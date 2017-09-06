@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_for_life"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ui_white"
+    tools:context="com.shiwaixiangcun.customer.ui.activity.ForLifeActivity">
+    <include android:id="@+id/include"
+        layout="@layout/top_bar_white"/>
+    <LinearLayout
+        android:background="@color/ui_white"
+        android:layout_below="@+id/include"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/ui_base_color"/>
+        <ImageView
+            android:layout_marginTop="100dp"
+            android:layout_gravity="center"
+            android:textColor="@color/word_black"
+            android:textSize="18sp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@mipmap/start_page"/>
+        <TextView
+            android:layout_marginTop="47dp"
+            android:layout_gravity="center"
+            android:textColor="@color/word_black"
+            android:textSize="22sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="世外生活"/>
+        <TextView
+            android:layout_marginTop="14dp"
+            android:layout_gravity="center"
+            android:textColor="@color/word_grad"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="发现生活的精彩"/>
+
+        <TextView
+            android:id="@+id/tv_version"
+            android:layout_gravity="center"
+            android:textColor="@color/word_grad"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="v 1.03"/>
+    </LinearLayout>
+    <TextView
+        android:textSize="12sp"
+        android:textColor="@color/word_little_grad"
+        android:layout_marginBottom="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/version_bottom"/>
+
+</RelativeLayout>

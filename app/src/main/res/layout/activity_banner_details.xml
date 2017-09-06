@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_details"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.shiwaixiangcun.customer.ui.activity.DetailsActivity">
+    <include android:id="@+id/include"
+        layout="@layout/top_bar_white"/>
+
+    <com.shiwaixiangcun.customer.widget.ObservableWebView
+        android:id="@+id/webview"
+        android:layout_below="@+id/include"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></com.shiwaixiangcun.customer.widget.ObservableWebView>
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tv_top"
+        android:layout_below="@+id/include"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/ui_line_black"/>
+</RelativeLayout>

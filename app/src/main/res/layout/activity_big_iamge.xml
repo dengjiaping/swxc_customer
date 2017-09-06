@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_big_iamge"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ui_back"
+    tools:context="com.shiwaixiangcun.customer.ui.activity.BigImageActivity">
+
+    <com.shiwaixiangcun.customer.widget.ZoomImageView
+        android:visibility="gone"
+        android:id="@+id/ziv_image"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="matrix"
+        android:src="@mipmap/defalt_image">
+
+    </com.shiwaixiangcun.customer.widget.ZoomImageView>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/id_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v4.view.ViewPager>
+    <RelativeLayout
+        android:background="@color/ui_little_back"
+        android:layout_width="match_parent"
+        android:layout_height="64dp">
+        <ImageView
+            android:id="@+id/iv_close_big_image"
+            android:layout_centerVertical="true"
+            android:padding="10dp"
+            android:layout_marginLeft="12dp"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:src="@mipmap/close"/>
+        <TextView
+            android:lines="1"
+            android:ellipsize="end"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="50dp"
+            android:id="@+id/tv_title_image"
+            android:layout_centerInParent="true"
+            android:textSize="17sp"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_marginBottom="16dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+
+            android:id="@+id/viewGroup"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="30dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"></LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

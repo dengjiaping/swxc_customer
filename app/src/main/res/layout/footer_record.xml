@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/tv_tv"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@color/ui_base_color"/>
+    <RelativeLayout
+        android:background="@color/ui_white"
+        android:layout_below="@+id/rl_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.shiwaixiangcun.customer.widget.MyListView
+            android:background="@color/ui_white"
+            android:dividerHeight="1dp"
+            android:id="@+id/lv_finish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="#F9F9F9">
+
+        </com.shiwaixiangcun.customer.widget.MyListView>
+
+    </RelativeLayout>
+</LinearLayout>
