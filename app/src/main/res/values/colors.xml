@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+
+    <color name="ui_base_color">#F6F6F6</color>
+    <color name="ui_green">#1CCC8C</color>
+    <color name="ui_white">#FFFFFF</color>
+    <color name="ui_orange">#FE9020</color>
+    <color name="ui_grad">#D82D3230</color>
+    <color name="ui_grad_10">#1A2D3230</color>
+    <color name="ui_grad_line">#B2637385</color>
+    <color name="ui_grad_back">#0C2D3230</color>
+    <color name="ui_back">#202020</color>
+    <color name="ui_little_back">#33202020</color>
+    <color name="ui_phone_item">#cee1cd</color>
+    <color name="ui_line_black">#212D3231</color>
+
+
+    <color name="word_black">#2D3230</color>
+    <color name="word_grad">#662D3230</color>
+    <color name="word_little_grad">#332D3230</color>
+    <color name="word_green">#1CCC8C</color>
+    <color name="word_white">#FFFFFF</color>
+    <color name="word_little_white">#99FFFFFF</color>
+    <color name="word_grad_sub">#CC2D3230</color>
+    <color name="word_red">#E94F4F</color>
+    <color name="word_black_heart">#333537</color>
+    <color name="word_black_80">#332D3230</color>
+    <color name="word_orange">#FE9020</color>
+    <color name="word_grad_60">#992D3230</color>
+
+
+    <color name="default_window_bg">#f5f5f9</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="gray">#aaaaaa</color>
+    <color name="light_blue">#6593cb</color>
+</resources>

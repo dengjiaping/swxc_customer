@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ui_white">
+    <LinearLayout
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_marginTop="18dp"
+            android:textColor="@color/word_black"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2017年健康生活从这些细节做起aaaaaaa"/>
+        <TextView
+            android:id="@+id/tv_summary"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/word_grad"
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2017年健康生活从这些细节做起aaaaaaa"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tv_come_from"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="8dp"
+                android:textSize="12sp"
+                android:textColor="@color/word_little_grad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="来源"/>
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:id="@+id/tv_publishTime"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/word_little_grad"
+                android:textSize="12sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2017年健康生活从这些"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

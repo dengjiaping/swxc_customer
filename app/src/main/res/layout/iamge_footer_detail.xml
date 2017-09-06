@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/ui_base_color"/>
+       <TextView
+           android:layout_marginTop="20dp"
+           android:layout_gravity="center"
+           android:textSize="14sp"
+           android:textColor="@color/word_grad"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="喜欢吗？" />
+        <Button
+            android:id="@+id/btn_phone"
+            android:layout_width="match_parent"
+            android:layout_height="49dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/pass"
+            android:layout_margin="20dp"
+            android:background="@drawable/acr_blue_bg"
+            android:text="立即联系"
+            android:textColor="@color/word_white"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+</LinearLayout>

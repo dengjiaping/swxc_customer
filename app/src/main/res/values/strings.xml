@@ -1,0 +1,49 @@
+<resources>
+    <string name="app_name">世外生活</string>
+    <string name="app_cancel">取消</string>
+    <string name="app_sure">确定</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="selected">已选(%1$s/%2$s)</string>
+
+    <array name="main_prioritynew_menu">
+        <item>一般</item>
+        <item>紧急</item>
+        <item>非常紧急</item>
+    </array>
+
+    <array name="main_gender_menu">
+        <item>男</item>
+        <item>女</item>
+    </array>
+
+    <array name="main_gender_menu_se">
+        <item>女</item>
+        <item>男</item>
+    </array>
+
+    <array name="main_priority_menu_new">
+        <item>""</item>
+    </array>
+
+    <string name="head">这里是HeadView</string>
+    <string name="pull_to_refresh">下拉刷新</string>
+    <string name="release_to_refresh">释放立即刷新</string>
+    <string name="refreshing">正在刷新...</string>
+    <string name="refresh_succeed">刷新成功</string>
+    <string name="refresh_fail">刷新失败</string>
+    <string name="pullup_to_load">上拉加载更多</string>
+    <string name="release_to_load">释放立即加载</string>
+    <string name="loading">正在加载...</string>
+    <string name="load_succeed">加载成功</string>
+    <string name="load_fail">加载失败</string>
+    <string name="version_bottom">©2017 shiwaixiangcun.com,all rights reserved</string>
+
+    <string name="app_btn1">有九宫格、有编辑页</string>
+    <string name="app_btn2">有九宫格、无编辑页</string>
+    <string name="app_btn3">无九宫格、有编辑页</string>
+    <string name="app_btn4">无九宫格、无编辑页</string>
+    <string name="app_derect_share">直接分享</string>
+    <string name="app_share_text">ShareSDK--文本</string>
+    <string name="app_share_comment">分享</string>
+</resources>

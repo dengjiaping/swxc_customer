@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_weight_history"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.shiwaixiangcun.customer.ui.activity.WeightHistoryActivity">
+    <include android:id="@+id/include"
+        layout="@layout/top_bar_white"/>
+
+
+    <com.shiwaixiangcun.customer.pullableview.PullToRefreshLayout
+        android:layout_below="@+id/include"
+        android:id="@+id/refresh_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/refresh_black_head" />
+        <!-- 支持所有实现Pullable接口的View -->
+
+        <com.shiwaixiangcun.customer.pullableview.PullableListView
+            android:divider="#00000000"
+            android:dividerHeight="0dp"
+            android:layout_marginTop="1dp"
+            android:id="@+id/lv_weight_history"
+            android:layout_below="@+id/include"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <include layout="@layout/load_more" />
+    </com.shiwaixiangcun.customer.pullableview.PullToRefreshLayout>
+
+</RelativeLayout>
