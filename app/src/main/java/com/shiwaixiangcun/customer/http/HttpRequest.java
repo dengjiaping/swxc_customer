@@ -34,20 +34,20 @@ public class HttpRequest {
 
     private static String BUG_TAG = "HttpRequest";
 
-    public static HttpExcuteType get(String url) {
-        return new HttpExcuteType(RequestType.GET, url);
+    public static HttpExecuteType get(String url) {
+        return new HttpExecuteType(RequestType.GET, url);
     }
 
-    public static HttpExcuteType post(String url) {
-        return new HttpExcuteType(RequestType.POST, url);
+    public static HttpExecuteType post(String url) {
+        return new HttpExecuteType(RequestType.POST, url);
     }
 
-    public static HttpExcuteType put(String url) {
-        return new HttpExcuteType(RequestType.PUT, url);
+    public static HttpExecuteType put(String url) {
+        return new HttpExecuteType(RequestType.PUT, url);
     }
 
-    public static HttpExcuteType delete(String url) {
-        return new HttpExcuteType(RequestType.DELETE, url);
+    public static HttpExecuteType delete(String url) {
+        return new HttpExecuteType(RequestType.DELETE, url);
     }
 
     public static void post(String url, Map<String, Object> params, final HttpCallBack httpCallBack) {

@@ -12,7 +12,7 @@ import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.mall.HotListHAdapter;
-import com.shiwaixiangcun.customer.mall.HotThing;
+import com.shiwaixiangcun.customer.model.MallBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +21,12 @@ import java.util.List;
  * Created by Administrator on 2017/9/6.
  */
 
-public class JingxuanListAdapter extends DelegateAdapter.Adapter<JingxuanListAdapter.MainViewHolder> {
+public class JingxuanListAdapter extends DelegateAdapter.Adapter<JingxuanListAdapter.DailyViewHolder> {
     private Context context;
     private LayoutHelper layoutHelper;
     private RecyclerView.LayoutParams layoutParams;
     private int count = 0;
-    private List<HotThing> mHotLists = new ArrayList<>();
+    private List<MallBean.DataBean.DailySelectionListBean> mHotLists = new ArrayList<>();
     private LinearLayoutManager mLinearLayoutManager;
     private HotListHAdapter mHotListHAdapter;
 
@@ -43,7 +43,7 @@ public class JingxuanListAdapter extends DelegateAdapter.Adapter<JingxuanListAda
         this.layoutParams = layoutParams;
         mLinearLayoutManager = new LinearLayoutManager(context);
         mLinearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        mHotListHAdapter = new HotListHAdapter(mHotLists);
+        mHotListHAdapter = new HotListHAdapter(context, mHotLists);
     }
 
     @Override
@@ -52,13 +52,13 @@ public class JingxuanListAdapter extends DelegateAdapter.Adapter<JingxuanListAda
     }
 
     @Override
-    public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new MainViewHolder(
-                LayoutInflater.from(context).inflate(R.layout.item_hotlists, parent, false));
+    public DailyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new DailyViewHolder(
+                LayoutInflater.from(context).inflate(R.layout.layout_mall_jingxuan, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(MainViewHolder holder, int position) {
+    public void onBindViewHolder(DailyViewHolder holder, int position) {
         holder.mRecyclerView.setLayoutManager(mLinearLayoutManager);
         holder.mRecyclerView.setAdapter(mHotListHAdapter);
     }
@@ -68,19 +68,19 @@ public class JingxuanListAdapter extends DelegateAdapter.Adapter<JingxuanListAda
         return count;
     }
 
-    public void setHotListData(List<HotThing> list) {
+    public void setHotListData(List<MallBean.DataBean.DailySelectionListBean> list) {
         mHotLists.clear();
         mHotListHAdapter.addData(list);
         mHotListHAdapter.notifyDataSetChanged();
     }
 
-    static class MainViewHolder extends RecyclerView.ViewHolder {
+    static class DailyViewHolder extends RecyclerView.ViewHolder {
 
         private RecyclerView mRecyclerView;
 
-        public MainViewHolder(View itemView) {
+        public DailyViewHolder(View itemView) {
             super(itemView);
-            mRecyclerView = (RecyclerView) itemView.findViewById(R.id.horizontal_list);
+            mRecyclerView = (RecyclerView) itemView.findViewById(R.id.rv_mall_jingxuan);
         }
     }
 }

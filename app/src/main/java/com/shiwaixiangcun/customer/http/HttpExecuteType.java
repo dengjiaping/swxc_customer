@@ -2,7 +2,6 @@ package com.shiwaixiangcun.customer.http;
 
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
-import com.lzy.okgo.request.BaseRequest;
 import com.lzy.okgo.request.DeleteRequest;
 import com.lzy.okgo.request.GetRequest;
 import com.lzy.okgo.request.PostRequest;
@@ -19,7 +18,7 @@ import okhttp3.Response;
 /**
  * Created by fyj on 2017/5/23.
  */
-public class HttpExcuteType {
+public class HttpExecuteType {
 
     private GetRequest getRequest;
     private PostRequest postRequest;
@@ -27,7 +26,7 @@ public class HttpExcuteType {
     private DeleteRequest deleteRequest;
     private RequestType requestType;
 
-    public HttpExcuteType(RequestType requestType, String url){
+    public HttpExecuteType(RequestType requestType, String url) {
         this.requestType = requestType;
         switch (requestType){
             case GET :
@@ -46,7 +45,7 @@ public class HttpExcuteType {
 
     }
 
-    public HttpExcuteType addParams(String key, Object value){
+    public HttpExecuteType addParams(String key, Object value) {
 
         switch (requestType){
             case GET :

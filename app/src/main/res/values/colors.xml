@@ -40,4 +40,9 @@
     <color name="gray">#aaaaaa</color>
     <color name="light_blue">#6593cb</color>
     <color name="indicator">#6bd26b</color>
+    <color name="more_gray">#2D3230</color>
+    <color name="mall_title">#2D3230</color>
+    <color name="mall_text">#2D3230</color>
+    <color name="mall_price">#FF1717</color>
+    <color name="mall_des">#F6A623</color>
 </resources>

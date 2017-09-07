@@ -58,9 +58,10 @@ dependencies {
     compile 'com.alibaba:fastjson:1.2.31'
     compile 'com.jakewharton:butterknife:8.4.0'
     compile 'com.youth.banner:banner:1.4.9'
+    compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.22'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
-    compile ('com.alibaba.android:vlayout:1.2.0@aar') {
+    compile('com.alibaba.android:vlayout:1.2.0@aar') {
         transitive = true
     }
 

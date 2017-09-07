@@ -4,14 +4,19 @@
     android:id="@+id/activity_mall"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#e6e6e6"
+    android:background="#f8f8f8"
     android:orientation="vertical"
 
     tools:context="com.shiwaixiangcun.customer.ui.activity.MallActivity">
 
+    <include
+        android:id="@+id/include"
+        layout="@layout/top_bar_blue" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_mall"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:overScrollMode="never" />
 
 </LinearLayout>

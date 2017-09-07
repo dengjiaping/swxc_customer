@@ -25,7 +25,7 @@ import static com.shiwaixiangcun.customer.utils.ResUtil.getResources;
  * Created by Administrator on 2017/9/6.
  */
 
-public class BannerAdapter extends DelegateAdapter.Adapter<BannerAdapter.MainViewHolder> {
+public class BannerAdapter extends DelegateAdapter.Adapter<BannerAdapter.BannerViewHolder> {
     public static List<?> images = new ArrayList<>();
     String[] urls = getResources().getStringArray(R.array.url);
     private Context context;
@@ -35,7 +35,7 @@ public class BannerAdapter extends DelegateAdapter.Adapter<BannerAdapter.MainVie
 
     public BannerAdapter(Context context, LayoutHelper layoutHelper, int count) {
         this(context, layoutHelper, count,
-                new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 300));
+                new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 
     public BannerAdapter(Context context, LayoutHelper layoutHelper, int count,
@@ -55,15 +55,14 @@ public class BannerAdapter extends DelegateAdapter.Adapter<BannerAdapter.MainVie
     }
 
     @Override
-    public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new MainViewHolder(LayoutInflater.from(context).inflate(R.layout.item_banner, parent, false));
+    public BannerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new BannerViewHolder(LayoutInflater.from(context).inflate(R.layout.layout_mall_banner, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(MainViewHolder holder, int position) {
+    public void onBindViewHolder(BannerViewHolder holder, int position) {
 
-        holder.mBanner
-                .setDelayTime(2500)
+        holder.mBanner.setDelayTime(2500)
                 .setImages(images)
                 .setImageLoader(new GlideImageLoader())
                 .start();
@@ -74,12 +73,12 @@ public class BannerAdapter extends DelegateAdapter.Adapter<BannerAdapter.MainVie
         return count;
     }
 
-    static class MainViewHolder extends RecyclerView.ViewHolder {
+    static class BannerViewHolder extends RecyclerView.ViewHolder {
         public Banner mBanner;
 
-        public MainViewHolder(View itemView) {
+        public BannerViewHolder(View itemView) {
             super(itemView);
-            mBanner = (Banner) itemView.findViewById(R.id.banner);
+            mBanner = (Banner) itemView.findViewById(R.id.banner_mall);
         }
     }
 

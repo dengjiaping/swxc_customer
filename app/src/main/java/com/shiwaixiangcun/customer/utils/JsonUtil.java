@@ -1,7 +1,5 @@
 package com.shiwaixiangcun.customer.utils;
 
-import java.lang.reflect.Type;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
@@ -12,11 +10,13 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
+import java.lang.reflect.Type;
+
 public class JsonUtil {
     public static String toJson(Object object) {
         GsonBuilder gb = new GsonBuilder();
         gb.registerTypeAdapter(String.class, new StringConverter());
-        Gson gson = new Gson();
+        Gson gson = gb.create();
 
         try {
             return gson.toJson(object);
@@ -29,7 +29,7 @@ public class JsonUtil {
     public static <T> T fromJson(String json, Class<T> classOfT) {
         GsonBuilder gb = new GsonBuilder();
         gb.registerTypeAdapter(String.class, new StringConverter());
-        Gson gson = new Gson();
+        Gson gson = gb.create();
 
         try {
             return gson.fromJson(json, classOfT);
@@ -42,7 +42,7 @@ public class JsonUtil {
     public static <T> T fromJson(String json, Type typeOfT) {
         GsonBuilder gb = new GsonBuilder();
         gb.registerTypeAdapter(String.class, new StringConverter());
-        Gson gson = new Gson();
+        Gson gson = gb.create();
 
         try {
             return gson.fromJson(json, typeOfT);
