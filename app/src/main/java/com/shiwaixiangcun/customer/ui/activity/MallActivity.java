@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
@@ -27,9 +28,11 @@ import com.shiwaixiangcun.customer.adapter.SuggestListAdapter;
 import com.shiwaixiangcun.customer.adapter.TestAdapter;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
+import com.shiwaixiangcun.customer.interfaces.ItemClick;
 import com.shiwaixiangcun.customer.model.MallBean;
 import com.shiwaixiangcun.customer.model.MallGoods;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
+import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -40,6 +43,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -47,10 +52,14 @@ import okhttp3.Response;
  * 商城Activity
  */
 
-public class MallActivity extends BaseActivity {
+public class MallActivity extends BaseActivity implements View.OnClickListener {
 
     List<MallBean.DataBean.DailySelectionListBean> mDailyList = new ArrayList<>();
     List<MallGoods.DataBean.ElementsBean> mList = new ArrayList<>();
+    @BindView(R.id.back_left)
+    ChangeLightImageView mBackLeft;
+    @BindView(R.id.tv_page_name)
+    TextView mTvPageName;
     private Context mContext = null;
     private RecyclerView mRvMall = null;
     private VirtualLayoutManager mLayoutManager = null;
@@ -72,6 +81,7 @@ public class MallActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mall);
+        ButterKnife.bind(this);
 
         mContext = this;
         EventBus.getDefault().register(this);
@@ -155,13 +165,18 @@ public class MallActivity extends BaseActivity {
 //        mRvMall.setRecycledViewPool(viewPool);
 //        viewPool.setMaxRecycledViews(0, 5);
 //        viewPool.setMaxRecycledViews(1, 7);
+
+
+        mTvPageName.setText("商城");
+        mBackLeft.setOnClickListener(this);
         mAdapters = new LinkedList<>();
         setSearch(mAdapters);
         setBanner(mAdapters);
-        setSingleAdapter(mAdapters);
+
         setJingxuanList(mAdapters);
-        setPinzhiAdapter(mAdapters);
-        setHotAndNew(mAdapters);
+        setSingleAdapter(mAdapters);
+//        setPinzhiAdapter(mAdapters);
+//        setHotAndNew(mAdapters);
         setSuggest(mAdapters);
         setList(mAdapters);
         bind(mAdapters);
@@ -176,6 +191,12 @@ public class MallActivity extends BaseActivity {
     private void setSearch(LinkedList<DelegateAdapter.Adapter> mAdapters) {
         LinearLayoutHelper linearLayoutHelper = new LinearLayoutHelper();
         SearchAdapter searchAdapter = new SearchAdapter(this, linearLayoutHelper, 1);
+        searchAdapter.setItemClick(new ItemClick() {
+            @Override
+            public void onItemClick(View view, int position) {
+                readyGo(SearchResultActivity.class);
+            }
+        });
         mAdapters.add(searchAdapter);
     }
 
@@ -261,4 +282,12 @@ public class MallActivity extends BaseActivity {
     }
 
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.back_left:
+                readyGo(MallCategoryActivity.class);
+                break;
+        }
+    }
 }

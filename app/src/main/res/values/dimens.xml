@@ -4,5 +4,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
 
+    <dimen name="toobar_height">56dp</dimen>
     <dimen name="item_height">5dp</dimen>
 </resources>

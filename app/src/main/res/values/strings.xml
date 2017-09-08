@@ -46,4 +46,7 @@
     <string name="app_derect_share">直接分享</string>
     <string name="app_share_text">ShareSDK--文本</string>
     <string name="app_share_comment">分享</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

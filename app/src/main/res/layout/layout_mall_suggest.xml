@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#f8f8f8"
-    android:orientation="vertical"
-    android:paddingBottom="10dp"
-    android:paddingTop="10dp">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="#f8f8f8"
+              android:orientation="vertical"
+              android:paddingBottom="8dp"
+              android:paddingTop="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,45 +14,41 @@
         android:orientation="vertical">
 
 
-        <include layout="@layout/layout_mall_pinzhi" />
+        <include layout="@layout/layout_mall_pinzhi"/>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.3dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:background="#2D3230" />
+            android:background="#2D3230"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:background="@color/white"
             android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
                 android:layout_weight="1">
 
-                <include layout="@layout/layout_mall_hot" />
+                <include layout="@layout/layout_mall_hot"/>
             </LinearLayout>
 
             <View
                 android:layout_width="0.3dp"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="8dp"
-                android:background="#2D3230" />
+                android:background="#2D3230"/>
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
                 android:layout_weight="1">
 
-                <include layout="@layout/layout_mall_new" />
+                <include layout="@layout/layout_mall_new"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

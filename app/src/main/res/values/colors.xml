@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#ffffff</color>
+    <color name="colorPrimaryDark">#ffffff</color>
+    <color name="colorAccent">#1CCC8C</color>
 
 
+    <color name="color_divider">#2D3230</color>
     <color name="ui_base_color">#F6F6F6</color>
     <color name="ui_green">#1CCC8C</color>
     <color name="ui_white">#FFFFFF</color>
@@ -45,4 +46,5 @@
     <color name="mall_text">#2D3230</color>
     <color name="mall_price">#FF1717</color>
     <color name="mall_des">#F6A623</color>
+    <color name="ui_background">#f8f8f8</color>
 </resources>
