@@ -37,6 +37,7 @@ public class Common implements Serializable {
      */
     public static String getVerification = domain + "mi/dynamic/password/message.json";
 
+    public static String getGoodDetail = domain + "mi/goods/detail.json";
     /**
      * viewpager banner列表 public
      */
@@ -94,12 +95,12 @@ public class Common implements Serializable {
     /**
      * 装修列表 get
      */
-    public static String decorateList  = domains + "mi/decorate/company/listpage.json";
+    public static String decorateList = domains + "mi/decorate/company/listpage.json";
 
     /**
      * 装修详情 get
      */
-    public static String companyDetail  = domains + "mi/decorate/company/detail.json";
+    public static String companyDetail = domains + "mi/decorate/company/detail.json";
 
     /**
      * 多文件上传 post
@@ -193,7 +194,6 @@ public class Common implements Serializable {
     public static String appUpdate = domains + "app/versionUpdate.json";
 
 
-
     /**
      * 商户类型列表 get
      */
@@ -207,12 +207,12 @@ public class Common implements Serializable {
 
 
     /**
-     *  活动get
+     * 活动get
      */
     public static String article = domains + "mi/article/active/listpage.json";
 
     /**
-     *  查询默认城市列表 get
+     * 查询默认城市列表 get
      */
     public static String findCityList = domains + "mi/cityCode/find.json";
 
@@ -222,16 +222,15 @@ public class Common implements Serializable {
 //    public static String findCityCode = domains + "mi/cityCode/findCityCode.json";
 
     /**
-     *  商户详情 get
+     * 商户详情 get
      */
     public static String merchantDetail = domains + "mi/merchant/detail.json";
-
 
 
     ///mc/customer/avatar 单文件上传已经改成了这个接口
 
 
-//    是否登录share
+    //    是否登录share
     public static String ISORNOLOGIN = "isornologin";
     public static String SIORNOLOGIN = "siornologin";
 

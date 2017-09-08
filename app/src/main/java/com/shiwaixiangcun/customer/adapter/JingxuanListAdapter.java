@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.shiwaixiangcun.customer.R;
-import com.shiwaixiangcun.customer.mall.HotListHAdapter;
 import com.shiwaixiangcun.customer.model.MallBean;
 
 import java.util.ArrayList;

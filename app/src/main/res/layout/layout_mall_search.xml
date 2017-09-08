@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="44dp"
-    android:background="@color/white"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    android:orientation="vertical"
-    android:paddingBottom="10dp"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
-    android:paddingTop="2dp">
+              android:layout_width="match_parent"
+              android:layout_height="44dp"
+              android:background="@color/white"
+              android:focusable="true"
+              android:focusableInTouchMode="true"
+              android:orientation="vertical"
+              android:paddingBottom="10dp"
+              android:paddingLeft="10dp"
+              android:paddingRight="10dp"
+              android:paddingTop="2dp">
 
-    <EditText
+    <TextView
+        android:id="@+id/edt_search"
         android:layout_width="match_parent"
         android:layout_height="32dp"
         android:background="@drawable/shape_search"
         android:drawableLeft="@mipmap/search"
         android:drawablePadding="8dp"
-        android:hint="搜索"
+        android:gravity="center_vertical"
         android:paddingLeft="8dp"
-        android:textColor="@color/mall_title"
-        android:textSize="14sp" />
+        android:text="搜索"
+        android:textColor="#5e6864"
+        android:textSize="14sp"/>
 
 </LinearLayout>

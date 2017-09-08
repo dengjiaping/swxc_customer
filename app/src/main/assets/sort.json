@@ -1,0 +1,413 @@
+{
+  "data": [
+    {
+      "categoryImg": null,
+      "children": [
+        {
+          "categoryImg": null,
+          "children": [
+            {
+              "categoryImg": "http://resource.shiwaixiangcun.cn/group1/M00/00/52/rBKx51mt_TeAGefEAAFDd3_-mrw369.jpg",
+              "children": [],
+              "id": 4,
+              "name": "苹果",
+              "parentId": 3,
+              "parentIds": null,
+              "weight": null
+            },
+            {
+              "categoryImg": "http://resource.shiwaixiangcun.cn/group1/M00/00/52/rBKx51mt_TeAGefEAAFDd3_-mrw369.jpg",
+              "children": [],
+              "id": 5,
+              "name": "芒果",
+              "parentId": 3,
+              "parentIds": null,
+              "weight": null
+            },
+            {
+              "categoryImg": "http://resource.shiwaixiangcun.cn/group1/M00/00/52/rBKx51mt_TeAGefEAAFDd3_-mrw369.jpg",
+              "children": [],
+              "id": 4,
+              "name": "菠萝",
+              "parentId": 3,
+              "parentIds": null,
+              "weight": null
+            },
+            {
+              "categoryImg": "http://resource.shiwaixiangcun.cn/group1/M00/00/52/rBKx51mt_TeAGefEAAFDd3_-mrw369.jpg",
+              "children": [],
+              "id": 5,
+              "name": "柚子",
+              "parentId": 3,
+              "parentIds": null,
+              "weight": null
+            }
+          ],
+          "id": 3,
+          "name": "水果",
+          "parentId": 1,
+          "parentIds": null,
+          "weight": null
+        },
+        {
+          "categoryImg": null,
+          "children": [
+            {
+              "categoryImg": "http://resource.shiwaixiangcun.cn/group1/M00/00/52/rBKx51mt_TeAGefEAAFDd3_-mrw369.jpg",
+              "children": [],
+              "id": 4,
+              "name": "土豆",
+              "parentId": 3,
+              "parentIds": null,
+              "weight": null
+            },
+            {
+              "categoryImg": "http://resource.shiwaixiangcun.cn/group1/M00/00/52/rBKx51mt_TeAGefEAAFDd3_-mrw369.jpg",
+              "children": [],
+              "id": 5,
+              "name": "西红柿",
+              "parentId": 3,
+              "parentIds": null,
+              "weight": null
+            },
+            {
+              "categoryImg": "http://resource.shiwaixiangcun.cn/group1/M00/00/52/rBKx51mt_TeAGefEAAFDd3_-mrw369.jpg",
+              "children": [],
+              "id": 4,
+              "name": "茄子",
+              "parentId": 3,
+              "parentIds": null,
+              "weight": null
+            }
+          ],
+          "id": 3,
+          "name": "蔬菜",
+          "parentId": 1,
+          "parentIds": null,
+          "weight": null
+        }
+      ],
+      "id": 2,
+      "name": "水果蔬菜",
+      "parentId": 1,
+      "parentIds": null,
+      "weight": null
+    },
+    {
+      "categoryImg": null,
+      "children": [
+        {
+          "categoryImg": null,
+          "children": [
+            {
+              "categoryImg": null,
+              "children": [],
+              "id": 11,
+              "name": "牛仔裤",
+              "parentId": 10,
+              "parentIds": null,
+              "weight": null
+            },
+            {
+              "categoryImg": null,
+              "children": [],
+              "id": 11,
+              "name": "连衣裙",
+              "parentId": 10,
+              "parentIds": null,
+              "weight": null
+            },
+            {
+              "categoryImg": null,
+              "children": [],
+              "id": 11,
+              "name": "休闲裤",
+              "parentId": 10,
+              "parentIds": null,
+              "weight": null
+            },
+            {
+              "categoryImg": null,
+              "children": [],
+              "id": 11,
+              "name": "polo衫",
+              "parentId": 10,
+              "parentIds": null,
+              "weight": null
+            }
+          ],
+          "id": 10,
+          "name": "男装",
+          "parentId": 1,
+          "parentIds": null,
+          "weight": null
+        }
+      ],
+      "id": 6,
+      "name": "服饰",
+      "parentId": 1,
+      "parentIds": null,
+      "weight": null
+    },
+    {
+      "categoryImg": null,
+      "children": [
+        {
+          "categoryImg": null,
+          "children": [
+            {
+              "categoryImg": null,
+              "children": [],
+              "id": 22,
+              "name": "插线板",
+              "parentId": 14,
+              "parentIds": null,
+              "weight": null
+            },
+            {
+              "categoryImg": null,
+              "children": [],
+              "id": 22,
+              "name": "插线板",
+              "parentId": 14,
+              "parentIds": null,
+              "weight": null
+            },
+            {
+              "categoryImg": null,
+              "children": [],
+              "id": 22,
+              "name": "电冰箱",
+              "parentId": 14,
+              "parentIds": null,
+              "weight": null
+            },
+            {
+              "categoryImg": null,
+              "children": [],
+              "id": 22,
+              "name": "电视机",
+              "parentId": 14,
+              "parentIds": null,
+              "weight": null
+            }
+          ],
+          "id": 14,
+          "name": "电器",
+          "parentId": 1,
+          "parentIds": null,
+          "weight": null
+        }
+      ],
+      "id": 13,
+      "name": "家用电器",
+      "parentId": 1,
+      "parentIds": null,
+      "weight": null
+    },
+    {
+      "categoryImg": null,
+      "children": [
+        {
+          "categoryImg": null,
+          "children": [
+            {
+              "categoryImg": "http://resource.shiwaixiangcun.cn/group1/M00/00/52/rBKx51mt_TeAGefEAAFDd3_-mrw369.jpg",
+              "children": [],
+              "id": 4,
+              "name": "苹果",
+              "parentId": 3,
+              "parentIds": null,
+              "weight": null
+            },
+            {
+              "categoryImg": null,
+              "children": [],
+              "id": 5,
+              "name": "芒果",
+              "parentId": 3,
+              "parentIds": null,
+              "weight": null
+            }
+          ],
+          "id": 3,
+          "name": "水果1",
+          "parentId": 1,
+          "parentIds": null,
+          "weight": null
+        }
+      ],
+      "id": 2,
+      "name": "家居日常",
+      "parentId": 1,
+      "parentIds": null,
+      "weight": null
+    },
+    {
+      "categoryImg": null,
+      "children": [
+        {
+          "categoryImg": null,
+          "children": [
+            {
+              "categoryImg": null,
+              "children": [],
+              "id": 11,
+              "name": "牛仔裤",
+              "parentId": 10,
+              "parentIds": null,
+              "weight": null
+            }
+          ],
+          "id": 10,
+          "name": "男装",
+          "parentId": 1,
+          "parentIds": null,
+          "weight": null
+        }
+      ],
+      "id": 6,
+      "name": "服饰",
+      "parentId": 1,
+      "parentIds": null,
+      "weight": null
+    },
+    {
+      "categoryImg": null,
+      "children": [
+        {
+          "categoryImg": null,
+          "children": [
+            {
+              "categoryImg": null,
+              "children": [],
+              "id": 22,
+              "name": "iMac",
+              "parentId": 14,
+              "parentIds": null,
+              "weight": null
+            }
+          ],
+          "id": 14,
+          "name": "笔记本",
+          "parentId": 1,
+          "parentIds": null,
+          "weight": null
+        }
+      ],
+      "id": 13,
+      "name": "电脑数码",
+      "parentId": 1,
+      "parentIds": null,
+      "weight": null
+    },
+    {
+      "categoryImg": null,
+      "children": [
+        {
+          "categoryImg": null,
+          "children": [
+            {
+              "categoryImg": "http://resource.shiwaixiangcun.cn/group1/M00/00/52/rBKx51mt_TeAGefEAAFDd3_-mrw369.jpg",
+              "children": [],
+              "id": 4,
+              "name": "西游记",
+              "parentId": 3,
+              "parentIds": null,
+              "weight": null
+            },
+            {
+              "categoryImg": null,
+              "children": [],
+              "id": 5,
+              "name": "水浒传",
+              "parentId": 3,
+              "parentIds": null,
+              "weight": null
+            }
+          ],
+          "id": 3,
+          "name": "名著",
+          "parentId": 1,
+          "parentIds": null,
+          "weight": null
+        }
+      ],
+      "id": 2,
+      "name": "文学书籍",
+      "parentId": 1,
+      "parentIds": null,
+      "weight": null
+    },
+    {
+      "categoryImg": null,
+      "children": [
+        {
+          "categoryImg": null,
+          "children": [
+            {
+              "categoryImg": null,
+              "children": [],
+              "id": 11,
+              "name": "板蓝根",
+              "parentId": 10,
+              "parentIds": null,
+              "weight": null
+            }
+          ],
+          "id": 10,
+          "name": "医药",
+          "parentId": 1,
+          "parentIds": null,
+          "weight": null
+        }
+      ],
+      "id": 6,
+      "name": "医药/器材",
+      "parentId": 1,
+      "parentIds": null,
+      "weight": null
+    },
+    {
+      "categoryImg": null,
+      "children": [
+        {
+          "categoryImg": null,
+          "children": [
+            {
+              "categoryImg": null,
+              "children": [],
+              "id": 22,
+              "name": "大宝SOD",
+              "parentId": 14,
+              "parentIds": null,
+              "weight": null
+            },
+            {
+              "categoryImg": null,
+              "children": [],
+              "id": 22,
+              "name": "美肤面膜",
+              "parentId": 14,
+              "parentIds": null,
+              "weight": null
+            }
+          ],
+          "id": 14,
+          "name": "化妆品",
+          "parentId": 1,
+          "parentIds": null,
+          "weight": null
+        }
+      ],
+      "id": 13,
+      "name": "美容护肤",
+      "parentId": 1,
+      "parentIds": null,
+      "weight": null
+    }
+  ],
+  "message": "操作成功",
+  "responseCode": 1001,
+  "success": true
+}

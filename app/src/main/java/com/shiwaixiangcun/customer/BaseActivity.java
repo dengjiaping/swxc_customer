@@ -1,7 +1,9 @@
 package com.shiwaixiangcun.customer;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 /**
@@ -9,15 +11,21 @@ import android.support.v7.app.AppCompatActivity;
  */
 
 public class BaseActivity extends AppCompatActivity {
-
     /**
      * 日志输出标志
      **/
     protected final String BUG_TAG = this.getClass().getSimpleName();
+    protected Context mContext = null;
 
     protected void readyGo(Class<?> clazz) {
         Intent intent = new Intent(this, clazz);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mContext = this;
     }
 
     protected void readyGo(Class<?> clazz, Bundle bundle) {
@@ -55,7 +63,6 @@ public class BaseActivity extends AppCompatActivity {
         }
         startActivityForResult(intent, requestCode);
     }
-
 
 
 }
