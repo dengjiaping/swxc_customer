@@ -1,7 +1,9 @@
 package com.shiwaixiangcun.customer.ui.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,11 +15,13 @@ import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
 import com.alibaba.android.vlayout.layout.OnePlusNLayoutHelper;
 import com.alibaba.android.vlayout.layout.SingleLayoutHelper;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.callback.StringCallback;
 import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.R;
+import com.shiwaixiangcun.customer.adapter.AdapterMall;
 import com.shiwaixiangcun.customer.adapter.BannerAdapter;
 import com.shiwaixiangcun.customer.adapter.HotAndNewAdapter;
 import com.shiwaixiangcun.customer.adapter.JingxuanListAdapter;
@@ -31,6 +35,7 @@ import com.shiwaixiangcun.customer.http.HttpRequest;
 import com.shiwaixiangcun.customer.interfaces.ItemClick;
 import com.shiwaixiangcun.customer.model.MallBean;
 import com.shiwaixiangcun.customer.model.MallGoods;
+import com.shiwaixiangcun.customer.utils.ItemDecoration;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
@@ -62,6 +67,8 @@ public class MallActivity extends BaseActivity implements View.OnClickListener {
     TextView mTvPageName;
     private Context mContext = null;
     private RecyclerView mRvMall = null;
+
+    private AdapterMall mAdapterMall;
     private VirtualLayoutManager mLayoutManager = null;
     private DelegateAdapter delegateAdapter = null;
     private LinkedList<DelegateAdapter.Adapter> mAdapters = null;
@@ -85,6 +92,7 @@ public class MallActivity extends BaseActivity implements View.OnClickListener {
 
         mContext = this;
         EventBus.getDefault().register(this);
+        initHeaders();
         initView();
         requestBanner();
         requestData();
@@ -103,15 +111,29 @@ public class MallActivity extends BaseActivity implements View.OnClickListener {
             public void onSuccess(String responseJson) {
                 MallGoods mallGoods = JsonUtil.fromJson(responseJson, MallGoods.class);
                 if (mallGoods != null) {
-                    Log.e(BUG_TAG, "请求成功");
-                    suggestListAdapter.addData(mallGoods.getData().getElements());
-                    suggestListAdapter.notifyDataSetChanged();
+//                    suggestListAdapter.addData(mallGoods.getData().getElements());
+                    mList.addAll(mallGoods.getData().getElements());
+                    mAdapterMall.notifyDataSetChanged();
+//                    suggestListAdapter.setItemClick(new ItemClick() {
+//                        @Override
+//                        public void onItemClick(View view, int position) {
+//                            Intent intent = new Intent();
+//                            Bundle bundle = new Bundle();
+//                            bundle.putInt("goodId", mList.get(position).getGoodsId());
+//                            intent.putExtras(bundle);
+//                            intent.setClass(mContext, GoodDetailActivity.class);
+//                            startActivity(intent);
+//
+//                        }
+//                    });
+//                    suggestListAdapter.notifyDataSetChanged();
                 }
                 super.onSuccess(responseJson);
             }
 
             @Override
             public void onFailed(Exception e) {
+                Log.e(BUG_TAG, "failed");
 
             }
         });
@@ -120,6 +142,9 @@ public class MallActivity extends BaseActivity implements View.OnClickListener {
     private void requestBanner() {
     }
 
+    /**
+     * 初始化各个View
+     */
     private void initHeaders() {
         LayoutInflater layoutInflater = LayoutInflater.from(mContext);
         mBannerView = layoutInflater.inflate(R.layout.layout_mall_banner, null);
@@ -139,9 +164,9 @@ public class MallActivity extends BaseActivity implements View.OnClickListener {
                     public void onSuccess(String s, Call call, Response response) {
                         MallBean mallBean = JsonUtil.fromJson(s, MallBean.class);
                         if (mallBean != null) {
-                            mDailyList = mallBean.getData().getDailySelectionList();
-                            mDailySelection.setHotListData(mDailyList);
-                            mDailySelection.notifyDataSetChanged();
+//                            mDailyList = mallBean.getData().getDailySelectionList();
+//                            mDailySelection.setHotListData(mDailyList);
+//                            mDailySelection.notifyDataSetChanged();
                             EventBus.getDefault().post(mallBean);
                         }
                     }
@@ -158,9 +183,28 @@ public class MallActivity extends BaseActivity implements View.OnClickListener {
         mRvMall = (RecyclerView) findViewById(R.id.rv_mall);
         mLayoutManager = new VirtualLayoutManager(this);
         mRvMall.setLayoutManager(mLayoutManager);
+        mAdapterMall = new AdapterMall(mList);
+        mRvMall.setAdapter(mAdapterMall);
+        mRvMall.addItemDecoration(new ItemDecoration(this, LinearLayoutManager.VERTICAL));
+        mAdapterMall.addHeaderView(mSearchView);
+        mAdapterMall.addHeaderView(mBannerView);
+        mAdapterMall.addHeaderView(mJingxuanView);
+        mAdapterMall.addHeaderView(mSuggersView);
+        mAdapterMall.addHeaderView(mTitleView);
+        mAdapterMall.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent intent = new Intent();
+                Bundle bundle = new Bundle();
+                bundle.putInt("goodId", mList.get(position).getGoodsId());
+                intent.putExtras(bundle);
+                intent.setClass(mContext, GoodDetailActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
-//        mRvMall.addItemDecoration(new MyDecoration(this, LinearLayoutManager.VERTICAL));
+//        mRvMall.addItemDecoration(new ItemDecoration(this, LinearLayoutManager.VERTICAL));
 //        RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
 //        mRvMall.setRecycledViewPool(viewPool);
 //        viewPool.setMaxRecycledViews(0, 5);
@@ -169,17 +213,17 @@ public class MallActivity extends BaseActivity implements View.OnClickListener {
 
         mTvPageName.setText("商城");
         mBackLeft.setOnClickListener(this);
-        mAdapters = new LinkedList<>();
-        setSearch(mAdapters);
-        setBanner(mAdapters);
-
-        setJingxuanList(mAdapters);
-        setSingleAdapter(mAdapters);
-//        setPinzhiAdapter(mAdapters);
-//        setHotAndNew(mAdapters);
-        setSuggest(mAdapters);
-        setList(mAdapters);
-        bind(mAdapters);
+//        mAdapters = new LinkedList<>();
+//        setSearch(mAdapters);
+//        setBanner(mAdapters);
+//
+//        setJingxuanList(mAdapters);
+//        setSingleAdapter(mAdapters);
+////        setPinzhiAdapter(mAdapters);
+////        setHotAndNew(mAdapters);
+//        setSuggest(mAdapters);
+//        setList(mAdapters);
+//        bind(mAdapters);
     }
 
     private void setSingleAdapter(LinkedList<DelegateAdapter.Adapter> mAdapters) {
@@ -267,8 +311,9 @@ public class MallActivity extends BaseActivity implements View.OnClickListener {
     private void setList(LinkedList<DelegateAdapter.Adapter> mAdapters) {
         LinearLayoutHelper linearLayoutHelper = new LinearLayoutHelper();
         linearLayoutHelper.setDividerHeight(3);
-        suggestListAdapter = new SuggestListAdapter(this, linearLayoutHelper, mList);
+        suggestListAdapter = new SuggestListAdapter(this, linearLayoutHelper);
         mAdapters.add(suggestListAdapter);
+
     }
 
     @Override
@@ -280,7 +325,8 @@ public class MallActivity extends BaseActivity implements View.OnClickListener {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void updateGoods(MallBean mallBean) {
         MallBean.DataBean data = mallBean.getData();
-        mPinzhiAdapter.addData(data.getQualityGoods());
+//        mPinzhiAdapter.addData(data.getQualityGoods());
+
 //        List<GoodBean> list=new ArrayList<>();
 //        list.add(data.getQualityGoods())
 //        hotAndNewAdapter.addData(data.get)

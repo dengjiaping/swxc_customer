@@ -2,10 +2,10 @@ package com.shiwaixiangcun.customer.widget;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.os.Bundle;
+import android.content.DialogInterface;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.annotation.StyleRes;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -30,61 +30,68 @@ import butterknife.ButterKnife;
  * Created by Administrator on 2017/9/11.
  */
 
-public class DialogSupport extends Dialog {
+public class DialogSupport extends Dialog implements DialogInterface.OnCancelListener, View.OnClickListener {
 
-    RecyclerView mRvSupport;
-    Button mBtnConfirm;
     List<GoodDetail.DataBean.ServicesBean> mList;
+    @BindView(R.id.rv_support)
+    RecyclerView mRvSupport;
+    @BindView(R.id.btn_confirm)
+    Button mBtnConfirm;
     private Context mContext;
     private OnCancelListener listener;
     private MyAdapter mAdapter;
+    private LinearLayoutManager mLinearLayoutManager;
 
     public DialogSupport(@NonNull Context context) {
-        super(context);
-        mContext = context;
+        super(context, R.style.AlertDialogStyle);
+        this.mContext = context;
+
+        initView();
     }
 
     public DialogSupport(@NonNull Context context, @StyleRes int themeResId) {
         super(context, themeResId);
-        mContext = context;
-    }
-
-    protected DialogSupport(@NonNull Context context, boolean cancelable, @Nullable OnCancelListener cancelListener) {
-        super(context, cancelable, cancelListener);
         this.mContext = context;
-        this.listener = cancelListener;
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
 
         initView();
     }
 
     private void initView() {
-        LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-        View view = layoutInflater.inflate(R.layout.layout_support, null);
-        setContentView(view);
-        mRvSupport = (RecyclerView) view.findViewById(R.id.rv_support);
-        mBtnConfirm = (Button) view.findViewById(R.id.btn_confirm);
+        setCancelable(true);
+        setCanceledOnTouchOutside(true);
         Window dialogWindow = getWindow();
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
         DisplayMetrics d = mContext.getResources().getDisplayMetrics(); // 获取屏幕宽、高用
         lp.height = (int) (d.heightPixels * 0.7);
         lp.gravity = Gravity.BOTTOM;
         dialogWindow.setAttributes(lp);
+        setContentView(R.layout.layout_support);
+        ButterKnife.bind(this);
         mList = new ArrayList<>();
         mAdapter = new MyAdapter();
-
+        mLinearLayoutManager = new LinearLayoutManager(mContext);
+        mRvSupport.setLayoutManager(mLinearLayoutManager);
+        mRvSupport.setAdapter(mAdapter);
+        mBtnConfirm.setOnClickListener(this);
     }
 
     public void setData(List<GoodDetail.DataBean.ServicesBean> list) {
         mList.addAll(list);
         mAdapter.notifyDataSetChanged();
+    }
 
+    @Override
+    public void onCancel(DialogInterface dialogInterface) {
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_confirm:
+                dismiss();
+                break;
+        }
     }
 
     final class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {

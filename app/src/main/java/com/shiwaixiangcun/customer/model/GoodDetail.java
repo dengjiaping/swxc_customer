@@ -7,9 +7,8 @@ import java.util.List;
  */
 
 public class GoodDetail {
-
     /**
-     * data : {"categoryFullName":"水果蔬菜-水果1-苹果","categoryId":4,"cityName":"朝阳","feature":"大哥发伟哥伟哥伟哥","goodsCode":null,"goodsDetail":"<p>但是但是但是是<img src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARsAAABuCAYAAAAXtbfnAAALQklEQVR4nO3df0zTZx4H8Pf4VX60FApCCyhFQAlERDZr6ombP3ZOTbZwmZecumTLLdlyf2yJnpfb/lnuj2XJ7c5kW7LckttpstuWqDnvSNTTI7uIZs3wTpk7OMaUiSCViVVoAYuU3fPtj6NgAafrp519vxKx/fL98dCnfffzPN9v4aFvFRARRVlSrBtARImBYUNEIhg2RCSCYUNEIhg2RCSCYUNEIhg2RCSCYUNEIhg2RCSCYUNEIhg2RCSCYUNEIhg2RCSCYUNEIhg2RCSCYUNEIhg2RCSCYUNEIhg2RCQiZcgzFus2EFECeIi/8JyIJHAYRUQiGDZEJIJhQ0QiGDZEJIJhQ0QiGDZEJIJhQ0QiGDZEJIJhQ0QiGDZEJIJhQ0QiGDZEJIJhQ0QiGDZEJIJhQ0QiUmLdgEgm7PZYN4G+oxSHI9ZNoDjHyoaIRDBsiEgEw4aIRDBsiEgEw4aIRDBsiEhEXJ76ngtPscYOL0mg+8HKhohEMGyISATDhohEMGyISATDhohEMGyISMQP7tT32sN7Y92EB5o+VQerIQ87l9qw2rxY7LjfuG6iu7cf7pExTPh8YsclFQLJyTBkZWDxwiIUmHKidpy4q2xa+r+KdRMSmue2F/9x9ePXjr+K9cXVQRf+3d6FG8MeBk0MaI+59thrfaD1RbTEXdh81PWvWDeBgqT64uu+qyLHoflFsy/iLmwuDQ/GugkUJNUX7pFRkePQ/KLZF3EXNqO+27FuAgVJ9YVvclLkODS/aPZF3IUNET2YGDZEJIJhQ0QiGDZEJIJhQ0QiGDZEJIJhQ0QifnCfjfr+WfHKxidhG21G46cdd7lNLd7cbEda18d4+eLwHOuV4LUf/wQVgwfwzNnwKzPL1fKtqBt1YM/pM7gQYUtz/bM4kP8NXj1xFKexAm9tXYcVaZGO4cKxw/vxxl22nOZTCJu9FHkRXxlj6Dv1Bb6YbdOiKjxaPIneji50j+SgfqUVKc4utPZpF8qVoaEhF96LZ9Har+7mqvsVOlzp7ES3O1o/S3xJmLB5es0v8NKC9GnLenr+iL9lbsFmg3oYDE+gpfGJ4HfmewGfx7nRx/Bi1SY8ffEgDs22WmUD1qQ68V6nChoVHi2lpunfz2rAnxobgndu4dz5d1V4abezscOYDeeNZhU0iPD9kE34oNEy789O38UAWh0DWPawDTnuVpzq0pZpQaHHzYu3UdhgU28hM0wMo8PRiZ7r1+EuLsXS2hpkdLbjv1du4UflVbChUwVO2Pq5i2CvykPqcC+cCRI0moQJm0On3/WHwhOrX8Du1LN4/OQlbF+9DTvSL+F3nxxF05CqJoo34PVaKzx9Duz7/5baC7oGpRH3uhAvNe7CS9OWhYLKitfLctHR+WccCl0BPt6Lt49ECietcgn8MvFXNu5S4RdcnPNTtGjPbHcvziEdK2p3oaV25rYu3G09RvepvxMDFhtMI2042TkeWLa4BpsLAf91t95rOHteva/UFiErIw1jav02/TLUWSyw9E1dmbuwKBdpKmgc7QOqVkocCRM2AdXYoB9Bkxq6VNftxI5cHdLSqvDL9epf+GoVW3FA/evp2auGP9qCux2qTFUatvrHUKGGSS+77fjgyXK4hlTipEUKpxBVuaivbzTvxT7Vtg8KXNijhlBt9/sj0z3TF9r8QRIwhpvq6/D4BApTc6FVQJqFWTrVdYPohVFVQ+Uwjfai9czn/hDRqqOSTG2tDNQFC1h9uQ15/luleKyhYO5h2QMmocLGXLMcdVkFWLVpF7b5A+QiqhtVEPiHJ1pQhG4HKoxq/1bH8czhuz1CaF0zXss3waKGSQcWpMDrbsc7bgtW6GerbMJVY7clGxcuu7C78Vl0qJD7KsIQcJpZKya6H56B6cMozTfe26hWQ1yTChsXDFiQngLPkDYfN66GvbdQWFwG+/IMnP/88ox9zFBUhY3lqVI/SlxIoLBRL+JFFujUC39tM8LmOqYPT0rDbve4Is/1zMd97Z/YemIv3qv5Gd63TmDfp8fRWvWsKrOz8NSslQ38ldQerwpEOPH7dh92LAksP3TagYat62ByhiqtoPJtOFIF7GPQREWkymbM5YW3MB3FOq3ezUdWuhcjXYEh1WB3Bz4br8LK4kxoBQ9NlzBhY1tlR3XqBHDHB5lDE6+RK5vQXM8dtAlfy8isFYW5eAveLM/FhfbAnI05OVkt9QWrkAsqPJbj6pHPYfb/vx8IHm9Nbi506el4tTGwn1IVTmuutfvPWJWWqiCcOXmk9kfREamyweCgGkpVwFRmUNVNNvS3PGgfmtrG3deJT4KTwcswM7BmSqQZm4QJmxJsMPjQNjCMBsP8a0ekqpR/aFWKCpeP7mJ1W5kVpckpauj2vKqUbsE5ohbenus0ecBUuAXmfzoO/wXH8pfiuVUIm0MKClY2JERnQH66B903xrAqz4oapGJ4oBfhv9vOoobqy1Ju4ASHUXdIkLDpwxvN+wPVSPhiVe7q1TCqdI5hVMjTWsUx2jE9aCJN+PqHacfRpEKjKbTMuAJvrV4HDKm3vJwKtc3CwPLGdcH/d00dz2jF+oJyNCywwKzeO0sbn8f6m1/7zzixshGiQiUpCUjNKMcjyzORka5Tz5Mk6G1LYXL14GT7VVy3lyFv8gbausfDNkxTYaTDhKp2QljZTEmQsAljqEGLf4jiwuUiE/J8Tvyh6WMVIrNNECsFW7BNm7cZX4DtRuCjUNk8x8SsOb8aT5XVYE3+ApjVsEiHEXzW51XL5xpGLcWbqzahOnkYl4e88GAIp4+/j9+MaqfGy+DsP4L3giW6PseKFUaL2n8WVq1cA8+Z0/h7lB+6xFACe70ZBoxjbFIHjHgwMHALSZXpcGlnjnQmLH94MfLghTfFiIolRji7gk8IXRGyMyfgcU69S7GymZJ4YROsPJCpXsDr1uH6oCPCsCgbaaEPchhX4q2VVTC5L+AUrHjx0Z+joe88PvTPwcwmGy/UbfRP9LZ2HUVryZPYlnoJH14BdtdFXj9wvC+x58SXwWVa+OkwPhq6engC3sJNeEV7l/R5cdXrBZIyoVPNWGQ0wRRpt3QP+uBw9M1YVobCSvVwm1XFWZYH/eQwvjzfCadxCexllVifegVn2p1wF2epnvTiUv/8R8lISrxPCiVW2Jzdj7Wh2xYrFk324sO2GZfEFe5Uw6gCdUNVIhfN2L6sHhXeTrzz6VE0jWZj/bINeK5kJV5L185QGSNeN+N1teLx5reD91RYlA/jWNtxtKkACTiHl4+c89+qG6zH22qoFDhepEZPrXuH4JzNweYmno2KumRkFxuR5LmKtq7LcKqsx0gXHONW1FdaUFsxDGeGDr7RG7g02y6MlXi0NheZwbu+0Wu4ItL2+PDQt0qsGxFO+7tQn/z24KzfX/+rbYKtoZbgfJJmwm6fdb0Uh+Oej3HsVOs9b0vfv80NtqjsN/FqOSKKCYYNEYlg2BCRCIYNEYlg2BCRCIYNEYlg2BCRiLgLm8zkxLqEO55J9UVyAl5NG6+i2Rdx18vW7PxYN4GCpPrCkJU5/0okIpp9EXdhs33JI7FuAgVJ9UVZiVnkODS/aPZF3H02am1RJSZi3YgEpk/VwWrIw86lNqw2LxY5pjnfhIdrlqC7tx/ukTFM+Hwix6WAlORkVdFkYPHCIhSYcqJ3nKjtOUrCP6tDDw7tSR7NJzrFXtwNo4jowcSwISIRP7hh1Fy/5oCI4hcrGyISwbAhIhEMGyISwbAhIhEMGyISwbAhIhFx99cViOjBxMqGiEQwbIhIBMOGiEQwbIhIBMOGiEQwbIhIBMOGiEQwbIhIBMOGiEQwbIhIBMOGiEQwbIhIxP8A1EN7H/TweYkAAAAASUVORK5CYII=\">鬼地方个电饭锅地方刚发的刚发的刚发的刚发的刚发的刚发的刚发的刚发的工单个地方好地方和梵蒂冈花费更多沪电股份和梵蒂冈发给黑寡妇黑寡妇黑寡妇和规范化规范黑寡妇很反感很反感很反感黑寡妇规范化<\/p>","goodsName":"喂喂喂喂干","goodsNumber":100001,"goodsPriceStores":[{"attributeIds":null,"attributes":"0.5kg_1,灰白色_3,2G_4,3G_4","goodsCode":"05465161","price":214.12,"sellerNumber":"164654","storeAmount":32},{"attributeIds":null,"attributes":"2.0kg_1,绿色_3,银色_3,4G_4","goodsCode":"88448465","price":54.12,"sellerNumber":"5548815","storeAmount":22}],"goodsStatus":"ENABLE","id":1,"images":[{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/15/rBKx51kuWf6AfG61AACtIGv8FOc221.png","fileId":1297,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/15/rBKx51kuWf6AfG61AACtIGv8FOc221.png"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/15/rBKx51kuWf-ARjofAACtIGv8FOc152.png","fileId":1298,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/15/rBKx51kuWf-ARjofAACtIGv8FOc152.png"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/16/rBKx51kuWgGADiNYAAFe1p-qeiY130.png","fileId":1299,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/16/rBKx51kuWgGADiNYAAFe1p-qeiY130.png"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/16/rBKx51kvvZKAEsfEAAQodgauSzo136.png","fileId":1336,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/16/rBKx51kvvZKAEsfEAAQodgauSzo136.png"}],"limitBuyAmount":0,"minPrice":15,"publishTime":"2017-08-28 09:38","publishWay":"FixedTime","published":false,"salesVolume":1000,"sellerId":2,"sellerNumber":null,"services":[{"id":240,"name":"7天退换","remark":"商家承诺7天无理由退换货"},{"id":242,"name":"世外自营","remark":"世外生活负责发货并提供售后服务"}],"shopName":"田野旗舰店","specifications":[{"attributes":[{"id":1,"selected":false,"value":"0.5kg"},{"id":3,"selected":false,"value":"2.0kg"}],"id":1,"name":"重量"},{"attributes":[{"id":15,"selected":false,"value":"灰白色"},{"id":24,"selected":false,"value":"绿色"}],"id":3,"name":"颜色"},{"attributes":[{"id":27,"selected":false,"value":"2G"}],"id":4,"name":"内存大小"},{"attributes":[{"id":18,"selected":false,"value":"银色"}],"id":3,"name":"颜色"},{"attributes":[{"id":43,"selected":false,"value":"3G"},{"id":28,"selected":false,"value":"4G"}],"id":4,"name":"内存大小"}],"stock":4001,"transportMoney":0}
+     * data : {"categoryFullName":"水果蔬菜","categoryId":2,"cityName":"通州","feature":"打发我个","goodsCode":null,"goodsDetail":"<p>dsfwgwergrw<\/p>\n\n<p>&nbsp;<\/p>\n\n<p>rgrg<\/p>\n\n<p>&nbsp;<\/p>\n\n<p>rgrg<\/p>\n\n<p><img alt=\"\" height=\"91\" src=\"http://resource.shiwaixiangcun.cn/group1/M00/00/56/rBKx51m2Q2-AcXT_AAA2Ynb5NIs251.jpg\" width=\"121\" /><\/p>\n","goodsName":"芒果01（有运费）","goodsNumber":100004,"goodsPriceStores":[{"attributeIds":null,"attributes":"1kg_1","goodsCode":null,"price":0.01,"sellerNumber":null,"storeAmount":9}],"goodsStatus":"ENABLE","id":109,"images":[{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/56/rBKx51m2Q0WATSGoAAAyxNR9tng611.jpg","fileId":4427,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/56/rBKx51m2Q0WATSGoAAAyxNR9tng611.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/56/rBKx51m2Q0eAV8mqAAA76G3dmhA833.jpg","fileId":4428,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/56/rBKx51m2Q0eAV8mqAAA76G3dmhA833.jpg"}],"limitBuyAmount":3,"minPrice":0.01,"publishTime":null,"publishWay":"Now","published":true,"salesVolume":0,"sellerId":1070,"sellerNumber":null,"services":[{"id":240,"name":"7天退换","remark":"商家承诺7天无理由退换货"},{"id":241,"name":"48小时快速退款","remark":"收到退货包裹并确认无误后，将在48小时内办理退款，退款将原路返回，不同银行处理时间不同，预计1-5个工作日到账"},{"id":242,"name":"世外自营","remark":"世外生活负责发货并提供售后服务"},{"id":243,"name":"货到付款","remark":"支持送货上门后再收款，支持现金、微信等方式"}],"shopName":"helin旗舰店","specifications":[{"attributes":[{"id":36,"selected":false,"value":"1kg"}],"id":1,"name":"重量"}],"stock":12,"transportMoney":23.3}
      * message : 操作成功
      * responseCode : 1001
      * success : true
@@ -19,6 +18,9 @@ public class GoodDetail {
     private String message;
     private int responseCode;
     private boolean success;
+
+    public GoodDetail() {
+    }
 
     public DataBean getData() {
         return data;
@@ -54,54 +56,65 @@ public class GoodDetail {
 
     public static class DataBean {
         /**
-         * categoryFullName : 水果蔬菜-水果1-苹果
-         * categoryId : 4
-         * cityName : 朝阳
-         * feature : 大哥发伟哥伟哥伟哥
+         * categoryFullName : 水果蔬菜
+         * categoryId : 2
+         * cityName : 通州
+         * feature : 打发我个
          * goodsCode : null
-         * goodsDetail : <p>但是但是但是是<img src="data:image/png;base64,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">鬼地方个电饭锅地方刚发的刚发的刚发的刚发的刚发的刚发的刚发的刚发的工单个地方好地方和梵蒂冈花费更多沪电股份和梵蒂冈发给黑寡妇黑寡妇黑寡妇和规范化规范黑寡妇很反感很反感很反感黑寡妇规范化</p>
-         * goodsName : 喂喂喂喂干
-         * goodsNumber : 100001
-         * goodsPriceStores : [{"attributeIds":null,"attributes":"0.5kg_1,灰白色_3,2G_4,3G_4","goodsCode":"05465161","price":214.12,"sellerNumber":"164654","storeAmount":32},{"attributeIds":null,"attributes":"2.0kg_1,绿色_3,银色_3,4G_4","goodsCode":"88448465","price":54.12,"sellerNumber":"5548815","storeAmount":22}]
+         * goodsDetail : <p>dsfwgwergrw</p>
+
+         <p>&nbsp;</p>
+
+         <p>rgrg</p>
+
+         <p>&nbsp;</p>
+
+         <p>rgrg</p>
+
+         <p><img alt="" height="91" src="http://resource.shiwaixiangcun.cn/group1/M00/00/56/rBKx51m2Q2-AcXT_AAA2Ynb5NIs251.jpg" width="121" /></p>
+
+         * goodsName : 芒果01（有运费）
+         * goodsNumber : 100004
+         * goodsPriceStores : [{"attributeIds":null,"attributes":"1kg_1","goodsCode":null,"price":0.01,"sellerNumber":null,"storeAmount":9}]
          * goodsStatus : ENABLE
-         * id : 1
-         * images : [{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/15/rBKx51kuWf6AfG61AACtIGv8FOc221.png","fileId":1297,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/15/rBKx51kuWf6AfG61AACtIGv8FOc221.png"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/15/rBKx51kuWf-ARjofAACtIGv8FOc152.png","fileId":1298,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/15/rBKx51kuWf-ARjofAACtIGv8FOc152.png"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/16/rBKx51kuWgGADiNYAAFe1p-qeiY130.png","fileId":1299,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/16/rBKx51kuWgGADiNYAAFe1p-qeiY130.png"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/16/rBKx51kvvZKAEsfEAAQodgauSzo136.png","fileId":1336,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/16/rBKx51kvvZKAEsfEAAQodgauSzo136.png"}]
-         * limitBuyAmount : 0
-         * minPrice : 15
-         * publishTime : 2017-08-28 09:38
-         * publishWay : FixedTime
-         * published : false
-         * salesVolume : 1000
-         * sellerId : 2
+         * id : 109
+         * images : [{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/56/rBKx51m2Q0WATSGoAAAyxNR9tng611.jpg","fileId":4427,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/56/rBKx51m2Q0WATSGoAAAyxNR9tng611.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/56/rBKx51m2Q0eAV8mqAAA76G3dmhA833.jpg","fileId":4428,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/56/rBKx51m2Q0eAV8mqAAA76G3dmhA833.jpg"}]
+         * limitBuyAmount : 3
+         * minPrice : 0.01
+         * publishTime : null
+         * publishWay : Now
+         * published : true
+         * salesVolume : 0
+         * sellerId : 1070
          * sellerNumber : null
-         * services : [{"id":240,"name":"7天退换","remark":"商家承诺7天无理由退换货"},{"id":242,"name":"世外自营","remark":"世外生活负责发货并提供售后服务"}]
-         * shopName : 田野旗舰店
-         * specifications : [{"attributes":[{"id":1,"selected":false,"value":"0.5kg"},{"id":3,"selected":false,"value":"2.0kg"}],"id":1,"name":"重量"},{"attributes":[{"id":15,"selected":false,"value":"灰白色"},{"id":24,"selected":false,"value":"绿色"}],"id":3,"name":"颜色"},{"attributes":[{"id":27,"selected":false,"value":"2G"}],"id":4,"name":"内存大小"},{"attributes":[{"id":18,"selected":false,"value":"银色"}],"id":3,"name":"颜色"},{"attributes":[{"id":43,"selected":false,"value":"3G"},{"id":28,"selected":false,"value":"4G"}],"id":4,"name":"内存大小"}]
-         * stock : 4001
-         * transportMoney : 0
+         * services : [{"id":240,"name":"7天退换","remark":"商家承诺7天无理由退换货"},{"id":241,"name":"48小时快速退款","remark":"收到退货包裹并确认无误后，将在48小时内办理退款，退款将原路返回，不同银行处理时间不同，预计1-5个工作日到账"},{"id":242,"name":"世外自营","remark":"世外生活负责发货并提供售后服务"},{"id":243,"name":"货到付款","remark":"支持送货上门后再收款，支持现金、微信等方式"}]
+         * shopName : helin旗舰店
+         * specifications : [{"attributes":[{"id":36,"selected":false,"value":"1kg"}],"id":1,"name":"重量"}]
+         * stock : 12
+         * transportMoney : 23.3
          */
 
         private String categoryFullName;
         private int categoryId;
         private String cityName;
         private String feature;
-        private Object goodsCode;
+        private String goodsCode;
         private String goodsDetail;
         private String goodsName;
         private int goodsNumber;
         private String goodsStatus;
         private int id;
         private int limitBuyAmount;
-        private int minPrice;
+        private double minPrice;
         private String publishTime;
         private String publishWay;
         private boolean published;
         private int salesVolume;
         private int sellerId;
-        private Object sellerNumber;
+        private String sellerNumber;
         private String shopName;
         private int stock;
-        private int transportMoney;
+        private double transportMoney;
         private List<GoodsPriceStoresBean> goodsPriceStores;
         private List<ImagesBean> images;
         private List<ServicesBean> services;
@@ -139,11 +152,11 @@ public class GoodDetail {
             this.feature = feature;
         }
 
-        public Object getGoodsCode() {
+        public String getGoodsCode() {
             return goodsCode;
         }
 
-        public void setGoodsCode(Object goodsCode) {
+        public void setGoodsCode(String goodsCode) {
             this.goodsCode = goodsCode;
         }
 
@@ -195,11 +208,11 @@ public class GoodDetail {
             this.limitBuyAmount = limitBuyAmount;
         }
 
-        public int getMinPrice() {
+        public double getMinPrice() {
             return minPrice;
         }
 
-        public void setMinPrice(int minPrice) {
+        public void setMinPrice(double minPrice) {
             this.minPrice = minPrice;
         }
 
@@ -243,11 +256,11 @@ public class GoodDetail {
             this.sellerId = sellerId;
         }
 
-        public Object getSellerNumber() {
+        public String getSellerNumber() {
             return sellerNumber;
         }
 
-        public void setSellerNumber(Object sellerNumber) {
+        public void setSellerNumber(String sellerNumber) {
             this.sellerNumber = sellerNumber;
         }
 
@@ -267,11 +280,11 @@ public class GoodDetail {
             this.stock = stock;
         }
 
-        public int getTransportMoney() {
+        public double getTransportMoney() {
             return transportMoney;
         }
 
-        public void setTransportMoney(int transportMoney) {
+        public void setTransportMoney(double transportMoney) {
             this.transportMoney = transportMoney;
         }
 
@@ -310,25 +323,25 @@ public class GoodDetail {
         public static class GoodsPriceStoresBean {
             /**
              * attributeIds : null
-             * attributes : 0.5kg_1,灰白色_3,2G_4,3G_4
-             * goodsCode : 05465161
-             * price : 214.12
-             * sellerNumber : 164654
-             * storeAmount : 32
+             * attributes : 1kg_1
+             * goodsCode : null
+             * price : 0.01
+             * sellerNumber : null
+             * storeAmount : 9
              */
 
-            private Object attributeIds;
+            private String attributeIds;
             private String attributes;
             private String goodsCode;
             private double price;
             private String sellerNumber;
             private int storeAmount;
 
-            public Object getAttributeIds() {
+            public String getAttributeIds() {
                 return attributeIds;
             }
 
-            public void setAttributeIds(Object attributeIds) {
+            public void setAttributeIds(String attributeIds) {
                 this.attributeIds = attributeIds;
             }
 
@@ -375,9 +388,9 @@ public class GoodDetail {
 
         public static class ImagesBean {
             /**
-             * accessUrl : http://resource.shiwaixiangcun.cn/group1/M00/00/15/rBKx51kuWf6AfG61AACtIGv8FOc221.png
-             * fileId : 1297
-             * thumbImageURL : http://resource.shiwaixiangcun.cn/group1/M00/00/15/rBKx51kuWf6AfG61AACtIGv8FOc221.png
+             * accessUrl : http://resource.shiwaixiangcun.cn/group1/M00/00/56/rBKx51m2Q0WATSGoAAAyxNR9tng611.jpg
+             * fileId : 4427
+             * thumbImageURL : http://resource.shiwaixiangcun.cn/group1/M00/00/56/rBKx51m2Q0WATSGoAAAyxNR9tng611.jpg
              */
 
             private String accessUrl;
@@ -447,7 +460,7 @@ public class GoodDetail {
 
         public static class SpecificationsBean {
             /**
-             * attributes : [{"id":1,"selected":false,"value":"0.5kg"},{"id":3,"selected":false,"value":"2.0kg"}]
+             * attributes : [{"id":36,"selected":false,"value":"1kg"}]
              * id : 1
              * name : 重量
              */
@@ -482,9 +495,9 @@ public class GoodDetail {
 
             public static class AttributesBean {
                 /**
-                 * id : 1
+                 * id : 36
                  * selected : false
-                 * value : 0.5kg
+                 * value : 1kg
                  */
 
                 private int id;

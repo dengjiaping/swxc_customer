@@ -48,4 +48,7 @@
     <color name="mall_price">#FF1717</color>
     <color name="mall_des">#F6A623</color>
     <color name="ui_background">#f8f8f8</color>
+    <color name="spec_list_item_unchecked">#ff2b2b2b</color>
+    <color name="spec_list_item_checked">#ffeb5858</color>
+    <color name="spec_list_item_disable">#ffbdbdbd</color>
 </resources>

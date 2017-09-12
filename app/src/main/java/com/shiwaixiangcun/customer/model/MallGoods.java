@@ -9,7 +9,7 @@ import java.util.List;
 public class MallGoods {
 
     /**
-     * data : {"elements":[{"feature":"耐穿又不贵","goodsId":70,"goodsName":"Lee","imagePath":"http://resource.shiwaixiangcun.cn/group1/M00/00/52/rBKx51muATWAc_X0AAES-j5ikmU911.jpg","minPrice":169,"subjectId":248},{"feature":null,"goodsId":72,"goodsName":"牛仔裤test01","imagePath":"http://resource.shiwaixiangcun.cn/group1/M00/00/54/rBKx51mvkNeATh1gAD-2MmYfpeg819.jpg","minPrice":12,"subjectId":248},{"feature":"346","goodsId":69,"goodsName":"343","imagePath":"http://resource.shiwaixiangcun.cn/group1/M00/00/52/rBKx51mn2eeAXFPlAAERCOllPFA639.png","minPrice":4,"subjectId":248},{"feature":"卖点","goodsId":65,"goodsName":"水果蔬菜-水果-苹果02","imagePath":"http://resource.shiwaixiangcun.cn/group1/M00/00/51/rBKx51mnb2SADRhjAAAUnqGei5c185.jpg","minPrice":2,"subjectId":248}],"page":1,"size":6,"totalAmount":4,"totalPages":1}
+     * data : {"elements":[{"feature":"得分王","goodsId":106,"goodsName":"服饰01","imagePath":"http://resource.shiwaixiangcun.cn/group1/M00/00/56/rBKx51m2P4mAaOdBADe7UTq8v-g118.jpg","minPrice":0.01,"subjectId":248},{"feature":"打发我个","goodsId":109,"goodsName":"芒果01（有运费）","imagePath":"http://resource.shiwaixiangcun.cn/group1/M00/00/56/rBKx51m2Q0WATSGoAAAyxNR9tng611.jpg","minPrice":0.01,"subjectId":248},{"feature":"dfhrgjs","goodsId":107,"goodsName":"零食01（限购3）","imagePath":"http://resource.shiwaixiangcun.cn/group1/M00/00/56/rBKx51m2QL6AP1HmAADN4JNFDVo636.jpg","minPrice":0.01,"subjectId":248}],"page":1,"size":6,"totalAmount":3,"totalPages":1}
      * message : 操作成功
      * responseCode : 1001
      * success : true
@@ -54,10 +54,10 @@ public class MallGoods {
 
     public static class DataBean {
         /**
-         * elements : [{"feature":"耐穿又不贵","goodsId":70,"goodsName":"Lee","imagePath":"http://resource.shiwaixiangcun.cn/group1/M00/00/52/rBKx51muATWAc_X0AAES-j5ikmU911.jpg","minPrice":169,"subjectId":248},{"feature":null,"goodsId":72,"goodsName":"牛仔裤test01","imagePath":"http://resource.shiwaixiangcun.cn/group1/M00/00/54/rBKx51mvkNeATh1gAD-2MmYfpeg819.jpg","minPrice":12,"subjectId":248},{"feature":"346","goodsId":69,"goodsName":"343","imagePath":"http://resource.shiwaixiangcun.cn/group1/M00/00/52/rBKx51mn2eeAXFPlAAERCOllPFA639.png","minPrice":4,"subjectId":248},{"feature":"卖点","goodsId":65,"goodsName":"水果蔬菜-水果-苹果02","imagePath":"http://resource.shiwaixiangcun.cn/group1/M00/00/51/rBKx51mnb2SADRhjAAAUnqGei5c185.jpg","minPrice":2,"subjectId":248}]
+         * elements : [{"feature":"得分王","goodsId":106,"goodsName":"服饰01","imagePath":"http://resource.shiwaixiangcun.cn/group1/M00/00/56/rBKx51m2P4mAaOdBADe7UTq8v-g118.jpg","minPrice":0.01,"subjectId":248},{"feature":"打发我个","goodsId":109,"goodsName":"芒果01（有运费）","imagePath":"http://resource.shiwaixiangcun.cn/group1/M00/00/56/rBKx51m2Q0WATSGoAAAyxNR9tng611.jpg","minPrice":0.01,"subjectId":248},{"feature":"dfhrgjs","goodsId":107,"goodsName":"零食01（限购3）","imagePath":"http://resource.shiwaixiangcun.cn/group1/M00/00/56/rBKx51m2QL6AP1HmAADN4JNFDVo636.jpg","minPrice":0.01,"subjectId":248}]
          * page : 1
          * size : 6
-         * totalAmount : 4
+         * totalAmount : 3
          * totalPages : 1
          */
 
@@ -107,8 +107,70 @@ public class MallGoods {
             this.elements = elements;
         }
 
-        public static class ElementsBean extends GoodBean {
+        public static class ElementsBean {
+            /**
+             * feature : 得分王
+             * goodsId : 106
+             * goodsName : 服饰01
+             * imagePath : http://resource.shiwaixiangcun.cn/group1/M00/00/56/rBKx51m2P4mAaOdBADe7UTq8v-g118.jpg
+             * minPrice : 0.01
+             * subjectId : 248
+             */
 
+            private String feature;
+            private int goodsId;
+            private String goodsName;
+            private String imagePath;
+            private double minPrice;
+            private int subjectId;
+
+            public String getFeature() {
+                return feature;
+            }
+
+            public void setFeature(String feature) {
+                this.feature = feature;
+            }
+
+            public int getGoodsId() {
+                return goodsId;
+            }
+
+            public void setGoodsId(int goodsId) {
+                this.goodsId = goodsId;
+            }
+
+            public String getGoodsName() {
+                return goodsName;
+            }
+
+            public void setGoodsName(String goodsName) {
+                this.goodsName = goodsName;
+            }
+
+            public String getImagePath() {
+                return imagePath;
+            }
+
+            public void setImagePath(String imagePath) {
+                this.imagePath = imagePath;
+            }
+
+            public double getMinPrice() {
+                return minPrice;
+            }
+
+            public void setMinPrice(double minPrice) {
+                this.minPrice = minPrice;
+            }
+
+            public int getSubjectId() {
+                return subjectId;
+            }
+
+            public void setSubjectId(int subjectId) {
+                this.subjectId = subjectId;
+            }
         }
     }
 }

@@ -42,4 +42,11 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
+
+    <style name="mypopwindow_anim_style">
+        <item name="android:windowEnterAnimation">@anim/dia_from</item>
+        <item name="android:windowExitAnimation">@anim/dia_out</item>
+    </style>
+
+
 </resources>

@@ -3,7 +3,9 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_gravity="center_vertical"
+              android:layout_marginBottom="4dp"
               android:layout_marginLeft="16dp"
+              android:layout_marginTop="4dp"
               android:gravity="center_vertical"
               android:orientation="horizontal">
 
@@ -17,6 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="4dp"
+        android:gravity="center_vertical"
         android:text="七天退换"
         android:textColor="#FF2D3230"
         android:textSize="14sp"/>

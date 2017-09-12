@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -62,17 +63,20 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
     TextView mTvPriceFare;
     @BindView(R.id.tv_amount)
     TextView mTvAmount;
-
     @BindView(R.id.llayout_service)
     LinearLayout mLlayoutService;
     @BindView(R.id.textView4)
     TextView mTextView4;
     @BindView(R.id.tv_categoty)
-    TextView mTvCategoty;
+    TextView mTvCategory;
     @BindView(R.id.iv_arrow)
     ImageView mIvArrow;
     @BindView(R.id.rl_choice)
     RelativeLayout mRlChoice;
+    @BindView(R.id.taglayout)
+    TagFlowLayout mTaglayout;
+    @BindView(R.id.btn_purchase)
+    Button mBtnPurchase;
 
 
     List<String> services = new ArrayList<>();
@@ -85,9 +89,9 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
     List<GoodDetail.DataBean.ServicesBean> mListServices = new ArrayList<>();
     //商品的SKU
     List<GoodDetail.DataBean.SpecificationsBean> mListSpecifications = new ArrayList<>();
-    @BindView(R.id.taglayout)
-    TagFlowLayout mTaglayout;
 
+
+    private int mGoodId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,26 +115,27 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
         //更新界面
         mTvTitle.setText(goodBean.getGoodsName());
         mTvDesc.setText(goodBean.getFeature());
-//        mTvPriceFare.setText(goodBean.getMinPrice());
+        mTvPrice.setText("¥ " + goodBean.getMinPrice());
+        mTvPriceFare.setText("¥ " + goodBean.getTransportMoney());
+        mTvAmount.setText(goodBean.getSellerNumber() + "");
         //获取List
         mListImage = goodBean.getImages();
         mListServices = goodBean.getServices();
         mListGoodsStores = goodBean.getGoodsPriceStores();
         mListSpecifications = goodBean.getSpecifications();
 
+        images.clear();
+        services.clear();
         for (int i = 0, size = mListImage.size(); i < size; i++) {
             String url = mListImage.get(i).getAccessUrl();
             images.add(url);
-
         }
-        Log.e(BUG_TAG, "图片数目" + images.size());
         mBannerDetails.setImages(images).setImageLoader(new GlideImageLoader()).setDelayTime(3000).start();
 
         for (int i = 0, size = mListServices.size(); i < size; i++) {
             String service = mListServices.get(i).getName();
             services.add(service);
         }
-
         //添加支持的服务到布局
         mTaglayout.setAdapter(new TagAdapter<String>(services) {
             @Override
@@ -146,17 +151,18 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
 
     private void iniData() {
 
+        Bundle bundle = getIntent().getExtras();
+        mGoodId = bundle.getInt("goodId");
+        Log.e(BUG_TAG, mGoodId + "");
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("id", 108);
+        hashMap.put("id", mGoodId);
         HttpRequest.get("http://mk.shiwaixiangcun.cn/mi/goods/detail.json", hashMap, new HttpCallBack() {
             @Override
             public void onSuccess(String responseJson) {
                 GoodDetail goodDetail = JsonUtil.fromJson(responseJson, GoodDetail.class);
-
                 if (null == goodDetail) {
                     return;
                 }
-
                 if (1001 == goodDetail.getResponseCode()) {
                     GoodDetail.DataBean data = goodDetail.getData();
                     EventBus.getDefault().postSticky(data);
@@ -173,10 +179,20 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
      * 初始化点击事件
      */
     private void iniEvent() {
+        mTaglayout.setClickable(false);
         mBackLeft.setOnClickListener(this);
-        mLlayoutService.setOnClickListener(this);
+        mLlayoutService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogSupport dialogSupport = new DialogSupport(mContext);
+                dialogSupport.show();
+                dialogSupport.setData(mListServices);
+
+            }
+        });
         mIvShareRight.setOnClickListener(this);
         mRlChoice.setOnClickListener(this);
+        mBtnPurchase.setOnClickListener(this);
     }
 
     /**
@@ -185,8 +201,8 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
 
     private void initView() {
         mIvShareRight.setVisibility(View.VISIBLE);
-        mBannerDetails.setBannerStyle(BannerConfig.NUM_INDICATOR);
-
+        mBannerDetails.setBannerStyle(BannerConfig.NOT_INDICATOR);
+        mTvPageName.setText("商品详情");
 
     }
 
@@ -194,24 +210,19 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_share_right:
+                finish();
                 break;
             case R.id.back_left:
                 finish();
                 break;
-            case R.id.llayout_service:
-                // TODO: 2017/9/11  显示服务对话框
-                Log.e(BUG_TAG, "创建对话框");
-                DialogSupport dialogSupport = new DialogSupport(mContext, R.style.AlertDialogStyle);
-                dialogSupport.show();
-                dialogSupport.setData(mListServices);
-
-
-                break;
             case R.id.rl_choice:
                 // TODO: 2017/9/11  显示商品选择对话框
                 Log.e(BUG_TAG, "创建对话框");
-                DialogSku dialogSku = new DialogSku(mContext, R.style.AlertDialogStyle);
+                DialogSku dialogSku = new DialogSku(mContext, R.style.AlertDialogStyle, mGoodId);
                 dialogSku.show();
+                break;
+            case R.id.btn_purchase:
+                readyGo(ConfirmOrderActivity.class);
                 break;
         }
     }

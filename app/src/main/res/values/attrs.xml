@@ -32,12 +32,13 @@
         <attr name="npv_AlternativeTextArrayWithoutMeasureHint" format="reference" />
         <attr name="npv_AlternativeHint" format="reference|string" />
     </declare-styleable>
-
-
-
-
-
-
+    <declare-styleable name="AutoLabel">
+        <attr name="lineSpacing" format="dimension"/>
+        <attr name="tagSpacing" format="dimension"/>
+        <!-- 是否是固定布局 -->
+        <attr name="isFixed" format="boolean"/>
+        <attr name="columnSize" format="integer"/>
+    </declare-styleable>
 
 
 </resources>

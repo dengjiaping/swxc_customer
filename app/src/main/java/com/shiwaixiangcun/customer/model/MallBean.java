@@ -111,7 +111,7 @@ public class MallBean {
             private int goodsId;
             private String goodsName;
             private String imagePath;
-            private int minPrice;
+            private double minPrice;
             private int subjectId;
 
             public String getFeature() {
@@ -146,7 +146,7 @@ public class MallBean {
                 this.imagePath = imagePath;
             }
 
-            public int getMinPrice() {
+            public double getMinPrice() {
                 return minPrice;
             }
 
@@ -177,7 +177,7 @@ public class MallBean {
             private int goodsId;
             private String goodsName;
             private String imagePath;
-            private int minPrice;
+            private double minPrice;
             private int subjectId;
 
             public String getFeature() {
@@ -212,7 +212,7 @@ public class MallBean {
                 this.imagePath = imagePath;
             }
 
-            public int getMinPrice() {
+            public double getMinPrice() {
                 return minPrice;
             }
 
