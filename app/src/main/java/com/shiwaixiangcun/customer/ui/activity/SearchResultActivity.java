@@ -1,10 +1,7 @@
 package com.shiwaixiangcun.customer.ui.activity;
 
 import android.content.Context;
-<<<<<<< HEAD
 import android.content.Intent;
-=======
->>>>>>> b26c82462d30abecb9d6dc868773dd8c0ac3a59d
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -19,10 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
-
->>>>>>> b26c82462d30abecb9d6dc868773dd8c0ac3a59d
 import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterSearchResult;
