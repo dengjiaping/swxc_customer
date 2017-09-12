@@ -16,7 +16,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
+
 import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterSearchResult;
@@ -89,6 +91,7 @@ public class SearchResultActivity extends BaseActivity implements View.OnClickLi
         mAdapter = new AdapterSearchResult(mList);
         mRvSearchResult.setAdapter(mAdapter);
         mRvSearchResult.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.VERTICAL));
+
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -97,6 +100,7 @@ public class SearchResultActivity extends BaseActivity implements View.OnClickLi
                 startActivity(intent);
             }
         });
+
     }
 
     @Override
@@ -104,7 +108,9 @@ public class SearchResultActivity extends BaseActivity implements View.OnClickLi
         switch (view.getId()) {
             case R.id.back_left:
                 finish();
+
                 break;
+
         }
     }
 
