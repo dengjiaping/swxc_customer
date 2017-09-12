@@ -1,7 +1,10 @@
 package com.shiwaixiangcun.customer.ui.activity;
 
 import android.content.Context;
+<<<<<<< HEAD
 import android.content.Intent;
+=======
+>>>>>>> b26c82462d30abecb9d6dc868773dd8c0ac3a59d
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -16,9 +19,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+<<<<<<< HEAD
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
+=======
+>>>>>>> b26c82462d30abecb9d6dc868773dd8c0ac3a59d
 import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterSearchResult;
@@ -91,6 +97,7 @@ public class SearchResultActivity extends BaseActivity implements View.OnClickLi
         mAdapter = new AdapterSearchResult(mList);
         mRvSearchResult.setAdapter(mAdapter);
         mRvSearchResult.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.VERTICAL));
+<<<<<<< HEAD
 
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -101,6 +108,8 @@ public class SearchResultActivity extends BaseActivity implements View.OnClickLi
             }
         });
 
+=======
+>>>>>>> b26c82462d30abecb9d6dc868773dd8c0ac3a59d
     }
 
     @Override
@@ -108,9 +117,12 @@ public class SearchResultActivity extends BaseActivity implements View.OnClickLi
         switch (view.getId()) {
             case R.id.back_left:
                 finish();
+<<<<<<< HEAD
 
                 break;
 
+=======
+>>>>>>> b26c82462d30abecb9d6dc868773dd8c0ac3a59d
         }
     }
 

@@ -359,6 +359,7 @@
             android:name=".ui.activity.SearchResultActivity"
             android:screenOrientation="portrait">
 
+
         </activity>
 
         <activity
@@ -366,6 +367,7 @@
             android:screenOrientation="portrait">
         </activity>
         <activity android:name=".ui.activity.ConfirmOrderActivity">
+
         </activity>
     </application>
 
