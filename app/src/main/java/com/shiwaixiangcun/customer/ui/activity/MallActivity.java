@@ -286,18 +286,4 @@ public class MallActivity extends BaseActivity implements View.OnClickListener {
 //        hotAndNewAdapter.addData(data.get)
     }
 
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.back_left:
-
-
-                //// TODO: 2017/9/11  点击跳转修改
-                readyGo(ConfirmOrderActivity.class);
-//                readyGo(MallCategoryActivity.class);
-
-                break;
-        }
-    }
 }
