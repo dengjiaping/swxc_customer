@@ -1,4 +1,4 @@
-package com.shiwaixiangcun.customer;
+package com.shiwaixiangcun.customer.app;
 
 import android.app.Application;
 import android.content.Context;
@@ -16,6 +16,18 @@ public class App extends Application {
     private static Context mContext;
     private static App instance;
 
+    public static App getInstance() {
+        return instance;
+    }
+
+    /**
+     * 获取上下文
+     *
+     * @return Context
+     */
+    public static Context getContext() {
+        return mContext;
+    }
 
     @Override
     public void onCreate() {
@@ -51,22 +63,6 @@ public class App extends Application {
         StatService.setAppChannel(this, "RepleceWithYourChannel", true);
         StatService.setOn(this, StatService.JAVA_EXCEPTION_LOG);
 
-    }
-
-
-
-
-    public static App getInstance() {
-        return instance;
-    }
-
-    /**
-     * 获取上下文
-     *
-     * @return Context
-     */
-    public static Context getContext() {
-        return mContext;
     }
 
 

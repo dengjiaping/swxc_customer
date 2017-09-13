@@ -71,7 +71,7 @@
                 android:layout_marginRight="8dp"
                 android:layout_weight="1"
                 android:background="@drawable/selector_button_red"
-                android:text="确 定"
+                android:text="立即购买"
                 android:textColor="@color/white"/>
         </LinearLayout>
     </RelativeLayout>

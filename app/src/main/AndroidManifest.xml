@@ -46,7 +46,7 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
 
     <application
-        android:name=".App"
+        android:name=".app.App"
         android:allowBackup="true"
         android:icon="@mipmap/start_page"
         android:label="@string/app_name"
@@ -348,8 +348,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-
-
         </activity>
         <activity
             android:name=".ui.activity.MallCategoryActivity"
@@ -358,16 +356,20 @@
         <activity
             android:name=".ui.activity.SearchResultActivity"
             android:screenOrientation="portrait">
-
-
         </activity>
-
         <activity
             android:name=".ui.activity.GoodDetailActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity android:name=".ui.activity.ConfirmOrderActivity">
-
+        </activity>
+        <activity android:name=".ui.activity.AddAddressActivity">
+        </activity>
+        <activity android:name=".ui.activity.EditAddressActivity">
+        </activity>
+        <activity android:name=".ui.activity.ChooseAddressActivity">
+        </activity>
+        <activity android:name=".ui.activity.ManageAddressActivity">
         </activity>
     </application>
 

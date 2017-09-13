@@ -1,4 +1,4 @@
-package com.shiwaixiangcun.customer.widget;
+package com.shiwaixiangcun.customer.ui.dialog;
 
 import android.app.Dialog;
 import android.content.Context;

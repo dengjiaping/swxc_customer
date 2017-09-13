@@ -1,8 +1,9 @@
-package com.shiwaixiangcun.customer.widget;
+package com.shiwaixiangcun.customer.ui.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.StyleRes;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,17 +11,20 @@ import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.shiwaixiangcun.customer.R;
-import com.shiwaixiangcun.customer.adapter.AdapterAttr;
+import com.shiwaixiangcun.customer.adapter.AdapterSpecification;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
 import com.shiwaixiangcun.customer.model.GoodDetail;
+import com.shiwaixiangcun.customer.ui.activity.ConfirmOrderActivity;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 
 import java.util.ArrayList;
@@ -34,8 +38,9 @@ import butterknife.ButterKnife;
  * Created by Administrator on 2017/9/11.
  */
 
-public class DialogSku extends Dialog implements DialogInterface.OnCancelListener {
+public class DialogSku extends Dialog implements DialogInterface.OnCancelListener, View.OnClickListener {
 
+    private static String TAG = "skuDialog";
     @BindView(R.id.iv_cover_sku)
     ImageView mIvCoverSku;
     @BindView(R.id.tv_price_sku)
@@ -51,7 +56,7 @@ public class DialogSku extends Dialog implements DialogInterface.OnCancelListene
     @BindView(R.id.btn_confirm)
     Button mBtnConfirm;
     GoodDetail goodDetail;
-    AdapterAttr mAdapter;
+    AdapterSpecification mAdapter;
     private Context mContext;
     private int mGoodId;
     private HashMap<String, GoodDetail.DataBean.SpecificationsBean.AttributesBean> goodsInfoMap;
@@ -64,12 +69,29 @@ public class DialogSku extends Dialog implements DialogInterface.OnCancelListene
         initView();
     }
 
+
     public DialogSku(@NonNull Context context, @StyleRes int themeResId, int id) {
         super(context, themeResId);
         this.mContext = context;
         this.mGoodId = id;
         initView();
         loadData();
+        initEvent();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    private void initEvent() {
+        mBtnConfirm.setOnClickListener(this);
+        mTvCancel.setOnClickListener(this);
     }
 
     private void initView() {
@@ -78,13 +100,13 @@ public class DialogSku extends Dialog implements DialogInterface.OnCancelListene
         Window dialogWindow = getWindow();
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
         DisplayMetrics d = mContext.getResources().getDisplayMetrics(); // 获取屏幕宽、高用
-        lp.height = (int) (d.heightPixels * 0.8);
+        lp.height = (int) (d.heightPixels * 0.7);
         lp.gravity = Gravity.BOTTOM;
         dialogWindow.setAttributes(lp);
         setContentView(R.layout.layout_sku);
         ButterKnife.bind(this);
         mSpecificationList = new ArrayList<>();
-        mAdapter = new AdapterAttr(mContext);
+        mAdapter = new AdapterSpecification(mContext);
         mRvAttr.setLayoutManager(new LinearLayoutManager(mContext));
         mRvAttr.setAdapter(mAdapter);
     }
@@ -111,53 +133,40 @@ public class DialogSku extends Dialog implements DialogInterface.OnCancelListene
                 }
                 if (1001 == goodDetail.getResponseCode()) {
                     GoodDetail.DataBean data = goodDetail.getData();
-                    Log.d("SKU", data.getSpecifications().size() + "");
-                    fillData(data.getSpecifications());
+                    fillData(data);
                 }
             }
 
             @Override
             public void onFailed(Exception e) {
-                Log.e("SKU", "failed");
             }
         });
     }
 
-    private void fillData(List<GoodDetail.DataBean.SpecificationsBean> specifications) {
+    private void fillData(GoodDetail.DataBean data) {
+        List<GoodDetail.DataBean.SpecificationsBean> specifications = data.getSpecifications();
         mSpecificationList.addAll(specifications);
         mAdapter.addData(mSpecificationList);
         mAdapter.notifyDataSetChanged();
-//        mSpecList.removeAllViews();
-//        goodsInfoMap = new HashMap<>();
-//        LayoutInflater mInflater = getLayoutInflater();
-//        if (null != mSpecificationList && mSpecificationList.size() > 0) {
-//            for (int i = 0, size = mSpecificationList.size(); i < size; i++) {
-//
-//                GoodDetail.DataBean.SpecificationsBean specificationsBean = specifications.get(i);
-//                View specView = mInflater.inflate(R.layout.ui_spec_item, null);
-//                TextView spec_name = (TextView) specView.findViewById(R.id.spec_name);
-//                final TagFlowLayout spec_list = (TagFlowLayout) specView.findViewById(R.id.spec_list);
-//                spec_name.setText(specificationsBean.getName());
-//                final List<GoodDetail.DataBean.SpecificationsBean.AttributesBean> attributes = specificationsBean.getAttributes();
-//
-//                final List<String> attrNames = new ArrayList<>();
-//                for (GoodDetail.DataBean.SpecificationsBean.AttributesBean attributesBean : attributes) {
-//                    attrNames.add(attributesBean.getValue());
-//                }
-//                spec_list.setAdapter(new TagAdapter<String>(attrNames) {
-//                    @Override
-//                    public View getView(FlowLayout parent, int position, String s) {
-//                        View view = LayoutInflater.from(mContext).inflate(R.layout.tag_attrs, spec_list, false);
-//                        TextView textView = (TextView) view.findViewById(R.id.tv_support);
-//                        textView.setText(attrNames.get(position));
-//                        return view;
-//                    }
-//                });
-//                mSpecList.addView(specView);
-//
-//
-//            }
+        if (data.getImages() == null) {
+            return;
+        }
+        Glide.with(mContext).load(data.getImages().get(0).getAccessUrl()).into(mIvCoverSku);
     }
 
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv_cancel:
+                dismiss();
+                break;
+            case R.id.btn_confirm:
+                Intent intent = new Intent();
+                intent.setClass(mContext, ConfirmOrderActivity.class);
+                mContext.startActivity(intent);
+                dismiss();
+                break;
+        }
+    }
 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,10 +18,10 @@ import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
 import com.shiwaixiangcun.customer.model.GoodDetail;
+import com.shiwaixiangcun.customer.ui.dialog.DialogSku;
+import com.shiwaixiangcun.customer.ui.dialog.DialogSupport;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
-import com.shiwaixiangcun.customer.widget.DialogSku;
-import com.shiwaixiangcun.customer.widget.DialogSupport;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.loader.ImageLoader;
@@ -49,8 +50,7 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
     ChangeLightImageView mBackLeft;
     @BindView(R.id.tv_page_name)
     TextView mTvPageName;
-    @BindView(R.id.iv_share_right)
-    ImageView mIvShareRight;
+
     @BindView(R.id.banner_details)
     Banner mBannerDetails;
     @BindView(R.id.tv_title)
@@ -77,7 +77,10 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
     TagFlowLayout mTaglayout;
     @BindView(R.id.btn_purchase)
     Button mBtnPurchase;
-
+    @BindView(R.id.iv_share_right)
+    ImageView mIvShareRight;
+    @BindView(R.id.webview)
+    WebView mWebview;
 
     List<String> services = new ArrayList<>();
     List<String> images = new ArrayList<>();
@@ -90,6 +93,7 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
     //商品的SKU
     List<GoodDetail.DataBean.SpecificationsBean> mListSpecifications = new ArrayList<>();
 
+    DialogSku dialogSku;
 
     private int mGoodId;
 
@@ -146,6 +150,7 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
                 return view;
             }
         });
+        mWebview.loadUrl(goodBean.getGoodsDetail());
 
     }
 
@@ -202,12 +207,14 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
     private void initView() {
         mIvShareRight.setVisibility(View.VISIBLE);
         mBannerDetails.setBannerStyle(BannerConfig.NOT_INDICATOR);
+        dialogSku = new DialogSku(mContext, R.style.AlertDialogStyle, mGoodId);
         mTvPageName.setText("商品详情");
 
     }
 
     @Override
     public void onClick(View view) {
+
         switch (view.getId()) {
             case R.id.iv_share_right:
                 finish();
@@ -216,13 +223,10 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
                 finish();
                 break;
             case R.id.rl_choice:
-                // TODO: 2017/9/11  显示商品选择对话框
-                Log.e(BUG_TAG, "创建对话框");
-                DialogSku dialogSku = new DialogSku(mContext, R.style.AlertDialogStyle, mGoodId);
                 dialogSku.show();
                 break;
             case R.id.btn_purchase:
-                readyGo(ConfirmOrderActivity.class);
+                dialogSku.show();
                 break;
         }
     }

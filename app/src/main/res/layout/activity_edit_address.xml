@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray"
+    android:orientation="vertical"
+    tools:context="com.shiwaixiangcun.customer.ui.activity.EditAddressActivity">
+
+    <include layout="@layout/top_bar_white"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="@color/color_divider_0.1"/>
+
+    <LinearLayout
+        android:id="@+id/lLayout_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_white"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <EditText
+            android:id="@+id/edt_name"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@null"
+            android:text="世外乡村"
+            android:textColor="@color/black_text_100"
+            android:textColorHint="@color/black_text_40"
+            android:textSize="16sp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="@color/color_divider_0.1"/>
+
+        <EditText
+            android:id="@+id/edt_phone"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@null"
+            android:text="18782207050"
+            android:textColor="@color/black_text_100"
+            android:textColorHint="@color/black_text_40"
+            android:textSize="16sp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="@color/color_divider_0.1"/>
+
+        <EditText
+            android:id="@+id/edt_address"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="16dp"
+            android:background="@null"
+            android:gravity="top|left"
+            android:text="四川省成都市武侯区丰德国际广场三单元十二楼"
+            android:textColor="@color/black_text_100"
+            android:textColorHint="@color/black_text_40"
+            android:textSize="16sp"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/bg_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <CheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="8dp"
+            android:gravity="center_vertical"
+            android:text="设置为默认地址"
+            android:textColor="@color/black_text_100"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -7,7 +7,7 @@ import com.lzy.okgo.request.DeleteRequest;
 import com.lzy.okgo.request.GetRequest;
 import com.lzy.okgo.request.PostRequest;
 import com.lzy.okgo.request.PutRequest;
-import com.shiwaixiangcun.customer.App;
+import com.shiwaixiangcun.customer.app.App;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.response.ResponseEntity;
 import com.shiwaixiangcun.customer.utils.JsonUtil;

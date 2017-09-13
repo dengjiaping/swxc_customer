@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.shiwaixiangcun.customer.BaseActivity;
@@ -47,6 +48,18 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     TextView mTvTotal;
     @BindView(R.id.btn_commit)
     Button mBtnCommit;
+    @BindView(R.id.tv_user_name)
+    TextView mTvUserName;
+    @BindView(R.id.tv_user_phone)
+    TextView mTvUserPhone;
+    @BindView(R.id.tv_address)
+    TextView mTvAddress;
+    @BindView(R.id.rLayout_hasAddress)
+    RelativeLayout mRLayoutHasAddress;
+    @BindView(R.id.rLayout_noAddress)
+    RelativeLayout mRLayoutNoAddress;
+
+    private boolean hasAddress = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,21 +71,35 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void initEvent() {
+        mBackLeft.setOnClickListener(this);
         mLlayoutAddAddress.setOnClickListener(this);
         mIvAdd.setOnClickListener(this);
         mIvReduce.setOnClickListener(this);
         mBtnCommit.setOnClickListener(this);
+        mRLayoutHasAddress.setOnClickListener(this);
     }
 
     private void initView() {
         mTvPageName.setText("确认订单");
+        if (hasAddress) {
+            mRLayoutHasAddress.setVisibility(View.VISIBLE);
+            mLlayoutAddAddress.setVisibility(View.GONE);
+        } else {
+            mRLayoutHasAddress.setVisibility(View.GONE);
+            mLlayoutAddAddress.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            default:
+            case R.id.back_left:
+                finish();
                 break;
+            case R.id.llayout_add_address:
+                readyGo(AddAddressActivity.class);
+                break;
+
         }
     }
 }

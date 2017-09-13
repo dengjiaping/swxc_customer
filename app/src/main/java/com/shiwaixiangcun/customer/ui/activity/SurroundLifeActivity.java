@@ -2,8 +2,8 @@ package com.shiwaixiangcun.customer.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,16 +22,16 @@ import com.shiwaixiangcun.customer.presenter.impl.HomeSurroundImpl;
 import com.shiwaixiangcun.customer.pullableview.MyListener;
 import com.shiwaixiangcun.customer.pullableview.PullToRefreshLayout;
 import com.shiwaixiangcun.customer.pullableview.PullableListView;
+import com.shiwaixiangcun.customer.ui.IHomeSurroundView;
+import com.shiwaixiangcun.customer.utils.Utils;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 import com.shiwaixiangcun.customer.widget.MyGridView;
-import com.shiwaixiangcun.customer.utils.Utils;
-import com.shiwaixiangcun.customer.ui.IHomeSurroundView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.shiwaixiangcun.customer.App.getContext;
+import static com.shiwaixiangcun.customer.app.App.getContext;
 
 public class SurroundLifeActivity extends AppCompatActivity implements View.OnClickListener,IHomeSurroundView{
 

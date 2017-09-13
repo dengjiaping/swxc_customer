@@ -1,6 +1,6 @@
 package com.shiwaixiangcun.customer.adapter;
 
-import android.app.Activity;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +18,7 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
 
     protected List<T> mList;
 
-    protected Activity mContext;
+    protected Context mContext;
 
     protected ListView mListView;
 
@@ -26,13 +26,13 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
 
     protected View mCacheView;
 
-    public BaseListAdapter(Activity context) {
+    public BaseListAdapter(Context context) {
         this.mContext = context;
-        mInflater = mContext.getLayoutInflater();
+        mInflater = LayoutInflater.from(mContext);
         mList = new ArrayList<T>();
     }
 
-    public BaseListAdapter(Activity context, List<T> mList) {
+    public BaseListAdapter(Context context, List<T> mList) {
         this.mContext = context;
         this.mList = mList;
         mInflater = LayoutInflater.from(mContext);
