@@ -52,7 +52,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.StartPageActivity"/>
+        <activity android:name=".ui.activity.StartPageActivity">
+
+        </activity>
         <activity
             android:name=".ui.activity.OnlineServiceActivity"
             android:screenOrientation="portrait"/>
@@ -343,11 +345,7 @@
         <activity
             android:name=".ui.activity.MallActivity"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.activity.MallCategoryActivity"
@@ -361,15 +359,31 @@
             android:name=".ui.activity.GoodDetailActivity"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ui.activity.ConfirmOrderActivity">
+        <activity
+            android:name=".ui.activity.ConfirmOrderActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ui.activity.AddAddressActivity">
+        <activity
+            android:name=".ui.activity.AddAddressActivity"
+            android:screenOrientation="portrait">
+
         </activity>
-        <activity android:name=".ui.activity.EditAddressActivity">
+        <activity
+            android:name=".ui.activity.EditAddressActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ui.activity.ChooseAddressActivity">
+        <activity
+            android:name=".ui.activity.ChooseAddressActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.ManageAddressActivity">
+        <activity
+            android:name=".ui.activity.ManageAddressActivity"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

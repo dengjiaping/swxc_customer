@@ -218,9 +218,9 @@ public class MDMUtils {
      * @return boolean
      */
     public static boolean isMobile(String mobiles) {
-        Pattern p = Pattern.compile("^((13[0-9])|(14[0-9])|(15[0-9])|(17[0-9])|(18[0-9]))\\d{8}$");
-        Matcher m = p.matcher(mobiles);
-        return m.matches();
+
+        String num = "[1][358]\\d{9}";
+        return num.matches(mobiles);
     }
 
     /**

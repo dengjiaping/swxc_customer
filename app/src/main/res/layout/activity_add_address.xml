@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="@null"
-            android:hint="收货人地址"
+            android:hint="收货人姓名"
             android:textColor="@color/black_text_100"
             android:textColorHint="@color/black_text_40"
             android:textSize="16sp"/>
@@ -80,7 +80,8 @@
         android:paddingRight="16dp">
 
         <CheckBox
-            android:id="@+id/checkbox"
+            android:id="@+id/cb_default"
+            style="@style/custom_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 

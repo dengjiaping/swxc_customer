@@ -7,7 +7,7 @@
 
     <color name="bg_white">#ffff</color>
     <color name="bg_gray">#F8F8F8</color>
-    <color name="color_divider">#454d4a</color>
+    <color name="color_divider">#b7454d4a</color>
 
     <color name="color_divider_0.1">#1a2d3230</color>
     <color name="ui_base_color">#F6F6F6</color>
@@ -57,4 +57,5 @@
     <color name="gray_text_60">#992d3230</color>
     <color name="black_text_100">#FF2D3230</color>
     <color name="black_text_40">#6e2d3230</color>
+    <color name="black_text_60">#992d3230</color>
 </resources>

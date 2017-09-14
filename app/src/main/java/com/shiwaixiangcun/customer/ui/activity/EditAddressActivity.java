@@ -43,7 +43,7 @@ public class EditAddressActivity extends BaseActivity implements View.OnClickLis
     EditText mEdtAddress;
     @BindView(R.id.lLayout_body)
     LinearLayout mLLayoutBody;
-    @BindView(R.id.checkbox)
+    @BindView(R.id.cb_default)
     CheckBox mCheckbox;
 
     @Override
