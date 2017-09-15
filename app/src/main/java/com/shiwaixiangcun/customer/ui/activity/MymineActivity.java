@@ -63,6 +63,8 @@ public class MymineActivity extends AppCompatActivity implements View.OnClickLis
     private RelativeLayout rl_wy_lay;
     private RelativeLayout rl_for_life;
     private RelativeLayout rl_app_updata;
+    private RelativeLayout rl_app_address;
+    private RelativeLayout rl_app_order;
     private Handler m_mainHandler;
     private ProgressDialog m_progressDlg;
 
@@ -89,6 +91,8 @@ public class MymineActivity extends AppCompatActivity implements View.OnClickLis
         rl_wy_lay = (RelativeLayout) findViewById(R.id.rl_wy_lay);
         rl_for_life = (RelativeLayout) findViewById(R.id.rl_for_life);
         rl_app_updata = (RelativeLayout) findViewById(R.id.rl_app_updata);
+        rl_app_address = (RelativeLayout) findViewById(R.id.rl_app_address);
+        rl_app_order = (RelativeLayout) findViewById(R.id.rl_app_order);
 
         //初始化相关变量
         initVariable();
@@ -102,12 +106,16 @@ public class MymineActivity extends AppCompatActivity implements View.OnClickLis
         rl_feed_back.setOnClickListener(this);
         rl_wy_lay.setOnClickListener(this);
         rl_for_life.setOnClickListener(this);
+        rl_app_order.setOnClickListener(this);
+        rl_app_address.setOnClickListener(this);
 
 
     }
 
     @Override
     public void onClick(View view) {
+        Intent intent;
+        String isOrnotLogin_renting = ShareUtil.getStringSpParams(MymineActivity.this, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
         int id = view.getId();
         switch (id) {
             case R.id.back_left:
@@ -116,22 +124,16 @@ public class MymineActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.rl_head_mine:
                 String isOrnotLogin_service = ShareUtil.getStringSpParams(MymineActivity.this, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
                 if (Utils.isNotEmpty(isOrnotLogin_service)) {
-                    Log.i("ttttt", "" + "!null");
-                    Intent intent = new Intent(this, InformationActivity.class);
+                    intent = new Intent(this, InformationActivity.class);
                     startActivity(intent);
                 } else {
-                    Log.i("ttttt", "" + "null");
-                    Intent intent = new Intent(this, LoginActivity.class);
-                    intent.putExtra("mineLogin","mineLogin");
-                    startActivityForResult(intent,1020);
-
-
+                    intent = new Intent(this, LoginActivity.class);
+                    intent.putExtra("mineLogin", "mineLogin");
+                    startActivityForResult(intent, 1020);
                 }
-
-
                 break;
             case R.id.rl_feed_back:
-                Intent intent_feed = new Intent(this, FeedBackActivity.class);
+                Intent intent_feed = new Intent(this, MallActivity.class);
                 startActivity(intent_feed);
                 break;
             case R.id.rl_wy_lay:
@@ -141,6 +143,25 @@ public class MymineActivity extends AppCompatActivity implements View.OnClickLis
                 Intent intent_version = new Intent(this, ForLifeActivity.class);
                 startActivity(intent_version);
                 break;
+            case R.id.rl_app_address:
+                if (Utils.isNotEmpty(isOrnotLogin_renting)) {
+                    intent = new Intent(this, ManageAddressActivity.class);
+                    startActivity(intent);
+                } else {
+                    intent = new Intent(this, LoginActivity.class);
+                    startActivity(intent);
+                }
+
+                break;
+            case R.id.rl_app_order:
+                if (Utils.isNotEmpty(isOrnotLogin_renting)) {
+                    Intent intent_order = new Intent(this, OrderActivity.class);
+                    startActivity(intent_order);
+                } else {
+                    intent = new Intent(this, LoginActivity.class);
+                    startActivity(intent);
+                }
+
         }
     }
 
@@ -167,7 +188,7 @@ public class MymineActivity extends AppCompatActivity implements View.OnClickLis
             tv_user_name.setText(username);
             if (Utils.isNotEmpty(head_image_path)) {
                 Picasso.with(this).load(head_image_path).into(iv_head_my_image);
-            }else {
+            } else {
                 iv_head_my_image.setImageResource(R.mipmap.defalt_image);
             }
 
@@ -434,7 +455,7 @@ public class MymineActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode){
+        switch (requestCode) {
             case 1020:
                 finish();
                 break;

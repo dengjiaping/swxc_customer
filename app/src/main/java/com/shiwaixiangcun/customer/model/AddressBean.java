@@ -4,13 +4,16 @@ package com.shiwaixiangcun.customer.model;/**
  * Desc： eg
  */
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by Administrator on 2017/9/13.
  */
 
-public class AddressBean {
+public class AddressBean implements Parcelable {
 
     /**
      * companyId : null
@@ -40,21 +43,14 @@ public class AddressBean {
     private String deliveryName;
     private String deliveryPhone;
     private Integer id;
-    private Object lastModifiedBy;
-    private Object lastModifiedDate;
+    private String lastModifiedBy;
+    private String lastModifiedDate;
     @SerializedName("new")
-    private boolean newX;
-    private Object orgPath;
+    private String newX;
+    private String orgPath;
     private int version;
 
     public AddressBean() {
-    }
-
-    public AddressBean(Integer companyId, String deliveryAddress, String deliveryName, String deliveryPhone) {
-        this.companyId = companyId;
-        this.deliveryAddress = deliveryAddress;
-        this.deliveryName = deliveryName;
-        this.deliveryPhone = deliveryPhone;
     }
 
     public Integer getCompanyId() {
@@ -137,35 +133,35 @@ public class AddressBean {
         this.id = id;
     }
 
-    public Object getLastModifiedBy() {
+    public String getLastModifiedBy() {
         return lastModifiedBy;
     }
 
-    public void setLastModifiedBy(Object lastModifiedBy) {
+    public void setLastModifiedBy(String lastModifiedBy) {
         this.lastModifiedBy = lastModifiedBy;
     }
 
-    public Object getLastModifiedDate() {
+    public String getLastModifiedDate() {
         return lastModifiedDate;
     }
 
-    public void setLastModifiedDate(Object lastModifiedDate) {
+    public void setLastModifiedDate(String lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public boolean isNewX() {
+    public String getNewX() {
         return newX;
     }
 
-    public void setNewX(boolean newX) {
+    public void setNewX(String newX) {
         this.newX = newX;
     }
 
-    public Object getOrgPath() {
+    public String getOrgPath() {
         return orgPath;
     }
 
-    public void setOrgPath(Object orgPath) {
+    public void setOrgPath(String orgPath) {
         this.orgPath = orgPath;
     }
 
@@ -176,4 +172,65 @@ public class AddressBean {
     public void setVersion(int version) {
         this.version = version;
     }
+
+    public AddressBean(Integer companyId, String deliveryAddress, String deliveryName, String deliveryPhone) {
+        this.companyId = companyId;
+        this.deliveryAddress = deliveryAddress;
+        this.deliveryName = deliveryName;
+        this.deliveryPhone = deliveryPhone;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.companyId);
+        dest.writeLong(this.createTime);
+        dest.writeValue(this.createdBy);
+        dest.writeValue(this.customerId);
+        dest.writeByte(this.defaulted ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.deleted ? (byte) 1 : (byte) 0);
+        dest.writeString(this.deliveryAddress);
+        dest.writeString(this.deliveryName);
+        dest.writeString(this.deliveryPhone);
+        dest.writeValue(this.id);
+        dest.writeString(this.lastModifiedBy);
+        dest.writeString(this.lastModifiedDate);
+        dest.writeString(this.newX);
+        dest.writeString(this.orgPath);
+        dest.writeInt(this.version);
+    }
+
+    protected AddressBean(Parcel in) {
+        this.companyId = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.createTime = in.readLong();
+        this.createdBy = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.customerId = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.defaulted = in.readByte() != 0;
+        this.deleted = in.readByte() != 0;
+        this.deliveryAddress = in.readString();
+        this.deliveryName = in.readString();
+        this.deliveryPhone = in.readString();
+        this.id = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.lastModifiedBy = in.readString();
+        this.lastModifiedDate = in.readString();
+        this.newX = in.readString();
+        this.orgPath = in.readString();
+        this.version = in.readInt();
+    }
+
+    public static final Parcelable.Creator<AddressBean> CREATOR = new Parcelable.Creator<AddressBean>() {
+        @Override
+        public AddressBean createFromParcel(Parcel source) {
+            return new AddressBean(source);
+        }
+
+        @Override
+        public AddressBean[] newArray(int size) {
+            return new AddressBean[size];
+        }
+    };
 }

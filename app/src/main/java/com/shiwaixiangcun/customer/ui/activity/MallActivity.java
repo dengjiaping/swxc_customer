@@ -155,14 +155,14 @@ public class MallActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void requestData() {
-        OkGo.get("http://mk.shiwaixiangcun.cn/mi/goods/subject/home.json")
+        OkGo.<String>get("http://mk.shiwaixiangcun.cn/mi/goods/subject/home.json")
                 .tag(BUG_TAG)
                 .cacheKey("mall")            // 设置当前请求的缓存key,建议每个不同功能的请求设置一个
                 .cacheMode(CacheMode.DEFAULT)    // 缓存模式，详细请看缓存介绍
                 .execute(new StringCallback() {
                     @Override
-                    public void onSuccess(String s, Call call, Response response) {
-                        MallBean mallBean = JsonUtil.fromJson(s, MallBean.class);
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        MallBean mallBean = JsonUtil.fromJson(response.body(), MallBean.class);
                         if (mallBean != null) {
 //                            mDailyList = mallBean.getData().getDailySelectionList();
 //                            mDailySelection.setHotListData(mDailyList);
@@ -170,6 +170,7 @@ public class MallActivity extends BaseActivity implements View.OnClickListener {
                             EventBus.getDefault().post(mallBean);
                         }
                     }
+
                 });
 
 

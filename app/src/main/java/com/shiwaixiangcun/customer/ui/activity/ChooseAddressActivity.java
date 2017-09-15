@@ -3,6 +3,7 @@ package com.shiwaixiangcun.customer.ui.activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -70,6 +71,7 @@ public class ChooseAddressActivity extends BaseActivity implements View.OnClickL
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(login_detail, type);
         final String refresh_token = responseEntity.getData().getRefresh_token();
         HashMap<String, Object> params = new HashMap<>();
+        Log.e(BUG_TAG,responseEntity.getData().getAccess_token());
         params.put("access_token", responseEntity.getData().getAccess_token());
         params.put("fields", "");
         HttpRequest.get("http://mk.shiwaixiangcun.cn/mc/delivery/address/listdata.json", params, new HttpCallBack() {
@@ -85,8 +87,8 @@ public class ChooseAddressActivity extends BaseActivity implements View.OnClickL
                 if (response == null) {
                     return;
                 }
-                mAddressBeanList.addAll(response.getData());
-                mAddressBeanList.addAll(response.getData());
+//                mAddressBeanList.addAll(response.getData());
+//                mAddressBeanList.addAll(response.getData());
                 mAdapterAddress.notifyDataSetChanged();
             }
 

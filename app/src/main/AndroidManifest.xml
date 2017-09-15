@@ -53,7 +53,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.activity.StartPageActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
 
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity
             android:name=".ui.activity.OnlineServiceActivity"
@@ -366,7 +370,6 @@
         <activity
             android:name=".ui.activity.AddAddressActivity"
             android:screenOrientation="portrait">
-
         </activity>
         <activity
             android:name=".ui.activity.EditAddressActivity"
@@ -375,15 +378,12 @@
         <activity
             android:name=".ui.activity.ChooseAddressActivity"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.activity.ManageAddressActivity"
             android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".ui.activity.OrderActivity">
         </activity>
     </application>
 

@@ -2,6 +2,7 @@ package com.shiwaixiangcun.customer.http;
 
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.DeleteRequest;
 import com.lzy.okgo.request.GetRequest;
 import com.lzy.okgo.request.PostRequest;
@@ -12,8 +13,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.Call;
-import okhttp3.Response;
 
 /**
  * Created by fyj on 2017/5/23.
@@ -30,16 +29,16 @@ public class HttpExecuteType {
         this.requestType = requestType;
         switch (requestType){
             case GET :
-                getRequest = OkGo.get(url).headers("Authorization", HttpRequest.getTokenByApplication());
+                getRequest = OkGo.<String>get(url).headers("Authorization", HttpRequest.getTokenByApplication());
                 break;
             case POST :
-                postRequest = OkGo.post(url).headers("Authorization", HttpRequest.getTokenByApplication());
+                postRequest = OkGo.<String>post(url).headers("Authorization", HttpRequest.getTokenByApplication());
                 break;
             case PUT:
-                putRequest = OkGo.put(url).headers("Authorization", HttpRequest.getTokenByApplication());
+                putRequest = OkGo.<String>put(url).headers("Authorization", HttpRequest.getTokenByApplication());
                 break;
             case DELETE :
-                deleteRequest = OkGo.delete(url).headers("Authorization", HttpRequest.getTokenByApplication());
+                deleteRequest = OkGo.<String>delete(url).headers("Authorization", HttpRequest.getTokenByApplication());
                 break;
         }
 
@@ -81,86 +80,37 @@ public class HttpExecuteType {
             case GET :
                 getRequest.execute(new StringCallback() {
                     @Override
-                    public void onSuccess(String s, Call call, Response response) {
-                        httpCallBack.onSuccess(s);
+                    public void onSuccess(Response<String> response) {
+                        httpCallBack.onSuccess(response.body());
                     }
 
-//                    @Override
-//                    public void onBefore(BaseRequest request) {
-//                        super.onBefore(request);
-//                        request.headers("Requested", "XMLHttpRequest");
-//                        request.headers("X-Requested-With", "android");
-//                        request.headers("Cookie", "uid" + "");
-//
-//                    }
-
-                    @Override
-                    public void onError(Call call, Response response, Exception e) {
-                        httpCallBack.onFailed(e);
-                    }
                 });
                 break;
             case POST :
                 postRequest.execute(new StringCallback() {
                     @Override
-                    public void onSuccess(String s, Call call, Response response) {
-                        httpCallBack.onSuccess(s);
+                    public void onSuccess(Response<String> response) {
+                        httpCallBack.onSuccess(response.body());
                     }
 
-//                    @Override
-//                    public void onBefore(BaseRequest request) {
-//                        super.onBefore(request);
-//                        request.headers("Requested", "XMLHttpRequest");
-//                        request.headers("X-Requested-With", "android");
-//                        request.headers("Cookie", "uid" + "");
-//                    }
-
-                    @Override
-                    public void onError(Call call, Response response, Exception e) {
-                        httpCallBack.onFailed(e);
-                    }
                 });
                 break;
             case PUT:
                 putRequest.execute(new StringCallback() {
                     @Override
-                    public void onSuccess(String s, Call call, Response response) {
-                        httpCallBack.onSuccess(s);
+                    public void onSuccess(Response<String> response) {
+                        httpCallBack.onSuccess(response.body());
                     }
 
-//                    @Override
-//                    public void onBefore(BaseRequest request) {
-//                        super.onBefore(request);
-//                        request.headers("Requested", "XMLHttpRequest");
-//                        request.headers("X-Requested-With", "android");
-//                        request.headers("Cookie", "uid" + "");
-//                    }
-
-                    @Override
-                    public void onError(Call call, Response response, Exception e) {
-                        httpCallBack.onFailed(e);
-                    }
                 });
                 break;
             case DELETE :
                 deleteRequest.execute(new StringCallback() {
                     @Override
-                    public void onSuccess(String s, Call call, Response response) {
-                        httpCallBack.onSuccess(s);
+                    public void onSuccess(Response<String> response) {
+                        httpCallBack.onSuccess(response.body());
                     }
 
-//                    @Override
-//                    public void onBefore(BaseRequest request) {
-//                        super.onBefore(request);
-//                        request.headers("Requested", "XMLHttpRequest");
-//                        request.headers("X-Requested-With", "android");
-//                        request.headers("Cookie", "uid" + "");
-//                    }
-
-                    @Override
-                    public void onError(Call call, Response response, Exception e) {
-                        httpCallBack.onFailed(e);
-                    }
                 });
                 break;
         }
@@ -174,14 +124,18 @@ public class HttpExecuteType {
             case GET :
                 getRequest.execute(new JsonCallBack<ResponseEntity<T>>() {
                     @Override
-                    public void onSuccess(ResponseEntity<T> responseEntity, Call call, Response response) {
-                        httpCallBack.onSuccess(responseEntity);
+                    public void onSuccess(Response<ResponseEntity<T>> response) {
+                        httpCallBack.onSuccess(response.body());
                     }
+//                    @Override
+//                    public void onSuccess(ResponseEntity<T> responseEntity, Call call, Response response) {
+//                        httpCallBack.onSuccess(responseEntity);
+//                    }
 
-                    @Override
-                    public void onError(Call call, Response response, Exception e) {
-                        httpCallBack.onFailed(e);
-                    }
+//                    @Override
+//                    public void onError(Call call, Response response, Exception e) {
+//                        httpCallBack.onFailed(e);
+//                    }
 
                 });
                 break;
@@ -189,26 +143,16 @@ public class HttpExecuteType {
                 postRequest.execute(new JsonCallBack<ResponseEntity<T>>() {
 
                     @Override
-                    public void onSuccess(ResponseEntity<T> responseEntity, Call call, Response response) {
-                        httpCallBack.onSuccess(responseEntity);
-                    }
-
-                    @Override
-                    public void onError(Call call, Response response, Exception e) {
-                        httpCallBack.onFailed(e);
+                    public void onSuccess(Response<ResponseEntity<T>> response) {
+                        httpCallBack.onSuccess(response.body());
                     }
                 });
                 break;
             case PUT:
                 putRequest.execute(new JsonCallBack<ResponseEntity<T>>() {
                     @Override
-                    public void onSuccess(ResponseEntity<T> responseEntity, Call call, Response response) {
-                        httpCallBack.onSuccess(responseEntity);
-                    }
-
-                    @Override
-                    public void onError(Call call, Response response, Exception e) {
-                        httpCallBack.onFailed(e);
+                    public void onSuccess(Response<ResponseEntity<T>> response) {
+                        httpCallBack.onSuccess(response.body());
                     }
                 });
                 break;
@@ -216,13 +160,8 @@ public class HttpExecuteType {
                 deleteRequest.execute(new JsonCallBack<ResponseEntity<T>>() {
 
                     @Override
-                    public void onSuccess(ResponseEntity<T> responseEntity, Call call, Response response) {
-                        httpCallBack.onSuccess(responseEntity);
-                    }
-
-                    @Override
-                    public void onError(Call call, Response response, Exception e) {
-                        httpCallBack.onFailed(e);
+                    public void onSuccess(Response<ResponseEntity<T>> response) {
+                        httpCallBack.onSuccess(response.body());
                     }
                 });
                 break;

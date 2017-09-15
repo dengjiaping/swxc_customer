@@ -50,7 +50,6 @@ public class AdapterManageAddress extends BaseQuickAdapter<AddressBean, BaseView
         helper.setOnCheckedChangeListener(R.id.cb_default, new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                Toast.makeText(mContext, "checkBox点击///////////", Toast.LENGTH_SHORT).show();
                 if (mCheckboxClickListener != null) {
                     mCheckboxClickListener.checkboxClick(helper.getAdapterPosition(), helper.getConvertView(), b);
                 }

@@ -3,6 +3,7 @@ package com.shiwaixiangcun.customer.http;
 import com.google.gson.reflect.TypeToken;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.DeleteRequest;
 import com.lzy.okgo.request.GetRequest;
 import com.lzy.okgo.request.PostRequest;
@@ -21,9 +22,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import okhttp3.Call;
-import okhttp3.Response;
 
 /**
  * Created by fyj on 2017/5/23.
@@ -58,24 +56,11 @@ public class HttpRequest {
 //        OkGo.post(url).headers("Cookie", "uid=" + cookie);
 
 
-        generateHttpParams(params, OkGo.post(url)).execute(new StringCallback() {
+        generateHttpParams(params, OkGo.<String>post(url)).execute(new StringCallback() {
             @Override
-            public void onSuccess(String s, Call call, Response response) {
-                httpCallBack.onSuccess(s);
+            public void onSuccess(Response<String> response) {
+                httpCallBack.onSuccess(response.body());
             }
-
-//            @Override
-//            public void onBefore(BaseRequest request) {
-//                super.onBefore(request);
-//
-//            }
-
-            @Override
-            public void onError(Call call, Response response, Exception e) {
-                httpCallBack.onFailed(e);
-
-            }
-
 
         });
     }
@@ -88,24 +73,13 @@ public class HttpRequest {
 //        OkGo.get(url).headers("Cookie", "uid=" + cookie);
 
 
-        generateHttpParams(params, OkGo.get(url)).execute(new StringCallback() {
+        generateHttpParams(params, OkGo.<String>get(url)).execute(new StringCallback() {
             @Override
-            public void onSuccess(String s, Call call, Response response) {
-                httpCallBack.onSuccess(s);
+            public void onSuccess(Response<String> response) {
+                httpCallBack.onSuccess(response.body());
             }
 
-//            @Override
-//            public void onBefore(BaseRequest request) {
-////                request.headers("key", );
-////                request.headers("Requested", "XMLHttpRequest");
-////                request.headers("X-Requested-With", "android");
-////                request.headers("Cookie", "uid" + "");
-//            }
 
-            @Override
-            public void onError(Call call, Response response, Exception e) {
-                httpCallBack.onFailed(e);
-            }
         });
     }
 
@@ -116,24 +90,13 @@ public class HttpRequest {
 //        OkGo.put(url).headers("X-Requested-With", "XMLHttpRequest");
 //        OkGo.put(url).headers("User-Agent", "android");
 //        OkGo.put(url).headers("Cookie", "uid=" + cookie);
-        generateHttpParams(params, OkGo.put(url)).execute(new StringCallback() {
+        generateHttpParams(params, OkGo.<String>put(url)).execute(new StringCallback() {
             @Override
-            public void onSuccess(String s, Call call, Response response) {
-                httpCallBack.onSuccess(s);
+            public void onSuccess(Response<String> response) {
+                httpCallBack.onSuccess(response.body());
             }
 
-//            @Override
-//            public void onBefore(BaseRequest request) {
-//                super.onBefore(request);
-////                request.headers("Requested", "XMLHttpRequest");
-////                request.headers("X-Requested-With", "android");
-////                request.headers("Cookie", "uid" + "");
-//            }
 
-            @Override
-            public void onError(Call call, Response response, Exception e) {
-                httpCallBack.onFailed(e);
-            }
         });
     }
 
@@ -144,24 +107,12 @@ public class HttpRequest {
 //        OkGo.delete(url).headers("X-Requested-With", "XMLHttpRequest");
 //        OkGo.delete(url).headers("User-Agent", "android");
 //        OkGo.delete(url).headers("Cookie", "uid =" + cookie);
-        generateHttpParams(params, OkGo.delete(url)).execute(new StringCallback() {
+        generateHttpParams(params, OkGo.<String>delete(url)).execute(new StringCallback() {
             @Override
-            public void onSuccess(String s, Call call, Response response) {
-                httpCallBack.onSuccess(s);
+            public void onSuccess(Response<String> response) {
+                httpCallBack.onSuccess(response.body());
             }
 
-//            @Override
-//            public void onBefore(BaseRequest request) {
-//                super.onBefore(request);
-////                request.headers("Requested", "XMLHttpRequest");
-////                request.headers("X-Requested-With", "android");
-////                request.headers("Cookie", "uid" + "");
-//            }
-
-            @Override
-            public void onError(Call call, Response response, Exception e) {
-                httpCallBack.onFailed(e);
-            }
         });
     }
 
@@ -194,7 +145,7 @@ public class HttpRequest {
             }
         }
 
-        return postRequest.headers("Authorization", getTokenByApplication());
+        return (PostRequest) postRequest.headers("Authorization", getTokenByApplication());
     }
 
     private static GetRequest generateHttpParams(Map<String, Object> params, GetRequest getRequest) {
@@ -218,7 +169,7 @@ public class HttpRequest {
             }
         }
 
-        return getRequest.headers("Authorization", getTokenByApplication());
+        return (GetRequest) getRequest.headers("Authorization", getTokenByApplication());
     }
 
     private static DeleteRequest generateHttpParams(Map<String, Object> params, DeleteRequest deleteRequest) {
@@ -242,7 +193,7 @@ public class HttpRequest {
             }
         }
 
-        return deleteRequest.headers("Authorization", getTokenByApplication());
+        return (DeleteRequest) deleteRequest.headers("Authorization", getTokenByApplication());
     }
 
     private static PutRequest generateHttpParams(Map<String, Object> params, PutRequest putRequest) {
@@ -267,7 +218,7 @@ public class HttpRequest {
             }
         }
 
-        return putRequest.headers("Authorization", getTokenByApplication());
+        return (PutRequest) putRequest.headers("Authorization", getTokenByApplication());
     }
 
 

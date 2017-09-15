@@ -36,7 +36,6 @@ public class JsonUtil {
 
     public static <T> T fromJson(String json, Type typeOfT) {
         Gson gson = new GsonBuilder().registerTypeAdapterFactory(new NullStringToEmptyAdapterFactory()).create();
-
         try {
             return gson.fromJson(json, typeOfT);
         } catch (Exception e) {

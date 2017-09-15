@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 import com.shiwaixiangcun.customer.BaseActivity;
+import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
@@ -69,6 +70,12 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
         initEvent();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
     private void initEvent() {
         mTvTopRight.setOnClickListener(this);
         mBackLeft.setOnClickListener(this);
@@ -99,7 +106,7 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
         userName = mEdtName.getText().toString().trim();
         userPhone = mEdtPhone.getText().toString().trim();
         userAddress = mEdtAddress.getText().toString().trim();
-        isDefault = mCheckbox.isSelected();
+        isDefault = mCheckbox.isChecked();
         if (checkValidity()) {
 
             if (isDefault) {
@@ -127,7 +134,7 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
             params.put("address", userAddress);
             params.put("default", isDefault);
             Log.e(BUG_TAG, responseEntity.getData().getAccess_token());
-            HttpRequest.post("http://mk.shiwaixiangcun.cn/mc/delivery/address/add.json", params, new HttpCallBack() {
+            HttpRequest.post(GlobalConfig.addAddress, params, new HttpCallBack() {
                 @Override
                 public void onSuccess(String responseJson) {
                     super.onSuccess(responseJson);
