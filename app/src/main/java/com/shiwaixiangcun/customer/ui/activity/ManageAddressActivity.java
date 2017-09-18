@@ -2,6 +2,7 @@ package com.shiwaixiangcun.customer.ui.activity;
 
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -30,6 +31,7 @@ import com.shiwaixiangcun.customer.loadingDialog.LoadingDialog;
 import com.shiwaixiangcun.customer.model.AddressBean;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.response.ResponseEntity;
+import com.shiwaixiangcun.customer.ui.dialog.DialogInfo;
 import com.shiwaixiangcun.customer.utils.DisplayUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.ShareUtil;
@@ -59,6 +61,8 @@ public class ManageAddressActivity extends BaseActivity implements View.OnClickL
     RecyclerView mRvAddress;
     @BindView(R.id.btn_add)
     Button mBtnAdd;
+    @BindView(R.id.root_view)
+    LinearLayout mRootView;
     private List<AddressBean> mAddressBeanList = new ArrayList<>();
     private AdapterManageAddress mManageAdapter;
     private String token = "";
@@ -99,10 +103,11 @@ public class ManageAddressActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onSuccess(String responseJson) {
                 super.onSuccess(responseJson);
-                Log.e(BUG_TAG,"onSuccess");
+                Log.e(BUG_TAG, "onSuccess");
                 if (responseJson == null) {
                     return;
                 }
+                Log.e(BUG_TAG, responseJson);
                 Type listType = new TypeToken<ResponseEntity<List<AddressBean>>>() {
                 }.getType();
                 Gson gson = new Gson();
@@ -110,9 +115,18 @@ public class ManageAddressActivity extends BaseActivity implements View.OnClickL
                 if (response == null) {
                     return;
                 }
-                mAddressBeanList.clear();
-                mAddressBeanList.addAll(response.getData());
-                mManageAdapter.notifyDataSetChanged();
+                switch (response.getResponseCode()) {
+                    case 1001:
+                        mAddressBeanList.clear();
+                        mAddressBeanList.addAll(response.getData());
+                        mManageAdapter.notifyDataSetChanged();
+                        break;
+                    default:
+                        Toast.makeText(mContext, "验证错误", Toast.LENGTH_SHORT).show();
+                        break;
+
+                }
+
             }
 
             @Override
@@ -168,10 +182,27 @@ public class ManageAddressActivity extends BaseActivity implements View.OnClickL
         });
         mManageAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, final int position) {
                 switch (view.getId()) {
                     case R.id.tv_delete:
-                        deleteAddress(mAddressBeanList.get(position));
+                        DialogInfo dialogInfo = new DialogInfo(mContext);
+                        dialogInfo.setDialogTitle("删除地址");
+                        dialogInfo.setDialogInfo("你的地址信息很重要！确定要删除么？");
+                        dialogInfo.setListener(new DialogInfo.onCallBackListener() {
+                            @Override
+                            public void closeBtn(DialogInfo dialog) {
+                                dialog.dismiss();
+                            }
+
+                            @Override
+                            public void confirmBtn(DialogInfo dialog) {
+                                dialog.dismiss();
+                                deleteAddress(mAddressBeanList.get(position));
+
+                            }
+                        });
+                        dialogInfo.show();
+
                         break;
                     case R.id.tv_edit:
 
@@ -249,18 +280,14 @@ public class ManageAddressActivity extends BaseActivity implements View.OnClickL
      * @param addressBean
      */
     private void deleteAddress(AddressBean addressBean) {
-        HashMap<String, Object> params = new HashMap<>();
         HashMap<String, String> stringHashMap = new HashMap<>();
         stringHashMap.put("access_token", token);
         stringHashMap.put("id", addressBean.getId() + "");
-        params.put("access_token", token);
-        params.put("id", addressBean.getId());
         Log.e(BUG_TAG, "delete  " + token);
         Log.e(BUG_TAG, "delete  " + addressBean.getId());
-
-
-        OkGo.<String>delete("http://mk.shiwaixiangcun.cn/mc/delivery/address/remove.json")
+        OkGo.<String>delete(GlobalConfig.deleteAddress)
                 .params(stringHashMap, false)
+                .isSpliceUrl(true)
                 .execute(new StringDialogCallBack(this) {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -276,11 +303,11 @@ public class ManageAddressActivity extends BaseActivity implements View.OnClickL
                         Log.e(BUG_TAG, result.getResponseCode() + "");
                         switch (result.getResponseCode()) {
                             case 1001:
-                                Toast.makeText(mContext, "删除成功", Toast.LENGTH_SHORT).show();
+                                Snackbar.make(mRootView, "删除成功", Snackbar.LENGTH_SHORT).show();
                                 initData();
                                 break;
                             default:
-                                Toast.makeText(mContext, "删除失败", Toast.LENGTH_SHORT).show();
+                                Snackbar.make(mRootView, "删除失败", Snackbar.LENGTH_SHORT).show();
                                 break;
                         }
                     }

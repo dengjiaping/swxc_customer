@@ -24,6 +24,9 @@ public abstract class BaseFragment extends Fragment {
     private boolean isFirstInvisible = true;
     private boolean isPrepared;
 
+    protected final String BUG_TAG = this.getClass().getSimpleName();
+    public String mTitle;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

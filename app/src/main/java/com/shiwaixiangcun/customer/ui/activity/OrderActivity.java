@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.R;
-import com.shiwaixiangcun.customer.ui.fragment.SimpleCardFragment;
+import com.shiwaixiangcun.customer.ui.fragment.OrderFragment;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 import com.shiwaixiangcun.customer.widget.tablayout.SlidingTabLayout;
 
@@ -56,8 +56,8 @@ public class OrderActivity extends BaseActivity implements View.OnClickListener 
 
     private void initView() {
         mTvPageName.setText("我的订单");
-        for (String title : mTitles) {
-            mFragments.add(SimpleCardFragment.getInstance(title));
+        for (String title:mTitles){
+            mFragments.add(OrderFragment.getInstance(title));
         }
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());
         mVp.setAdapter(mAdapter);

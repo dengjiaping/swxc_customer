@@ -78,7 +78,7 @@ public class OrderBean {
         private String orderNumber;
         private String orderStatus;
         private double realyPay;
-        private int transportMoney;
+        private double transportMoney;
         private List<OrderDetailDtoListBean> orderDetailDtoList;
 
         public int getGoodsTotal() {
@@ -121,7 +121,7 @@ public class OrderBean {
             this.realyPay = realyPay;
         }
 
-        public int getTransportMoney() {
+        public double getTransportMoney() {
             return transportMoney;
         }
 

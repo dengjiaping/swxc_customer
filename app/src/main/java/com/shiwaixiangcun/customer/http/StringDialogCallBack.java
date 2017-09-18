@@ -20,7 +20,7 @@ public abstract class StringDialogCallBack extends StringCallback {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        dialog.setMessage("请求网络中...");
+        dialog.setMessage("加载中...");
     }
 
     @Override

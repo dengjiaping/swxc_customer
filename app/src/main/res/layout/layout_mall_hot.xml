@@ -27,7 +27,7 @@
             android:layout_width="82dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="大家都在选择"
+            android:text="大家的选择准没错 >"
             android:textColor="@color/mall_des"
             android:textSize="16sp" />
 
