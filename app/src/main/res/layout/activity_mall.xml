@@ -10,8 +10,8 @@
     tools:context="com.shiwaixiangcun.customer.ui.activity.MallActivity">
 
     <include
-        android:id="@+id/include"
-        layout="@layout/top_bar_blue" />
+        android:id="@+id/top_search"
+        layout="@layout/top_bar_search"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_mall"

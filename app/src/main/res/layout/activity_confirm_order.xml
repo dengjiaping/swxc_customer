@@ -105,6 +105,7 @@
                 android:layout_gravity="center"
                 android:background="@color/bg_white"
                 android:orientation="vertical">
+
                 <LinearLayout
 
                     android:id="@+id/llayout_add_address"
@@ -142,44 +143,47 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="140dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/white">
 
                 <ImageView
-                    android:id="@+id/iv_cover_sku"
+                    android:id="@+id/iv_good_cover"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="16dp"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/m"/>
+                    android:scaleType="centerCrop"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
+                    android:layout_marginTop="8dp"
                     android:orientation="vertical">
 
-
                     <TextView
-                        android:id="@+id/tv_title_order"
+                        android:id="@+id/tv_good_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="4dp"
                         android:gravity="center_vertical"
+                        android:maxLines="2"
+                        android:minLines="2"
                         android:textColor="#FF2D3230"
                         android:textSize="16sp"
                         tools:text="欧姆龙（OMRON）电子血压计..."
                         />
 
                     <TextView
-                        android:id="@+id/tv_desc_order"
+                        android:id="@+id/tv_good_desc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="4dp"
                         android:gravity="center_vertical"
+                        android:maxLines="2"
+                        android:minLines="2"
                         android:textColor="@color/gray"
                         android:textSize="14sp"
                         tools:text="红色，2017年新款"
@@ -187,34 +191,33 @@
 
 
                     <RelativeLayout
-
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp">
+                        android:layout_marginTop="4dp">
 
                         <TextView
 
-                            android:id="@+id/tv_price_price"
+                            android:id="@+id/tv_good_price"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
                             android:layout_centerVertical="true"
-                            android:layout_marginTop="8dp"
+                            android:layout_marginTop="4dp"
                             android:gravity="center_vertical"
-                            android:text="¥399.00"
                             android:textColor="#FFFF1717"
                             android:textSize="18sp"
+                            tools:text="¥399.00"
                             />
 
                         <TextView
-                            android:id="@+id/tv_number_order"
+                            android:id="@+id/tv_good_amount"
                             android:layout_width="wrap_content"
                             android:layout_height="24dp"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:text="x1"
                             android:textColor="#FF2D3230"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp"
+                            tools:text="x1"/>
                     </RelativeLayout>
 
 
@@ -261,7 +264,7 @@
                         android:src="@mipmap/reduce"/>
 
                     <TextView
-                        android:id="@+id/tv_number"
+                        android:id="@+id/tv_order_amount"
                         android:layout_width="30dp"
                         android:layout_height="24dp"
                         android:gravity="center"
@@ -294,9 +297,9 @@
                 android:maxLines="1"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
-                android:text="运费￥10.00，由恒信天鹅堡负责发货"
                 android:textColor="@color/gray"
-                android:textSize="14sp"/>
+                android:textSize="14sp"
+                tools:text="运费￥10.00，由恒信天鹅堡负责发货"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -322,15 +325,16 @@
                         android:textSize="16sp"/>
 
                     <TextView
+                        android:id="@+id/tv_order_total"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:gravity="center"
                         android:orientation="horizontal"
-                        android:text="¥399.00"
                         android:textColor="#FFFF1717"
-                        android:textSize="16sp">
+                        android:textSize="16sp"
+                        tools:text="¥399.00">
 
 
                     </TextView>
@@ -354,15 +358,16 @@
                         android:textSize="16sp"/>
 
                     <TextView
+                        android:id="@+id/tv_order_fare"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:gravity="center"
                         android:orientation="horizontal"
-                        android:text="¥10.00"
                         android:textColor="#FFFF1717"
-                        android:textSize="16sp">
+                        android:textSize="16sp"
+                        tools:text="¥10.00">
 
 
                     </TextView>

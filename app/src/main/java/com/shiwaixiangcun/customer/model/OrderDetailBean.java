@@ -52,6 +52,9 @@ public class OrderDetailBean {
         this.goodsDetail = goodsDetail;
     }
 
+
+    public static class ExpressWay {
+    }
     public static class BuyersInfoBean {
         /**
          * customerName : 15520447006
@@ -62,12 +65,21 @@ public class OrderDetailBean {
          * deliveryWay : 由helin旗舰店发货，并提供售后服务。
          */
 
+        private String leavingMessage;
         private String customerName;
         private String customerPhone;
         private String deliveryAddress;
         private String deliveryName;
         private String deliveryPhone;
         private String deliveryWay;
+
+        public String getLeavingMessage() {
+            return leavingMessage;
+        }
+
+        public void setLeavingMessage(String leavingMessage) {
+            this.leavingMessage = leavingMessage;
+        }
 
         public String getCustomerName() {
             return customerName;
@@ -210,12 +222,21 @@ public class OrderDetailBean {
          * subtotal : 0.01
          */
 
+        private String attrDescription;
         private int amount;
         private String goodName;
         private String imgPath;
         private double price;
         private String shopName;
         private double subtotal;
+
+        public String getAttrDescription() {
+            return attrDescription;
+        }
+
+        public void setAttrDescription(String attrDescription) {
+            this.attrDescription = attrDescription;
+        }
 
         public int getAmount() {
             return amount;

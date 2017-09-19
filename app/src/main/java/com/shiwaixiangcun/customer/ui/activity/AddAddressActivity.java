@@ -59,6 +59,7 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
     String userPhone;
     String userAddress;
 
+
     private boolean isDefault = false;
 
     @Override
@@ -150,6 +151,7 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
                             bundle.putString("userName", userName);
                             bundle.putString("userPhone", userPhone);
                             bundle.putString("userAddress", userAddress);
+
                             intent.putExtras(bundle);
                             setResult(0X12, intent);
                             finish();

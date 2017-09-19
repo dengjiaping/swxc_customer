@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.TextView;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
@@ -20,6 +19,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.callback.StringCallback;
 import com.shiwaixiangcun.customer.BaseActivity;
+import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterMall;
 import com.shiwaixiangcun.customer.adapter.BannerAdapter;
@@ -50,8 +50,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import okhttp3.Call;
-import okhttp3.Response;
 
 /**
  * 商城Activity
@@ -63,8 +61,6 @@ public class MallActivity extends BaseActivity implements View.OnClickListener {
     List<MallGoods.DataBean.ElementsBean> mList = new ArrayList<>();
     @BindView(R.id.back_left)
     ChangeLightImageView mBackLeft;
-    @BindView(R.id.tv_page_name)
-    TextView mTvPageName;
     private Context mContext = null;
     private RecyclerView mRvMall = null;
 
@@ -155,7 +151,7 @@ public class MallActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void requestData() {
-        OkGo.<String>get("http://mk.shiwaixiangcun.cn/mi/goods/subject/home.json")
+        OkGo.<String>get(GlobalConfig.getMallHome)
                 .tag(BUG_TAG)
                 .cacheKey("mall")            // 设置当前请求的缓存key,建议每个不同功能的请求设置一个
                 .cacheMode(CacheMode.DEFAULT)    // 缓存模式，详细请看缓存介绍
@@ -187,7 +183,6 @@ public class MallActivity extends BaseActivity implements View.OnClickListener {
         mAdapterMall = new AdapterMall(mList);
         mRvMall.setAdapter(mAdapterMall);
         mRvMall.addItemDecoration(new ItemDecoration(this, LinearLayoutManager.VERTICAL));
-        mAdapterMall.addHeaderView(mSearchView);
         mAdapterMall.addHeaderView(mBannerView);
         mAdapterMall.addHeaderView(mJingxuanView);
         mAdapterMall.addHeaderView(mSuggersView);
@@ -211,8 +206,6 @@ public class MallActivity extends BaseActivity implements View.OnClickListener {
 //        viewPool.setMaxRecycledViews(0, 5);
 //        viewPool.setMaxRecycledViews(1, 7);
 
-
-        mTvPageName.setText("商城");
         mBackLeft.setOnClickListener(this);
 //        mAdapters = new LinkedList<>();
 //        setSearch(mAdapters);

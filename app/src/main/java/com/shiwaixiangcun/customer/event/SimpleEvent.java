@@ -12,6 +12,7 @@ public class SimpleEvent {
     //SKU选择更新商品信息
     public static final int UPDATE_GOOD_INFO = 1;
     public static final int UPDATE_ORDER_DETAIL = 2;
+    public static final int CONFIRM_ORDER = 3;
     /**
      * 操作类型
      */
@@ -21,7 +22,7 @@ public class SimpleEvent {
      */
     public int mEventValue;
 
-    private Object mData;
+    public Object mData;
 
     public SimpleEvent(int mEventType) {
         this.mEventType = mEventType;

@@ -114,8 +114,9 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
         EventBus.getDefault().unregister(this);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void updateUI(GoodDetail.DataBean goodBean) {
+        dialogSku.setData(goodBean.getTransportMoney(), goodBean.getShopName());
         //更新界面
         mTvTitle.setText(goodBean.getGoodsName());
         mTvDesc.setText(goodBean.getFeature());
@@ -170,7 +171,7 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
                 }
                 if (1001 == goodDetail.getResponseCode()) {
                     GoodDetail.DataBean data = goodDetail.getData();
-                    EventBus.getDefault().postSticky(data);
+                    EventBus.getDefault().post(data);
                 }
             }
 
@@ -223,6 +224,7 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
                 finish();
                 break;
             case R.id.rl_choice:
+
                 dialogSku.show();
                 break;
             case R.id.btn_purchase:

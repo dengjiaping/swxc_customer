@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:minHeight="125dp"
-              xmlns:tools="http://schemas.android.com/tools"
               android:background="@color/white"
               android:gravity="center_vertical"
+              android:minHeight="125dp"
               android:orientation="horizontal"
               android:paddingBottom="8dp"
               android:paddingLeft="16dp"
@@ -31,28 +31,28 @@
             android:id="@+id/tv_mall_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="这是一个标题"
             android:maxLines="2"
             android:minLines="1"
             android:textColor="@color/mall_title"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            tools:text="这是一个标题"/>
 
         <TextView
-            android:layout_marginTop="8dp"
             android:id="@+id/tv_mall_des"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="描述"
+            android:layout_marginTop="4dp"
             android:maxLines="2"
-            android:minLines="2"
+            android:minLines="1"
             android:textColor="@color/mall_des"
-            android:textSize="14sp"/>
+            android:textSize="14sp"
+            tools:text="描述"/>
 
         <TextView
-            android:layout_marginTop="8dp"
             android:id="@+id/tv_mall_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:text="400"
             android:textColor="@color/mall_price"
             android:textSize="18sp"/>

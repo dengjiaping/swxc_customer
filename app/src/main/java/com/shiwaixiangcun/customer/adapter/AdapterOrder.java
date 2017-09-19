@@ -1,6 +1,5 @@
 package com.shiwaixiangcun.customer.adapter;
 
-import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
@@ -36,7 +35,7 @@ public class AdapterOrder extends BaseQuickAdapter<OrderBean.ElementsBean, BaseV
         helper.setText(R.id.tv_title, orderDetailDtoListBean.getGoodsName());
         helper.setText(R.id.tv_desc, orderDetailDtoListBean.getGoodsAttrDescription());
         helper.setText(R.id.tv_price, String.valueOf(orderDetailDtoListBean.getPrice()));
-        helper.setText(R.id.tv_number, "x " + orderDetailDtoListBean.getGoodsAmount());
+        helper.setText(R.id.tv_order_amount, "x " + orderDetailDtoListBean.getGoodsAmount());
         helper.addOnClickListener(R.id.btn_red);
         helper.addOnClickListener(R.id.btn_white);
         ImageDisplayUtil.showImageView(mContext, orderDetailDtoListBean.getThumbImageURL(), mIvCover);
@@ -56,7 +55,7 @@ public class AdapterOrder extends BaseQuickAdapter<OrderBean.ElementsBean, BaseV
             case "WaitPay":
                 helper.setText(R.id.tv_order_stature, "等待付款");
                 mBtnRed.setVisibility(View.VISIBLE);
-                mBtnWhite.setText(View.VISIBLE);
+                mBtnWhite.setVisibility(View.VISIBLE);
                 mBtnWhite.setText("取消订单");
                 mBtnRed.setText("等待付款");
                 break;

@@ -4,12 +4,12 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.StyleRes;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -18,18 +18,28 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.google.gson.reflect.TypeToken;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
+import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterSpecification;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
+import com.shiwaixiangcun.customer.interfaces.TagClick;
 import com.shiwaixiangcun.customer.model.GoodDetail;
+import com.shiwaixiangcun.customer.model.StockBean;
+import com.shiwaixiangcun.customer.response.ResponseEntity;
 import com.shiwaixiangcun.customer.ui.activity.ConfirmOrderActivity;
+import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,8 +50,8 @@ import butterknife.ButterKnife;
 
 public class DialogSku extends Dialog implements DialogInterface.OnCancelListener, View.OnClickListener {
 
-    private static String TAG = "skuDialog";
-    @BindView(R.id.iv_cover_sku)
+    private final String BUG_TAG = "skuDialog";
+    @BindView(R.id.iv_good_cover)
     ImageView mIvCoverSku;
     @BindView(R.id.tv_price_sku)
     TextView mTvPriceSku;
@@ -57,18 +67,18 @@ public class DialogSku extends Dialog implements DialogInterface.OnCancelListene
     Button mBtnConfirm;
     GoodDetail goodDetail;
     AdapterSpecification mAdapter;
+    StringBuilder idBuilder = new StringBuilder();
     private Context mContext;
     private int mGoodId;
+    private double mFare;
+    private String shopName;
     private HashMap<String, GoodDetail.DataBean.SpecificationsBean.AttributesBean> goodsInfoMap;
-
     private List<GoodDetail.DataBean.SpecificationsBean> mSpecificationList;
-
     public DialogSku(@NonNull Context context) {
         super(context, R.style.AlertDialogStyle);
         this.mContext = context;
         initView();
     }
-
 
     public DialogSku(@NonNull Context context, @StyleRes int themeResId, int id) {
         super(context, themeResId);
@@ -77,6 +87,11 @@ public class DialogSku extends Dialog implements DialogInterface.OnCancelListene
         initView();
         loadData();
         initEvent();
+    }
+
+    public void setData(double fare, String shopName) {
+        this.mFare = fare;
+        this.shopName = shopName;
     }
 
     @Override
@@ -106,9 +121,10 @@ public class DialogSku extends Dialog implements DialogInterface.OnCancelListene
         setContentView(R.layout.layout_sku);
         ButterKnife.bind(this);
         mSpecificationList = new ArrayList<>();
-        mAdapter = new AdapterSpecification(mContext);
+        mAdapter = new AdapterSpecification(mContext, mGoodId);
         mRvAttr.setLayoutManager(new LinearLayoutManager(mContext));
         mRvAttr.setAdapter(mAdapter);
+
     }
 
     @Override
@@ -123,10 +139,9 @@ public class DialogSku extends Dialog implements DialogInterface.OnCancelListene
     private void loadData() {
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("id", mGoodId);
-        HttpRequest.get("http://mk.shiwaixiangcun.cn/mi/goods/detail.json", hashMap, new HttpCallBack() {
+        HttpRequest.get(GlobalConfig.getGoodDetail, hashMap, new HttpCallBack() {
             @Override
             public void onSuccess(String responseJson) {
-                Log.e("SKU", "onSuccess");
                 goodDetail = JsonUtil.fromJson(responseJson, GoodDetail.class);
                 if (null == goodDetail) {
                     return;
@@ -144,16 +159,60 @@ public class DialogSku extends Dialog implements DialogInterface.OnCancelListene
     }
 
     private void fillData(GoodDetail.DataBean data) {
+        mTvStockSku.setText("价格：");
+        mTvStockSku.setText("库存： ");
+        StringBuilder nameBuilder = new StringBuilder();
+
+        nameBuilder.append("请选择: ");
+        ImageDisplayUtil.showImageView(mContext, data.getImages().get(0).getThumbImageURL(), mIvCoverSku);
         List<GoodDetail.DataBean.SpecificationsBean> specifications = data.getSpecifications();
+        for (GoodDetail.DataBean.SpecificationsBean bean : specifications) {
+            nameBuilder.append(bean.getName()).append(" ");
+            idBuilder.append(mAdapter.getIdMap().get(bean.getName())).append(",");
+        }
+        mTvResultSku.setText(nameBuilder.toString());
         mSpecificationList.addAll(specifications);
         mAdapter.addData(mSpecificationList);
+        mAdapter.setTagClick(new TagClick() {
+            @Override
+            public void onTagClick() {
+                requestStock(mAdapter.getIdBuilder().toString());
+            }
+
+
+        });
         mAdapter.notifyDataSetChanged();
         if (data.getImages() == null) {
             return;
         }
-        Glide.with(mContext).load(data.getImages().get(0).getAccessUrl()).into(mIvCoverSku);
     }
 
+    private void requestStock(String s) {
+        OkGo.<String>get(GlobalConfig.getStock + mGoodId + ".json")
+                .params("attributeIds", s)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        String jsonString = response.body();
+                        if (jsonString == null) {
+                            return;
+                        }
+                        Type type = new TypeToken<ResponseEntity<StockBean>>() {
+                        }.getType();
+                        ResponseEntity<StockBean> stockResponseEntity = JsonUtil.fromJson(jsonString, type);
+                        if (stockResponseEntity == null) {
+                            return;
+                        }
+                        switch (stockResponseEntity.getResponseCode()) {
+                            case 1001:
+                                StockBean data = stockResponseEntity.getData();
+                                mTvPriceSku.setText("价格: " + String.valueOf(data.getMinPrice()));
+                                mTvStockSku.setText("库存: " + data.getStock() + "");
+                                break;
+                        }
+                    }
+                });
+    }
 
     @Override
     public void onClick(View view) {
@@ -162,7 +221,20 @@ public class DialogSku extends Dialog implements DialogInterface.OnCancelListene
                 dismiss();
                 break;
             case R.id.btn_confirm:
+                HashMap<String, String> valueMap = mAdapter.getValueMap();
+                StringBuilder nameBuilder = new StringBuilder();
+                Set setValue = valueMap.keySet();
+                for (Object aSetValue : setValue) {
+                    String key = (String) aSetValue;
+                    nameBuilder.append(key).append(":").append(valueMap.get(key)).append(";");
+                }
                 Intent intent = new Intent();
+                Bundle bundle = new Bundle();
+                bundle.putInt("goodId", mGoodId);
+                bundle.putString("value", nameBuilder.toString());
+                bundle.putString("id", idBuilder.toString());
+                bundle.putParcelable("goodInfo", goodDetail.getData());
+                intent.putExtras(bundle);
                 intent.setClass(mContext, ConfirmOrderActivity.class);
                 mContext.startActivity(intent);
                 dismiss();

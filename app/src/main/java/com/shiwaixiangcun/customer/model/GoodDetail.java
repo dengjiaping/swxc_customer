@@ -1,5 +1,9 @@
 package com.shiwaixiangcun.customer.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -54,7 +58,18 @@ public class GoodDetail {
         this.success = success;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Parcelable {
+        public static final Parcelable.Creator<DataBean> CREATOR = new Parcelable.Creator<DataBean>() {
+            @Override
+            public DataBean createFromParcel(Parcel source) {
+                return new DataBean(source);
+            }
+
+            @Override
+            public DataBean[] newArray(int size) {
+                return new DataBean[size];
+            }
+        };
         /**
          * categoryFullName : 水果蔬菜
          * categoryId : 2
@@ -119,6 +134,41 @@ public class GoodDetail {
         private List<ImagesBean> images;
         private List<ServicesBean> services;
         private List<SpecificationsBean> specifications;
+
+        public DataBean() {
+        }
+
+        protected DataBean(Parcel in) {
+            this.categoryFullName = in.readString();
+            this.categoryId = in.readInt();
+            this.cityName = in.readString();
+            this.feature = in.readString();
+            this.goodsCode = in.readString();
+            this.goodsDetail = in.readString();
+            this.goodsName = in.readString();
+            this.goodsNumber = in.readInt();
+            this.goodsStatus = in.readString();
+            this.id = in.readInt();
+            this.limitBuyAmount = in.readInt();
+            this.minPrice = in.readDouble();
+            this.publishTime = in.readString();
+            this.publishWay = in.readString();
+            this.published = in.readByte() != 0;
+            this.salesVolume = in.readInt();
+            this.sellerId = in.readInt();
+            this.sellerNumber = in.readString();
+            this.shopName = in.readString();
+            this.stock = in.readInt();
+            this.transportMoney = in.readDouble();
+            this.goodsPriceStores = new ArrayList<GoodsPriceStoresBean>();
+            in.readList(this.goodsPriceStores, GoodsPriceStoresBean.class.getClassLoader());
+            this.images = new ArrayList<ImagesBean>();
+            in.readList(this.images, ImagesBean.class.getClassLoader());
+            this.services = new ArrayList<ServicesBean>();
+            in.readList(this.services, ServicesBean.class.getClassLoader());
+            this.specifications = new ArrayList<SpecificationsBean>();
+            in.readList(this.specifications, SpecificationsBean.class.getClassLoader());
+        }
 
         public String getCategoryFullName() {
             return categoryFullName;
@@ -320,7 +370,52 @@ public class GoodDetail {
             this.specifications = specifications;
         }
 
-        public static class GoodsPriceStoresBean {
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.categoryFullName);
+            dest.writeInt(this.categoryId);
+            dest.writeString(this.cityName);
+            dest.writeString(this.feature);
+            dest.writeString(this.goodsCode);
+            dest.writeString(this.goodsDetail);
+            dest.writeString(this.goodsName);
+            dest.writeInt(this.goodsNumber);
+            dest.writeString(this.goodsStatus);
+            dest.writeInt(this.id);
+            dest.writeInt(this.limitBuyAmount);
+            dest.writeDouble(this.minPrice);
+            dest.writeString(this.publishTime);
+            dest.writeString(this.publishWay);
+            dest.writeByte(this.published ? (byte) 1 : (byte) 0);
+            dest.writeInt(this.salesVolume);
+            dest.writeInt(this.sellerId);
+            dest.writeString(this.sellerNumber);
+            dest.writeString(this.shopName);
+            dest.writeInt(this.stock);
+            dest.writeDouble(this.transportMoney);
+            dest.writeList(this.goodsPriceStores);
+            dest.writeList(this.images);
+            dest.writeList(this.services);
+            dest.writeList(this.specifications);
+        }
+
+        public static class GoodsPriceStoresBean implements Parcelable {
+            public static final Creator<GoodsPriceStoresBean> CREATOR = new Creator<GoodsPriceStoresBean>() {
+                @Override
+                public GoodsPriceStoresBean createFromParcel(Parcel source) {
+                    return new GoodsPriceStoresBean(source);
+                }
+
+                @Override
+                public GoodsPriceStoresBean[] newArray(int size) {
+                    return new GoodsPriceStoresBean[size];
+                }
+            };
             /**
              * attributeIds : null
              * attributes : 1kg_1
@@ -336,6 +431,18 @@ public class GoodDetail {
             private double price;
             private String sellerNumber;
             private int storeAmount;
+
+            public GoodsPriceStoresBean() {
+            }
+
+            protected GoodsPriceStoresBean(Parcel in) {
+                this.attributeIds = in.readString();
+                this.attributes = in.readString();
+                this.goodsCode = in.readString();
+                this.price = in.readDouble();
+                this.sellerNumber = in.readString();
+                this.storeAmount = in.readInt();
+            }
 
             public String getAttributeIds() {
                 return attributeIds;
@@ -384,9 +491,35 @@ public class GoodDetail {
             public void setStoreAmount(int storeAmount) {
                 this.storeAmount = storeAmount;
             }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeString(this.attributeIds);
+                dest.writeString(this.attributes);
+                dest.writeString(this.goodsCode);
+                dest.writeDouble(this.price);
+                dest.writeString(this.sellerNumber);
+                dest.writeInt(this.storeAmount);
+            }
         }
 
-        public static class ImagesBean {
+        public static class ImagesBean implements Parcelable {
+            public static final Creator<ImagesBean> CREATOR = new Creator<ImagesBean>() {
+                @Override
+                public ImagesBean createFromParcel(Parcel source) {
+                    return new ImagesBean(source);
+                }
+
+                @Override
+                public ImagesBean[] newArray(int size) {
+                    return new ImagesBean[size];
+                }
+            };
             /**
              * accessUrl : http://resource.shiwaixiangcun.cn/group1/M00/00/56/rBKx51m2Q0WATSGoAAAyxNR9tng611.jpg
              * fileId : 4427
@@ -396,6 +529,15 @@ public class GoodDetail {
             private String accessUrl;
             private int fileId;
             private String thumbImageURL;
+
+            public ImagesBean() {
+            }
+
+            protected ImagesBean(Parcel in) {
+                this.accessUrl = in.readString();
+                this.fileId = in.readInt();
+                this.thumbImageURL = in.readString();
+            }
 
             public String getAccessUrl() {
                 return accessUrl;
@@ -420,9 +562,32 @@ public class GoodDetail {
             public void setThumbImageURL(String thumbImageURL) {
                 this.thumbImageURL = thumbImageURL;
             }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeString(this.accessUrl);
+                dest.writeInt(this.fileId);
+                dest.writeString(this.thumbImageURL);
+            }
         }
 
-        public static class ServicesBean {
+        public static class ServicesBean implements Parcelable {
+            public static final Creator<ServicesBean> CREATOR = new Creator<ServicesBean>() {
+                @Override
+                public ServicesBean createFromParcel(Parcel source) {
+                    return new ServicesBean(source);
+                }
+
+                @Override
+                public ServicesBean[] newArray(int size) {
+                    return new ServicesBean[size];
+                }
+            };
             /**
              * id : 240
              * name : 7天退换
@@ -432,6 +597,15 @@ public class GoodDetail {
             private int id;
             private String name;
             private String remark;
+
+            public ServicesBean() {
+            }
+
+            protected ServicesBean(Parcel in) {
+                this.id = in.readInt();
+                this.name = in.readString();
+                this.remark = in.readString();
+            }
 
             public int getId() {
                 return id;
@@ -456,9 +630,32 @@ public class GoodDetail {
             public void setRemark(String remark) {
                 this.remark = remark;
             }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeInt(this.id);
+                dest.writeString(this.name);
+                dest.writeString(this.remark);
+            }
         }
 
-        public static class SpecificationsBean {
+        public static class SpecificationsBean implements Parcelable {
+            public static final Creator<SpecificationsBean> CREATOR = new Creator<SpecificationsBean>() {
+                @Override
+                public SpecificationsBean createFromParcel(Parcel source) {
+                    return new SpecificationsBean(source);
+                }
+
+                @Override
+                public SpecificationsBean[] newArray(int size) {
+                    return new SpecificationsBean[size];
+                }
+            };
             /**
              * attributes : [{"id":36,"selected":false,"value":"1kg"}]
              * id : 1
@@ -468,6 +665,16 @@ public class GoodDetail {
             private int id;
             private String name;
             private List<AttributesBean> attributes;
+
+            public SpecificationsBean() {
+            }
+
+            protected SpecificationsBean(Parcel in) {
+                this.id = in.readInt();
+                this.name = in.readString();
+                this.attributes = new ArrayList<AttributesBean>();
+                in.readList(this.attributes, AttributesBean.class.getClassLoader());
+            }
 
             public int getId() {
                 return id;
@@ -493,7 +700,30 @@ public class GoodDetail {
                 this.attributes = attributes;
             }
 
-            public static class AttributesBean {
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeInt(this.id);
+                dest.writeString(this.name);
+                dest.writeList(this.attributes);
+            }
+
+            public static class AttributesBean implements Parcelable {
+                public static final Creator<AttributesBean> CREATOR = new Creator<AttributesBean>() {
+                    @Override
+                    public AttributesBean createFromParcel(Parcel source) {
+                        return new AttributesBean(source);
+                    }
+
+                    @Override
+                    public AttributesBean[] newArray(int size) {
+                        return new AttributesBean[size];
+                    }
+                };
                 /**
                  * id : 36
                  * selected : false
@@ -503,6 +733,15 @@ public class GoodDetail {
                 private int id;
                 private boolean selected;
                 private String value;
+
+                public AttributesBean() {
+                }
+
+                protected AttributesBean(Parcel in) {
+                    this.id = in.readInt();
+                    this.selected = in.readByte() != 0;
+                    this.value = in.readString();
+                }
 
                 public int getId() {
                     return id;
@@ -526,6 +765,18 @@ public class GoodDetail {
 
                 public void setValue(String value) {
                     this.value = value;
+                }
+
+                @Override
+                public int describeContents() {
+                    return 0;
+                }
+
+                @Override
+                public void writeToParcel(Parcel dest, int flags) {
+                    dest.writeInt(this.id);
+                    dest.writeByte(this.selected ? (byte) 1 : (byte) 0);
+                    dest.writeString(this.value);
                 }
             }
         }

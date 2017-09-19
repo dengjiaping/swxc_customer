@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
 
+    android:layout_width="match_parent"
     android:layout_height="140dp"
     android:background="@color/white">
 
     <ImageView
-        android:id="@+id/iv_cover_sku"
+        android:id="@+id/iv_good_cover"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center_vertical"
@@ -28,9 +29,9 @@
             android:layout_height="26dp"
             android:layout_marginTop="20dp"
             android:gravity="center_vertical"
-            android:text="¥399.00"
             android:textColor="#FFFF1717"
             android:textSize="18sp"
+            tools:text="¥399.00"
             />
 
         <TextView
@@ -39,9 +40,9 @@
             android:layout_height="26dp"
             android:layout_marginTop="8dp"
             android:gravity="center_vertical"
-            android:text="库存  28件"
             android:textColor="@color/gray"
             android:textSize="16sp"
+            tools:text="库存  28件"
             />
 
         <TextView
@@ -50,9 +51,9 @@
             android:layout_height="26dp"
             android:layout_marginTop="8dp"
             android:gravity="center_vertical"
-            android:text="请选择  颜色  款式"
             android:textColor="@color/gray"
             android:textSize="16sp"
+            tools:text="请选择  颜色  款式"
             />
 
     </LinearLayout>
