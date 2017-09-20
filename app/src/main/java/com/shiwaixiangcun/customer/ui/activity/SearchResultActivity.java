@@ -1,7 +1,6 @@
 package com.shiwaixiangcun.customer.ui.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -13,21 +12,33 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.HttpParams;
+import com.lzy.okgo.model.Response;
 import com.shiwaixiangcun.customer.BaseActivity;
+import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterSearchResult;
-import com.shiwaixiangcun.customer.http.HttpCallBack;
-import com.shiwaixiangcun.customer.http.HttpRequest;
-import com.shiwaixiangcun.customer.model.SearchResult;
-import com.shiwaixiangcun.customer.utils.JsonUtil;
+import com.shiwaixiangcun.customer.event.EventCenter;
+import com.shiwaixiangcun.customer.event.SimpleEvent;
+import com.shiwaixiangcun.customer.http.StringDialogCallBack;
+import com.shiwaixiangcun.customer.response.ResponseEntity;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -43,74 +54,131 @@ public class SearchResultActivity extends BaseActivity implements View.OnClickLi
     Toolbar mToolbar;
     @BindView(R.id.rv_search_result)
     RecyclerView mRvSearchResult;
-
+    @BindView(R.id.rlayout_no_data)
+    RelativeLayout mRlayoutNoData;
     private AdapterSearchResult mAdapter;
-    private List<SearchResult.DataBean.ElementsBean> mList = new ArrayList<>();
+    private List<ElementBean.ElementsBean> mList = new ArrayList<>();
+    private String searchKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_reasult);
+        setContentView(R.layout.activity_search_result);
+        EventCenter.getInstance().register(this);
         ButterKnife.bind(this);
+        Bundle bundle = getIntent().getExtras();
+        searchKey = bundle.getString("name");
+        Log.e(BUG_TAG, searchKey);
+        requestData(searchKey, 1, 10);
         initView();
-        requestData();
     }
 
-    private void requestData() {
-        // TODO: 2017/9/8 向网络请求数据
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventCenter.getInstance().unregister(this);
+    }
 
-        HashMap<String, Object> params = new HashMap();
-        params.put("goodsSubjectValue", "DailySelection");
-        params.put("page.pn", "1");
-        params.put("page.size", "6");
-        params.put("siteId", "1");
-        HttpRequest.get("http://mk.shiwaixiangcun.cn/mi/goods/subject/listpage.json", params, new HttpCallBack() {
-            @Override
-            public void onSuccess(String responseJson) {
-                Log.e(BUG_TAG, "请求成功");
-                SearchResult mallGoods = JsonUtil.fromJson(responseJson, SearchResult.class);
-                if (mallGoods != null) {
-                    mAdapter.addData(mallGoods.getData().getElements());
-                    mAdapter.notifyDataSetChanged();
-                }
-                super.onSuccess(responseJson);
-            }
+    /**
+     * 从服务器获取数据以后更新
+     *
+     * @param simpleEvent
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void handleEvent(SimpleEvent simpleEvent) {
+        if (simpleEvent.mEventType != SimpleEvent.UPDATE_SEARCH) {
+            return;
+        }
+        switch (simpleEvent.mEventValue) {
+            case 1:
+                ElementBean guessData = (ElementBean) simpleEvent.getData();
+                mList.clear();
+                mList.addAll(guessData.getElements());
+                mAdapter.notifyDataSetChanged();
+                break;
 
-            @Override
-            public void onFailed(Exception e) {
-                Log.e(BUG_TAG, "请求失败");
 
-            }
-        });
+        }
+    }
+
+    /**
+     * 请求网络数据
+     *
+     * @param page 页码
+     * @param size 每页数目
+     */
+    private void requestData(String keyword, int page, int size) {
+        HttpParams httpParams = new HttpParams();
+        httpParams.put("search", keyword);
+        httpParams.put("page.pn", page);
+        httpParams.put("page.size", size);
+        httpParams.put("siteId", 1);
+        OkGo.<String>get(GlobalConfig.searchGood)
+                .params(httpParams)
+                .execute(new StringDialogCallBack(this) {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        String jsonString = response.body();
+                        Type type = new TypeToken<ResponseEntity<ElementBean>>() {
+                        }.getType();
+                        Gson gson = new Gson();
+                        ResponseEntity<ElementBean> data = gson.fromJson(jsonString, type);
+                        if (data == null) {
+                            return;
+                        }
+                        switch (data.getResponseCode()) {
+                            case 1001:
+                                if (data.getData().getElements().size() == 0) {
+                                    mRlayoutNoData.setVisibility(View.VISIBLE);
+                                    return;
+                                }
+                                mRlayoutNoData.setVisibility(View.GONE);
+                                EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_SEARCH, 1, data.getData()));
+                                break;
+                        }
+                    }
+                });
+
+
     }
 
     private void initView() {
+
+
         mRvSearchResult.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new AdapterSearchResult(mList);
         mRvSearchResult.setAdapter(mAdapter);
+        mBackLeft.setOnClickListener(this);
         mRvSearchResult.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.VERTICAL));
-
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent = new Intent();
-                intent.setClass(mContext, GoodDetailActivity.class);
-                startActivity(intent);
+                Bundle bundle = new Bundle();
+                bundle.putInt("goodId", mList.get(position).getGoodsId());
+                readyGo(GoodDetailActivity.class, bundle);
             }
         });
 
+        mEditSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                searchKey = mEditSearch.getText().toString();
+                Log.e(BUG_TAG, searchKey);
+                requestData(searchKey, 1, 10);
+                return false;
+            }
+        });
     }
+
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back_left:
                 finish();
-
                 break;
-
-
         }
+
     }
 
     private static class RecycleViewDivider extends RecyclerView.ItemDecoration {

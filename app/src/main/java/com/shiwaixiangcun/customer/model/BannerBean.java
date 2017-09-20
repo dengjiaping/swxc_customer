@@ -3,7 +3,7 @@ package com.shiwaixiangcun.customer.model;
 /**
  * Created by Administrator on 2017/5/24.
  */
-public class Banner {
+public class BannerBean {
 
     private String imagePath;
     private String link;

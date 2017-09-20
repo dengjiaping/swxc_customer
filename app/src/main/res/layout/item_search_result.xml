@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="140dp"
+              xmlns:tools="http://schemas.android.com/tools"
               android:background="@color/white"
               android:orientation="horizontal">
 
@@ -12,8 +13,7 @@
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="8dp"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/m"/>
+        android:scaleType="centerCrop"/>
 
     <LinearLayout
         android:layout_width="0dp"
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:maxLines="2"
             android:minLines="2"
-            android:text="海底捞火锅底料 自热式自煮方便火锅 菜多多牛油麻辣"
+            tools:text="海底捞火锅底料 自热式自煮方便火锅 菜多多牛油麻辣"
             android:textColor="#FF2D3230"
             android:textSize="16sp"/>
 
@@ -42,7 +42,7 @@
             android:layout_marginTop="8dp"
             android:maxLines="1"
             android:minLines="1"
-            android:text="晒单赢好礼，仅限前99名"
+            tools:text="晒单赢好礼，仅限前99名"
             android:textColor="#FFF6A623"
             android:textSize="14sp"/>
 
@@ -53,7 +53,7 @@
             android:layout_marginTop="8dp"
             android:maxLines="1"
             android:minLines="1"
-            android:text="¥25.9"
+            tools:text="¥25.9"
             android:textColor="#FFFF1717"
             android:textSize="18sp"/>
 

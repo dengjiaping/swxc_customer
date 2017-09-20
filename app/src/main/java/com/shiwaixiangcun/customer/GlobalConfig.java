@@ -9,6 +9,7 @@ public class GlobalConfig {
 
     //测试地址
 
+    private static String OT_DOMAIN = "http://ot.shiwaixiangcun.cn";
     private static String DEBUG_DOMAIN = "http://mk.shiwaixiangcun.cn";
     private static String DOMAIN = DEBUG_DOMAIN;
 
@@ -25,4 +26,8 @@ public class GlobalConfig {
     public static String getMallHome = DOMAIN + "/mi/goods/subject/home.json";
     public static String getGoodDetail = DOMAIN + "/mi/goods/detail.json";
     public static String getStock = DOMAIN + "/mi/goods/detail/attribute/";
+    public static String getGuessLike = DOMAIN + "/mi/goods/subject/listpage.json";
+    public static String getBanner = OT_DOMAIN + "/mi/banner/listdata.json";
+    public static String getKeyword = DOMAIN + "/mi/keywords.json";
+    public static String searchGood=DOMAIN+"/mi/goods/search/listpage.json";
 }

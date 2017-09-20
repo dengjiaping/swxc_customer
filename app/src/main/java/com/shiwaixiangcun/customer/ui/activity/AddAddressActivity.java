@@ -19,6 +19,8 @@ import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
+import com.shiwaixiangcun.customer.model.AddAddressBean;
+import com.shiwaixiangcun.customer.model.AddressBean;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.response.ResponseEntity;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
@@ -139,7 +141,7 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
                 @Override
                 public void onSuccess(String responseJson) {
                     super.onSuccess(responseJson);
-                    ResponseEntity response = JsonUtil.fromJson(responseJson, ResponseEntity.class);
+                    AddAddressBean response = JsonUtil.fromJson(responseJson, AddAddressBean.class);
                     if (response == null) {
                         return;
                     }
@@ -148,12 +150,12 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
                             Toast.makeText(mContext, "保存成功", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent();
                             Bundle bundle = new Bundle();
+                            bundle.putInt("addressID",response.getData().getId());
                             bundle.putString("userName", userName);
                             bundle.putString("userPhone", userPhone);
                             bundle.putString("userAddress", userAddress);
-
                             intent.putExtras(bundle);
-                            setResult(0X12, intent);
+                            setResult(0x12, intent);
                             finish();
                             break;
                         case 1002:

@@ -3,12 +3,14 @@ package com.shiwaixiangcun.customer.adapter;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.model.GoodDetail;
-import com.zhy.view.flowlayout.FlowLayout;
-import com.zhy.view.flowlayout.TagAdapter;
+import com.shiwaixiangcun.customer.widget.flowtag.OnInitSelectedPosition;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,35 +19,55 @@ import java.util.List;
  * Created by Administrator on 2017/9/12.
  */
 
-public class AdapterTag extends TagAdapter<GoodDetail.DataBean.SpecificationsBean.AttributesBean> {
+public class AdapterTag extends BaseAdapter implements OnInitSelectedPosition {
 
-    private List<GoodDetail.DataBean.SpecificationsBean.AttributesBean> mDatas = new ArrayList<>();
+    private final Context mContext;
+    private final List<String> mDataList;
 
-    private Context mContext;
-
-    public AdapterTag(Context context, List<GoodDetail.DataBean.SpecificationsBean.AttributesBean> datas) {
-        super(datas);
+    public AdapterTag(Context context) {
         this.mContext = context;
-        mDatas.addAll(datas);
+        this.mDataList = new ArrayList<>();
     }
 
-
     @Override
-    public boolean setSelected(int position, GoodDetail.DataBean.SpecificationsBean.AttributesBean attributesBean) {
-
-
-        return true;
+    public int getCount() {
+        return mDataList.size();
     }
 
+    @Override
+    public Object getItem(int position) {
+        return mDataList.get(position);
+    }
 
     @Override
-    public View getView(FlowLayout parent, int position, GoodDetail.DataBean.SpecificationsBean.AttributesBean attributesBean) {
-        View convertView = LayoutInflater.from(mContext).inflate(R.layout.tag_attrs, parent, false);
-        TextView textView = (TextView) convertView.findViewById(R.id.tv_tag);
-        GoodDetail.DataBean.SpecificationsBean.AttributesBean bean = mDatas.get(position);
-        textView.setText(bean.getValue());
-        textView.setSelected(true);
+    public long getItemId(int position) {
+        return position;
+    }
 
-        return convertView;
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+
+        View view = LayoutInflater.from(mContext).inflate(R.layout.search_tag, parent, false);
+        TextView textView = (TextView) view.findViewById(R.id.tv_tag);
+
+        String t = mDataList.get(position);
+        textView.setText(t);
+        return view;
+    }
+
+    public void onlyAddAll(List<String> datas) {
+        mDataList.addAll(datas);
+        notifyDataSetChanged();
+    }
+
+    public void clearAndAddAll(List<String> datas) {
+        mDataList.clear();
+        onlyAddAll(datas);
+    }
+
+    @Override
+    public boolean isSelectedPosition(int position) {
+
+        return false;
     }
 }

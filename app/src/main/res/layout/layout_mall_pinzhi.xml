@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#fff"
-    android:orientation="vertical"
-    android:paddingBottom="10dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="16dp">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="#fff"
+              android:orientation="vertical"
+              android:paddingBottom="10dp"
+              android:paddingLeft="16dp"
+              android:paddingRight="16dp"
+              android:paddingTop="16dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -21,7 +22,8 @@
             android:layout_centerVertical="true"
             android:text="品质好货"
             android:textColor="@color/mall_title"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/tv_pinzhi_more"
@@ -32,10 +34,11 @@
             android:layout_centerVertical="true"
             android:text="更多"
             android:textColor="@color/more_gray"
-            android:textSize="14sp" />
+            android:textSize="14sp"/>
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/llayout_pingzhi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -53,20 +56,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="16dp"
-                android:paddingBottom="16dp"
-                android:text="水果蔬菜苹果"
+                android:layout_marginTop="8dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:paddingBottom="6dp"
                 android:textColor="@color/mall_text"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                tools:text="水果蔬菜苹果"/>
 
             <TextView
                 android:id="@+id/tv_pinzhi_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                android:text="168.00"
                 android:textColor="@color/mall_price"
-                android:textSize="14sp" />
+                android:textSize="16sp"
+                tools:text="¥168.00"/>
 
         </LinearLayout>
 
@@ -75,7 +80,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:scaleType="centerCrop"
-            android:src="@mipmap/m" />
+            />
     </LinearLayout>
 
 </LinearLayout>

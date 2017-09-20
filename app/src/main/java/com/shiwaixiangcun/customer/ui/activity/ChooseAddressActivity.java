@@ -128,7 +128,9 @@ public class ChooseAddressActivity extends BaseActivity implements View.OnClickL
                 finish();
                 break;
             case R.id.tv_top_right:
-                readyGo(ManageAddressActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putBoolean("clickable",false);
+                readyGo(ManageAddressActivity.class,bundle);
                 break;
         }
 

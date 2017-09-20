@@ -1,5 +1,6 @@
 package com.shiwaixiangcun.customer.ui.activity;
 
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -68,15 +69,18 @@ public class ManageAddressActivity extends BaseActivity implements View.OnClickL
     private String token = "";
     private LoadingDialog loadingDialog;
 
+    private boolean clickable = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_address);
         ButterKnife.bind(this);
+        Bundle bundle = getIntent().getExtras();
+        clickable = bundle.getBoolean("clickable");
         initToken();
         initView();
         initEvent();
-//        initData();
     }
 
     /**
@@ -162,14 +166,23 @@ public class ManageAddressActivity extends BaseActivity implements View.OnClickL
                 outRect.set(0, 0, 0, DisplayUtil.dip2px(mContext, 10));
             }
         });
-        mManageAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Toast.makeText(mContext, "item点击", Toast.LENGTH_SHORT).show();
-
-//                readyGo();
-            }
-        });
+        if (clickable) {
+            mManageAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                    AddressBean addressInfo = mAddressBeanList.get(position);
+                    Intent intent = new Intent();
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("addressID",addressInfo.getId());
+                    bundle.putString("userName", addressInfo.getDeliveryName());
+                    bundle.putString("userPhone", addressInfo.getDeliveryPhone());
+                    bundle.putString("userAddress", addressInfo.getDeliveryAddress());
+                    intent.putExtras(bundle);
+                    setResult(0x13, intent);
+                    finish();
+                }
+            });
+        }
         mManageAdapter.setCheckboxClickListener(new onCheckboxClickListener() {
             @Override
             public void checkboxClick(int position, View view, boolean modify) {

@@ -2,6 +2,13 @@ package com.shiwaixiangcun.customer.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
@@ -14,7 +21,9 @@ import java.lang.reflect.Type;
 
 public class JsonUtil {
     public static String toJson(Object object) {
-        Gson gson = new GsonBuilder().registerTypeAdapterFactory(new NullStringToEmptyAdapterFactory()).create();
+        GsonBuilder gb = new GsonBuilder();
+        gb.registerTypeAdapter(String.class, new StringConverter());
+        Gson gson = gb.create();
         try {
             return gson.toJson(object);
         } catch (Exception e) {
@@ -25,7 +34,9 @@ public class JsonUtil {
 
     public static <T> T fromJson(String json, Class<T> classOfT) {
 
-        Gson gson = new GsonBuilder().registerTypeAdapterFactory(new NullStringToEmptyAdapterFactory()).create();
+        GsonBuilder gb = new GsonBuilder();
+        gb.registerTypeAdapter(String.class, new StringConverter());
+        Gson gson = gb.create();
         try {
             return gson.fromJson(json, classOfT);
         } catch (Exception e) {
@@ -35,7 +46,9 @@ public class JsonUtil {
     }
 
     public static <T> T fromJson(String json, Type typeOfT) {
-        Gson gson = new GsonBuilder().registerTypeAdapterFactory(new NullStringToEmptyAdapterFactory()).create();
+        GsonBuilder gb = new GsonBuilder();
+        gb.registerTypeAdapter(String.class, new StringConverter());
+        Gson gson = gb.create();
         try {
             return gson.fromJson(json, typeOfT);
         } catch (Exception e) {
@@ -45,38 +58,22 @@ public class JsonUtil {
     }
 
 
-    public static class NullStringToEmptyAdapterFactory<T> implements TypeAdapterFactory {
-        @SuppressWarnings("unchecked")
-        public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-            Class<T> rawType = (Class<T>) type.getRawType();
-            if (rawType != String.class) {
-                return null;
+    public static class StringConverter implements JsonSerializer<String>,
+            JsonDeserializer<String> {
+        public JsonElement serialize(String src, Type typeOfSrc,
+                                     JsonSerializationContext context) {
+            if (src == null) {
+                return new JsonPrimitive("");
+            } else {
+                return new JsonPrimitive(src.toString());
             }
-            return (TypeAdapter<T>) new StringNullAdapter();
+        }
+
+        public String deserialize(JsonElement json, Type typeOfT,
+                                  JsonDeserializationContext context)
+                throws JsonParseException {
+            return json.getAsJsonPrimitive().getAsString();
         }
     }
-
-    public static class StringNullAdapter extends TypeAdapter<String> {
-        @Override
-        public String read(JsonReader reader) throws IOException {
-            // TODO Auto-generated method stub
-            if (reader.peek() == JsonToken.NULL) {
-                reader.nextNull();
-                return "";
-            }
-            return reader.nextString();
-        }
-
-        @Override
-        public void write(JsonWriter writer, String value) throws IOException {
-            // TODO Auto-generated method stub
-            if (value == null) {
-                writer.nullValue();
-                return;
-            }
-            writer.value(value);
-        }
-    }
-
 
 }

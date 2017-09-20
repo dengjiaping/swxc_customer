@@ -10,6 +10,7 @@ import android.support.annotation.StyleRes;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -32,6 +33,7 @@ import com.shiwaixiangcun.customer.model.GoodDetail;
 import com.shiwaixiangcun.customer.model.StockBean;
 import com.shiwaixiangcun.customer.response.ResponseEntity;
 import com.shiwaixiangcun.customer.ui.activity.ConfirmOrderActivity;
+import com.shiwaixiangcun.customer.utils.ArithmeticUtils;
 import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 
@@ -67,13 +69,12 @@ public class DialogSku extends Dialog implements DialogInterface.OnCancelListene
     Button mBtnConfirm;
     GoodDetail goodDetail;
     AdapterSpecification mAdapter;
-    StringBuilder idBuilder = new StringBuilder();
     private Context mContext;
     private int mGoodId;
-    private double mFare;
-    private String shopName;
-    private HashMap<String, GoodDetail.DataBean.SpecificationsBean.AttributesBean> goodsInfoMap;
     private List<GoodDetail.DataBean.SpecificationsBean> mSpecificationList;
+    private StringBuilder nameBuilder = new StringBuilder();
+    private List<String> mNameList = new ArrayList<>();
+
     public DialogSku(@NonNull Context context) {
         super(context, R.style.AlertDialogStyle);
         this.mContext = context;
@@ -87,11 +88,6 @@ public class DialogSku extends Dialog implements DialogInterface.OnCancelListene
         initView();
         loadData();
         initEvent();
-    }
-
-    public void setData(double fare, String shopName) {
-        this.mFare = fare;
-        this.shopName = shopName;
     }
 
     @Override
@@ -161,16 +157,16 @@ public class DialogSku extends Dialog implements DialogInterface.OnCancelListene
     private void fillData(GoodDetail.DataBean data) {
         mTvStockSku.setText("价格：");
         mTvStockSku.setText("库存： ");
-        StringBuilder nameBuilder = new StringBuilder();
-
-        nameBuilder.append("请选择: ");
+        mTvResultSku.setText("请选择： ");
         ImageDisplayUtil.showImageView(mContext, data.getImages().get(0).getThumbImageURL(), mIvCoverSku);
         List<GoodDetail.DataBean.SpecificationsBean> specifications = data.getSpecifications();
-        for (GoodDetail.DataBean.SpecificationsBean bean : specifications) {
-            nameBuilder.append(bean.getName()).append(" ");
-            idBuilder.append(mAdapter.getIdMap().get(bean.getName())).append(",");
+        for (GoodDetail.DataBean.SpecificationsBean attributesBean : specifications) {
+            nameBuilder.append(attributesBean.getName()).append(",");
         }
-        mTvResultSku.setText(nameBuilder.toString());
+        if (nameBuilder.length() > 1) {
+            nameBuilder.deleteCharAt(nameBuilder.length() - 1);
+        }
+        mTvResultSku.setText("请选择： " + nameBuilder.toString());
         mSpecificationList.addAll(specifications);
         mAdapter.addData(mSpecificationList);
         mAdapter.setTagClick(new TagClick() {
@@ -182,6 +178,10 @@ public class DialogSku extends Dialog implements DialogInterface.OnCancelListene
 
         });
         mAdapter.notifyDataSetChanged();
+        for (GoodDetail.DataBean.SpecificationsBean bean : specifications) {
+            mNameList.add(bean.getName());
+        }
+
         if (data.getImages() == null) {
             return;
         }
@@ -206,7 +206,7 @@ public class DialogSku extends Dialog implements DialogInterface.OnCancelListene
                         switch (stockResponseEntity.getResponseCode()) {
                             case 1001:
                                 StockBean data = stockResponseEntity.getData();
-                                mTvPriceSku.setText("价格: " + String.valueOf(data.getMinPrice()));
+                                mTvPriceSku.setText("价格: " + "¥ "+ArithmeticUtils.format(data.getMinPrice()));
                                 mTvStockSku.setText("库存: " + data.getStock() + "");
                                 break;
                         }
@@ -222,12 +222,21 @@ public class DialogSku extends Dialog implements DialogInterface.OnCancelListene
                 break;
             case R.id.btn_confirm:
                 HashMap<String, String> valueMap = mAdapter.getValueMap();
+                HashMap<String, Integer> idMap = mAdapter.getIdMap();
                 StringBuilder nameBuilder = new StringBuilder();
+                StringBuilder idBuilder = new StringBuilder();
+                for (String name : mNameList) {
+                    idBuilder.append(idMap.get(name)).append(",");
+                    Log.e(BUG_TAG, idMap.get(name) + "");
+
+                }
                 Set setValue = valueMap.keySet();
                 for (Object aSetValue : setValue) {
                     String key = (String) aSetValue;
                     nameBuilder.append(key).append(":").append(valueMap.get(key)).append(";");
                 }
+
+                idBuilder.deleteCharAt(idBuilder.length() - 1);
                 Intent intent = new Intent();
                 Bundle bundle = new Bundle();
                 bundle.putInt("goodId", mGoodId);

@@ -9,6 +9,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.model.OrderBean;
+import com.shiwaixiangcun.customer.utils.ArithmeticUtils;
 import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 
 import java.util.List;
@@ -28,13 +29,13 @@ public class AdapterOrder extends BaseQuickAdapter<OrderBean.ElementsBean, BaseV
         OrderBean.ElementsBean.OrderDetailDtoListBean orderDetailDtoListBean = item.getOrderDetailDtoList().get(0);
         helper.setText(R.id.tv_order_number, item.getOrderNumber());
         helper.setText(R.id.tv_description, "共" + item.getGoodsTotal() + "件商品 合计 ￥"
-                + item.getRealyPay() + " (含运费 ￥" + item.getTransportMoney() + ")");
+                + ArithmeticUtils.format(item.getRealyPay()) + " (含运费 ￥" + ArithmeticUtils.format(item.getTransportMoney()) + ")");
         Button mBtnWhite = helper.getView(R.id.btn_white);
         Button mBtnRed = helper.getView(R.id.btn_red);
         ImageView mIvCover = helper.getView(R.id.iv_cover);
         helper.setText(R.id.tv_title, orderDetailDtoListBean.getGoodsName());
         helper.setText(R.id.tv_desc, orderDetailDtoListBean.getGoodsAttrDescription());
-        helper.setText(R.id.tv_price, String.valueOf(orderDetailDtoListBean.getPrice()));
+        helper.setText(R.id.tv_price, "￥ "+ArithmeticUtils.format(orderDetailDtoListBean.getPrice()));
         helper.setText(R.id.tv_order_amount, "x " + orderDetailDtoListBean.getGoodsAmount());
         helper.addOnClickListener(R.id.btn_red);
         helper.addOnClickListener(R.id.btn_white);
@@ -57,7 +58,7 @@ public class AdapterOrder extends BaseQuickAdapter<OrderBean.ElementsBean, BaseV
                 mBtnRed.setVisibility(View.VISIBLE);
                 mBtnWhite.setVisibility(View.VISIBLE);
                 mBtnWhite.setText("取消订单");
-                mBtnRed.setText("等待付款");
+                mBtnRed.setText("付款");
                 break;
             case "Delivered":
                 helper.setText(R.id.tv_order_stature, "已发货");

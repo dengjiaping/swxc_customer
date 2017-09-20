@@ -13,6 +13,9 @@ public class SimpleEvent {
     public static final int UPDATE_GOOD_INFO = 1;
     public static final int UPDATE_ORDER_DETAIL = 2;
     public static final int CONFIRM_ORDER = 3;
+    public static final int UPDATE_MALL = 4;
+    public static final int UPDATE_GOOD_LIST = 5;
+    public static final int UPDATE_SEARCH = 6;
     /**
      * 操作类型
      */

@@ -11,6 +11,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -98,6 +99,7 @@ public class OrderFragment extends BaseFragment {
         }.getType();
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(loginInfo, type);
         tokenString = responseEntity.getData().getAccess_token();
+        Log.e(BUG_TAG,tokenString);
     }
 
 
@@ -147,6 +149,7 @@ public class OrderFragment extends BaseFragment {
                         DialogInfo deleteDialog = new DialogInfo(mContext);
                         deleteDialog.setDialogTitle("删除订单");
                         deleteDialog.setDialogInfo("确认删除此订单？");
+                        deleteDialog.show();
                         deleteDialog.setListener(new DialogInfo.onCallBackListener() {
                             @Override
                             public void closeBtn(DialogInfo dialog) {
@@ -156,9 +159,10 @@ public class OrderFragment extends BaseFragment {
                             @Override
                             public void confirmBtn(DialogInfo dialog) {
                                 deleteOrder(elementsBean);
+                                dialog.dismiss();
                             }
                         });
-                        deleteDialog.show();
+
                         break;
                     case "取消订单":
                         cancelOrder(elementsBean);

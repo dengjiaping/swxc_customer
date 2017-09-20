@@ -21,7 +21,7 @@
             android:layout_height="0.3dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:background="#2D3230"/>
+            android:background="@drawable/divider_bg"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -31,6 +31,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
+                android:id="@+id/llayout_hot_good"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
@@ -41,9 +42,10 @@
             <View
                 android:layout_width="0.3dp"
                 android:layout_height="match_parent"
-                android:background="#2D3230"/>
+                android:background="@drawable/divider_bg"/>
 
             <LinearLayout
+                android:id="@+id/llayout_new_good"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">

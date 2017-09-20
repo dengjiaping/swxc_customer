@@ -59,10 +59,6 @@ public class AdapterSpecification extends RecyclerView.Adapter<RecyclerView.View
         return idMap;
     }
 
-    public TagAdapter getTagAdapter() {
-        return mTagAdapter;
-    }
-
     public void setTagClick(TagClick tagClick) {
         mTagClick = tagClick;
     }

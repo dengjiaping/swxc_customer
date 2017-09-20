@@ -34,7 +34,7 @@ import com.shiwaixiangcun.customer.broadCast.RegistBrodUtils;
 import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.imageloader.GlideImageLoader;
 import com.shiwaixiangcun.customer.model.AnnouncementBean;
-import com.shiwaixiangcun.customer.model.Banner;
+import com.shiwaixiangcun.customer.model.BannerBean;
 import com.shiwaixiangcun.customer.model.InformationBean;
 import com.shiwaixiangcun.customer.model.WeatherDataBean;
 import com.shiwaixiangcun.customer.presenter.IHomePresenter;
@@ -113,7 +113,7 @@ public class HomeActivity extends BaseActivity implements IHomeView, ViewPager.O
     };
     private List<AnnouncementBean> elements_headline;
     private ChangeLightImageView back_left;
-    private List<Banner> list_banner;
+    private List<BannerBean> list_banner;
     private RelativeLayout rl_net_not;
     private TextView tv_page_name;
     private int i_ata = 0;
@@ -391,9 +391,9 @@ public class HomeActivity extends BaseActivity implements IHomeView, ViewPager.O
     @Override
     public void setBgaAdpaterAndClickResult(String result) {
         Log.e(BUG_TAG, result);
-        Type type = new TypeToken<ResponseEntity<List<Banner>>>() {
+        Type type = new TypeToken<ResponseEntity<List<BannerBean>>>() {
         }.getType();
-        ResponseEntity<List<Banner>> responseEntity = JsonUtil.fromJson(result, type);
+        ResponseEntity<List<BannerBean>> responseEntity = JsonUtil.fromJson(result, type);
         list_banner = responseEntity.getData();
         urls_image.clear();
         for (int i = 0; i < list_banner.size(); i++) {
@@ -497,7 +497,7 @@ public class HomeActivity extends BaseActivity implements IHomeView, ViewPager.O
 
     }
 
-    private void InitViewpager(List<Banner> list_banner) {
+    private void InitViewpager(List<BannerBean> list_banner) {
         group.removeAllViews();
         for (int i = 0; i < list_banner.size(); i++) {
         }

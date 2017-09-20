@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="80dp"
@@ -22,9 +23,10 @@
             android:gravity="center"
             android:maxLines="2"
             android:minLines="2"
-            android:text="产品"
             android:textColor="@color/mall_title"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:visibility="gone"
+            tools:text="产品"/>
 
         <ImageView
             android:id="@+id/iv_daily_icon"
@@ -33,7 +35,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="6dp"
             android:scaleType="centerCrop"
-            android:src="@mipmap/m" />
+            />
 
         <TextView
             android:id="@+id/tv_daily_price"
@@ -42,9 +44,9 @@
             android:layout_marginTop="8dp"
             android:gravity="center"
             android:lines="1"
-            android:text="卷后12元"
             android:textColor="@color/mall_price"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            tools:text="卷后12元"/>
 
     </LinearLayout>
 

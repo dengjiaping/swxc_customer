@@ -1,6 +1,5 @@
 package com.shiwaixiangcun.customer.ui.activity;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,19 +11,20 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.shiwaixiangcun.customer.BaseActivity;
+import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
 import com.shiwaixiangcun.customer.model.GoodDetail;
 import com.shiwaixiangcun.customer.ui.dialog.DialogSku;
 import com.shiwaixiangcun.customer.ui.dialog.DialogSupport;
+import com.shiwaixiangcun.customer.utils.ArithmeticUtils;
+import com.shiwaixiangcun.customer.utils.GlideImageLoader;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
-import com.youth.banner.loader.ImageLoader;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -116,12 +116,12 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void updateUI(GoodDetail.DataBean goodBean) {
-        dialogSku.setData(goodBean.getTransportMoney(), goodBean.getShopName());
+
         //更新界面
         mTvTitle.setText(goodBean.getGoodsName());
         mTvDesc.setText(goodBean.getFeature());
-        mTvPrice.setText("¥ " + goodBean.getMinPrice());
-        mTvPriceFare.setText("¥ " + goodBean.getTransportMoney());
+        mTvPrice.setText("¥ " + ArithmeticUtils.format(goodBean.getMinPrice()));
+        mTvPriceFare.setText("¥ " + ArithmeticUtils.format(goodBean.getTransportMoney()));
         mTvAmount.setText(goodBean.getSellerNumber() + "");
         //获取List
         mListImage = goodBean.getImages();
@@ -140,6 +140,13 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
         for (int i = 0, size = mListServices.size(); i < size; i++) {
             String service = mListServices.get(i).getName();
             services.add(service);
+        }
+
+        if (mListSpecifications.size() == 0) {
+            mRlChoice.setVisibility(View.GONE);
+        }
+        if (mListServices.size() == 0) {
+            mLlayoutService.setVisibility(View.GONE);
         }
         //添加支持的服务到布局
         mTaglayout.setAdapter(new TagAdapter<String>(services) {
@@ -162,7 +169,7 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
         Log.e(BUG_TAG, mGoodId + "");
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("id", mGoodId);
-        HttpRequest.get("http://mk.shiwaixiangcun.cn/mi/goods/detail.json", hashMap, new HttpCallBack() {
+        HttpRequest.get(GlobalConfig.getGoodDetail, hashMap, new HttpCallBack() {
             @Override
             public void onSuccess(String responseJson) {
                 GoodDetail goodDetail = JsonUtil.fromJson(responseJson, GoodDetail.class);
@@ -233,13 +240,4 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
         }
     }
 
-    static class GlideImageLoader extends ImageLoader {
-
-        @Override
-        public void displayImage(Context context, Object path, ImageView imageView) {
-            Glide.with(context.getApplicationContext())
-                    .load(path)
-                    .into(imageView);
-        }
-    }
 }

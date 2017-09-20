@@ -9,7 +9,6 @@
     android:orientation="vertical"
     tools:context="com.shiwaixiangcun.customer.ui.activity.GoodDetailActivity">
 
-
     <LinearLayout
 
         android:layout_width="match_parent"
@@ -21,7 +20,9 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/bg_gray"
+            android:paddingBottom="60dp">
 
             <LinearLayout
 
@@ -78,6 +79,7 @@
                         android:id="@+id/tv_price"
                         android:layout_width="wrap_content"
                         android:layout_height="24dp"
+                        android:layout_marginBottom="8dp"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"
                         android:layout_marginTop="8dp"
@@ -94,9 +96,10 @@
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:orientation="horizontal"
+                    android:paddingBottom="14dp"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
-                    android:paddingTop="8dp">
+                    android:paddingTop="14dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -146,17 +149,15 @@
                 </LinearLayout>
 
                 <LinearLayout
-
                     android:id="@+id/llayout_service"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
                     android:background="#FFF3FCF9"
                     android:clickable="true"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:paddingBottom="4dp"
-                    android:paddingTop="4dp">
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp">
 
                     <com.zhy.view.flowlayout.TagFlowLayout
 
@@ -208,16 +209,11 @@
                         android:src="@mipmap/to_right"/>
                 </RelativeLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="10dp"
-                    android:background="#FFF6F6F6">
-
-                </View>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="54dp"
+                    android:layout_marginTop="4dp"
                     android:background="@color/white"
                     android:gravity="center"
                     android:text="图文详情"

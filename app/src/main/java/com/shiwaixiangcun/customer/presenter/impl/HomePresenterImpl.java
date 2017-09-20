@@ -81,7 +81,7 @@ public class HomePresenterImpl implements IHomePresenter {
             public void onSuccess(String responseJson) {
                 Log.i("oooooo---onSuccess---banner", responseJson);
                 iHomeView.setBgaAdpaterAndClickResult(responseJson);
-//                Type type = new TypeToken<ResponseEntity<List<Banner>>>() {
+//                Type type = new TypeToken<ResponseEntity<List<BannerBean>>>() {
 //                }.getType();
 //                responseEntity = JsonUtil.fromJson(responseJson, type);
 //                String imagePath = responseEntity.getData().get(0).getImagePath();
