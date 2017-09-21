@@ -2,15 +2,17 @@ package com.shiwaixiangcun.customer;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+
+import com.shiwaixiangcun.customer.ui.fragment.CubeFragmentActivity;
 
 /**
  * Activity 基类
  */
 
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends CubeFragmentActivity {
     /**
      * 日志输出标志
      **/
@@ -25,8 +27,11 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         mContext = this;
     }
+
 
     protected void readyGo(Class<?> clazz, Bundle bundle) {
         Intent intent = new Intent(this, clazz);
@@ -65,4 +70,13 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    protected String getCloseWarning() {
+        return null;
+    }
+
+    @Override
+    protected int getFragmentContainerId() {
+        return 0;
+    }
 }

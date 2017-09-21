@@ -1,6 +1,6 @@
 package com.shiwaixiangcun.customer.http;
 
-import com.shiwaixiangcun.customer.response.ResponseEntity;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 
 /**
  * Created by fyj on 2017/5/24.

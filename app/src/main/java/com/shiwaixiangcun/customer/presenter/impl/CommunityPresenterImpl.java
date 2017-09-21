@@ -8,11 +8,11 @@ import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
 import com.shiwaixiangcun.customer.model.AnnouncementBean;
+import com.shiwaixiangcun.customer.model.PageBean;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.presenter.ICommunityPresenter;
-import com.shiwaixiangcun.customer.response.PageBean;
-import com.shiwaixiangcun.customer.response.ResponseEntity;
-import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.ui.CommunityView;
+import com.shiwaixiangcun.customer.utils.JsonUtil;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;

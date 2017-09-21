@@ -2,8 +2,8 @@ package com.shiwaixiangcun.customer.ui.activity;
 
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -16,15 +16,15 @@ import com.baidu.mobstat.StatService;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.HeatateListAdapter;
 import com.shiwaixiangcun.customer.model.HeartateBean;
+import com.shiwaixiangcun.customer.model.PageBean;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.presenter.impl.HeartateImpl;
-import com.shiwaixiangcun.customer.pullableview.MyListener;
-import com.shiwaixiangcun.customer.pullableview.PullToRefreshLayout;
-import com.shiwaixiangcun.customer.response.PageBean;
-import com.shiwaixiangcun.customer.response.ResponseEntity;
+import com.shiwaixiangcun.customer.ui.IHeartateView;
+import com.shiwaixiangcun.customer.utils.TimeToTime;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 import com.shiwaixiangcun.customer.widget.MyListView;
-import com.shiwaixiangcun.customer.utils.TimeToTime;
-import com.shiwaixiangcun.customer.ui.IHeartateView;
+import com.shiwaixiangcun.customer.widget.pullableview.MyListener;
+import com.shiwaixiangcun.customer.widget.pullableview.PullToRefreshLayout;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.shiwaixiangcun.customer.response;
+package com.shiwaixiangcun.customer.model;
 
 /**
  * Created by fyj on 2017/5/24.

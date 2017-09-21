@@ -11,11 +11,13 @@ package com.shiwaixiangcun.customer.event;/**
 public class SimpleEvent {
     //SKU选择更新商品信息
     public static final int UPDATE_GOOD_INFO = 1;
-    public static final int UPDATE_ORDER_DETAIL = 2;
-    public static final int CONFIRM_ORDER = 3;
+
     public static final int UPDATE_MALL = 4;
-    public static final int UPDATE_GOOD_LIST = 5;
     public static final int UPDATE_SEARCH = 6;
+    public static final int CONFIRM_ORDER = 3;
+    public static final int UPDATE_ORDER_DETAIL = 2;
+    public static final int UPDATE_GOOD_LIST = 5;
+    public static final int UPDATE_GOOD_DETAIL = 7;
     /**
      * 操作类型
      */

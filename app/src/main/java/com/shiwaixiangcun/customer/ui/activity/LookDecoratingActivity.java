@@ -1,8 +1,8 @@
 package com.shiwaixiangcun.customer.ui.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -12,12 +12,12 @@ import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.DecordatingListAdapter;
+import com.shiwaixiangcun.customer.model.PageBean;
 import com.shiwaixiangcun.customer.model.RecoratingListBean;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.presenter.impl.HouseRecoratingImpl;
-import com.shiwaixiangcun.customer.response.PageBean;
-import com.shiwaixiangcun.customer.response.ResponseEntity;
-import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 import com.shiwaixiangcun.customer.ui.IHouseRecoratingView;
+import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
 import java.util.ArrayList;
 import java.util.List;

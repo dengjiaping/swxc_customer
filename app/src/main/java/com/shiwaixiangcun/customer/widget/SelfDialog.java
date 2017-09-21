@@ -19,11 +19,11 @@ import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
 import com.shiwaixiangcun.customer.model.HouseSelectListBean;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
-import com.shiwaixiangcun.customer.response.ResponseEntity;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.LoginOutUtil;
 import com.shiwaixiangcun.customer.utils.RefreshTockenUtil;
-import com.shiwaixiangcun.customer.utils.ShareUtil;
+import com.shiwaixiangcun.customer.utils.SharePreference;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -55,6 +55,15 @@ public class SelfDialog extends Dialog {
     private SelfdialogListAdapter selfdialogListAdapter;
     private List<HouseSelectListBean> data;
     private String numberDesc;
+    private int layoutId;
+    private List<String> list_self = new ArrayList<>();
+    private String str_id;
+
+    public SelfDialog(Context context, int layoutId) {
+        super(context, R.style.AlertDialogStyle);
+        this.layoutId = layoutId;
+        this.context = context;
+    }
 
     /**
      * 设置取消按钮的显示内容和监听
@@ -87,14 +96,6 @@ public class SelfDialog extends Dialog {
         this.onItemclickListener = onItemclickListener;
     }
 
-    private int layoutId;
-
-    public SelfDialog(Context context, int layoutId) {
-        super(context, R.style.AlertDialogStyle);
-        this.layoutId = layoutId;
-        this.context = context;
-    }
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -116,9 +117,6 @@ public class SelfDialog extends Dialog {
         initEvent();
 
     }
-
-    private List<String> list_self = new ArrayList<>();
-    private String str_id;
 
     /**
      * 初始化界面的确定和取消监听器
@@ -143,7 +141,7 @@ public class SelfDialog extends Dialog {
                     if (onItemclickListener != null) {
                         onItemclickListener.onitemClick(str_id, numberDesc);
                     }
-                    ShareUtil.saveStringToSpParams(context, Common.ISSELECTHOSE, Common.SISELECTHOSE, "" + l1);
+                    SharePreference.saveStringToSpParams(context, Common.ISSELECTHOSE, Common.SISELECTHOSE, "" + l1);
                     selfdialogListAdapter.notifyDataSetChanged();
                 }
 
@@ -234,26 +232,9 @@ public class SelfDialog extends Dialog {
         messageStr = message;
     }
 
-
-    /**
-     * 设置确定按钮和取消被点击的接口
-     */
-    public interface onYesOnclickListener {
-        public void onYesClick();
-    }
-
-    public interface onNoOnclickListener {
-        public void onNoClick();
-    }
-
-    public interface onItemclickListener {
-        public void onitemClick(String str_id, String houseName);
-    }
-
-
     //出租房
     private void sendToRentHttp(final Context context) {
-        String login_detail = ShareUtil.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        String login_detail = SharePreference.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
         Log.i("eeeeeettt", login_detail);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
@@ -292,6 +273,22 @@ public class SelfDialog extends Dialog {
                 Log.i("oooooo---onFailed---", e.toString());
             }
         });
+    }
+
+    /**
+     * 设置确定按钮和取消被点击的接口
+     */
+    public interface onYesOnclickListener {
+        void onYesClick();
+    }
+
+    public interface onNoOnclickListener {
+        void onNoClick();
+    }
+
+
+    public interface onItemclickListener {
+        void onitemClick(String str_id, String houseName);
     }
 
 

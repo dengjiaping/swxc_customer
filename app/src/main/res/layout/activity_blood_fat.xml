@@ -7,7 +7,7 @@
     tools:context="com.shiwaixiangcun.customer.ui.activity.BloodPressureActivity">
 
 
-    <com.shiwaixiangcun.customer.pullableview.PullToRefreshLayout
+    <com.shiwaixiangcun.customer.widget.pullableview.PullToRefreshLayout
         android:id="@+id/refresh_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -15,7 +15,7 @@
         <include layout="@layout/refresh_head" />
         <!-- 支持所有实现Pullable接口的View -->
 
-        <com.shiwaixiangcun.customer.pullableview.PullableScrollView
+        <com.shiwaixiangcun.customer.widget.pullableview.PullableScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -183,19 +183,19 @@
                     android:layout_marginTop="20dp"
                     android:background="@color/ui_base_color" />
                 <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
                     android:layout_marginTop="13dp"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:orientation="vertical">
                     <TextView
-                        android:layout_marginTop="14dp"
-                        android:layout_marginLeft="20dp"
-                        android:textColor="@color/word_black"
-                        android:textSize="14sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="理想血脂"/>
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="14dp"
+                        android:text="理想血脂"
+                        android:textColor="@color/word_black"
+                        android:textSize="14sp"/>
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -203,10 +203,10 @@
                         android:layout_marginRight="25dp"
                         android:gravity="center_vertical">
                         <LinearLayout
-                            android:layout_marginTop="10dp"
-                            android:orientation="vertical"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="vertical">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -217,9 +217,9 @@
                                 android:textSize="14sp" />
 
                             <TextView
-                                android:layout_marginTop="5dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
                                 android:lines="1"
                                 android:text="甘油三酯 0.56-1.7"
                                 android:textColor="@color/word_grad"
@@ -227,11 +227,11 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_marginTop="10dp"
-                            android:layout_alignParentRight="true"
-                            android:orientation="vertical"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="10dp"
+                            android:orientation="vertical">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -242,9 +242,9 @@
                                 android:textSize="14sp" />
 
                             <TextView
-                                android:layout_marginTop="5dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
                                 android:lines="1"
                                 android:text="高密度脂蛋白 >= 1.04"
                                 android:textColor="@color/word_grad"
@@ -311,9 +311,9 @@
                         android:textSize="12sp" />
 
                     <LinearLayout
-                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
                         <com.idtk.smallchart.chart.CurveChart
                             android:id="@+id/curveChart_a"
                             android:layout_width="match_parent"
@@ -346,9 +346,9 @@
                         android:textSize="12sp" />
 
                     <LinearLayout
-                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
                         <com.idtk.smallchart.chart.CurveChart
                             android:id="@+id/curveChart_b"
                             android:layout_width="match_parent"
@@ -381,9 +381,9 @@
                         android:textSize="12sp" />
 
                     <LinearLayout
-                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
                         <com.idtk.smallchart.chart.CurveChart
                             android:id="@+id/curveChart_c"
                             android:layout_width="match_parent"
@@ -416,9 +416,9 @@
                         android:textSize="12sp" />
 
                     <LinearLayout
-                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
                         <com.idtk.smallchart.chart.CurveChart
                             android:id="@+id/curveChart_d"
                             android:layout_width="match_parent"
@@ -479,10 +479,10 @@
                     android:layout_height="10dp"
                     android:background="@color/ui_base_color" />
             </LinearLayout>
-        </com.shiwaixiangcun.customer.pullableview.PullableScrollView>
+        </com.shiwaixiangcun.customer.widget.pullableview.PullableScrollView>
 
         <include layout="@layout/load_more" />
-    </com.shiwaixiangcun.customer.pullableview.PullToRefreshLayout>
+    </com.shiwaixiangcun.customer.widget.pullableview.PullToRefreshLayout>
 
 
     <include

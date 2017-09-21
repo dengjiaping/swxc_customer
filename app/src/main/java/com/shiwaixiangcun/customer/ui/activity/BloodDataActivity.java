@@ -1,8 +1,8 @@
 package com.shiwaixiangcun.customer.ui.activity;
 
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -12,14 +12,14 @@ import com.baidu.mobstat.StatService;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.PressureHistoryAdapter;
 import com.shiwaixiangcun.customer.model.BloodPressureDataBean;
+import com.shiwaixiangcun.customer.model.PageBean;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.presenter.impl.BloodDataImpl;
-import com.shiwaixiangcun.customer.pullableview.MyListener;
-import com.shiwaixiangcun.customer.pullableview.PullToRefreshLayout;
-import com.shiwaixiangcun.customer.pullableview.PullableListView;
-import com.shiwaixiangcun.customer.response.PageBean;
-import com.shiwaixiangcun.customer.response.ResponseEntity;
-import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 import com.shiwaixiangcun.customer.ui.IBloodDataView;
+import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
+import com.shiwaixiangcun.customer.widget.pullableview.MyListener;
+import com.shiwaixiangcun.customer.widget.pullableview.PullToRefreshLayout;
+import com.shiwaixiangcun.customer.widget.pullableview.PullableListView;
 
 import java.util.List;
 

@@ -4,10 +4,9 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -15,20 +14,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
 import com.shiwaixiangcun.customer.R;
-
-
 import com.shiwaixiangcun.customer.http.Common;
-import com.shiwaixiangcun.customer.response.ResponseEntity;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.share.OnekeyShare;
-import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
-import com.shiwaixiangcun.customer.widget.ObservableWebView;
+import com.shiwaixiangcun.customer.ui.IDetailView;
 import com.shiwaixiangcun.customer.utils.SdCordUtil;
 import com.shiwaixiangcun.customer.utils.Utils;
-import com.shiwaixiangcun.customer.ui.IDetailView;
+import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
+import com.shiwaixiangcun.customer.widget.ObservableWebView;
 
 import java.util.HashMap;
 
@@ -65,22 +61,10 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
         articleId = intent.getStringExtra("articleId");
         detailtitle = intent.getStringExtra("detailtitle");
         detailcontent = intent.getStringExtra("detailcontent");
-        Log.i("hhhhhgggg",articleId+"");
         layoutView();
         initData();
 
-//        HttpRequest.post("ww").executeEntity(new HttpCallBack<ResponseEntity<Object>>() {
-//
-//            @Override
-//            public void onSuccess(ResponseEntity<ResponseEntity<Object>> responseEntity) {
-//
-//            }
-//
-//            @Override
-//            public void onFailed(Exception e) {
-//
-//            }
-//        });
+
         webview = (ObservableWebView) findViewById(R.id.webview);
         //设置WebView属性，能够执行Javascript脚本
         webview.getSettings().setJavaScriptEnabled(true);
@@ -103,19 +87,10 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
                     tv_page_name.setText("");
                     tv_top.setVisibility(View.GONE);
                 }
-                Log.i("hhhoiioa",dx+"=----"+dy+"------=="+scrollY);
+
             }
         });
 
-////        int scrollY = webview.getScrollY();
-////        Log.i("sssssssa",scrollY+"");
-////
-//        webview.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-//            @Override
-//            public void onScrollChange(View view, int i, int i1, int i2, int i3) {
-//                Log.i("hhhoiioa",i+"=----"+i1+"-----"+i2+"-------"+i3);
-//            }
-//        });
 
     }
 
@@ -130,9 +105,6 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
 
     private void initData() {
         str_web += "?articleId="+articleId;
-        Log.e("hhoop",str_web);
-//        DetailImpl detail = new DetailImpl(this,articleId);
-//        detail.setBgaAdpaterAndClick(this);
         iv_share_right.setVisibility(View.VISIBLE);
         back_left.setOnClickListener(this);
         iv_share_right.setOnClickListener(this);
@@ -151,34 +123,12 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-//    @Override
-//    //设置回退
-//    //覆盖Activity类的onKeyDown(int keyCoder,KeyEvent event)方法
-//    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        if ((keyCode == KeyEvent.KEYCODE_BACK) && webview.canGoBack()) {
-//            webview.goBack(); //goBack()表示返回WebView的上一页面
-//            return true;
-//        }
-//        return false;
-//    }
-
     @Override
     public void setBgaAdpaterAndClickResult(ResponseEntity result) {
 
     }
 
-    //Web视图
-    private class HelloWebViewClient extends WebViewClient {
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            view.loadUrl(url);
-            return true;
-        }
-    }
-
-
     private void showShare() {
-        Log.e("aaaaaaaaaass",detailcontent+"------"+detailtitle+"----------"+shareimage);
         OnekeyShare oks = new OnekeyShare();
         //关闭sso授权
         oks.disableSSOWhenAuthorize();
@@ -204,20 +154,19 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
         oks.setCallback(new PlatformActionListener() {
             @Override
             public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-                Log.e("rrrrrrrrr","onComplete"+"=========="+platform.getName());
+
                 Toast.makeText(DetailsActivity.this,"分享成功",Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onError(Platform platform, int i, Throwable throwable) {
-                Log.e("rrrrrrrrr","onError");
-                    Log.e("rrrrrrrrr",throwable.toString());
+
                 Toast.makeText(DetailsActivity.this,"分享失败",Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onCancel(Platform platform, int i) {
-                Log.e("rrrrrrrrr","onCancel");
+
                 Toast.makeText(DetailsActivity.this,"取消",Toast.LENGTH_LONG).show();
             }
         });
@@ -236,5 +185,14 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
     protected void onPause() {
         super.onPause();
         StatService.onPause(this);
+    }
+
+    //Web视图
+    private class HelloWebViewClient extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            view.loadUrl(url);
+            return true;
+        }
     }
 }

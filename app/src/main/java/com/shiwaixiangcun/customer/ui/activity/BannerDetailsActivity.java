@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -19,12 +19,12 @@ import android.widget.Toast;
 import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
 import com.shiwaixiangcun.customer.R;
-import com.shiwaixiangcun.customer.response.ResponseEntity;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.share.OnekeyShare;
+import com.shiwaixiangcun.customer.ui.IDetailView;
+import com.shiwaixiangcun.customer.utils.SdCordUtil;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 import com.shiwaixiangcun.customer.widget.ObservableWebView;
-import com.shiwaixiangcun.customer.utils.SdCordUtil;
-import com.shiwaixiangcun.customer.ui.IDetailView;
 
 import java.util.HashMap;
 
@@ -178,16 +178,6 @@ public class BannerDetailsActivity extends AppCompatActivity implements View.OnC
 
     }
 
-    //Web视图
-    private class HelloWebViewClient extends WebViewClient {
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            view.loadUrl(url);
-            return true;
-        }
-    }
-
-
     private void showShare() {
         OnekeyShare oks = new OnekeyShare();
         //关闭sso授权
@@ -247,5 +237,14 @@ public class BannerDetailsActivity extends AppCompatActivity implements View.OnC
         super.onPause();
         StatService.onPause(this);
         webview.pauseTimers();
+    }
+
+    //Web视图
+    private class HelloWebViewClient extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            view.loadUrl(url);
+            return true;
+        }
     }
 }

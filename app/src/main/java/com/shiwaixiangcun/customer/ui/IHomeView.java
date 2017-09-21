@@ -2,9 +2,9 @@ package com.shiwaixiangcun.customer.ui;
 
 import com.shiwaixiangcun.customer.model.AnnouncementBean;
 import com.shiwaixiangcun.customer.model.InformationBean;
+import com.shiwaixiangcun.customer.model.PageBean;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.model.WeatherDataBean;
-import com.shiwaixiangcun.customer.response.PageBean;
-import com.shiwaixiangcun.customer.response.ResponseEntity;
 
 /**
  * Created by fyj on 2017/05/22.

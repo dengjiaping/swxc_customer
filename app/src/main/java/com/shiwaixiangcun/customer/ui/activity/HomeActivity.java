@@ -36,21 +36,21 @@ import com.shiwaixiangcun.customer.imageloader.GlideImageLoader;
 import com.shiwaixiangcun.customer.model.AnnouncementBean;
 import com.shiwaixiangcun.customer.model.BannerBean;
 import com.shiwaixiangcun.customer.model.InformationBean;
+import com.shiwaixiangcun.customer.model.PageBean;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.model.WeatherDataBean;
 import com.shiwaixiangcun.customer.presenter.IHomePresenter;
 import com.shiwaixiangcun.customer.presenter.impl.HomePresenterImpl;
-import com.shiwaixiangcun.customer.pullableview.MyListener;
-import com.shiwaixiangcun.customer.pullableview.PullToRefreshLayout;
-import com.shiwaixiangcun.customer.pullableview.PullableListView;
-import com.shiwaixiangcun.customer.response.PageBean;
-import com.shiwaixiangcun.customer.response.ResponseEntity;
 import com.shiwaixiangcun.customer.ui.IHomeView;
 import com.shiwaixiangcun.customer.utils.DecoratorViewPager;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.NoFastClickUtil;
-import com.shiwaixiangcun.customer.utils.ShareUtil;
+import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.utils.Utils;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
+import com.shiwaixiangcun.customer.widget.pullableview.MyListener;
+import com.shiwaixiangcun.customer.widget.pullableview.PullToRefreshLayout;
+import com.shiwaixiangcun.customer.widget.pullableview.PullableListView;
 import com.squareup.picasso.Picasso;
 import com.yyydjk.library.BannerLayout;
 
@@ -64,21 +64,19 @@ import java.util.List;
  */
 public class HomeActivity extends BaseActivity implements IHomeView, ViewPager.OnPageChangeListener, View.OnClickListener, ListView.OnItemClickListener, ListView.OnScrollListener {
 
+    private final long TIME_INTERVAL = 8000L;
     private IHomePresenter ihomePresenter;
     private PullableListView lv_details;
     private List<String> list_home = new ArrayList<>();
     private DecoratorViewPager viewPager;
-
     /**
      * 装点点的ImageView数组
      */
     private ImageView[] tips;
-
     /**
      * 装ImageView数组
      */
     private ImageView[] mImageViews;
-
     /**
      * 图片资源id
      */
@@ -94,7 +92,6 @@ public class HomeActivity extends BaseActivity implements IHomeView, ViewPager.O
     private TextView tv_health;
     private TextView tv_announcement;
     private TextView tv_more_more;
-    private final long TIME_INTERVAL = 8000L;
     private ViewAnimator viewAnimator;
 
 
@@ -123,7 +120,9 @@ public class HomeActivity extends BaseActivity implements IHomeView, ViewPager.O
     private TextView tv_awards;
     private RelativeLayout rl_weather;
     private TextView tv_weather_home;
-
+    private List<String> urls_image = new ArrayList<>();
+    private long exitTime;
+    private Toast mToast;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -287,13 +286,12 @@ public class HomeActivity extends BaseActivity implements IHomeView, ViewPager.O
         viewAnimator.showNext();
     }
 
-
     @Override
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
             case R.id.tv_online_service:
-                String isOrnotLogin_service = ShareUtil.getStringSpParams(HomeActivity.this, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
+                String isOrnotLogin_service = SharePreference.getStringSpParams(HomeActivity.this, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
 
                 if (NoFastClickUtil.isFastClick()) {
                     //快速点击后的逻辑，可以提示用户点击太快，休息一会
@@ -311,7 +309,7 @@ public class HomeActivity extends BaseActivity implements IHomeView, ViewPager.O
                 }
                 break;
             case R.id.tv_house_renting:
-                String isOrnotLogin_renting = ShareUtil.getStringSpParams(HomeActivity.this, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
+                String isOrnotLogin_renting = SharePreference.getStringSpParams(HomeActivity.this, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
                 if (Utils.isNotEmpty(isOrnotLogin_renting)) {
                     intent = new Intent(this, HouseRentingActivity.class);
                     startActivity(intent);
@@ -328,7 +326,7 @@ public class HomeActivity extends BaseActivity implements IHomeView, ViewPager.O
 
                 break;
             case R.id.tv_health:
-                String isOrnotLogin_health = ShareUtil.getStringSpParams(HomeActivity.this, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
+                String isOrnotLogin_health = SharePreference.getStringSpParams(HomeActivity.this, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
                 if (Utils.isNotEmpty(isOrnotLogin_health)) {
                     //住户认证
 //                    intent = new Intent(this, ResidentCertificationActivity.class);
@@ -353,7 +351,7 @@ public class HomeActivity extends BaseActivity implements IHomeView, ViewPager.O
                 startActivity(intent);
                 break;
             case R.id.back_left:
-//                String isOrnotLogin_mine = ShareUtil.getStringSpParams(HomeActivity.this, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
+//                String isOrnotLogin_mine = SharePreference.getStringSpParams(HomeActivity.this, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
 //                if (Utils.isNotEmpty(isOrnotLogin_mine)) {
                 intent = new Intent(this, MymineActivity.class);
                 startActivity(intent);
@@ -386,8 +384,6 @@ public class HomeActivity extends BaseActivity implements IHomeView, ViewPager.O
         }
     }
 
-    private List<String> urls_image = new ArrayList<>();
-
     @Override
     public void setBgaAdpaterAndClickResult(String result) {
         Log.e(BUG_TAG, result);
@@ -404,7 +400,6 @@ public class HomeActivity extends BaseActivity implements IHomeView, ViewPager.O
             rl_home_banner.setVisibility(View.GONE);
         } else {
             rl_home_banner.setVisibility(View.VISIBLE);
-//            InitViewpager(list_banner);
             initViewpager(urls_image);
         }
 
@@ -462,7 +457,7 @@ public class HomeActivity extends BaseActivity implements IHomeView, ViewPager.O
 
 
             if (i_ata == 2) {
-                ShareUtil.saveStringToSpParams(this, Common.ISRESIDENT, Common.SIRESIDENT, "online");
+                SharePreference.saveStringToSpParams(this, Common.ISRESIDENT, Common.SIRESIDENT, "online");
                 intent = new Intent(this, ResidentCertificationActivity.class);
 
                 startActivityForResult(intent, 1009);
@@ -484,7 +479,6 @@ public class HomeActivity extends BaseActivity implements IHomeView, ViewPager.O
 
         tv_weather_home.setText(info + " " + temperature + "°C");
     }
-
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -550,11 +544,7 @@ public class HomeActivity extends BaseActivity implements IHomeView, ViewPager.O
         new Thread(new Runnable() {
             @Override
             public void run() {
-                if (mImageViews.length <= 1) {
-                    isLooper = false;
-                } else {
-                    isLooper = true;
-                }
+                isLooper = mImageViews.length > 1;
 
                 while (isLooper) {
                     try {
@@ -575,11 +565,84 @@ public class HomeActivity extends BaseActivity implements IHomeView, ViewPager.O
         }).start();
     }
 
+    @Override
+    public void onPageScrollStateChanged(int arg0) {
+
+    }
+
+    @Override
+    public void onPageScrolled(int arg0, float arg1, int arg2) {
+
+    }
+
+    @Override
+    public void onPageSelected(int arg0) {
+        setImageBackground(arg0 % mImageViews.length);
+
+    }
+
+    /**
+     * 设置选中的tip的背景
+     *
+     * @param selectItems
+     */
+    private void setImageBackground(int selectItems) {
+        for (int i = 0; i < tips.length; i++) {
+            if (i == selectItems) {
+                tips[i].setBackgroundResource(R.mipmap.vpbtoa);
+            } else {
+                tips[i].setBackgroundResource(R.mipmap.vpbtob);
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
+
+    }
+
+    @Override
+    public void onScrollStateChanged(AbsListView absListView, int i) {
+
+    }
+
+    @Override
+    public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+
+        if (i == 0) {
+            tv_page_name.setText("世外生活");
+        } else {
+            tv_page_name.setText("热点资讯");
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (System.currentTimeMillis() - exitTime > 1500) {
+            mToast = Toast.makeText(this, "再点一次退出", Toast.LENGTH_SHORT);
+            mToast.show();
+            exitTime = System.currentTimeMillis();
+        } else {
+            if (mToast != null) {
+                mToast.cancel();
+            }
+            finish();
+            System.exit(0);
+        }
+    }
 
     /**
      * @author xiaanming
      */
-    public class MyAdapter extends PagerAdapter {
+    public final class MyAdapter extends PagerAdapter {
 
         @Override
         public int getCount() {
@@ -642,83 +705,6 @@ public class HomeActivity extends BaseActivity implements IHomeView, ViewPager.O
         }
 
 
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int arg0) {
-
-    }
-
-    @Override
-    public void onPageScrolled(int arg0, float arg1, int arg2) {
-
-    }
-
-    @Override
-    public void onPageSelected(int arg0) {
-        setImageBackground(arg0 % mImageViews.length);
-
-    }
-
-    /**
-     * 设置选中的tip的背景
-     *
-     * @param selectItems
-     */
-    private void setImageBackground(int selectItems) {
-        for (int i = 0; i < tips.length; i++) {
-            if (i == selectItems) {
-                tips[i].setBackgroundResource(R.mipmap.vpbtoa);
-            } else {
-                tips[i].setBackgroundResource(R.mipmap.vpbtob);
-            }
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        StatService.onResume(this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        StatService.onPause(this);
-
-    }
-
-    @Override
-    public void onScrollStateChanged(AbsListView absListView, int i) {
-
-    }
-
-    @Override
-    public void onScroll(AbsListView absListView, int i, int i1, int i2) {
-
-        if (i == 0) {
-            tv_page_name.setText("世外生活");
-        } else {
-            tv_page_name.setText("热点资讯");
-        }
-    }
-
-    private long exitTime;
-    private Toast mToast;
-
-    @Override
-    public void onBackPressed() {
-        if (System.currentTimeMillis() - exitTime > 1500) {
-            mToast = Toast.makeText(this, "再点一次退出", Toast.LENGTH_SHORT);
-            mToast.show();
-            exitTime = System.currentTimeMillis();
-        } else {
-            if (mToast != null) {
-                mToast.cancel();
-            }
-            finish();
-            System.exit(0);
-        }
     }
 
 

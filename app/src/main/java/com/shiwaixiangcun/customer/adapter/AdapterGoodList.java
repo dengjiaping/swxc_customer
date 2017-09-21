@@ -3,11 +3,10 @@ package com.shiwaixiangcun.customer.adapter;
 import android.support.annotation.Nullable;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shiwaixiangcun.customer.R;
-import com.shiwaixiangcun.customer.ui.activity.ElementBean;
+import com.shiwaixiangcun.customer.model.ElementBean;
 import com.shiwaixiangcun.customer.utils.ArithmeticUtils;
 import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 

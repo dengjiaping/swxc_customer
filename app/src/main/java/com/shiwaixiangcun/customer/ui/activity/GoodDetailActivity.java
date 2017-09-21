@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -11,9 +13,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
+import com.shiwaixiangcun.customer.event.EventCenter;
+import com.shiwaixiangcun.customer.event.SimpleEvent;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
 import com.shiwaixiangcun.customer.model.GoodDetail;
@@ -50,7 +57,6 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
     ChangeLightImageView mBackLeft;
     @BindView(R.id.tv_page_name)
     TextView mTvPageName;
-
     @BindView(R.id.banner_details)
     Banner mBannerDetails;
     @BindView(R.id.tv_title)
@@ -77,11 +83,12 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
     TagFlowLayout mTaglayout;
     @BindView(R.id.btn_purchase)
     Button mBtnPurchase;
+    @BindView(R.id.llayout_content)
+    LinearLayout mllayoutContent;
     @BindView(R.id.iv_share_right)
     ImageView mIvShareRight;
     @BindView(R.id.webview)
-    WebView mWebview;
-
+    WebView mWebView;
     List<String> services = new ArrayList<>();
     List<String> images = new ArrayList<>();
     //商品图片展示
@@ -108,65 +115,82 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
         iniEvent();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void updateUI(GoodDetail.DataBean goodBean) {
+    public void updateUI(SimpleEvent simpleEvent) {
 
-        //更新界面
-        mTvTitle.setText(goodBean.getGoodsName());
-        mTvDesc.setText(goodBean.getFeature());
-        mTvPrice.setText("¥ " + ArithmeticUtils.format(goodBean.getMinPrice()));
-        mTvPriceFare.setText("¥ " + ArithmeticUtils.format(goodBean.getTransportMoney()));
-        mTvAmount.setText(goodBean.getSellerNumber() + "");
-        //获取List
-        mListImage = goodBean.getImages();
-        mListServices = goodBean.getServices();
-        mListGoodsStores = goodBean.getGoodsPriceStores();
-        mListSpecifications = goodBean.getSpecifications();
-
-        images.clear();
-        services.clear();
-        for (int i = 0, size = mListImage.size(); i < size; i++) {
-            String url = mListImage.get(i).getAccessUrl();
-            images.add(url);
+        if (simpleEvent.mEventType != SimpleEvent.UPDATE_GOOD_DETAIL) {
+            return;
         }
-        mBannerDetails.setImages(images).setImageLoader(new GlideImageLoader()).setDelayTime(3000).start();
+        switch (simpleEvent.mEventValue) {
+            case 1:
+                //更新界面
+                GoodDetail.DataBean goodBean = (GoodDetail.DataBean) simpleEvent.getData();
+                mTvTitle.setText(goodBean.getGoodsName());
+                mTvDesc.setText(goodBean.getFeature());
+                mTvPrice.setText("¥ " + ArithmeticUtils.format(goodBean.getMinPrice()));
+                mTvPriceFare.setText("¥ " + ArithmeticUtils.format(goodBean.getTransportMoney()));
+                mTvAmount.setText(goodBean.getSellerNumber() + "");
+                //获取List
+                mListImage = goodBean.getImages();
+                mListServices = goodBean.getServices();
+                mListGoodsStores = goodBean.getGoodsPriceStores();
+                mListSpecifications = goodBean.getSpecifications();
+                images.clear();
+                services.clear();
+                for (int i = 0, size = mListImage.size(); i < size; i++) {
+                    String url = mListImage.get(i).getAccessUrl();
+                    images.add(url);
+                }
+                mBannerDetails.setImages(images).setImageLoader(new GlideImageLoader()).setDelayTime(3000).start();
 
-        for (int i = 0, size = mListServices.size(); i < size; i++) {
-            String service = mListServices.get(i).getName();
-            services.add(service);
-        }
+                for (int i = 0, size = mListServices.size(); i < size; i++) {
+                    String service = mListServices.get(i).getName();
+                    services.add(service);
+                }
 
-        if (mListSpecifications.size() == 0) {
-            mRlChoice.setVisibility(View.GONE);
-        }
-        if (mListServices.size() == 0) {
-            mLlayoutService.setVisibility(View.GONE);
-        }
-        //添加支持的服务到布局
-        mTaglayout.setAdapter(new TagAdapter<String>(services) {
-            @Override
-            public View getView(FlowLayout parent, int position, String s) {
-                View view = LayoutInflater.from(mContext).inflate(R.layout.tag, mTaglayout, false);
-                TextView textView = (TextView) view.findViewById(R.id.tv_support);
-                textView.setText(services.get(position));
-                return view;
-            }
-        });
-        mWebview.loadUrl(goodBean.getGoodsDetail());
+                if (mListSpecifications.size() == 0) {
+                    mRlChoice.setVisibility(View.GONE);
+                }
+                if (mListServices.size() == 0) {
+                    mLlayoutService.setVisibility(View.GONE);
+                }
+                //添加支持的服务到布局
+                mTaglayout.setAdapter(new TagAdapter<String>(services) {
+                    @Override
+                    public View getView(FlowLayout parent, int position, String s) {
+                        View view = LayoutInflater.from(mContext).inflate(R.layout.tag, mTaglayout, false);
+                        TextView textView = (TextView) view.findViewById(R.id.tv_support);
+                        textView.setText(services.get(position));
+                        return view;
+                    }
+                });
+                break;
 
+            case 2:
+                Log.e(BUG_TAG, "加载商品详情");
+                String htmlString = (String) simpleEvent.getData();
+                mWebView.loadUrl(htmlString);
+                mWebView.loadDataWithBaseURL(null, htmlString, "text/html", "utf-8", null);
+                mWebView.getSettings().setJavaScriptEnabled(true);
+                mWebView.setWebChromeClient(new WebChromeClient());
+                break;
+        }
     }
 
     private void iniData() {
-
         Bundle bundle = getIntent().getExtras();
         mGoodId = bundle.getInt("goodId");
         Log.e(BUG_TAG, mGoodId + "");
+        requestContent();
+        requestDetail();
+    }
+
+    /**
+     * 获取商品详情
+     */
+    private void requestDetail() {
+
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("id", mGoodId);
         HttpRequest.get(GlobalConfig.getGoodDetail, hashMap, new HttpCallBack() {
@@ -178,7 +202,7 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
                 }
                 if (1001 == goodDetail.getResponseCode()) {
                     GoodDetail.DataBean data = goodDetail.getData();
-                    EventBus.getDefault().post(data);
+                    EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_GOOD_DETAIL, 1, data));
                 }
             }
 
@@ -186,6 +210,24 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
             public void onFailed(Exception e) {
             }
         });
+
+    }
+
+    /**
+     * 获取图文详情页面
+     */
+    private void requestContent() {
+        OkGo.<String>get(GlobalConfig.getOrderContent)
+                .params("id", mGoodId)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        Log.e(BUG_TAG, "onSuccess");
+                        String html = response.body();
+                        EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_GOOD_DETAIL, 2, html));
+                    }
+                });
+
     }
 
     /**
@@ -218,6 +260,33 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
         dialogSku = new DialogSku(mContext, R.style.AlertDialogStyle, mGoodId);
         mTvPageName.setText("商品详情");
 
+        initWebView();
+
+    }
+
+    /**
+     * 配置WebView
+     */
+    private void initWebView() {
+        WebSettings webSettings = mWebView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+
+
+//设置自适应屏幕，两者合用
+        webSettings.setUseWideViewPort(true); //将图片调整到适合webview的大小
+        webSettings.setLoadWithOverviewMode(true); // 缩放至屏幕的大小
+
+//缩放操作
+        webSettings.setSupportZoom(true); //支持缩放，默认为true。是下面那个的前提。
+        webSettings.setBuiltInZoomControls(true); //设置内置的缩放控件。若为false，则该WebView不可缩放
+        webSettings.setDisplayZoomControls(false); //隐藏原生的缩放控件
+
+//其他细节操作
+        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK); //关闭webview中缓存
+        webSettings.setAllowFileAccess(true); //设置可以访问文件
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(true); //支持通过JS打开新窗口
+        webSettings.setLoadsImagesAutomatically(true); //支持自动加载图片
+        webSettings.setDefaultTextEncodingName("utf-8");//设置编码格式
     }
 
     @Override
@@ -231,7 +300,6 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
                 finish();
                 break;
             case R.id.rl_choice:
-
                 dialogSku.show();
                 break;
             case R.id.btn_purchase:
@@ -240,4 +308,32 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
         }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mWebView.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mWebView.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mWebView != null) {
+            mllayoutContent.removeView(mWebView);
+            mWebView.destroy();
+        }
+        super.onDestroy();
+
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
 }

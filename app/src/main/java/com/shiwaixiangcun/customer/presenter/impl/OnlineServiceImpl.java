@@ -8,17 +8,17 @@ import com.google.gson.reflect.TypeToken;
 import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
-import com.shiwaixiangcun.customer.loadingDialog.LoadingDialog;
 import com.shiwaixiangcun.customer.model.ImageReturnbean;
 import com.shiwaixiangcun.customer.model.InformationBean;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.presenter.IOnlineServicePresenter;
-import com.shiwaixiangcun.customer.response.ResponseEntity;
+import com.shiwaixiangcun.customer.ui.IOnlineServiceView;
+import com.shiwaixiangcun.customer.ui.dialog.DialogLoading;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.LoginOutUtil;
 import com.shiwaixiangcun.customer.utils.RefreshTockenUtil;
-import com.shiwaixiangcun.customer.utils.ShareUtil;
-import com.shiwaixiangcun.customer.ui.IOnlineServiceView;
+import com.shiwaixiangcun.customer.utils.SharePreference;
 
 import java.io.File;
 import java.lang.reflect.Type;
@@ -37,7 +37,8 @@ public class OnlineServiceImpl implements IOnlineServicePresenter {
     private HashMap<String, File> hash_image;
     private String str_imaId = "";
     private String s_imageId = "";
-    private LoadingDialog loadingDialog;
+    private DialogLoading mDialogLoading;
+    private List<File> list_file = new ArrayList<>();
 
     public OnlineServiceImpl(IOnlineServiceView iOnlineServiceView, String content, HashMap<String, File> hash_image) {
         this.iOnlineServiceView = iOnlineServiceView;
@@ -52,8 +53,8 @@ public class OnlineServiceImpl implements IOnlineServicePresenter {
 
     @Override
     public void setHaveImageClick(Context context) {
-        loadingDialog = new LoadingDialog(context, "正在提交");
-        loadingDialog.show();
+        mDialogLoading = new DialogLoading(context, "正在提交");
+        mDialogLoading.show();
 
         sendImageHttp(context);
     }
@@ -66,7 +67,7 @@ public class OnlineServiceImpl implements IOnlineServicePresenter {
     //在线报修
     private void sendOnlineServiceHttp(final Context context) {
 
-        String login_detail = ShareUtil.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        String login_detail = SharePreference.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
         Log.i("eeeeeettt", login_detail);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
@@ -103,9 +104,6 @@ public class OnlineServiceImpl implements IOnlineServicePresenter {
         });
     }
 
-
-    private List<File> list_file = new ArrayList<>();
-
     //图片提交
     private void sendImageHttp(final Context context) {
         for (int i = 0; i < list_file.size(); i++) {
@@ -121,7 +119,7 @@ public class OnlineServiceImpl implements IOnlineServicePresenter {
 
 
         Log.i("mmmmmmmmmmm", list_file.size() + "");
-        String login_detail = ShareUtil.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        String login_detail = SharePreference.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
         Log.i("eeeeeettt", login_detail);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
@@ -157,14 +155,14 @@ public class OnlineServiceImpl implements IOnlineServicePresenter {
             @Override
             public void onFailed(Exception e) {
                 Log.i("oooooo---onFailed---", e.toString());
-                loadingDialog.close();
+                mDialogLoading.close();
             }
         });
     }
 
     //在线报修
     private void sendOnlineServiceImageHttp(Context context,String s_imageId) {
-        String login_detail = ShareUtil.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        String login_detail = SharePreference.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
         Log.i("eeeeeettt", login_detail);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
@@ -178,7 +176,7 @@ public class OnlineServiceImpl implements IOnlineServicePresenter {
         HttpRequest.post(Common.OnlineRepair, hashMap, new HttpCallBack() {
             @Override
             public void onSuccess(String responseJson) {
-                loadingDialog.close();
+                mDialogLoading.close();
                 Log.i("oooooo---onSuccess---aaaa", responseJson);
                 Type type = new TypeToken<ResponseEntity>() {
                 }.getType();
@@ -191,13 +189,13 @@ public class OnlineServiceImpl implements IOnlineServicePresenter {
             @Override
             public void onFailed(Exception e) {
                 Log.i("oooooo---onFailed---", e.toString());
-                loadingDialog.close();
+                mDialogLoading.close();
             }
         });
     }
     //个人信息
     private void sendInformationHttp(final Context context) {
-        String login_detail = ShareUtil.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        String login_detail = SharePreference.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
         Log.i("eeeeeettt", login_detail);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();

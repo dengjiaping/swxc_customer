@@ -4,12 +4,12 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -29,27 +29,26 @@ import com.shiwaixiangcun.customer.model.ImageReturnbean;
 import com.shiwaixiangcun.customer.model.InformationaBean;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.LogoutBean;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.model.User;
 import com.shiwaixiangcun.customer.presenter.impl.HouseInformationImpl;
-import com.shiwaixiangcun.customer.response.ResponseEntity;
-import com.shiwaixiangcun.customer.utils.ShareUtil;
-import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
+import com.shiwaixiangcun.customer.ui.IHouseInformationView;
 import com.shiwaixiangcun.customer.utils.CompressionImageUtil;
-import com.shiwaixiangcun.customer.widget.ImageViewPlus;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.LoginOutUtil;
-import com.shiwaixiangcun.customer.widget.PhotoAlbumDialog;
 import com.shiwaixiangcun.customer.utils.RefreshTockenUtil;
 import com.shiwaixiangcun.customer.utils.ResUtil;
-import com.shiwaixiangcun.customer.widget.SelfLoginoutDialog;
+import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.utils.TimerToTimerUtil;
 import com.shiwaixiangcun.customer.utils.Utils;
 import com.shiwaixiangcun.customer.utils.WheelPriorityDialogFragment;
-import com.shiwaixiangcun.customer.ui.IHouseInformationView;
+import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
+import com.shiwaixiangcun.customer.widget.ImageViewPlus;
+import com.shiwaixiangcun.customer.widget.PhotoAlbumDialog;
+import com.shiwaixiangcun.customer.widget.SelfLoginoutDialog;
 import com.squareup.picasso.Picasso;
 
 import java.io.BufferedOutputStream;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -59,6 +58,9 @@ import java.util.List;
 
 public class InformationActivity extends AppCompatActivity implements View.OnClickListener, IHouseInformationView {
 
+    private static final int MSG_CODE = 1001;
+    private final int RESULT_CODE = 1;
+    private final int SAVE_CODE = 1010;      //点击添加图片
     private ChangeLightImageView back_left;
     private TextView tv_page_name;
     private ImageViewPlus iv_head_image;
@@ -71,7 +73,7 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
     private HouseInformationImpl houseInformation;
     private RelativeLayout rl_head_image;
     private PhotoAlbumDialog selfDialog;
-    private static final int MSG_CODE = 1001;
+    private Bitmap bitmap1;
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -84,13 +86,22 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
         }
 
     };
-    private Bitmap bitmap1;
     private RelativeLayout rl_gender;
     private Dialog dateDialog;
     private RelativeLayout rl_data_dialog;
     private String str_sex_get;
     private String str_sex_get_to;
     private String str_trim;
+    private String str_sex = "";
+
+    public static String getSDPath() {
+        File sdDir = null;
+        boolean sdCardExist = Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED); //判断sd卡是否存在
+        if (sdCardExist) {
+            sdDir = Environment.getExternalStorageDirectory();//获取跟目录
+        }
+        return sdDir.toString();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,11 +136,11 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
 //        houseInformation = new HouseInformationImpl(this, "");
 //        houseInformation.setBgaAdpaterAndClick(this);
         tv_page_name.setText("个人信息");
-        String image_head = ShareUtil.getStringSpParams(this, Common.ISIMAGEHEAD, Common.SIIMAGEHEAD);
-        String name = ShareUtil.getStringSpParams(this, Common.ISUSERNAME, Common.SIUSERNAME);
-        String sex = ShareUtil.getStringSpParams(this, Common.ISUSERSEX, Common.SIUSERSEX);
-        String old = ShareUtil.getStringSpParams(this, Common.ISUSEROLD, Common.SIUSEROLD);
-        String phone = ShareUtil.getStringSpParams(this, Common.ISUSERPHONE, Common.SIUSERPHONE);
+        String image_head = SharePreference.getStringSpParams(this, Common.ISIMAGEHEAD, Common.SIIMAGEHEAD);
+        String name = SharePreference.getStringSpParams(this, Common.ISUSERNAME, Common.SIUSERNAME);
+        String sex = SharePreference.getStringSpParams(this, Common.ISUSERSEX, Common.SIUSERSEX);
+        String old = SharePreference.getStringSpParams(this, Common.ISUSEROLD, Common.SIUSEROLD);
+        String phone = SharePreference.getStringSpParams(this, Common.ISUSERPHONE, Common.SIUSERPHONE);
         Log.i("ssssss",sex);
 
         if (Utils.isNotEmpty(image_head)) {
@@ -250,11 +261,10 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void setLogout(LogoutBean user) {
         if (user.getResponseCode() == 1001) {
-            ShareUtil.saveStringToSpParams(InformationActivity.this, Common.ISORNOLOGIN, Common.SIORNOLOGIN, "");
+            SharePreference.saveStringToSpParams(InformationActivity.this, Common.ISORNOLOGIN, Common.SIORNOLOGIN, "");
             finish();
         }
     }
-
 
     private void showLoginoutDialog() {
         final SelfLoginoutDialog selfLoginoutDialog = new SelfLoginoutDialog(InformationActivity.this, R.layout.item_dialog_loginout);
@@ -343,9 +353,6 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-    private final int RESULT_CODE = 1;
-    private final int SAVE_CODE = 1010;      //点击添加图片
-
     private void showDialog() {
         selfDialog = new PhotoAlbumDialog(InformationActivity.this, R.layout.photo_album_dialog_layout);
         selfDialog.setTitle("");
@@ -408,20 +415,10 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
         return myCaptureFile;
     }
 
-    public static String getSDPath() {
-        File sdDir = null;
-        boolean sdCardExist = Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED); //判断sd卡是否存在
-        if (sdCardExist) {
-            sdDir = Environment.getExternalStorageDirectory();//获取跟目录
-        }
-        return sdDir.toString();
-    }
-
-
     //图片提交
     private void sendImageHttp(File file) {
 
-        String login_detail = ShareUtil.getStringSpParams(this, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        String login_detail = SharePreference.getStringSpParams(this, Common.ISSAVELOGIN, Common.SISAVELOGIN);
         Log.i("eeeeeettt", login_detail);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
@@ -448,7 +445,7 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
                         String fileId = responseEntity.getData().get(0).getFileId() + "";
                         houseInformation = new HouseInformationImpl(InformationActivity.this, fileId);
                         houseInformation.setHeadImageXg(InformationActivity.this);
-                        ShareUtil.saveStringToSpParams(InformationActivity.this, Common.ISIMAGEHEAD, Common.SIIMAGEHEAD, responseEntity.getData().get(0).getThumbImageURL());
+                        SharePreference.saveStringToSpParams(InformationActivity.this, Common.ISIMAGEHEAD, Common.SIIMAGEHEAD, responseEntity.getData().get(0).getThumbImageURL());
                     }
 
                 } else if (responseEntity.getResponseCode() == 1018) {
@@ -467,8 +464,6 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
             }
         });
     }
-
-    private String str_sex = "";
 
     //性别
     private void initPriorityEvent() {
@@ -489,11 +484,11 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
                 if (value.equals("男")) {
                     str_sex = "MAN";
                     tv_information_nv.setText("男");
-                    ShareUtil.saveStringToSpParams(InformationActivity.this,Common.ISUSERSEX,Common.SIUSERSEX,"MAN");
+                    SharePreference.saveStringToSpParams(InformationActivity.this, Common.ISUSERSEX, Common.SIUSERSEX, "MAN");
                 } else if (value.equals("女")) {
                     str_sex = "WOMAN";
                     tv_information_nv.setText("女");
-                    ShareUtil.saveStringToSpParams(InformationActivity.this,Common.ISUSERSEX,Common.SIUSERSEX,"WOMAN");
+                    SharePreference.saveStringToSpParams(InformationActivity.this, Common.ISUSERSEX, Common.SIUSERSEX, "WOMAN");
                 } else {
                     str_sex = "NONE";
                     tv_information_nv.setText("未设置");
@@ -534,7 +529,7 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
                 String s_data = dates[0] + "-" + (dates[1] > 9 ? dates[1] : ("0" + dates[1])) + "-"
                         + (dates[2] > 9 ? dates[2] : ("0" + dates[2]));
                 tv_information_old.setText(s_data);
-                ShareUtil.saveStringToSpParams(InformationActivity.this,Common.ISUSEROLD,Common.SIUSEROLD,s_data);
+                SharePreference.saveStringToSpParams(InformationActivity.this, Common.ISUSEROLD, Common.SIUSEROLD, s_data);
                 houseInformation = new HouseInformationImpl(InformationActivity.this, s_data);
                 houseInformation.setData(InformationActivity.this);
             }

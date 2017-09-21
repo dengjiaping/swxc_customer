@@ -1,7 +1,7 @@
 package com.shiwaixiangcun.customer.ui.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -15,11 +15,11 @@ import android.widget.Toast;
 import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
 import com.shiwaixiangcun.customer.R;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.presenter.impl.HouseGetRentImpl;
-import com.shiwaixiangcun.customer.response.ResponseEntity;
-import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
-import com.shiwaixiangcun.customer.utils.Utils;
 import com.shiwaixiangcun.customer.ui.IHouseGetRentView;
+import com.shiwaixiangcun.customer.utils.Utils;
+import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
 public class IgetRentActivity extends AppCompatActivity implements View.OnClickListener, IHouseGetRentView {
 
@@ -33,6 +33,7 @@ public class IgetRentActivity extends AppCompatActivity implements View.OnClickL
     private EditText post_content;
     private int MIN_MARK = 0;
     private int MAX_MARK = 1000000;
+    private TextView tv_et_getrent;
     private TextWatcher watcher = new TextWatcher(){
 
         @Override
@@ -74,7 +75,6 @@ public class IgetRentActivity extends AppCompatActivity implements View.OnClickL
         }
 
     };
-    private TextView tv_et_getrent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

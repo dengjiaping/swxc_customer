@@ -28,14 +28,14 @@ import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
 import com.shiwaixiangcun.customer.http.StringDialogCallBack;
 import com.shiwaixiangcun.customer.interfaces.onCheckboxClickListener;
-import com.shiwaixiangcun.customer.loadingDialog.LoadingDialog;
 import com.shiwaixiangcun.customer.model.AddressBean;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
-import com.shiwaixiangcun.customer.response.ResponseEntity;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.ui.dialog.DialogInfo;
+import com.shiwaixiangcun.customer.ui.dialog.DialogLoading;
 import com.shiwaixiangcun.customer.utils.DisplayUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
-import com.shiwaixiangcun.customer.utils.ShareUtil;
+import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
 import java.lang.reflect.Type;
@@ -67,7 +67,7 @@ public class ManageAddressActivity extends BaseActivity implements View.OnClickL
     private List<AddressBean> mAddressBeanList = new ArrayList<>();
     private AdapterManageAddress mManageAdapter;
     private String token = "";
-    private LoadingDialog loadingDialog;
+    private DialogLoading mDialogLoading;
 
     private boolean clickable = false;
 
@@ -87,7 +87,7 @@ public class ManageAddressActivity extends BaseActivity implements View.OnClickL
      * 获取Token
      */
     private void initToken() {
-        String login_info = ShareUtil.getStringSpParams(this, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        String login_info = SharePreference.getStringSpParams(this, Common.ISSAVELOGIN, Common.SISAVELOGIN);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(login_info, type);
@@ -266,16 +266,16 @@ public class ManageAddressActivity extends BaseActivity implements View.OnClickL
                 if (result == null) {
                     return;
                 }
-                loadingDialog = new LoadingDialog(mContext, "正在修改...");
-                loadingDialog.show();
+                mDialogLoading = new DialogLoading(mContext, "正在修改...");
+                mDialogLoading.show();
                 switch (result.getResponseCode()) {
                     case 1001:
-                        loadingDialog.close();
+                        mDialogLoading.close();
                         initData();
                         break;
                     default:
 
-                        loadingDialog.close();
+                        mDialogLoading.close();
                         break;
                 }
             }

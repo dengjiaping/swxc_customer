@@ -1,11 +1,9 @@
 package com.shiwaixiangcun.customer.presenter.impl;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.shiwaixiangcun.customer.http.Common;
@@ -14,15 +12,15 @@ import com.shiwaixiangcun.customer.http.HttpRequest;
 import com.shiwaixiangcun.customer.model.AnnouncementBean;
 import com.shiwaixiangcun.customer.model.InformationBean;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
+import com.shiwaixiangcun.customer.model.PageBean;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.model.WeatherDataBean;
 import com.shiwaixiangcun.customer.presenter.IHomePresenter;
-import com.shiwaixiangcun.customer.response.PageBean;
-import com.shiwaixiangcun.customer.response.ResponseEntity;
+import com.shiwaixiangcun.customer.ui.IHomeView;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.LoginOutUtil;
 import com.shiwaixiangcun.customer.utils.RefreshTockenUtil;
-import com.shiwaixiangcun.customer.utils.ShareUtil;
-import com.shiwaixiangcun.customer.ui.IHomeView;
+import com.shiwaixiangcun.customer.utils.SharePreference;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -79,20 +77,17 @@ public class HomePresenterImpl implements IHomePresenter {
         HttpRequest.get(Common.listpage, hashMap, new HttpCallBack() {
             @Override
             public void onSuccess(String responseJson) {
-                Log.i("oooooo---onSuccess---banner", responseJson);
                 iHomeView.setBgaAdpaterAndClickResult(responseJson);
 //                Type type = new TypeToken<ResponseEntity<List<BannerBean>>>() {
 //                }.getType();
 //                responseEntity = JsonUtil.fromJson(responseJson, type);
 //                String imagePath = responseEntity.getData().get(0).getImagePath();
-//                Log.i("oooooo---onSuccess---ssss----", responseJson);
 
 
             }
 
             @Override
             public void onFailed(Exception e) {
-                Log.i("oooooo---onFailed---", e.toString());
             }
         });
     }
@@ -109,7 +104,6 @@ public class HomePresenterImpl implements IHomePresenter {
         HttpRequest.get(Common.articleListpage, hashMap, new HttpCallBack() {
             @Override
             public void onSuccess(String responseJson) {
-                Log.i("oooooo---onSuccess---111", responseJson);
                 // 分页列表
                 Type type = new TypeToken<ResponseEntity<PageBean<AnnouncementBean>>>() {
                 }.getType();
@@ -120,7 +114,6 @@ public class HomePresenterImpl implements IHomePresenter {
 
             @Override
             public void onFailed(Exception e) {
-                Log.i("oooooo---onFailed---", e.toString());
             }
         });
     }
@@ -135,7 +128,6 @@ public class HomePresenterImpl implements IHomePresenter {
         HttpRequest.get(Common.articleListpage, hashMap, new HttpCallBack() {
             @Override
             public void onSuccess(String responseJson) {
-                Log.i("oooooo---onSuccess--123321", responseJson);
                 // 分页列表
                 Type type = new TypeToken<ResponseEntity<PageBean<AnnouncementBean>>>() {
                 }.getType();
@@ -146,7 +138,6 @@ public class HomePresenterImpl implements IHomePresenter {
 
             @Override
             public void onFailed(Exception e) {
-                Log.i("oooooo---onFailed---", e.toString());
             }
         });
     }
@@ -154,9 +145,7 @@ public class HomePresenterImpl implements IHomePresenter {
 
     //个人信息
     private void sendInformationHttp(final Context context) {
-        String login_detail = ShareUtil.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
-        Log.i("eeeeeettt", "0-------------0");
-        Log.i("eeeeeettt", login_detail);
+        String login_detail = SharePreference.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(login_detail, type);
@@ -164,11 +153,9 @@ public class HomePresenterImpl implements IHomePresenter {
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("access_token", responseEntity.getData().getAccess_token());
 
-        Log.i("dddddd", hashMap.toString() + "-----------" + Common.information);
         HttpRequest.get(Common.information, hashMap, new HttpCallBack() {
             @Override
             public void onSuccess(String responseJson) {
-                Log.i("oooooo---onSuccess---", responseJson);
                 InformationBean user = new Gson().fromJson(responseJson, InformationBean.class);
                 if (user.getResponseCode() == 1001) {
                     iHomeView.setInformationResult(user);
@@ -181,7 +168,6 @@ public class HomePresenterImpl implements IHomePresenter {
 
             @Override
             public void onFailed(Exception e) {
-                Log.i("oooooo---onFailed---", e.toString());
             }
         });
     }
@@ -191,11 +177,9 @@ public class HomePresenterImpl implements IHomePresenter {
     private void sendWeatherHttp(final Context context,String cityCode) {
         HashMap<String, Object> hashMap = new HashMap<>();
 
-        Log.e("dddddd", hashMap.toString() + "-----------" + "http://tqapi.mobile.360.cn/v4/"+cityCode+".json");
         HttpRequest.get("http://tqapi.mobile.360.cn/v4/"+cityCode+".json", hashMap, new HttpCallBack() {
             @Override
             public void onSuccess(String responseJson) {
-                Log.e("oooooo---onSuccess---yyyy", responseJson);
                  JSON.parse(responseJson);
                 WeatherDataBean weatherDataBean = new Gson().fromJson(responseJson, WeatherDataBean.class);
                 iHomeView.setHomeWeatherClick(weatherDataBean);
@@ -205,7 +189,6 @@ public class HomePresenterImpl implements IHomePresenter {
 
             @Override
             public void onFailed(Exception e) {
-                Log.e("oooooo---onFailed---", e.toString());
                 Toast.makeText(context,"网络异常，请稍后再试...",Toast.LENGTH_LONG).show();
 
             }

@@ -7,11 +7,10 @@ import com.lzy.okgo.request.DeleteRequest;
 import com.lzy.okgo.request.GetRequest;
 import com.lzy.okgo.request.PostRequest;
 import com.lzy.okgo.request.PutRequest;
-import com.shiwaixiangcun.customer.response.ResponseEntity;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 

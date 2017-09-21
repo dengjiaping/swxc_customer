@@ -1,14 +1,14 @@
 package com.shiwaixiangcun.customer.ui.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
 import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
 import com.shiwaixiangcun.customer.R;
-import com.shiwaixiangcun.customer.appupdate.VersionUpdateUtil;
+import com.shiwaixiangcun.customer.utils.VersionUpdateUtil;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
 public class ForLifeActivity extends AppCompatActivity implements View.OnClickListener{

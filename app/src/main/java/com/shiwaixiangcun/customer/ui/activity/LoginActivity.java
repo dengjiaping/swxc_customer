@@ -2,8 +2,8 @@ package com.shiwaixiangcun.customer.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,18 +19,18 @@ import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
-import com.shiwaixiangcun.customer.loadingDialog.LoadingDialog;
 import com.shiwaixiangcun.customer.model.InformationaBean;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
-import com.shiwaixiangcun.customer.response.ResponseEntity;
-import com.shiwaixiangcun.customer.utils.ShareUtil;
-import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
+import com.shiwaixiangcun.customer.ui.dialog.DialogLoading;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.LoginOutUtil;
 import com.shiwaixiangcun.customer.utils.RefreshTockenUtil;
+import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.utils.TimeCount;
 import com.shiwaixiangcun.customer.utils.TimerToTimerUtil;
 import com.shiwaixiangcun.customer.utils.Utils;
+import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText et_get_psw;
     private EditText et_username;
     private ChangeLightImageView back_left;
-    private LoadingDialog loadingDialog;
+    private DialogLoading mDialogLoading;
     private String mineLogin;
 
     @Override
@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void initData() {
         time = new TimeCount(60000, 1000, tv_get_verification);
         tv_get_verification.setOnClickListener(this);
-        et_username.setText(ShareUtil.getStringSpParams(this, Common.ISSAVEACCOUNT, Common.SISAVEACCOUNT));
+        et_username.setText(SharePreference.getStringSpParams(this, Common.ISSAVEACCOUNT, Common.SISAVEACCOUNT));
         btn_login.setOnClickListener(this);
         back_left.setOnClickListener(this);
     }
@@ -153,12 +153,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(responseJson, type);
 
                 if (responseEntity.getResponseCode() == 1003) {
-                    loadingDialog = new LoadingDialog(LoginActivity.this, "正在登录...");
-                    loadingDialog.show();
+                    mDialogLoading = new DialogLoading(LoginActivity.this, "正在登录...");
+                    mDialogLoading.show();
                     String access_token = responseEntity.getData().getAccess_token();
 
-                    ShareUtil.saveStringToSpParams(LoginActivity.this, Common.ISSAVEACCOUNT, Common.SISAVEACCOUNT, et_username.getText().toString().trim());
-                    ShareUtil.saveStringToSpParams(LoginActivity.this, Common.ISSAVELOGIN, Common.SISAVELOGIN, responseJson);
+                    SharePreference.saveStringToSpParams(LoginActivity.this, Common.ISSAVEACCOUNT, Common.SISAVEACCOUNT, et_username.getText().toString().trim());
+                    SharePreference.saveStringToSpParams(LoginActivity.this, Common.ISSAVELOGIN, Common.SISAVELOGIN, responseJson);
 
                     sendInformationHttp(LoginActivity.this);
 
@@ -177,7 +177,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     //个人信息
     private void sendInformationHttp(final Context context) {
-        String login_detail = ShareUtil.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        String login_detail = SharePreference.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(login_detail, type);
@@ -198,27 +198,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //                        Log.e("bbbbbbbbbbbm", name + "------" + value);
 //                        if (name.equals("uid")) {
 //                            Log.e("bbbbbbbbbbbm---------------", value);
-//                        ShareUtil.saveStringToSpParams(LoginActivity.this,Common.ISCOOKIE,Common.SICOOKIE,value);
+//                        SharePreference.saveStringToSpParams(LoginActivity.this,Common.ISCOOKIE,Common.SICOOKIE,value);
 //                        }
 //
 //                    }
-                    ShareUtil.saveStringToSpParams(LoginActivity.this, Common.ISORNOLOGIN, Common.SIORNOLOGIN, "yesLogin");
+                    SharePreference.saveStringToSpParams(LoginActivity.this, Common.ISORNOLOGIN, Common.SIORNOLOGIN, "yesLogin");
                     if (Utils.isNotEmpty(user.getData().getAvatar())) {
                         if (Utils.isNotEmpty(user.getData().getAvatar().getAccessUrl())) {
-                            ShareUtil.saveStringToSpParams(LoginActivity.this, Common.ISIMAGEHEAD, Common.SIIMAGEHEAD, user.getData().getAvatar().getAccessUrl());
+                            SharePreference.saveStringToSpParams(LoginActivity.this, Common.ISIMAGEHEAD, Common.SIIMAGEHEAD, user.getData().getAvatar().getAccessUrl());
                         } else {
-                            ShareUtil.saveStringToSpParams(LoginActivity.this, Common.ISIMAGEHEAD, Common.SIIMAGEHEAD, "");
+                            SharePreference.saveStringToSpParams(LoginActivity.this, Common.ISIMAGEHEAD, Common.SIIMAGEHEAD, "");
                         }
                     } else {
-                        ShareUtil.saveStringToSpParams(LoginActivity.this, Common.ISIMAGEHEAD, Common.SIIMAGEHEAD, "");
+                        SharePreference.saveStringToSpParams(LoginActivity.this, Common.ISIMAGEHEAD, Common.SIIMAGEHEAD, "");
                     }
 
 
-                    ShareUtil.saveStringToSpParams(LoginActivity.this, Common.ISUSERNAME, Common.SIUSERNAME, user.getData().getName());
-                    ShareUtil.saveStringToSpParams(LoginActivity.this, Common.ISUSERSEX, Common.SIUSERSEX, user.getData().getSex());
-                    ShareUtil.saveStringToSpParams(LoginActivity.this, Common.ISUSEROLD, Common.SIUSEROLD, TimerToTimerUtil.stampToInspectionDate(user.getData().getBirthday() + ""));
-                    ShareUtil.saveStringToSpParams(LoginActivity.this, Common.ISUSERPHONE, Common.SIUSERPHONE, user.getData().getPhone());
-                    loadingDialog.close();
+                    SharePreference.saveStringToSpParams(LoginActivity.this, Common.ISUSERNAME, Common.SIUSERNAME, user.getData().getName());
+                    SharePreference.saveStringToSpParams(LoginActivity.this, Common.ISUSERSEX, Common.SIUSERSEX, user.getData().getSex());
+                    SharePreference.saveStringToSpParams(LoginActivity.this, Common.ISUSEROLD, Common.SIUSEROLD, TimerToTimerUtil.stampToInspectionDate(user.getData().getBirthday() + ""));
+                    SharePreference.saveStringToSpParams(LoginActivity.this, Common.ISUSERPHONE, Common.SIUSERPHONE, user.getData().getPhone());
+                    mDialogLoading.close();
                     if (Utils.isNotEmpty(mineLogin)) {
                         if (mineLogin.equals("mineLogin")) {
                             Intent intent = new Intent();
@@ -236,7 +236,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onFailed(Exception e) {
                 Toast.makeText(context, "登录失败", Toast.LENGTH_LONG).show();
-                loadingDialog.close();
+                mDialogLoading.close();
             }
         });
     }

@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -26,21 +26,21 @@ import com.shiwaixiangcun.customer.model.BloodPressurebean;
 import com.shiwaixiangcun.customer.model.BloodSugarBean;
 import com.shiwaixiangcun.customer.model.HealthAllActivity;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
+import com.shiwaixiangcun.customer.model.PageBean;
 import com.shiwaixiangcun.customer.model.PressureFatBean;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.model.WeightBean;
 import com.shiwaixiangcun.customer.presenter.impl.HealthOkImpl;
-import com.shiwaixiangcun.customer.pullableview.MyListener;
-import com.shiwaixiangcun.customer.pullableview.PullToRefreshLayout;
-import com.shiwaixiangcun.customer.response.PageBean;
-import com.shiwaixiangcun.customer.response.ResponseEntity;
-import com.shiwaixiangcun.customer.utils.ShareUtil;
-import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
+import com.shiwaixiangcun.customer.ui.IHealthOkView;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.LoginOutUtil;
 import com.shiwaixiangcun.customer.utils.RefreshTockenUtil;
+import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.utils.TimeToTime;
 import com.shiwaixiangcun.customer.utils.Utils;
-import com.shiwaixiangcun.customer.ui.IHealthOkView;
+import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
+import com.shiwaixiangcun.customer.widget.pullableview.MyListener;
+import com.shiwaixiangcun.customer.widget.pullableview.PullToRefreshLayout;
 
 import java.io.Serializable;
 import java.lang.reflect.Type;
@@ -375,7 +375,7 @@ public class HealthOkActivity extends AppCompatActivity implements View.OnClickL
 
     //体重
     private void sendWeightHttp(final Context context) {
-        String login_detail = ShareUtil.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        String login_detail = SharePreference.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
         Log.i("eeeeeettt", login_detail);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
@@ -412,7 +412,7 @@ public class HealthOkActivity extends AppCompatActivity implements View.OnClickL
 
     //血压
     private void sendBloodPressureHttp(final Context context) {
-        String login_detail = ShareUtil.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        String login_detail = SharePreference.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
         Log.i("eeeeeettt", login_detail);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
@@ -453,7 +453,7 @@ public class HealthOkActivity extends AppCompatActivity implements View.OnClickL
 
     //血糖页面和列表
     private void sendBloodSugarHttp(final Context context) {
-        String login_detail = ShareUtil.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        String login_detail = SharePreference.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
         Log.i("eeeeeettt", login_detail);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
@@ -490,7 +490,7 @@ public class HealthOkActivity extends AppCompatActivity implements View.OnClickL
 
     //血脂
     private void sendBloodFatHttp(final Context context) {
-        String login_detail = ShareUtil.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        String login_detail = SharePreference.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
         Log.i("eeeeeettt", login_detail);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();

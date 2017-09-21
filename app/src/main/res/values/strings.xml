@@ -49,4 +49,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="main_home">首页</string>
+    <string name="main_mall">商城</string>
+    <string name="main_me">我的</string>
 </resources>

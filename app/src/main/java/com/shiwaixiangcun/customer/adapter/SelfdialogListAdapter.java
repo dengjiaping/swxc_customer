@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.model.HouseSelectListBean;
-import com.shiwaixiangcun.customer.utils.ShareUtil;
+import com.shiwaixiangcun.customer.utils.SharePreference;
 
 import java.util.List;
 
@@ -61,7 +61,7 @@ public class SelfdialogListAdapter extends BaseAdapter {
         }
         final ViewHolder finalMViewHolder = mViewHolder;
         Log.i("ttttttttt", "eeeeeeeeee"+list.get(position).getId()+"------"+position);
-        String stringSpParams = ShareUtil.getStringSpParams(parent.getContext(), Common.ISSELECTHOSE, Common.SISELECTHOSE);
+        String stringSpParams = SharePreference.getStringSpParams(parent.getContext(), Common.ISSELECTHOSE, Common.SISELECTHOSE);
 
 //        mViewHolder.rl_select_house_a.setOnClickListener(new View.OnClickListener() {
 //            @Override

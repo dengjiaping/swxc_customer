@@ -9,17 +9,17 @@ import com.google.gson.reflect.TypeToken;
 import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
-import com.shiwaixiangcun.customer.loadingDialog.LoadingDialog;
 import com.shiwaixiangcun.customer.model.HouseSelectListBean;
 import com.shiwaixiangcun.customer.model.InformationBean;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.presenter.IOnhousetosellerPresenter;
-import com.shiwaixiangcun.customer.response.ResponseEntity;
+import com.shiwaixiangcun.customer.ui.IHouseToSellerView;
+import com.shiwaixiangcun.customer.ui.dialog.DialogLoading;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.LoginOutUtil;
 import com.shiwaixiangcun.customer.utils.RefreshTockenUtil;
-import com.shiwaixiangcun.customer.utils.ShareUtil;
-import com.shiwaixiangcun.customer.ui.IHouseToSellerView;
+import com.shiwaixiangcun.customer.utils.SharePreference;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -33,7 +33,7 @@ public class HousetoSellerImpl implements IOnhousetosellerPresenter {
     private IHouseToSellerView iHouseToSellerView;
     private String str_houseId;
     private String str_content;
-    private LoadingDialog loadingDialog;
+    private DialogLoading mDialogLoading;
 
     public HousetoSellerImpl(IHouseToSellerView iHouseToSellerView, String str_houseId, String str_content) {
         this.iHouseToSellerView = iHouseToSellerView;
@@ -43,8 +43,8 @@ public class HousetoSellerImpl implements IOnhousetosellerPresenter {
 
     @Override
     public void setBgaAdpaterAndClick(Context context) {
-        loadingDialog = new LoadingDialog(context, "正在提交");
-        loadingDialog.show();
+        mDialogLoading = new DialogLoading(context, "正在提交");
+        mDialogLoading.show();
         sendToRentHttp(context);
     }
 
@@ -61,7 +61,7 @@ public class HousetoSellerImpl implements IOnhousetosellerPresenter {
 
     //出租房
     private void sendToRentHttp(final Context context) {
-        String login_detail = ShareUtil.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        String login_detail = SharePreference.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
         Log.i("eeeeeettt", login_detail);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
@@ -82,14 +82,14 @@ public class HousetoSellerImpl implements IOnhousetosellerPresenter {
                 ResponseEntity responseEntity = JsonUtil.fromJson(responseJson, ResponseEntity.class);
                 if (responseEntity.getResponseCode() == 1001) {
                     iHouseToSellerView.setBgaAdpaterAndClickResult(responseEntity);
-                    loadingDialog.close();
+                    mDialogLoading.close();
                 } else if (responseEntity.getResponseCode() == 1018) {
                     RefreshTockenUtil.sendIntDataInvatation(context, refresh_token);
                 } else if (responseEntity.getResponseCode() == 1019) {
                     LoginOutUtil.sendLoginOutUtil(context);
                 }else if (responseEntity.getResponseCode() == 1002){
                     Toast.makeText(context,responseEntity.getMessage(),Toast.LENGTH_LONG).show();
-                    loadingDialog.close();
+                    mDialogLoading.close();
                 }
 
             }
@@ -98,7 +98,7 @@ public class HousetoSellerImpl implements IOnhousetosellerPresenter {
             public void onFailed(Exception e) {
                 Log.i("oooooo---onFailed---", e.toString());
                 Toast.makeText(context,"网络异常，请稍后再试...",Toast.LENGTH_LONG).show();
-                loadingDialog.close();
+                mDialogLoading.close();
             }
         });
     }
@@ -106,7 +106,7 @@ public class HousetoSellerImpl implements IOnhousetosellerPresenter {
 
     //房列表
     private void sendHouseListHttp(final Context context) {
-        String login_detail = ShareUtil.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        String login_detail = SharePreference.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
         Log.i("eeeeeettt", login_detail);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
@@ -148,7 +148,7 @@ public class HousetoSellerImpl implements IOnhousetosellerPresenter {
 
     //个人信息
     private void sendInformationHttp(final Context context) {
-        String login_detail = ShareUtil.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        String login_detail = SharePreference.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
         Log.i("eeeeeettt", login_detail);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();

@@ -30,8 +30,8 @@ import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
 import com.shiwaixiangcun.customer.interfaces.TagClick;
 import com.shiwaixiangcun.customer.model.GoodDetail;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.model.StockBean;
-import com.shiwaixiangcun.customer.response.ResponseEntity;
 import com.shiwaixiangcun.customer.ui.activity.ConfirmOrderActivity;
 import com.shiwaixiangcun.customer.utils.ArithmeticUtils;
 import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
@@ -46,9 +46,7 @@ import java.util.Set;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by Administrator on 2017/9/11.
- */
+
 
 public class DialogSku extends Dialog implements DialogInterface.OnCancelListener, View.OnClickListener {
 
@@ -206,7 +204,7 @@ public class DialogSku extends Dialog implements DialogInterface.OnCancelListene
                         switch (stockResponseEntity.getResponseCode()) {
                             case 1001:
                                 StockBean data = stockResponseEntity.getData();
-                                mTvPriceSku.setText("价格: " + "¥ "+ArithmeticUtils.format(data.getMinPrice()));
+                                mTvPriceSku.setText("价格: " + "¥ " + ArithmeticUtils.format(data.getMinPrice()));
                                 mTvStockSku.setText("库存: " + data.getStock() + "");
                                 break;
                         }
@@ -236,7 +234,9 @@ public class DialogSku extends Dialog implements DialogInterface.OnCancelListene
                     nameBuilder.append(key).append(":").append(valueMap.get(key)).append(";");
                 }
 
-                idBuilder.deleteCharAt(idBuilder.length() - 1);
+                if (idBuilder.length() > 0) {
+                    idBuilder.deleteCharAt(idBuilder.length() - 1);
+                }
                 Intent intent = new Intent();
                 Bundle bundle = new Bundle();
                 bundle.putInt("goodId", mGoodId);

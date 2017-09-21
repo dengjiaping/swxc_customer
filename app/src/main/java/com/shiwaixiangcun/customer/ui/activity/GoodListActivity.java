@@ -19,11 +19,8 @@ import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterGoodList;
 import com.shiwaixiangcun.customer.event.EventCenter;
 import com.shiwaixiangcun.customer.event.SimpleEvent;
-import com.shiwaixiangcun.customer.model.MallBean;
-import com.shiwaixiangcun.customer.response.ResponseEntity;
-import com.shiwaixiangcun.customer.utils.ArithmeticUtils;
-import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
-import com.shiwaixiangcun.customer.utils.RecyclerViewDivider;
+import com.shiwaixiangcun.customer.model.ElementBean;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -44,12 +41,10 @@ public class GoodListActivity extends BaseActivity implements View.OnClickListen
     TextView mTvPageName;
     @BindView(R.id.rv_good_list)
     RecyclerView mRvGoodList;
-
-
+    AdapterGoodList mAdapterGoodList;
     private int flag = 0;
     private String type;
     private List<ElementBean.ElementsBean> mGoodList = new ArrayList<>();
-    AdapterGoodList mAdapterGoodList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

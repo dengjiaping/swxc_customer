@@ -1,4 +1,4 @@
-package com.shiwaixiangcun.customer.pullableview;
+package com.shiwaixiangcun.customer.widget.pullableview;
 
 import android.content.Context;
 import android.util.AttributeSet;

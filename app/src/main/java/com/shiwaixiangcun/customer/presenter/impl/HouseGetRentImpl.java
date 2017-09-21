@@ -8,15 +8,15 @@ import com.google.gson.reflect.TypeToken;
 import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
-import com.shiwaixiangcun.customer.loadingDialog.LoadingDialog;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.presenter.IGetRentHousePresenter;
-import com.shiwaixiangcun.customer.response.ResponseEntity;
+import com.shiwaixiangcun.customer.ui.IHouseGetRentView;
+import com.shiwaixiangcun.customer.ui.dialog.DialogLoading;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.LoginOutUtil;
 import com.shiwaixiangcun.customer.utils.RefreshTockenUtil;
-import com.shiwaixiangcun.customer.utils.ShareUtil;
-import com.shiwaixiangcun.customer.ui.IHouseGetRentView;
+import com.shiwaixiangcun.customer.utils.SharePreference;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -28,7 +28,7 @@ import java.util.HashMap;
 public class HouseGetRentImpl implements IGetRentHousePresenter {
     private IHouseGetRentView iHouseGetRentView;
     private String str_content;
-    private LoadingDialog loadingDialog;
+    private DialogLoading mDialogLoading;
 
     public HouseGetRentImpl(IHouseGetRentView iHouseGetRentView, String str_content) {
         this.iHouseGetRentView = iHouseGetRentView;
@@ -37,8 +37,8 @@ public class HouseGetRentImpl implements IGetRentHousePresenter {
 
     @Override
     public void setBgaAdpaterAndClick(Context context) {
-        loadingDialog = new LoadingDialog(context, "正在提交");
-        loadingDialog.show();
+        mDialogLoading = new DialogLoading(context, "正在提交");
+        mDialogLoading.show();
         sendGetRentHttp(context);
     }
 
@@ -47,7 +47,7 @@ public class HouseGetRentImpl implements IGetRentHousePresenter {
 
     //租房
     private void sendGetRentHttp(final Context context) {
-        String login_detail = ShareUtil.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        String login_detail = SharePreference.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
         Log.i("eeeeeettt", login_detail);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
@@ -68,14 +68,14 @@ public class HouseGetRentImpl implements IGetRentHousePresenter {
 
                 if (responseEntity.getResponseCode() == 1001) {
                     iHouseGetRentView.setBgaAdpaterAndClickResult(responseEntity);
-                    loadingDialog.close();
+                    mDialogLoading.close();
                 } else if (responseEntity.getResponseCode() == 1018) {
                     RefreshTockenUtil.sendIntDataInvatation(context, refresh_token);
                 } else if (responseEntity.getResponseCode() == 1019) {
                     LoginOutUtil.sendLoginOutUtil(context);
                 }else if (responseEntity.getResponseCode() == 1002){
                     Toast.makeText(context,responseEntity.getMessage(),Toast.LENGTH_LONG).show();
-                    loadingDialog.close();
+                    mDialogLoading.close();
                 }
 
             }
@@ -84,7 +84,7 @@ public class HouseGetRentImpl implements IGetRentHousePresenter {
             public void onFailed(Exception e) {
                 Log.i("oooooo---onFailed---", e.toString());
                 Toast.makeText(context,"网络异常，请稍后再试...",Toast.LENGTH_LONG).show();
-                loadingDialog.close();
+                mDialogLoading.close();
             }
         });
     }

@@ -22,6 +22,9 @@ import butterknife.ButterKnife;
 
 public class OrderActivity extends BaseActivity implements View.OnClickListener {
 
+    private final String[] mTitles = {
+            "全部", "待付款", "待收货", "已完成"
+    };
     @BindView(R.id.back_left)
     ChangeLightImageView mBackLeft;
     @BindView(R.id.tv_page_name)
@@ -32,11 +35,7 @@ public class OrderActivity extends BaseActivity implements View.OnClickListener 
     SlidingTabLayout mTablayout;
     @BindView(R.id.vp)
     ViewPager mVp;
-
     private ArrayList<Fragment> mFragments = new ArrayList<>();
-    private final String[] mTitles = {
-            "全部", "待付款", "待收货", "已完成"
-    };
     private MyPagerAdapter mAdapter;
 
     @Override
@@ -61,7 +60,6 @@ public class OrderActivity extends BaseActivity implements View.OnClickListener 
         }
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());
         mVp.setAdapter(mAdapter);
-        mAdapter = new MyPagerAdapter(getSupportFragmentManager());
         mTablayout.setViewPager(mVp);
     }
 

@@ -9,11 +9,11 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -22,16 +22,16 @@ import android.widget.TextView;
 import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
 import com.shiwaixiangcun.customer.R;
-import com.shiwaixiangcun.customer.appupdate.VersionUpdateUtil;
 import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.model.UpdateAppBean;
 import com.shiwaixiangcun.customer.presenter.impl.MyMineImpl;
+import com.shiwaixiangcun.customer.ui.IMyMineView;
+import com.shiwaixiangcun.customer.utils.SharePreference;
+import com.shiwaixiangcun.customer.utils.Utils;
+import com.shiwaixiangcun.customer.utils.VersionUpdateUtil;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 import com.shiwaixiangcun.customer.widget.ImageViewPlus;
 import com.shiwaixiangcun.customer.widget.SelfLoginoutDialog;
-import com.shiwaixiangcun.customer.utils.ShareUtil;
-import com.shiwaixiangcun.customer.utils.Utils;
-import com.shiwaixiangcun.customer.ui.IMyMineView;
 import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpEntity;
@@ -53,6 +53,18 @@ import java.util.List;
 
 public class MymineActivity extends AppCompatActivity implements View.OnClickListener, IMyMineView {
 
+    long m_newVerCode; //最新版的版本号
+    String m_newVerName; //最新版的版本名
+    String m_appNameStr; //下载到本地要给这个APP命的名字
+    View.OnClickListener btnClickListener = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            // TODO Auto-generated method stub
+            Log.i("aaaaaaaaabbvva", "点击了版本更新");
+            new checkNewestVersionAsyncTask().execute();
+        }
+    };
     private ChangeLightImageView back_left;
     private RelativeLayout rl_head_mine;
     private RelativeLayout rl_feed_back;
@@ -67,6 +79,7 @@ public class MymineActivity extends AppCompatActivity implements View.OnClickLis
     private RelativeLayout rl_app_order;
     private Handler m_mainHandler;
     private ProgressDialog m_progressDlg;
+    private String verName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,14 +128,14 @@ public class MymineActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View view) {
         Intent intent;
-        String isOrnotLogin_renting = ShareUtil.getStringSpParams(MymineActivity.this, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
+        String isOrnotLogin_renting = SharePreference.getStringSpParams(MymineActivity.this, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
         int id = view.getId();
         switch (id) {
             case R.id.back_left:
                 finish();
                 break;
             case R.id.rl_head_mine:
-                String isOrnotLogin_service = ShareUtil.getStringSpParams(MymineActivity.this, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
+                String isOrnotLogin_service = SharePreference.getStringSpParams(MymineActivity.this, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
                 if (Utils.isNotEmpty(isOrnotLogin_service)) {
                     intent = new Intent(this, InformationActivity.class);
                     startActivity(intent);
@@ -183,10 +196,10 @@ public class MymineActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onResume() {
         super.onResume();
-        String isOrnotLogin_service = ShareUtil.getStringSpParams(MymineActivity.this, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
+        String isOrnotLogin_service = SharePreference.getStringSpParams(MymineActivity.this, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
         if (Utils.isNotEmpty(isOrnotLogin_service)) {
-            String head_image_path = ShareUtil.getStringSpParams(this, Common.ISIMAGEHEAD, Common.SIIMAGEHEAD);
-            String username = ShareUtil.getStringSpParams(this, Common.ISUSERNAME, Common.SIUSERNAME);
+            String head_image_path = SharePreference.getStringSpParams(this, Common.ISIMAGEHEAD, Common.SIIMAGEHEAD);
+            String username = SharePreference.getStringSpParams(this, Common.ISUSERNAME, Common.SIUSERNAME);
             Log.i("1111111111122", head_image_path);
 
             tv_user_name.setText(username);
@@ -243,55 +256,6 @@ public class MymineActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
         selfLoginoutDialog.show();
-    }
-
-    long m_newVerCode; //最新版的版本号
-    String m_newVerName; //最新版的版本名
-    String m_appNameStr; //下载到本地要给这个APP命的名字
-    private String verName;
-
-    View.OnClickListener btnClickListener = new View.OnClickListener() {
-
-        @Override
-        public void onClick(View v) {
-            // TODO Auto-generated method stub
-            Log.i("aaaaaaaaabbvva", "点击了版本更新");
-            new checkNewestVersionAsyncTask().execute();
-        }
-    };
-
-    class checkNewestVersionAsyncTask extends AsyncTask<Void, Void, Boolean> {
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO Auto-generated method stub
-            if (postCheckNewestVersionCommand2Server()) {
-                int vercode = VersionUpdateUtil.getVerCode(getApplicationContext()); // 用到前面第一节写的方法
-                if (m_newVerCode > vercode) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-            return false;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result) {
-            // TODO Auto-generated method stub
-            Log.i("aaaaaaaaabbvva", "请求版本更新接口");
-//            sendAppUpdateInvatation();
-            myMine = new MyMineImpl(MymineActivity.this, "");
-            myMine.setBgaAdpaterAndClick(MymineActivity.this);
-
-            super.onPostExecute(result);
-        }
-
-        @Override
-        protected void onPreExecute() {
-            // TODO Auto-generated method stub
-            super.onPreExecute();
-        }
     }
 
     /**
@@ -380,7 +344,6 @@ public class MymineActivity extends AppCompatActivity implements View.OnClickLis
         dialog.show();
     }
 
-
     private void initVariable() {
         m_mainHandler = new Handler();
         m_progressDlg = new ProgressDialog(this);
@@ -463,6 +426,36 @@ public class MymineActivity extends AppCompatActivity implements View.OnClickLis
             case 1020:
                 finish();
                 break;
+        }
+    }
+
+    class checkNewestVersionAsyncTask extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            // TODO Auto-generated method stub
+            if (postCheckNewestVersionCommand2Server()) {
+                int vercode = VersionUpdateUtil.getVerCode(getApplicationContext()); // 用到前面第一节写的方法
+                return m_newVerCode > vercode;
+            }
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            // TODO Auto-generated method stub
+            Log.i("aaaaaaaaabbvva", "请求版本更新接口");
+//            sendAppUpdateInvatation();
+            myMine = new MyMineImpl(MymineActivity.this, "");
+            myMine.setBgaAdpaterAndClick(MymineActivity.this);
+
+            super.onPostExecute(result);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            // TODO Auto-generated method stub
+            super.onPreExecute();
         }
     }
 }

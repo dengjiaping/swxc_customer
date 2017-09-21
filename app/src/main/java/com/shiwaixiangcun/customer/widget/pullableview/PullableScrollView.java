@@ -1,4 +1,4 @@
-package com.shiwaixiangcun.customer.pullableview;
+package com.shiwaixiangcun.customer.widget.pullableview;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -25,19 +25,13 @@ public class PullableScrollView extends ScrollView implements Pullable
 	@Override
 	public boolean canPullDown()
 	{
-		if (getScrollY() == 0)
-			return true;
-		else
-			return false;
-	}
+        return getScrollY() == 0;
+    }
 
 	@Override
 	public boolean canPullUp()
 	{
-		if (getScrollY() >= (getChildAt(0).getHeight() - getMeasuredHeight()))
-			return true;
-		else
-			return false;
-	}
+        return getScrollY() >= (getChildAt(0).getHeight() - getMeasuredHeight());
+    }
 
 }

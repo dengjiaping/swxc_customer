@@ -1,4 +1,4 @@
-package com.shiwaixiangcun.customer.pullableview;
+package com.shiwaixiangcun.customer.widget.pullableview;
 
 public interface Pullable
 {

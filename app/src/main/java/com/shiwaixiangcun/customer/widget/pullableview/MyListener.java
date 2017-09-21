@@ -1,4 +1,4 @@
-package com.shiwaixiangcun.customer.pullableview;
+package com.shiwaixiangcun.customer.widget.pullableview;
 
 import android.os.Handler;
 import android.os.Message;
@@ -6,6 +6,9 @@ import android.util.Log;
 
 
 public class MyListener implements PullToRefreshLayout.OnRefreshListener {
+
+    public onRefreshListener onRefreshListener;
+    public onRefreshOkListener onRefreshOkListener;
 
     @Override
     public void onRefresh(final PullToRefreshLayout pullToRefreshLayout) {
@@ -42,26 +45,23 @@ public class MyListener implements PullToRefreshLayout.OnRefreshListener {
         }.sendEmptyMessageDelayed(0, 3000);
     }
 
-    public onRefreshListener onRefreshListener;
-	public onRefreshOkListener onRefreshOkListener;
+    public void setRefreshListener(onRefreshListener onRefreshListener) {
+        this.onRefreshListener = onRefreshListener;
+    }
+
+    public void setRefreshOkListener(onRefreshOkListener onRefreshOkListener) {
+        this.onRefreshOkListener = onRefreshOkListener;
+    }
+
 
     //开始刷新回调
     public interface onRefreshListener {
         void refreshScence(boolean isnot);
     }
 
-    public void setRefreshListener(onRefreshListener onRefreshListener) {
-        this.onRefreshListener = onRefreshListener;
-    }
-
-
 	//开始刷新回调
 	public interface onRefreshOkListener {
 		void refreshOkScence(boolean isnot);
-	}
-
-	public void setRefreshOkListener(onRefreshOkListener onRefreshOkListener) {
-		this.onRefreshOkListener = onRefreshOkListener;
 	}
 
 }

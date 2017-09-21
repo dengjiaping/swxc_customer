@@ -19,17 +19,17 @@ import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.ResidentBean;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.model.residentLastBean;
 import com.shiwaixiangcun.customer.presenter.impl.ResidentCertificationImpl;
-import com.shiwaixiangcun.customer.response.ResponseEntity;
+import com.shiwaixiangcun.customer.ui.IResifdentView;
 import com.shiwaixiangcun.customer.utils.AppManager;
-import com.shiwaixiangcun.customer.utils.ShareUtil;
-import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.ResUtil;
+import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.utils.Utils;
+import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 import com.shiwaixiangcun.customer.widget.WheelView;
-import com.shiwaixiangcun.customer.ui.IResifdentView;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -37,6 +37,7 @@ import java.util.List;
 
 public class ResidentCertificationActivity extends Activity implements View.OnClickListener, WheelView.OnValueChangeListener, IResifdentView {
 
+    String totle_totle = "";
     private ChangeLightImageView back_left;
     private Button btn_to_other;
     private WheelView wheelView;
@@ -66,6 +67,7 @@ public class ResidentCertificationActivity extends Activity implements View.OnCl
     private List<residentLastBean.DataBean> data_house;
     private int id_new;
     private String totle;
+    private String str_houseId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -578,12 +580,9 @@ public class ResidentCertificationActivity extends Activity implements View.OnCl
         setSubView(data);
     }
 
-    String totle_totle = "";
-    private String str_houseId = "";
-
     //某单元下得房屋
     private void sendHouseHttp(Context context, int id, final String little_total, final int value) {
-        String login_detail = ShareUtil.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        String login_detail = SharePreference.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
         Log.i("eeeeeettt", login_detail);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();

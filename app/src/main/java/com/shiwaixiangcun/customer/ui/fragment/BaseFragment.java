@@ -1,163 +1,150 @@
 package com.shiwaixiangcun.customer.ui.fragment;
 
-import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
-import com.shiwaixiangcun.customer.utils.StringUtil;
+import com.shiwaixiangcun.customer.BaseActivity;
+import com.shiwaixiangcun.customer.event.EventCenter;
 
 /**
  * Created by Administrator on 2017/9/15.
  */
 
-public abstract class BaseFragment extends Fragment {
-    protected Context mContext;
-    protected LayoutInflater mLayoutInflater;
-    private boolean isFirstVisible = true;
-    private boolean isFirstInvisible = true;
-    private boolean isPrepared;
+public abstract class BaseFragment extends CubeFragment implements View.OnClickListener {
+    protected static final String TAG = BaseFragment.class.getName();
+    protected String requestID;
+    private Context mContext;
+    private boolean isPause;
+    private boolean mRegistered;
 
-    protected final String BUG_TAG = this.getClass().getSimpleName();
-    public String mTitle;
 
+    private boolean visialbe = false;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = this.getActivity();
+    }
+
+    @Override
+    public void onClick(View v) {
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        isPause = false;
 
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        this.mContext = context;
-
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (getContentViewLayoutID() != 0) {
-            return inflater.inflate(getContentViewLayoutID(), null);
-        } else {
-            return super.onCreateView(inflater, container, savedInstanceState);
-        }
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        initViewAndEvents(view);
-    }
-
-    /**
-     * 初始化视图以及点击事件
-     *
-     * @param view
-     */
-    protected abstract void initViewAndEvents(View view);
-
-    /**
-     * 布局文件
-     *
-     * @return
-     */
-    protected abstract int getContentViewLayoutID();
-
-    protected void readyGo(Class<?> clazz) {
-        Intent intent = new Intent(getActivity(), clazz);
-        startActivity(intent);
-    }
-
-    protected void readyGo(Class<?> clazz, Bundle bundle) {
-        Intent intent = new Intent(getActivity(), clazz);
-        if (null != bundle) {
-            intent.putExtras(bundle);
-        }
-        startActivity(intent);
-    }
-
-    protected void readyGoForResult(Class<?> clazz, int requestCode) {
-        Intent intent = new Intent(getActivity(), clazz);
-        startActivityForResult(intent, requestCode);
-    }
-
-    protected void readyGoForResult(Class<?> clazz, int requestCode, Bundle bundle) {
-        Intent intent = new Intent(getActivity(), clazz);
-        if (null != bundle) {
-            intent.putExtras(bundle);
-        }
-        startActivityForResult(intent, requestCode);
-    }
-
-    protected void showToast(String msg) {
-        if (null != msg && !StringUtil.isEmpty(msg)) {
-            Snackbar.make(((Activity) mContext).getWindow().getDecorView(), msg, Snackbar.LENGTH_SHORT).show();
-        }
+    public void onPause() {
+        super.onPause();
+        isPause = true;
+        removeProgressDialog();// pause时关闭加载框
     }
 
     @Override
     public void onDestroy() {
-        destroyViewAndThing();
         super.onDestroy();
     }
 
-    protected abstract void destroyViewAndThing();
-
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        initPrepare();
+    protected boolean isPause() {
+        return isPause;
     }
 
-    private synchronized void initPrepare() {
-        if (isPrepared) {
-            onFirstUserVisible();
-        } else {
-            isPrepared = true;
-        }
+    public void showMessage(String msg) {
+
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            if (isFirstVisible) {
-                isFirstVisible = false;
-                initPrepare();
-            } else {
-                onUserVisible();
-            }
-        } else {
-            if (isFirstInvisible) {
-                isFirstInvisible = false;
-                onFirstUserInvisible();
-            } else {
-                onUserInvisible();
-            }
+    /**
+     * 显示进度对话框
+     */
+    public final void showProgressDialog(DialogInterface.OnCancelListener mCancel) {
+        if (getContext() instanceof BaseActivity) {
+//            ((BaseActivity) getContext()).showProgressDialog(mCancel);
         }
     }
 
     /**
-     * 用户第一次可见
+     * 进度对话框是否显示
+     *
+     * @return
      */
-    protected abstract void onFirstUserVisible();
+    public final boolean isProgressShowing() {
+        if (getContext() instanceof BaseActivity) {
+//            return ((BaseActivity) getContext()).isProgressShowing();
+        }
 
-    /**
-     * 用户可见
-     */
-    protected abstract void onUserVisible();
-
-    private void onFirstUserInvisible() {
+        return false;
     }
 
-    protected abstract void onUserInvisible();
+    /**
+     * 隐藏进度对话框
+     */
+    public final void removeProgressDialog() {
+        if (getContext() instanceof BaseActivity) {
+//            ((BaseActivity) getContext()).removeProgressDialog();
+        }
+    }
+
+    public synchronized void register() {
+        if (!mRegistered) {
+            mRegistered = true;
+            EventCenter.getInstance().register(this);
+        }
+    }
+
+    public synchronized void unRegister() {
+        if (mRegistered) {
+            mRegistered = false;
+            EventCenter.getInstance().unregister(this);
+        }
+    }
+
+    protected void readyGo(Class<?> clazz, Bundle bundle) {
+        Intent intent = new Intent(this.getActivity(), clazz);
+        if (null != bundle) {
+            intent.putExtras(bundle);
+        }
+        startActivity(intent);
+    }
+
+    protected void readyGoThenKill(Class<?> clazz) {
+        Intent intent = new Intent(this.getActivity(), clazz);
+        startActivity(intent);
+
+    }
+
+    protected void readyGoThenKill(Class<?> clazz, Bundle bundle) {
+        Intent intent = new Intent(this.getActivity(), clazz);
+        if (null != bundle) {
+            intent.putExtras(bundle);
+        }
+        startActivity(intent);
+
+    }
+
+    protected void readyGoForResult(Class<?> clazz, int requestCode) {
+        Intent intent = new Intent(this.getActivity(), clazz);
+        startActivityForResult(intent, requestCode);
+    }
+
+    protected void readyGoForResult(Class<?> clazz, int requestCode, Bundle bundle) {
+        Intent intent = new Intent(this.getActivity(), clazz);
+        if (null != bundle) {
+            intent.putExtras(bundle);
+        }
+        startActivityForResult(intent, requestCode);
+    }
+
+
 }

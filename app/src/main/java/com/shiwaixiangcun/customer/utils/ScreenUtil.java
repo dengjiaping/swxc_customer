@@ -6,10 +6,10 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ScrollView;
 
 /**
  * 获得屏幕相关的辅助类
@@ -114,7 +114,7 @@ public class ScreenUtil {
         //获取设置的配置信息
         Configuration config = context.getResources().getConfiguration();
 
-        return (config.orientation == Configuration.ORIENTATION_LANDSCAPE) ? true : false;
+        return (config.orientation == Configuration.ORIENTATION_LANDSCAPE);
     }
 
 
@@ -160,6 +160,38 @@ public class ScreenUtil {
         return bp;
     }
 
+
+    /**
+     * 判断视图是否显示在屏幕上
+     *
+     * @param context
+     * @param view
+     * @return
+     */
+    public static boolean checkIsVisible(Context context, View view) {
+        int screenWidth = getScreenWidth(context);
+        int screenHeight = getScreenHeight(context);
+        Rect rect = new Rect(0, 0, screenWidth, screenHeight);
+        int[] location = new int[2];
+        view.getLocationInWindow(location);
+        //view已不在屏幕可见区域;
+        return view.getLocalVisibleRect(rect);
+    }
+
+    /**
+     * 判断视图是否在Scroll中可见
+     *
+     * @param scroll scrollView
+     * @param view   view
+     * @return
+     */
+    private boolean isVisibleInScrollView(ScrollView scroll, View view) {
+        Rect bounds = new Rect();
+        view.getHitRect(bounds);
+        Rect scrollBounds = new Rect(scroll.getScrollX(), scroll.getScrollY(),
+                scroll.getScrollX() + scroll.getWidth(), scroll.getScrollY() + scroll.getHeight());
+        return Rect.intersects(scrollBounds, bounds);
+    }
 
 
 }

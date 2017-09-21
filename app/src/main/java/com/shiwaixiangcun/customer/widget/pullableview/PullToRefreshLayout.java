@@ -1,4 +1,4 @@
-package com.shiwaixiangcun.customer.pullableview;
+package com.shiwaixiangcun.customer.widget.pullableview;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -6,14 +6,12 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
-import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -44,30 +42,27 @@ public class PullToRefreshLayout extends RelativeLayout
 	public static final int LOADING = 4;
 	// 操作完毕
 	public static final int DONE = 5;
-	// 当前状态
-	private int state = INIT;
-	// 刷新回调接口
-	private OnRefreshListener mListener;
 	// 刷新成功
 	public static final int SUCCEED = 0;
 	// 刷新失败
 	public static final int FAIL = 1;
-	// 按下Y坐标，上一个事件点Y坐标
-	private float downY, lastY;
-
 	// 下拉的距离。注意：pullDownY和pullUpY不可能同时不为0
 	public float pullDownY = 0;
-	// 上拉的距离
+    // 回滚速度
+    public float MOVE_SPEED = 8;
+    // 当前状态
+    private int state = INIT;
+    // 刷新回调接口
+    private OnRefreshListener mListener;
+    // 按下Y坐标，上一个事件点Y坐标
+    private float downY, lastY;
+    // 上拉的距离
 	private float pullUpY = 0;
-
 	// 释放刷新的距离
 	private float refreshDist = 200;
 	// 释放加载的距离
 	private float loadmoreDist = 200;
-
 	private MyTimer timer;
-	// 回滚速度
-	public float MOVE_SPEED = 8;
 	// 第一次执行布局
 	private boolean isLayout = false;
 	// 在刷新过程中滑动操作
@@ -101,18 +96,6 @@ public class PullToRefreshLayout extends RelativeLayout
 	private View loadStateImageView;
 	// 加载结果：成功或失败
 	private TextView loadStateTextView;
-
-	// 实现了Pullable接口的View
-	private View pullableView;
-	// 过滤多点触碰
-	private int mEvents;
-	// 这两个变量用来控制pull的方向，如果不加控制，当情况满足可上拉又可下拉时没法下拉
-	private boolean canPullDown = true;
-	private boolean canPullUp = true;
-
-	private Context mContext;
-
-
 	/**
 	 * 执行自动回滚的handler
 	 */
@@ -174,23 +157,20 @@ public class PullToRefreshLayout extends RelativeLayout
 		}
 
 	};
-
-	public void setOnRefreshListener(OnRefreshListener listener)
-	{
-		mListener = listener;
-	}
-	//正在刷新
-	public void setIngRefreshListener(OnRefreshListener listener)
-	{
-		mListener = listener;
-	}
+    // 实现了Pullable接口的View
+    private View pullableView;
+    // 过滤多点触碰
+    private int mEvents;
+    // 这两个变量用来控制pull的方向，如果不加控制，当情况满足可上拉又可下拉时没法下拉
+    private boolean canPullDown = true;
+    private boolean canPullUp = true;
+    private Context mContext;
 
 	public PullToRefreshLayout(Context context)
 	{
 		super(context);
 		initView(context);
 	}
-
 	public PullToRefreshLayout(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
@@ -202,6 +182,15 @@ public class PullToRefreshLayout extends RelativeLayout
 		super(context, attrs, defStyle);
 		initView(context);
 	}
+
+    public void setOnRefreshListener(OnRefreshListener listener) {
+        mListener = listener;
+    }
+
+    //正在刷新
+    public void setIngRefreshListener(OnRefreshListener listener) {
+        mListener = listener;
+    }
 
 	private void initView(Context context)
 	{
@@ -521,52 +510,6 @@ public class PullToRefreshLayout extends RelativeLayout
 	}
 
 	/**
-	 * @author chenjing 自动模拟手指滑动的task
-	 * 
-	 */
-	private class AutoRefreshAndLoadTask extends
-			AsyncTask<Integer, Float, String>
-	{
-
-		@Override
-		protected String doInBackground(Integer... params)
-		{
-			while (pullDownY < 4 / 3 * refreshDist)
-			{
-				pullDownY += MOVE_SPEED;
-				publishProgress(pullDownY);
-				try
-				{
-					Thread.sleep(params[0]);
-				} catch (InterruptedException e)
-				{
-					e.printStackTrace();
-				}
-			}
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(String result)
-		{
-			changeState(REFRESHING);
-			// 刷新操作
-			if (mListener != null)
-				mListener.onRefresh(PullToRefreshLayout.this);
-			hide();
-		}
-
-		@Override
-		protected void onProgressUpdate(Float... values)
-		{
-			if (pullDownY > refreshDist)
-				changeState(RELEASE_TO_REFRESH);
-			requestLayout();
-		}
-
-	}
-
-	/**
 	 * 自动刷新
 	 */
 	public void autoRefresh()
@@ -634,6 +577,63 @@ public class PullToRefreshLayout extends RelativeLayout
 						+ loadmoreView.getMeasuredHeight());
 	}
 
+    /**
+     * 刷新加载回调接口
+     *
+     * @author chenjing
+     */
+    public interface OnRefreshListener {
+        /**
+         * 刷新操作
+         */
+        void onRefresh(PullToRefreshLayout pullToRefreshLayout);
+
+        /**
+         * 加载操作
+         */
+        void onLoadMore(PullToRefreshLayout pullToRefreshLayout);
+
+
+    }
+
+    /**
+     * @author chenjing 自动模拟手指滑动的task
+     */
+    private class AutoRefreshAndLoadTask extends
+            AsyncTask<Integer, Float, String> {
+
+        @Override
+        protected String doInBackground(Integer... params) {
+            while (pullDownY < 4 / 3 * refreshDist) {
+                pullDownY += MOVE_SPEED;
+                publishProgress(pullDownY);
+                try {
+                    Thread.sleep(params[0]);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            changeState(REFRESHING);
+            // 刷新操作
+            if (mListener != null)
+                mListener.onRefresh(PullToRefreshLayout.this);
+            hide();
+        }
+
+        @Override
+        protected void onProgressUpdate(Float... values) {
+            if (pullDownY > refreshDist)
+                changeState(RELEASE_TO_REFRESH);
+            requestLayout();
+        }
+
+    }
+
 	class MyTimer
 	{
 		private Handler handler;
@@ -682,29 +682,6 @@ public class PullToRefreshLayout extends RelativeLayout
 			}
 
 		}
-	}
-
-	/**
-	 * 刷新加载回调接口
-	 * 
-	 * @author chenjing
-	 * 
-	 */
-	public interface OnRefreshListener
-	{
-		/**
-		 * 刷新操作
-		 */
-		void onRefresh(PullToRefreshLayout pullToRefreshLayout);
-
-		/**
-		 * 加载操作
-		 */
-		void onLoadMore(PullToRefreshLayout pullToRefreshLayout);
-
-
-
-
 	}
 
 

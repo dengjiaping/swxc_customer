@@ -2,9 +2,8 @@ package com.shiwaixiangcun.customer.ui.activity;
 
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -15,21 +14,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.model.HouseSelectListBean;
 import com.shiwaixiangcun.customer.model.InformationBean;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.presenter.impl.HousetoRentImpl;
-import com.shiwaixiangcun.customer.response.ResponseEntity;
+import com.shiwaixiangcun.customer.ui.IHouseToRentView;
 import com.shiwaixiangcun.customer.utils.AppManager;
-import com.shiwaixiangcun.customer.utils.ShareUtil;
+import com.shiwaixiangcun.customer.utils.SharePreference;
+import com.shiwaixiangcun.customer.utils.Utils;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 import com.shiwaixiangcun.customer.widget.SelfDialog;
-import com.shiwaixiangcun.customer.utils.Utils;
-import com.shiwaixiangcun.customer.ui.IHouseToRentView;
 
 import java.util.List;
 import java.util.Timer;
@@ -38,14 +36,6 @@ import java.util.TimerTask;
 
 public class ItoRentActivity extends AppCompatActivity implements View.OnClickListener, IHouseToRentView {
 
-    private ChangeLightImageView back_left;
-    private RelativeLayout rl_select_house_to;
-    private Button btn_submit_torent;
-    private RelativeLayout rl_success_submit;
-    private Button btn_ok;
-    private String str_select_id = "";
-    private EditText et_rent_money;
-    private EditText et_post_content;
     Timer timer = new Timer();
     TimerTask task = new TimerTask() {
         @Override
@@ -59,9 +49,17 @@ public class ItoRentActivity extends AppCompatActivity implements View.OnClickLi
             });
         }
     };
-
+    private ChangeLightImageView back_left;
+    private RelativeLayout rl_select_house_to;
+    private Button btn_submit_torent;
+    private RelativeLayout rl_success_submit;
+    private Button btn_ok;
+    private String str_select_id = "";
+    private EditText et_rent_money;
+    private EditText et_post_content;
     private int MIN_MARK = 0;
     private int MAX_MARK = 1000000;
+    private TextView tv_et_tv;
     private TextWatcher watcher = new TextWatcher() {
 
         @Override
@@ -105,7 +103,6 @@ public class ItoRentActivity extends AppCompatActivity implements View.OnClickLi
         }
 
     };
-    private TextView tv_et_tv;
     private TextView tv_ok_select_house;
     private List<HouseSelectListBean> result_house;
     private Intent intent;
@@ -165,7 +162,7 @@ public class ItoRentActivity extends AppCompatActivity implements View.OnClickLi
                 finish();
                 break;
             case R.id.rl_select_house_to:
-                ShareUtil.saveStringToSpParams(this, Common.ISSELECTHOSE, Common.SISELECTHOSE, "");
+                SharePreference.saveStringToSpParams(this, Common.ISSELECTHOSE, Common.SISELECTHOSE, "");
                 HousetoRentImpl housetoRent_select = new HousetoRentImpl(this, "", "");
                 housetoRent_select.setHouseList(this);
                 showLoginoutDialog();
@@ -221,7 +218,7 @@ public class ItoRentActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onNoClick() {
                 selfLoginoutDialog.dismiss();
-                ShareUtil.saveStringToSpParams(ItoRentActivity.this, Common.ISSELECTHOSE, Common.SISELECTHOSE, "");
+                SharePreference.saveStringToSpParams(ItoRentActivity.this, Common.ISSELECTHOSE, Common.SISELECTHOSE, "");
             }
         });
         selfLoginoutDialog.setListItemClickListenser(new SelfDialog.onItemclickListener() {

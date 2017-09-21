@@ -10,9 +10,9 @@ import com.lzy.okgo.request.PostRequest;
 import com.lzy.okgo.request.PutRequest;
 import com.shiwaixiangcun.customer.app.App;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
-import com.shiwaixiangcun.customer.response.ResponseEntity;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
-import com.shiwaixiangcun.customer.utils.ShareUtil;
+import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.utils.Utils;
 
 import java.io.File;
@@ -50,7 +50,7 @@ public class HttpRequest {
 
     public static void post(String url, Map<String, Object> params, final HttpCallBack httpCallBack) {
 //        Context context = App.getContext();
-//        String cookie = ShareUtil.getStringSpParams(context, Common.ISCOOKIE, Common.SICOOKIE);
+//        String cookie = SharePreference.getStringSpParams(context, Common.ISCOOKIE, Common.SICOOKIE);
 //        OkGo.post(url).headers("X-Requested-With", "XMLHttpRequest");
 //        OkGo.post(url).headers("User-Agent", "android");
 //        OkGo.post(url).headers("Cookie", "uid=" + cookie);
@@ -67,7 +67,7 @@ public class HttpRequest {
 
     public static void get(String url, Map<String, Object> params, final HttpCallBack httpCallBack) {
 //        Context context = App.getContext();
-//        String cookie = ShareUtil.getStringSpParams(context, Common.ISCOOKIE, Common.SICOOKIE);
+//        String cookie = SharePreference.getStringSpParams(context, Common.ISCOOKIE, Common.SICOOKIE);
 //        OkGo.get(url).headers("X-Requested-With", "XMLHttpRequest");
 //        OkGo.get(url).headers("User-Agent", "android");
 //        OkGo.get(url).headers("Cookie", "uid=" + cookie);
@@ -86,7 +86,7 @@ public class HttpRequest {
 
     public static void put(String url, Map<String, Object> params, final HttpCallBack httpCallBack) {
 //        Context context = App.getContext();
-//        String cookie = ShareUtil.getStringSpParams(context, Common.ISCOOKIE, Common.SICOOKIE);
+//        String cookie = SharePreference.getStringSpParams(context, Common.ISCOOKIE, Common.SICOOKIE);
 //        OkGo.put(url).headers("X-Requested-With", "XMLHttpRequest");
 //        OkGo.put(url).headers("User-Agent", "android");
 //        OkGo.put(url).headers("Cookie", "uid=" + cookie);
@@ -103,7 +103,7 @@ public class HttpRequest {
 
     public static void delete(String url, Map<String, Object> params, final HttpCallBack httpCallBack) {
 //        Context context = App.getContext();
-//        String cookie = ShareUtil.getStringSpParams(context, Common.ISCOOKIE, Common.SICOOKIE);
+//        String cookie = SharePreference.getStringSpParams(context, Common.ISCOOKIE, Common.SICOOKIE);
 //        OkGo.delete(url).headers("X-Requested-With", "XMLHttpRequest");
 //        OkGo.delete(url).headers("User-Agent", "android");
 //        OkGo.delete(url).headers("Cookie", "uid =" + cookie);
@@ -223,7 +223,7 @@ public class HttpRequest {
 
 
     public static String getTokenByApplication() {
-        String login_detail = ShareUtil.getStringSpParams(App.getInstance(), Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        String login_detail = SharePreference.getStringSpParams(App.getInstance(), Common.ISSAVELOGIN, Common.SISAVELOGIN);
         if (Utils.isNotEmpty(login_detail)) {
             Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
             }.getType();

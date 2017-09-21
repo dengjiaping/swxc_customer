@@ -26,12 +26,12 @@ import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.http.StringDialogCallBack;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.OrderDetailBean;
-import com.shiwaixiangcun.customer.response.ResponseEntity;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.ui.dialog.DialogInfo;
 import com.shiwaixiangcun.customer.utils.DateUtil;
 import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
-import com.shiwaixiangcun.customer.utils.ShareUtil;
+import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -120,7 +120,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void initData() {
-        String loginInfo = ShareUtil.getStringSpParams(mContext, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        String loginInfo = SharePreference.getStringSpParams(mContext, Common.ISSAVELOGIN, Common.SISAVELOGIN);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(loginInfo, type);

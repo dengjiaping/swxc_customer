@@ -1,4 +1,4 @@
-package com.shiwaixiangcun.customer.response;
+package com.shiwaixiangcun.customer.model;
 
 import java.util.List;
 

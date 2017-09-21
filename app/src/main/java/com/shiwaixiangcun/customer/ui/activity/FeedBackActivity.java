@@ -1,8 +1,8 @@
 package com.shiwaixiangcun.customer.ui.activity;
 
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -11,10 +11,10 @@ import android.widget.Toast;
 import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
 import com.shiwaixiangcun.customer.R;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.presenter.impl.FeedBackImpl;
-import com.shiwaixiangcun.customer.response.ResponseEntity;
-import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 import com.shiwaixiangcun.customer.ui.IFeedBackView;
+import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
 public class FeedBackActivity extends AppCompatActivity implements View.OnClickListener ,IFeedBackView {
 

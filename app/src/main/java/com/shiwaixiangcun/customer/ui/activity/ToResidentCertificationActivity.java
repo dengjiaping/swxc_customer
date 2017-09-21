@@ -1,8 +1,8 @@
 package com.shiwaixiangcun.customer.ui.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,13 +17,13 @@ import com.baidu.mobstat.StatService;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.model.HousePhoneBean;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.presenter.impl.HousePhoneImpl;
-import com.shiwaixiangcun.customer.response.ResponseEntity;
-import com.shiwaixiangcun.customer.utils.AppManager;
-import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
-import com.shiwaixiangcun.customer.utils.ShareUtil;
-import com.shiwaixiangcun.customer.utils.Utils;
 import com.shiwaixiangcun.customer.ui.IHousePhoneView;
+import com.shiwaixiangcun.customer.utils.AppManager;
+import com.shiwaixiangcun.customer.utils.SharePreference;
+import com.shiwaixiangcun.customer.utils.Utils;
+import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
 import java.util.List;
 
@@ -41,6 +41,7 @@ public class ToResidentCertificationActivity extends AppCompatActivity implement
     private ImageView iv_submit_expression;
     private TextView tv_submit_succsse;
     private TextView tv_content;
+    private int next_i = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +84,7 @@ public class ToResidentCertificationActivity extends AppCompatActivity implement
         btn_submit_open.setOnClickListener(this);
         btn_ok.setOnClickListener(this);
     }
-    private int next_i = 0;
+
     @Override
     public void onClick(View view) {
         int id = view.getId();
@@ -115,7 +116,7 @@ public class ToResidentCertificationActivity extends AppCompatActivity implement
                 break;
             case R.id.btn_ok:
                 AppManager.getAppManager().finishAllActivity();
-                String resident = ShareUtil.getStringSpParams(this, Common.ISRESIDENT, Common.SIRESIDENT);
+                String resident = SharePreference.getStringSpParams(this, Common.ISRESIDENT, Common.SIRESIDENT);
                 if (resident.equals("torent")){
 //                    Intent intent = new Intent(this,ItoRentActivity.class);
 //                    startActivity(intent);

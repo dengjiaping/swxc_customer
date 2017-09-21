@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 /**
  * Created by Administrator on 2016/8/8.
  */
-public class ShareUtil {
+public class SharePreference {
 
     public static void saveStringToSpParams(Context context, String spName, String paramName, String vlaue) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(spName, Context.MODE_PRIVATE);

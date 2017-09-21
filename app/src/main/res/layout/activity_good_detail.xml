@@ -26,6 +26,8 @@
 
             <LinearLayout
 
+
+                android:id="@+id/llayout_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
@@ -33,6 +35,7 @@
                 <com.youth.banner.Banner
 
                     android:id="@+id/banner_details"
+
                     android:layout_width="match_parent"
                     android:layout_height="350dp">
 
@@ -220,12 +223,18 @@
                     android:textColor="#FF2D3230"
                     android:textSize="16sp"/>
 
+                <LinearLayout
+                    android:id="@+id/llayout_webView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+
                 <WebView
                     android:id="@+id/webview"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp">
+                    android:layout_height="wrap_content">
 
                 </WebView>
 

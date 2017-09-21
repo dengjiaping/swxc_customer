@@ -1,8 +1,8 @@
 package com.shiwaixiangcun.customer.ui.activity;
 
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -12,11 +12,11 @@ import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.BloodFatHistoryAdapter;
 import com.shiwaixiangcun.customer.model.PressureFatBean;
 import com.shiwaixiangcun.customer.presenter.impl.BloodFatDataImpl;
-import com.shiwaixiangcun.customer.pullableview.MyListener;
-import com.shiwaixiangcun.customer.pullableview.PullToRefreshLayout;
-import com.shiwaixiangcun.customer.pullableview.PullableListView;
-import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 import com.shiwaixiangcun.customer.ui.IBloodFatDataView;
+import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
+import com.shiwaixiangcun.customer.widget.pullableview.MyListener;
+import com.shiwaixiangcun.customer.widget.pullableview.PullToRefreshLayout;
+import com.shiwaixiangcun.customer.widget.pullableview.PullableListView;
 
 import java.util.List;
 

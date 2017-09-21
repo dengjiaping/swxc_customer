@@ -1,4 +1,4 @@
-package com.shiwaixiangcun.customer.loadingDialog;
+package com.shiwaixiangcun.customer.ui.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -10,11 +10,11 @@ import android.widget.TextView;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.utils.LVCircularRing;
 
-public class LoadingDialog {
+public class DialogLoading {
     LVCircularRing mLoadingView;
     Dialog mLoadingDialog;
 
-    public LoadingDialog(Context context, String msg) {
+    public DialogLoading(Context context, String msg) {
         // 首先得到整个View
         View view = LayoutInflater.from(context).inflate(
                 R.layout.loading_dialog_view, null);

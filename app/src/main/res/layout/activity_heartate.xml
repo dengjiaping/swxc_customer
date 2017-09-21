@@ -8,7 +8,7 @@
     tools:context="com.shiwaixiangcun.customer.ui.activity.HeartateActivity">
 
 
-    <com.shiwaixiangcun.customer.pullableview.PullToRefreshLayout
+    <com.shiwaixiangcun.customer.widget.pullableview.PullToRefreshLayout
         android:id="@+id/refresh_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -16,108 +16,108 @@
         <include layout="@layout/refresh_head" />
         <!-- 支持所有实现Pullable接口的View -->
 
-        <com.shiwaixiangcun.customer.pullableview.PullableScrollView
+        <com.shiwaixiangcun.customer.widget.pullableview.PullableScrollView
             android:id="@+id/sv_heartate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <RelativeLayout
-                android:background="@color/ui_white"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@color/ui_white">
                 <LinearLayout
 
                     android:id="@+id/ll_top_heart"
-                    android:gravity="center_horizontal"
-                    android:paddingTop="78dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/back_start_end"
 
+                    android:gravity="center_horizontal"
                     android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:paddingTop="78dp">
                     <TextView
                         android:id="@+id/tv_heart_normol"
-                        android:textSize="28dp"
-                        android:textColor="@color/word_white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="心率"/>
+                        android:text="心率"
+                        android:textColor="@color/word_white"
+                        android:textSize="28dp"/>
                     <TextView
                         android:id="@+id/tv_heartate_data"
-                        android:layout_marginTop="42dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="48sp"
-                        android:textColor="@color/word_white"/>
+                        android:layout_marginTop="42dp"
+                        android:textColor="@color/word_white"
+                        android:textSize="48sp"/>
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:text="bpm"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:textColor="@color/word_white"/>
+                        android:textColor="@color/word_white"
+                        android:textSize="14sp"/>
 
                     <TextView
                         android:id="@+id/tv_heart_creat_time"
-                        android:layout_marginBottom="20dp"
-                        android:layout_marginTop="78dp"
-
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:textColor="@color/word_little_white"/>
+
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginTop="78dp"
+                        android:textColor="@color/word_little_white"
+                        android:textSize="14sp"/>
                 </LinearLayout>
                 <RelativeLayout
                     android:id="@+id/rl_content_center"
-                    android:background="@color/ui_white"
-                    android:layout_below="@+id/ll_top_heart"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ll_top_heart"
+                    android:background="@color/ui_white">
 
                     <TextView
                         android:id="@+id/tv_heartate_introduce"
-                        android:textSize="14sp"
-                        android:textColor="@color/word_grad"
-                        android:layout_margin="20dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:textColor="@color/word_grad"
+                        android:textSize="14sp"/>
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/rl_heart_little_title"
-                    android:layout_marginBottom="1dp"
-                    android:background="@color/ui_white"
-                    android:layout_marginTop="10dp"
-                    android:layout_below="@+id/rl_content_center"
                     android:layout_width="match_parent"
-                    android:layout_height="54dp">
+                    android:layout_height="54dp"
+                    android:layout_below="@+id/rl_content_center"
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/ui_white">
                     <TextView
-                        android:layout_centerVertical="true"
                         android:layout_width="4dp"
                         android:layout_height="20dp"
+                        android:layout_centerVertical="true"
                         android:background="@color/ui_green"/>
                     <TextView
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="20dp"
-                        android:textSize="16sp"
-                        android:textColor="@color/word_black_heart"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="心率数据"/>
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"
+                        android:text="心率数据"
+                        android:textColor="@color/word_black_heart"
+                        android:textSize="16sp"/>
                 </RelativeLayout>
 
                 <com.shiwaixiangcun.customer.widget.MyListView
-                    android:layout_below="@+id/rl_heart_little_title"
                     android:id="@+id/lv_detail_heartate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:dividerHeight="0dp"
-                    android:divider="#FFFFFF">
+                    android:layout_below="@+id/rl_heart_little_title"
+                    android:divider="#FFFFFF"
+                    android:dividerHeight="0dp">
                 </com.shiwaixiangcun.customer.widget.MyListView>
             </RelativeLayout>
-        </com.shiwaixiangcun.customer.pullableview.PullableScrollView>
+        </com.shiwaixiangcun.customer.widget.pullableview.PullableScrollView>
 
         <include layout="@layout/load_more" />
-    </com.shiwaixiangcun.customer.pullableview.PullToRefreshLayout>
+    </com.shiwaixiangcun.customer.widget.pullableview.PullToRefreshLayout>
 
 
 

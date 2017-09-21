@@ -31,7 +31,8 @@ import com.shiwaixiangcun.customer.adapter.AdapterSearchResult;
 import com.shiwaixiangcun.customer.event.EventCenter;
 import com.shiwaixiangcun.customer.event.SimpleEvent;
 import com.shiwaixiangcun.customer.http.StringDialogCallBack;
-import com.shiwaixiangcun.customer.response.ResponseEntity;
+import com.shiwaixiangcun.customer.model.ElementBean;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
 import org.greenrobot.eventbus.Subscribe;

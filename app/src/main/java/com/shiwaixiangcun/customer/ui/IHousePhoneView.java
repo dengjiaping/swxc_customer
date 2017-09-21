@@ -1,7 +1,7 @@
 package com.shiwaixiangcun.customer.ui;
 
 import com.shiwaixiangcun.customer.model.HousePhoneBean;
-import com.shiwaixiangcun.customer.response.ResponseEntity;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 
 import java.util.List;
 

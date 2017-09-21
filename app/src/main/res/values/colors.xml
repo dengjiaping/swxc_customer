@@ -58,4 +58,6 @@
     <color name="black_text_100">#FF2D3230</color>
     <color name="black_text_40">#6e2d3230</color>
     <color name="black_text_60">#992d3230</color>
+    <color name="main_text_selected">#FF1CCC8C</color>
+    <color name="main_text_default">#FF2D3230</color>
 </resources>

@@ -6,8 +6,10 @@
     android:layout_height="match_parent"
     android:background="@color/ui_base_color"
     tools:context="com.shiwaixiangcun.customer.ui.activity.SurroundTopActivity">
-    <include layout="@layout/top_bar_white"
-        android:id="@id/include"/>
+
+    <include
+        android:id="@id/include"
+        layout="@layout/top_bar_white"/>
     <!--<ListView-->
         <!--android:divider="@null"-->
         <!--android:layout_below="@+id/include"-->
@@ -16,25 +18,24 @@
         <!--android:layout_height="match_parent"></ListView>-->
 
 
-
-    <com.shiwaixiangcun.customer.pullableview.PullToRefreshLayout
-        android:layout_below="@+id/include"
+    <com.shiwaixiangcun.customer.widget.pullableview.PullToRefreshLayout
         android:id="@+id/refresh_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/include">
 
         <include layout="@layout/refresh_black_head" />
         <!-- 支持所有实现Pullable接口的View -->
 
-        <com.shiwaixiangcun.customer.pullableview.PullableListView
-            android:divider="#00000000"
-            android:dividerHeight="0dp"
-            android:layout_marginTop="1dp"
+        <com.shiwaixiangcun.customer.widget.pullableview.PullableListView
             android:id="@+id/lv_surround_top"
-            android:layout_below="@+id/include"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_below="@+id/include"
+            android:layout_marginTop="1dp"
+            android:divider="#00000000"
+            android:dividerHeight="0dp"/>
 
         <include layout="@layout/load_more" />
-    </com.shiwaixiangcun.customer.pullableview.PullToRefreshLayout>
+    </com.shiwaixiangcun.customer.widget.pullableview.PullToRefreshLayout>
 </RelativeLayout>

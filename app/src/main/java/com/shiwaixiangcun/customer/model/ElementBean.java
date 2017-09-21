@@ -1,4 +1,4 @@
-package com.shiwaixiangcun.customer.ui.activity;
+package com.shiwaixiangcun.customer.model;
 
 import java.util.List;
 

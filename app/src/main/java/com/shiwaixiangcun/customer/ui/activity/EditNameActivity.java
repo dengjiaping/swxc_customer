@@ -2,8 +2,8 @@ package com.shiwaixiangcun.customer.ui.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -12,11 +12,11 @@ import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.http.Common;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.presenter.impl.EditNameImpl;
-import com.shiwaixiangcun.customer.response.ResponseEntity;
-import com.shiwaixiangcun.customer.utils.ShareUtil;
-import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 import com.shiwaixiangcun.customer.ui.IEditNameView;
+import com.shiwaixiangcun.customer.utils.SharePreference;
+import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
 public class EditNameActivity extends AppCompatActivity implements View.OnClickListener, IEditNameView {
 
@@ -72,7 +72,7 @@ public class EditNameActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void setBgaAdpaterAndClickResult(ResponseEntity result) {
         if (result.getResponseCode() == 1001){
-            ShareUtil.saveStringToSpParams(EditNameActivity.this, Common.ISUSERNAME, Common.SIUSERNAME, et_new_name.getText().toString().trim());
+            SharePreference.saveStringToSpParams(EditNameActivity.this, Common.ISUSERNAME, Common.SIUSERNAME, et_new_name.getText().toString().trim());
             Intent intent = new Intent();
             intent.putExtra("newName",et_new_name.getText().toString().trim());
             setResult(1717,intent);

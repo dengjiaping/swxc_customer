@@ -12,9 +12,8 @@ import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.LogoutBean;
-import com.shiwaixiangcun.customer.response.ResponseEntity;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.ui.activity.LoginActivity;
-
 
 import java.io.Serializable;
 import java.lang.reflect.Type;
@@ -31,7 +30,7 @@ public class LoginOutUtil implements Serializable {
 
         Toast.makeText(context, "您的账号在其他设备登录", Toast.LENGTH_LONG).show();
         //登出
-        String login_detail = ShareUtil.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        String login_detail = SharePreference.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
         Log.i("eeeeeettt", login_detail);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
@@ -46,7 +45,7 @@ public class LoginOutUtil implements Serializable {
                 Log.i("oooooo---onSuccess---", responseJson);
                 LogoutBean user = new Gson().fromJson(responseJson, LogoutBean.class);
                 if (user.getResponseCode() == 1001){
-                    ShareUtil.saveStringToSpParams(context, Common.ISORNOLOGIN, Common.SIORNOLOGIN, "");
+                    SharePreference.saveStringToSpParams(context, Common.ISORNOLOGIN, Common.SIORNOLOGIN, "");
                     Intent intent = new Intent(context, LoginActivity.class);
                     context.startActivity(intent);
                 }

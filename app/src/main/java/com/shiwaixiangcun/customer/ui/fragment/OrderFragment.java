@@ -1,7 +1,6 @@
 package com.shiwaixiangcun.customer.ui.fragment;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
@@ -12,7 +11,9 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -33,12 +34,12 @@ import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.http.StringDialogCallBack;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.OrderBean;
-import com.shiwaixiangcun.customer.response.ResponseEntity;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.ui.activity.OrderDetailActivity;
 import com.shiwaixiangcun.customer.ui.dialog.DialogInfo;
 import com.shiwaixiangcun.customer.utils.DisplayUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
-import com.shiwaixiangcun.customer.utils.ShareUtil;
+import com.shiwaixiangcun.customer.utils.SharePreference;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -52,7 +53,7 @@ import butterknife.Unbinder;
  * Created by Administrator on 2017/9/18.
  */
 
-public class OrderFragment extends BaseFragment {
+public class OrderFragment extends Fragment {
     Unbinder unbinder;
     @BindView(R.id.rv_order)
     RecyclerView mRvOrder;
@@ -73,49 +74,34 @@ public class OrderFragment extends BaseFragment {
     private String mStringPrompt;
     private String tokenString;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mContext = getActivity();
-
-        mStringPrompt = mTitle;
-        switch (mTitle) {
-            case "全部":
-                stature = "";
-                break;
-            case "待付款":
-                stature = "WaitPay";
-                break;
-            case "待收货":
-                stature = "Delivered";
-                break;
-            case "已完成":
-                stature = "Closed";
-                break;
-        }
-
-        String loginInfo = ShareUtil.getStringSpParams(mContext, Common.ISSAVELOGIN, Common.SISAVELOGIN);
-        Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
-        }.getType();
-        ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(loginInfo, type);
-        tokenString = responseEntity.getData().getAccess_token();
-        Log.e(BUG_TAG,tokenString);
+    public static Fragment getInstance(String title) {
+        OrderFragment fragment = new OrderFragment();
+        fragment.mTitle = title;
+        return fragment;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.order_fragment, container, false);
+        unbinder = ButterKnife.bind(this, view);
+        return view;
+    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        initViewAndEvents(view);
+        super.onViewCreated(view, savedInstanceState);
+        requestData();
+        initData();
     }
 
-
-    /**
-     * 初始化视图
-     *
-     * @param view
-     */
-    protected void initViewAndEvents(View view) {
-        unbinder = ButterKnife.bind(this, view);
+    private void initData() {
         mOrderList = new ArrayList<>();
         mAdapterOrder = new AdapterOrder(mOrderList);
         mTvPrompt.setText("没有" + mStringPrompt + "订单");
@@ -175,6 +161,80 @@ public class OrderFragment extends BaseFragment {
                 }
             }
         });
+
+
+    }
+
+    private void requestData() {
+        Log.e("fragment", "请求数据");
+        HttpParams httpParams = new HttpParams();
+        httpParams.put("page.pn", 1);
+        httpParams.put("page.size", 10);
+        httpParams.put("orderStatus", stature);
+        httpParams.put("access_token", tokenString);
+        OkGo.<String>get(GlobalConfig.getAllOrders)
+                .params(httpParams)
+                .execute(new StringDialogCallBack((Activity) mContext) {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        if (response == null) {
+                            return;
+                        }
+                        String responseJson = response.body();
+                        Type listType = new TypeToken<ResponseEntity<OrderBean>>() {
+                        }.getType();
+                        Gson gson = new Gson();
+                        ResponseEntity<OrderBean> order = gson.fromJson(responseJson, listType);
+                        if (order == null) {
+                            return;
+                        }
+                        mOrder = order.getData();
+                        if (mOrder.getTotalAmount() == 0) {
+                            mLlayoutNodata.setVisibility(View.VISIBLE);
+                        }
+                        if (mOrder.getTotalAmount() > 0) {
+                            mLlayoutNodata.setVisibility(View.GONE);
+                            mOrderList.clear();
+                            mOrderList.addAll(mOrder.getElements());
+                            mAdapterOrder.notifyDataSetChanged();
+                        }
+
+                    }
+                });
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mContext = this.getActivity();
+
+        mStringPrompt = mTitle;
+        switch (mTitle) {
+            case "全部":
+                stature = "";
+                break;
+            case "待付款":
+                stature = "WaitPay";
+                break;
+            case "待收货":
+                stature = "Delivered";
+                break;
+            case "已完成":
+                stature = "Closed";
+                break;
+        }
+
+        String loginInfo = SharePreference.getStringSpParams(mContext, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
+        }.getType();
+        ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(loginInfo, type);
+        tokenString = responseEntity.getData().getAccess_token();
 
 
     }
@@ -244,7 +304,7 @@ public class OrderFragment extends BaseFragment {
                         switch (responseEntity != null ? responseEntity.getResponseCode() : 0) {
                             case 1001:
                                 Snackbar.make(mRootView, "删除成功", Snackbar.LENGTH_SHORT).show();
-                                iniData();
+                                requestData();
                                 break;
                             default:
                                 Snackbar.make(mRootView, "删除失败", Snackbar.LENGTH_LONG)
@@ -260,7 +320,6 @@ public class OrderFragment extends BaseFragment {
                 });
 
     }
-
 
     /**
      * 通用的网络请求   取消订单，删除订单，确认收货共用
@@ -285,7 +344,7 @@ public class OrderFragment extends BaseFragment {
                         switch (responseEntity != null ? responseEntity.getResponseCode() : 0) {
                             case 1001:
                                 Snackbar.make(mRootView, prompt + "成功", Snackbar.LENGTH_SHORT).show();
-                                iniData();
+                                requestData();
                                 break;
                             default:
                                 Snackbar.make(mRootView, prompt + "失败", Snackbar.LENGTH_LONG)
@@ -302,85 +361,9 @@ public class OrderFragment extends BaseFragment {
     }
 
     @Override
-    protected int getContentViewLayoutID() {
-        return R.layout.order_fragment;
-    }
-
-    @Override
-    protected void destroyViewAndThing() {
-
-    }
-
-    @Override
-    protected void onFirstUserVisible() {
-        iniData();
-
-    }
-
-    @Override
-    protected void onUserVisible() {
-        iniData();
-
-    }
-
-    @Override
-    protected void onUserInvisible() {
-
-    }
-
-
-    /**
-     * 请求网络数据
-     */
-    private void iniData() {
-        HttpParams httpParams = new HttpParams();
-        httpParams.put("page.pn", 1);
-        httpParams.put("page.size", 10);
-        httpParams.put("orderStatus", stature);
-        httpParams.put("access_token", tokenString);
-        OkGo.<String>get(GlobalConfig.getAllOrders)
-                .params(httpParams)
-                .execute(new StringDialogCallBack((Activity) mContext) {
-                    @Override
-                    public void onSuccess(Response<String> response) {
-                        if (response == null) {
-                            return;
-                        }
-                        String responseJson = response.body();
-                        Type listType = new TypeToken<ResponseEntity<OrderBean>>() {
-                        }.getType();
-                        Gson gson = new Gson();
-                        ResponseEntity<OrderBean> order = gson.fromJson(responseJson, listType);
-                        if (order == null) {
-                            return;
-                        }
-                        mOrder = order.getData();
-                        if (mOrder.getTotalAmount() == 0) {
-                            mLlayoutNodata.setVisibility(View.VISIBLE);
-                        }
-                        if (mOrder.getTotalAmount() > 0) {
-                            mLlayoutNodata.setVisibility(View.GONE);
-                            mOrderList.clear();
-                            mOrderList.addAll(mOrder.getElements());
-                            mAdapterOrder.notifyDataSetChanged();
-                        }
-
-                    }
-                });
-
-
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-    }
-
-    public static Fragment getInstance(String title) {
-        OrderFragment fragment = new OrderFragment();
-        fragment.mTitle = title;
-        return fragment;
     }
 
 }

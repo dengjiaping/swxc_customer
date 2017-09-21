@@ -1,8 +1,8 @@
 package com.shiwaixiangcun.customer.ui.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -19,14 +19,14 @@ import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.model.HouseSelectListBean;
 import com.shiwaixiangcun.customer.model.InformationBean;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.presenter.impl.HousetoSellerImpl;
-import com.shiwaixiangcun.customer.response.ResponseEntity;
+import com.shiwaixiangcun.customer.ui.IHouseToSellerView;
 import com.shiwaixiangcun.customer.utils.AppManager;
-import com.shiwaixiangcun.customer.utils.ShareUtil;
+import com.shiwaixiangcun.customer.utils.SharePreference;
+import com.shiwaixiangcun.customer.utils.Utils;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 import com.shiwaixiangcun.customer.widget.SelfDialog;
-import com.shiwaixiangcun.customer.utils.Utils;
-import com.shiwaixiangcun.customer.ui.IHouseToSellerView;
 
 import java.util.List;
 import java.util.Timer;
@@ -34,16 +34,6 @@ import java.util.TimerTask;
 
 public class ItoSellerActivity extends AppCompatActivity implements View.OnClickListener,IHouseToSellerView{
 
-    private ChangeLightImageView back_left;
-    private TextView tv_page_name;
-    private RelativeLayout rl_select_house_to;
-    private Button btn_submit_seller;
-    private RelativeLayout rl_success_submit;
-    private Button btn_ok;
-    private String str_select_house = "";
-    private EditText et_seller_money;
-    private EditText post_content;
-    private TextView tv_et_seller;
     Timer timer = new Timer();
     TimerTask task = new TimerTask() {
         @Override
@@ -56,6 +46,16 @@ public class ItoSellerActivity extends AppCompatActivity implements View.OnClick
             });
         }
     };
+    private ChangeLightImageView back_left;
+    private TextView tv_page_name;
+    private RelativeLayout rl_select_house_to;
+    private Button btn_submit_seller;
+    private RelativeLayout rl_success_submit;
+    private Button btn_ok;
+    private String str_select_house = "";
+    private EditText et_seller_money;
+    private EditText post_content;
+    private TextView tv_et_seller;
     private int MIN_MARK = 0;
     private int MAX_MARK = 10000;
     private TextWatcher watcher = new TextWatcher(){
@@ -156,7 +156,7 @@ public class ItoSellerActivity extends AppCompatActivity implements View.OnClick
                 finish();
                 break;
             case R.id.rl_select_house_to:
-                ShareUtil.saveStringToSpParams(this, Common.ISSELECTHOSE, Common.SISELECTHOSE, "");
+                SharePreference.saveStringToSpParams(this, Common.ISSELECTHOSE, Common.SISELECTHOSE, "");
                 showLoginoutDialog();
                 break;
             case R.id.btn_submit_seller:
@@ -221,7 +221,7 @@ public class ItoSellerActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onNoClick() {
                 selfLoginoutDialog.dismiss();
-                ShareUtil.saveStringToSpParams(ItoSellerActivity.this, Common.ISSELECTHOSE,Common.SISELECTHOSE,"");
+                SharePreference.saveStringToSpParams(ItoSellerActivity.this, Common.ISSELECTHOSE, Common.SISELECTHOSE, "");
             }
         });
         selfLoginoutDialog.show();

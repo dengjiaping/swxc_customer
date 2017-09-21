@@ -20,11 +20,10 @@ import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
 import com.shiwaixiangcun.customer.model.AddAddressBean;
-import com.shiwaixiangcun.customer.model.AddressBean;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
-import com.shiwaixiangcun.customer.response.ResponseEntity;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
-import com.shiwaixiangcun.customer.utils.ShareUtil;
+import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.utils.StringUtil;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
@@ -115,7 +114,7 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
             if (isDefault) {
 //                AddressBean addressBean = new AddressBean(userAddress, userName, userPhone);
 //                String addressJson = JsonUtil.toJson(addressBean);
-//                ShareUtil.saveStringToSpParams(this, Common.ADDRESS, Common.DEFAULT_ADDRESS, addressJson);
+//                SharePreference.saveStringToSpParams(this, Common.ADDRESS, Common.DEFAULT_ADDRESS, addressJson);
 
             }
             //关闭软键盘
@@ -125,7 +124,7 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
             }
 
             //获取token值
-            final String login_detail = ShareUtil.getStringSpParams(this, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+            final String login_detail = SharePreference.getStringSpParams(this, Common.ISSAVELOGIN, Common.SISAVELOGIN);
             Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
             }.getType();
             final ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(login_detail, type);

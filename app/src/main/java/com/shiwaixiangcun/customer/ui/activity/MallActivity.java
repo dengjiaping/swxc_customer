@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -29,9 +28,10 @@ import com.shiwaixiangcun.customer.adapter.AdapterMall;
 import com.shiwaixiangcun.customer.event.EventCenter;
 import com.shiwaixiangcun.customer.event.SimpleEvent;
 import com.shiwaixiangcun.customer.model.BannerBean;
+import com.shiwaixiangcun.customer.model.ElementBean;
 import com.shiwaixiangcun.customer.model.Keyword;
 import com.shiwaixiangcun.customer.model.MallBean;
-import com.shiwaixiangcun.customer.response.ResponseEntity;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.utils.ArithmeticUtils;
 import com.shiwaixiangcun.customer.utils.GlideImageLoader;
 import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
@@ -99,7 +99,6 @@ public class MallActivity extends BaseActivity implements View.OnClickListener {
         ButterKnife.bind(this);
         initHeaders();
         initView();
-
         requestKeyword();
         requestBanner();
         requestData();

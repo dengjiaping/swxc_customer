@@ -29,11 +29,11 @@ import com.shiwaixiangcun.customer.http.StringDialogCallBack;
 import com.shiwaixiangcun.customer.model.AddressBean;
 import com.shiwaixiangcun.customer.model.GoodDetail;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
-import com.shiwaixiangcun.customer.response.ResponseEntity;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.utils.ArithmeticUtils;
 import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
-import com.shiwaixiangcun.customer.utils.ShareUtil;
+import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -171,14 +171,14 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
         //设置地址情况
 
-        String stringSpParams = ShareUtil.getStringSpParams(this, Common.ADDRESS, Common.DEFAULT_ADDRESS);
+        String stringSpParams = SharePreference.getStringSpParams(this, Common.ADDRESS, Common.DEFAULT_ADDRESS);
         if (stringSpParams != null) {
 //            hasAddress = true;
             defaultAddress = JsonUtil.fromJson(stringSpParams, AddressBean.class);
 
         }
         mRLayoutNoAddress.setVisibility(View.GONE);
-        mRLayoutHasAddress.setVisibility(View.GONE);
+        mRLayoutHasAddress.setVisibility(View.INVISIBLE);
         //获取默认地址
         getDefaultAddress();
 //        if (hasAddress) {
@@ -226,7 +226,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
      */
     private void putData() {
 
-        final String loginInfo = ShareUtil.getStringSpParams(mContext, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        final String loginInfo = SharePreference.getStringSpParams(mContext, Common.ISSAVELOGIN, Common.SISAVELOGIN);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(loginInfo, type);

@@ -59,6 +59,7 @@ dependencies {
     compile 'com.android.support:support-v4:25.3.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.zhy:flowlayout-lib:1.0.3'
+    compile 'com.just.agentweb:agentweb:2.0.1'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
 }

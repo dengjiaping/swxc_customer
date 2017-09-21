@@ -1,8 +1,8 @@
 package com.shiwaixiangcun.customer.ui.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -14,9 +14,9 @@ import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.model.InformationBean;
 import com.shiwaixiangcun.customer.presenter.impl.HousetoImpl;
-import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
-import com.shiwaixiangcun.customer.utils.ShareUtil;
 import com.shiwaixiangcun.customer.ui.IHouseToView;
+import com.shiwaixiangcun.customer.utils.SharePreference;
+import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
 public class HouseRentingActivity extends AppCompatActivity implements View.OnClickListener,IHouseToView{
 
@@ -77,7 +77,7 @@ public class HouseRentingActivity extends AppCompatActivity implements View.OnCl
                     intent.setClass(this,ItoRentActivity.class);
                     startActivity(intent);
                 }else if (i_pta == 2){
-                    ShareUtil.saveStringToSpParams(this, Common.ISRESIDENT,Common.SIRESIDENT,"torent");
+                    SharePreference.saveStringToSpParams(this, Common.ISRESIDENT, Common.SIRESIDENT, "torent");
                     intent = new Intent(this, ResidentCertificationActivity.class);
                     startActivityForResult(intent, 1009);
                 }else {
@@ -91,7 +91,7 @@ public class HouseRentingActivity extends AppCompatActivity implements View.OnCl
                     intent.setClass(this,ItoSellerActivity.class);
                     startActivity(intent);
                 }else if (i_pta == 2){
-                    ShareUtil.saveStringToSpParams(this, Common.ISRESIDENT,Common.SIRESIDENT,"tosell");
+                    SharePreference.saveStringToSpParams(this, Common.ISRESIDENT, Common.SIRESIDENT, "tosell");
                     intent = new Intent(this, ResidentCertificationActivity.class);
                     startActivityForResult(intent, 1009);
                 }else {

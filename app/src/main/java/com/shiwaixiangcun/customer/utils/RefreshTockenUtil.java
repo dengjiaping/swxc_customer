@@ -9,7 +9,7 @@ import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
-import com.shiwaixiangcun.customer.response.ResponseEntity;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.ui.activity.LoginActivity;
 
 import java.io.Serializable;
@@ -25,7 +25,7 @@ public class RefreshTockenUtil implements Serializable {
     public static void sendIntDataInvatation(final Context context,String refresh_token) {
 
 
-//        if (("one").equals(ShareUtil.getStringSpParams(context,Common.ISFRESHTOKEN,Common.SIFRESHTOKEN))){
+//        if (("one").equals(SharePreference.getStringSpParams(context,Common.ISFRESHTOKEN,Common.SIFRESHTOKEN))){
 //            return;
 //        }
 //        HashMap<String, Object> hashMap = new HashMap<>();
@@ -42,11 +42,11 @@ public class RefreshTockenUtil implements Serializable {
 //
 //                LoginBean loginBean = new Gson().fromJson(reslut.toString(), LoginBean.class);
 //                if (loginBean.getResponseCode() == 1003){
-//                    ShareUtil.saveStringToSpParams(context,Common.ISFRESHTOKEN,Common.SIFRESHTOKEN,"one");
-//                    ShareUtil.saveStringToSpParams(context, Common.LOGINSHARE, Common.PSLOGINSHARE, reslut.toString());
+//                    SharePreference.saveStringToSpParams(context,Common.ISFRESHTOKEN,Common.SIFRESHTOKEN,"one");
+//                    SharePreference.saveStringToSpParams(context, Common.LOGINSHARE, Common.PSLOGINSHARE, reslut.toString());
 //                }else if (loginBean.getResponseCode() == 1017){
 //                    //退到登录界
-//                    ShareUtil.saveStringToSpParams(context, Common.ISLOGIN, Common.SILOGIN, "noLogin");
+//                    SharePreference.saveStringToSpParams(context, Common.ISLOGIN, Common.SILOGIN, "noLogin");
 //                    Intent intent = new Intent(context, LoginActivity.class);
 //                    intent.putExtra("loginoutNew","loginoutNew");
 //                    intent.putExtra("tockenguoqi","offtocken");
@@ -76,13 +76,13 @@ public class RefreshTockenUtil implements Serializable {
 
                         String access_token = responseEntity.getData().getAccess_token();
                         Log.i("ooooooooooo", access_token);
-                        ShareUtil.saveStringToSpParams(context, Common.ISORNOLOGIN, Common.SIORNOLOGIN, "yesLogin");
-                        ShareUtil.saveStringToSpParams(context,Common.ISSAVELOGIN,Common.SISAVELOGIN,responseJson);
+                        SharePreference.saveStringToSpParams(context, Common.ISORNOLOGIN, Common.SIORNOLOGIN, "yesLogin");
+                        SharePreference.saveStringToSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN, responseJson);
 
 
 //                        sendInformationHttp(context);
                     }else {
-                        ShareUtil.saveStringToSpParams(context, Common.ISORNOLOGIN, Common.SIORNOLOGIN, "");
+                        SharePreference.saveStringToSpParams(context, Common.ISORNOLOGIN, Common.SIORNOLOGIN, "");
 //                        Toast.makeText(context,responseEntity.getMessage(),Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(context, LoginActivity.class);
                         context.startActivity(intent);

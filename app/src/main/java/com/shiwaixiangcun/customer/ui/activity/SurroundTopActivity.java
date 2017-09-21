@@ -1,8 +1,8 @@
 package com.shiwaixiangcun.customer.ui.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,12 +13,12 @@ import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.SurroundMerchAdapter;
 import com.shiwaixiangcun.customer.model.MerchantListBean;
 import com.shiwaixiangcun.customer.presenter.impl.SurroundTopImpl;
-import com.shiwaixiangcun.customer.pullableview.MyListener;
-import com.shiwaixiangcun.customer.pullableview.PullToRefreshLayout;
-import com.shiwaixiangcun.customer.pullableview.PullableListView;
-import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
-import com.shiwaixiangcun.customer.utils.Utils;
 import com.shiwaixiangcun.customer.ui.ISurroundTopView;
+import com.shiwaixiangcun.customer.utils.Utils;
+import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
+import com.shiwaixiangcun.customer.widget.pullableview.MyListener;
+import com.shiwaixiangcun.customer.widget.pullableview.PullToRefreshLayout;
+import com.shiwaixiangcun.customer.widget.pullableview.PullableListView;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -19,13 +19,13 @@ import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.http.Common;
-import com.shiwaixiangcun.customer.response.ResponseEntity;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.share.OnekeyShare;
-import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
-import com.shiwaixiangcun.customer.widget.ObservableWebView;
+import com.shiwaixiangcun.customer.ui.IDetailView;
 import com.shiwaixiangcun.customer.utils.SdCordUtil;
 import com.shiwaixiangcun.customer.utils.Utils;
-import com.shiwaixiangcun.customer.ui.IDetailView;
+import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
+import com.shiwaixiangcun.customer.widget.ObservableWebView;
 
 import java.util.HashMap;
 
@@ -166,16 +166,6 @@ public class ViewMoreActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
-    //Web视图
-    private class HelloWebViewClient extends WebViewClient {
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            view.loadUrl(url);
-            return true;
-        }
-    }
-
-
     private void showShare() {
         Log.e("aaaaaaaaaass",detailcontent+"------"+detailtitle+"----------"+shareimage);
         OnekeyShare oks = new OnekeyShare();
@@ -235,5 +225,14 @@ public class ViewMoreActivity extends AppCompatActivity implements View.OnClickL
     protected void onPause() {
         super.onPause();
         StatService.onPause(this);
+    }
+
+    //Web视图
+    private class HelloWebViewClient extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            view.loadUrl(url);
+            return true;
+        }
     }
 }
