@@ -117,7 +117,7 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
         requestKeyword();
         requestBanner();
         requestData();
-        requestGood("GuessLike", 5, 1, 10);
+        requestGood("GuessLike", 5, 1, 20);
     }
 
 

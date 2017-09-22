@@ -18,6 +18,8 @@ public class SimpleEvent {
     public static final int UPDATE_ORDER_DETAIL = 2;
     public static final int UPDATE_GOOD_LIST = 5;
     public static final int UPDATE_GOOD_DETAIL = 7;
+    public static final int PAY_SUCCESS = 8;
+    public static final int PAY_DEFAULT = 9;
     /**
      * 操作类型
      */

@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 import com.shiwaixiangcun.customer.BaseActivity;
@@ -27,9 +28,13 @@ import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
 import com.shiwaixiangcun.customer.http.StringDialogCallBack;
 import com.shiwaixiangcun.customer.model.AddressBean;
+import com.shiwaixiangcun.customer.model.CurrentOrder;
 import com.shiwaixiangcun.customer.model.GoodDetail;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
+import com.shiwaixiangcun.customer.pay.AliInfo;
+import com.shiwaixiangcun.customer.pay.AliPay;
+import com.shiwaixiangcun.customer.ui.dialog.DialogPay;
 import com.shiwaixiangcun.customer.utils.ArithmeticUtils;
 import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
@@ -110,19 +115,21 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     AddressBean defaultAddress;
     private boolean hasAddress = false;
     private int mGoodId;
+    private String mStrMessage;
+
     private String mChooseValue;
     private String mChooseId;
     private GoodDetail.DataBean data;
     private int amount = 1;
     private String tokenString;
     private int addressId;
+    private DialogPay mDialogPay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_order);
         ButterKnife.bind(this);
-
         EventCenter.getInstance().register(this);
         initData();
         initView();
@@ -231,35 +238,58 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         }.getType();
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(loginInfo, type);
         tokenString = responseEntity.getData().getAccess_token();
+        mStrMessage = mEdtMessage.getText().toString();
         HttpParams params = new HttpParams();
         params.put("addressId", addressId);
         params.put("amount", amount);
         params.put("attrDescription", mChooseValue);
         params.put("attrIds", mChooseId);
         params.put("goodsId", mGoodId);
-        params.put("leavingMessage", "");
+        params.put("leavingMessage", mStrMessage);
         params.put("sellerId", data.getSellerId());
         params.put("access_token", tokenString);
-        Log.e(BUG_TAG, mChooseValue);
-        Log.e(BUG_TAG, mChooseId);
         OkGo.<String>post(GlobalConfig.putOrder)
                 .params(params)
                 .isSpliceUrl(true)
                 .execute(new StringDialogCallBack(this) {
                     @Override
                     public void onSuccess(Response<String> response) {
-                        Log.e(BUG_TAG, "onSuccess");
-                        Log.e(BUG_TAG, response.body());
                         String jsonString = response.body();
-                        Gson gson = new Gson();
-                        ResponseEntity entity = gson.fromJson(jsonString, ResponseEntity.class);
-                        switch (entity.getResponseCode()) {
+                        CurrentOrder currentOrder = JsonUtil.fromJson(jsonString, CurrentOrder.class);
+                        if (currentOrder == null) {
+                            return;
+                        }
+                        final String orderNumber = currentOrder.getData().getNumber();
+                        switch (currentOrder.getResponseCode()) {
                             case 1001:
                                 Toast.makeText(mContext, "提交订单成功", Toast.LENGTH_SHORT).show();
-                                // TODO: 2017/9/20  进入支付
+                                mDialogPay = new DialogPay(mContext);
+                                mDialogPay.setPrice("¥" + ArithmeticUtils.format(currentOrder.getData().getShouldPay()));
+                                mDialogPay.show();
+                                mDialogPay.setListener(new DialogPay.onCallBackListener() {
+                                    @Override
+                                    public void closeBtn(DialogPay dialog) {
+                                        dialog.dismiss();
+                                    }
+
+                                    @Override
+                                    public void confirmBtn(DialogPay dialog) {
+                                        String defaultPay = dialog.getDefaultPay();
+                                        Log.e(BUG_TAG, defaultPay);
+                                        switch (defaultPay) {
+                                            case "weixin":
+                                                Toast.makeText(mContext, "正在进行微信支付", Toast.LENGTH_SHORT).show();
+                                                break;
+                                            case "zhifubao":
+                                                pay(orderNumber);
+                                                break;
+                                        }
+                                    }
+                                });
+
                                 break;
                             default:
-                                Toast.makeText(mContext, entity.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, currentOrder.getMessage(), Toast.LENGTH_SHORT).show();
                                 break;
 
                         }
@@ -279,58 +309,94 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
     }
 
+    private void pay(String orderNumber) {
+        OkGo.<String>post(GlobalConfig.payZhiFuBao)
+                .params("access_token", tokenString)
+                .params("orderNumber", orderNumber)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        Log.e(BUG_TAG, response.body());
+                        Type type = new TypeToken<ResponseEntity<AliInfo>>() {
+                        }.getType();
+                        ResponseEntity<AliInfo> entity = JsonUtil.fromJson(response.body(), type);
+                        if (entity == null) {
+                            return;
+                        }
+                        String zhiFuBaoResponse = entity.getData().getZhiFuBaoResponse();
+                        AliPay.getInstance().pay(zhiFuBaoResponse, ConfirmOrderActivity.this);
+                    }
+                });
+
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void handleEvent(SimpleEvent simpleEvent) {
-        if (simpleEvent.mEventType != SimpleEvent.CONFIRM_ORDER) {
+        if (simpleEvent == null) {
             return;
         }
-        if (simpleEvent.mEventValue == 2) {
-            if (amount == 0) {
-                Toast.makeText(mContext, "至少需要选择一个商品", Toast.LENGTH_SHORT).show();
-            } else {
-                amount -= 1;
-            }
-        }
-        if (simpleEvent.mEventValue == 1) {
-            amount += 1;
-        }
+        switch (simpleEvent.mEventType) {
+            case SimpleEvent.PAY_SUCCESS:
+                Log.e(BUG_TAG, "支付成功");
+                mDialogPay.dismiss();
+                Toast.makeText(mContext, "支付成功", Toast.LENGTH_SHORT).show();
+                break;
+            case SimpleEvent.PAY_DEFAULT:
+                mDialogPay.dismiss();
+                Toast.makeText(mContext, "支付失败", Toast.LENGTH_SHORT).show();
+                break;
+            case SimpleEvent.CONFIRM_ORDER:
+                if (simpleEvent.mEventValue == 2) {
+                    if (amount == 0) {
+                        Toast.makeText(mContext, "至少需要选择一个商品", Toast.LENGTH_SHORT).show();
+                    } else {
+                        amount -= 1;
+                    }
+                }
+                if (simpleEvent.mEventValue == 1) {
+                    amount += 1;
+                }
 
-        double total_good = ArithmeticUtils.mul(amount, data.getMinPrice(), 2);
-        double total_order = ArithmeticUtils.add(total_good, data.getTransportMoney());
+                double total_good = ArithmeticUtils.mul(amount, data.getMinPrice(), 2);
+                double total_order = ArithmeticUtils.add(total_good, data.getTransportMoney());
 
-        mTvTotal.setText("￥ " + ArithmeticUtils.format(total_good));
-        mTvOrderTotal.setText("￥ " + ArithmeticUtils.format(total_order));
-        mTvOrderAmount.setText(amount + "");
-        mTvGoodAmount.setText("x " + amount);
+                mTvTotal.setText("￥ " + ArithmeticUtils.format(total_good));
+                mTvOrderTotal.setText("￥ " + ArithmeticUtils.format(total_order));
+                mTvOrderAmount.setText(amount + "");
+                mTvGoodAmount.setText("x " + amount);
+                break;
+        }
     }
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Bundle bundle = data.getExtras();
+
         switch (requestCode) {
             case 0x12:
-
                 Log.e(BUG_TAG, "添加地址返回");
+                Bundle addBundle = data.getExtras();
+
                 mRLayoutNoAddress.setVisibility(View.GONE);
                 mRLayoutHasAddress.setVisibility(View.VISIBLE);
-                addressId = bundle.getInt("addressID", 0);
-                userName = bundle.getString("userName");
-                userPhone = bundle.getString("userPhone");
-                userAddress = bundle.getString("userAddress");
+                addressId = addBundle.getInt("addressID", 0);
+                userName = addBundle.getString("userName");
+                userPhone = addBundle.getString("userPhone");
+                userAddress = addBundle.getString("userAddress");
                 mTvUserName.setText(userName);
                 mTvUserPhone.setText(userPhone);
                 mTvAddress.setText(userAddress);
                 break;
             case 0x13:
                 Log.e(BUG_TAG, "选择地址返回");
+                Bundle chooseBundle = data.getExtras();
                 mRLayoutNoAddress.setVisibility(View.GONE);
                 mRLayoutHasAddress.setVisibility(View.VISIBLE);
-                addressId = bundle.getInt("addressID", 0);
-                userName = bundle.getString("userName");
-                userPhone = bundle.getString("userPhone");
-                userAddress = bundle.getString("userAddress");
+                addressId = chooseBundle.getInt("addressID", 0);
+                userName = chooseBundle.getString("userName");
+                userPhone = chooseBundle.getString("userPhone");
+                userAddress = chooseBundle.getString("userAddress");
                 mTvUserName.setText(userName);
                 mTvUserPhone.setText(userPhone);
                 mTvAddress.setText(userAddress);

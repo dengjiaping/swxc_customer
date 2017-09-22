@@ -1,7 +1,6 @@
 package com.shiwaixiangcun.customer.ui.fragment;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -11,14 +10,13 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
@@ -30,31 +28,37 @@ import com.lzy.okgo.model.Response;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterOrder;
+import com.shiwaixiangcun.customer.event.SimpleEvent;
 import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.http.StringDialogCallBack;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.OrderBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
+import com.shiwaixiangcun.customer.pay.AliInfo;
+import com.shiwaixiangcun.customer.pay.AliPay;
+import com.shiwaixiangcun.customer.pay.WXpay;
+import com.shiwaixiangcun.customer.pay.WeiXinInfo;
 import com.shiwaixiangcun.customer.ui.activity.OrderDetailActivity;
 import com.shiwaixiangcun.customer.ui.dialog.DialogInfo;
 import com.shiwaixiangcun.customer.utils.DisplayUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * Created by Administrator on 2017/9/18.
  */
 
-public class OrderFragment extends Fragment {
-    Unbinder unbinder;
+public class OrderFragment extends LazyFragment {
     @BindView(R.id.rv_order)
     RecyclerView mRvOrder;
     @BindView(R.id.iv_no)
@@ -65,14 +69,16 @@ public class OrderFragment extends Fragment {
     LinearLayout mLlayoutNodata;
     @BindView(R.id.root_view)
     FrameLayout mRootView;
+    private String BUG_TAG = this.getClass().getSimpleName();
     private AdapterOrder mAdapterOrder;
     private String mTitle;
     private List<OrderBean.ElementsBean> mOrderList;
     private OrderBean mOrder;
-    private Context mContext;
+    private Activity mContext;
     private String stature;
     private String mStringPrompt;
     private String tokenString;
+
 
     public static Fragment getInstance(String title) {
         OrderFragment fragment = new OrderFragment();
@@ -86,21 +92,44 @@ public class OrderFragment extends Fragment {
 
     }
 
-    @Nullable
+
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.order_fragment, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        return view;
+    protected int getContentViewLayoutID() {
+        return R.layout.order_fragment;
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        requestData();
+    protected void initViewsAndEvents(View view) {
         initData();
+
     }
 
+    @Override
+    protected void onFirstUserVisible() {
+        requestData();
+
+    }
+
+    @Override
+    protected void onUserVisible() {
+        requestData();
+
+    }
+
+    @Override
+    protected void onUserInvisible() {
+
+    }
+
+    @Override
+    protected void DestroyViewAndThing() {
+        EventBus.getDefault().unregister(this);
+
+    }
+
+    /**
+     * 初始化数据
+     */
     private void initData() {
         mOrderList = new ArrayList<>();
         mAdapterOrder = new AdapterOrder(mOrderList);
@@ -166,7 +195,7 @@ public class OrderFragment extends Fragment {
     }
 
     private void requestData() {
-        Log.e("fragment", "请求数据");
+        Log.e(BUG_TAG, "请求数据");
         HttpParams httpParams = new HttpParams();
         httpParams.put("page.pn", 1);
         httpParams.put("page.size", 10);
@@ -174,7 +203,7 @@ public class OrderFragment extends Fragment {
         httpParams.put("access_token", tokenString);
         OkGo.<String>get(GlobalConfig.getAllOrders)
                 .params(httpParams)
-                .execute(new StringDialogCallBack((Activity) mContext) {
+                .execute(new StringDialogCallBack(mContext) {
                     @Override
                     public void onSuccess(Response<String> response) {
                         if (response == null) {
@@ -204,16 +233,11 @@ public class OrderFragment extends Fragment {
 
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this.getActivity();
-
         mStringPrompt = mTitle;
         switch (mTitle) {
             case "全部":
@@ -223,7 +247,7 @@ public class OrderFragment extends Fragment {
                 stature = "WaitPay";
                 break;
             case "待收货":
-                stature = "Delivered";
+                stature = "WaitDeliver";
                 break;
             case "已完成":
                 stature = "Closed";
@@ -235,6 +259,7 @@ public class OrderFragment extends Fragment {
         }.getType();
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(loginInfo, type);
         tokenString = responseEntity.getData().getAccess_token();
+        EventBus.getDefault().register(this);
 
 
     }
@@ -245,17 +270,6 @@ public class OrderFragment extends Fragment {
         intent.setClass(mContext, OrderDetailActivity.class);
         startActivity(intent);
 
-    }
-
-    /**
-     * 显示对话框
-     *
-     * @param title
-     * @param content
-     */
-    private void showDialog(String title, String content) {
-//        AlertDialog alertDialog=new AlertDialog();
-//        alertDialog.
     }
 
     private void cancelOrder(OrderBean.ElementsBean elementsBean) {
@@ -271,7 +285,59 @@ public class OrderFragment extends Fragment {
     private void payOrder(OrderBean.ElementsBean elementsBean) {
 
 
-        // TODO: 2017/9/18  订单支付
+        String orderNumber = elementsBean.getOrderNumber();
+        Log.e(BUG_TAG, orderNumber);
+        Log.e(BUG_TAG, tokenString);
+        OkGo.<String>post(GlobalConfig.payWeiXin)
+                .params("access_token", tokenString)
+                .params("orderNumber", orderNumber)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        Log.e(BUG_TAG, "onError");
+                    }
+
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        Log.e(BUG_TAG, "onSuccess");
+                        Log.e(BUG_TAG, response.body());
+                        Type type = new TypeToken<ResponseEntity<WeiXinInfo>>() {
+                        }.getType();
+                        ResponseEntity<WeiXinInfo> entity = JsonUtil.fromJson(response.body(), type);
+                        if (entity == null) {
+                            return;
+                        }
+                        WeiXinInfo.WeiXinResponseBean weiXinResponse = entity.getData().getWeiXinResponse();
+
+                        WXpay wXpay = new WXpay(weiXinResponse);
+                        wXpay.createWXAPI(mContext);
+                        wXpay.sendPayReq();
+
+                    }
+                });
+    }
+
+    private void pay(String orderNumber) {
+        OkGo.<String>post(GlobalConfig.payZhiFuBao)
+                .params("access_token", tokenString)
+                .params("orderNumber", orderNumber)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        Log.e(BUG_TAG, response.body());
+                        Type type = new TypeToken<ResponseEntity<AliInfo>>() {
+                        }.getType();
+                        ResponseEntity<AliInfo> entity = JsonUtil.fromJson(response.body(), type);
+                        if (entity == null) {
+                            return;
+                        }
+                        String zhiFuBaoResponse = entity.getData().getZhiFuBaoResponse();
+                        AliPay.getInstance().pay(zhiFuBaoResponse, mContext);
+
+                    }
+                });
+
     }
 
     /**
@@ -360,10 +426,22 @@ public class OrderFragment extends Fragment {
                 });
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void handleEvent(SimpleEvent simpleEvent) {
+        if (simpleEvent == null) {
+            return;
+        }
+        switch (simpleEvent.mEventType) {
+            case SimpleEvent.PAY_SUCCESS:
+                Log.e(BUG_TAG, "支付成功");
+                Toast.makeText(mContext, "支付成功", Toast.LENGTH_SHORT).show();
+                requestData();
+                break;
+            case SimpleEvent.PAY_DEFAULT:
+                Log.e(BUG_TAG, "支付失败");
+                Toast.makeText(mContext, "支付失败", Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
 }

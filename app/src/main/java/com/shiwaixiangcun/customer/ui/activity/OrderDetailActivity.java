@@ -28,6 +28,7 @@ import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.OrderDetailBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.ui.dialog.DialogInfo;
+import com.shiwaixiangcun.customer.utils.ArithmeticUtils;
 import com.shiwaixiangcun.customer.utils.DateUtil;
 import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
@@ -190,8 +191,6 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                 RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) mLlInfoPrice.getLayoutParams();
                 layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
                 mLlInfoPrice.setLayoutParams(layoutParams);
-//                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) mLlInfoPrice.getLayoutParams();
-//                layoutParams.addRule(paren);
                 break;
             case "WaitPay":
                 mTvOrderStatus.setText("等待付款");
@@ -227,9 +226,9 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
         OrderDetailBean.OrderInfoBean orderInfo = orderDetail.getOrderInfo();
         mTvOrderId.setText(orderInfo.getOrderNumber());
         mTvOrderDate.setText(DateUtil.getMillon(orderInfo.getOrderTime()));
-        mTvOrderTotal.setText(String.valueOf(orderInfo.getRealPay()));
-        mTvFare.setText(String.valueOf(orderInfo.getTransportMoney()));
-        mTvTotal.setText(String.valueOf(orderInfo.getShouldPay()));
+        mTvOrderTotal.setText("¥ " + ArithmeticUtils.format(orderInfo.getRealPay()));
+        mTvFare.setText("¥ " + ArithmeticUtils.format(orderInfo.getTransportMoney()));
+        mTvTotal.setText("¥ " + ArithmeticUtils.format(orderInfo.getShouldPay()));
         mTvOrderPayWay.setText(orderInfo.getPayWay());
 
 
@@ -237,7 +236,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
         OrderDetailBean.GoodsDetailBean goodsDetailBean = orderDetail.getGoodsDetail().get(0);
         mTvGoodDesc.setText(goodsDetailBean.getShopName());
         mTvGoodTitle.setText(goodsDetailBean.getGoodName());
-        mTvGoodPrice.setText(String.valueOf(goodsDetailBean.getPrice()));
+        mTvGoodPrice.setText("¥ " + ArithmeticUtils.format(goodsDetailBean.getPrice()));
         mTvGoodAmount.setText("x" + goodsDetailBean.getAmount());
         ImageDisplayUtil.showImageView(this, goodsDetailBean.getImgPath(), mIvGoodCover);
         Log.e(BUG_TAG, orderDetail.getBuyersInfo().getDeliveryAddress());

@@ -21,8 +21,7 @@
         <item name="android:windowExitAnimation">@anim/slide_out_to_bottom</item>
     </style>
 
-    <!--/////////////-->
-    <!-- 自定义仿IOS的AlertDialog的样式 -->
+
     <style name="AlertDialogStyle">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>

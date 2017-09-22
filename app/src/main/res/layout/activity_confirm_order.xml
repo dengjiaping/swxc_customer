@@ -16,8 +16,7 @@
             android:layout_height="match_parent"
             android:background="@color/ui_background"
             android:orientation="vertical"
-            android:paddingBottom="8dp"
-            >
+            android:paddingBottom="8dp">
 
             <include layout="@layout/top_bar_white"/>
 
@@ -303,6 +302,41 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/white"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="horizontal"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="买家留言"
+                    android:textColor="#FF2D3230"
+                    android:textSize="16sp"/>
+
+                <EditText
+                    android:id="@+id/edt_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="8dp"
+                    android:background="@null"
+                    android:hint="选填，对交易的说明"
+                    android:maxLines="1"
+                    android:textColor="@color/mall_text"
+                    android:textColorHint="@color/gray"
+                    android:textSize="16sp"/>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="90dp"
                 android:background="@color/white"
                 android:gravity="center_vertical"
@@ -375,41 +409,7 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/white"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:orientation="horizontal"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="买家留言"
-                    android:textColor="#FF2D3230"
-                    android:textSize="16sp"/>
-
-                <EditText
-                    android:id="@+id/edt_message"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="8dp"
-                    android:background="@null"
-                    android:hint="选填，对交易的说明"
-                    android:maxLines="1"
-                    android:textColor="@color/mall_text"
-                    android:textColorHint="@color/gray"
-                    android:textSize="16sp"/>
-
-
-            </LinearLayout>
 
 
         </LinearLayout>

@@ -4,9 +4,9 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,11 +23,11 @@ import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.CompanyDetilListAdapter;
 import com.shiwaixiangcun.customer.model.RecoratingDetailBean;
 import com.shiwaixiangcun.customer.presenter.impl.HouseRecoratingDetailImpl;
+import com.shiwaixiangcun.customer.ui.IHouseRecoratingDetailView;
+import com.shiwaixiangcun.customer.utils.Utils;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 import com.shiwaixiangcun.customer.widget.MyListView;
 import com.shiwaixiangcun.customer.widget.SelfLoginoutDialog;
-import com.shiwaixiangcun.customer.utils.Utils;
-import com.shiwaixiangcun.customer.ui.IHouseRecoratingDetailView;
 import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
@@ -186,20 +186,13 @@ public class CompanyDetailActivity extends AppCompatActivity implements View.OnC
         final SelfLoginoutDialog selfLoginoutDialog = new SelfLoginoutDialog(CompanyDetailActivity.this, R.layout.item_dialog_call_phone);
         selfLoginoutDialog.setTitle("是否要拨打此电话？");
         selfLoginoutDialog.setMessage(phone);
-//        selfLoginoutDialog.setColor();
         selfLoginoutDialog.setYesOnclickListener("是", new SelfLoginoutDialog.onYesOnclickListener() {
             @Override
             public void onYesClick() {
                 selfLoginoutDialog.dismiss();
                 Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phone));
                 if (ActivityCompat.checkSelfPermission(CompanyDetailActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
+
                     return;
                 }
                 startActivity(intent);
