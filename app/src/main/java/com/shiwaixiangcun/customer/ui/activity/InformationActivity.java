@@ -141,8 +141,6 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
         String sex = SharePreference.getStringSpParams(this, Common.ISUSERSEX, Common.SIUSERSEX);
         String old = SharePreference.getStringSpParams(this, Common.ISUSEROLD, Common.SIUSEROLD);
         String phone = SharePreference.getStringSpParams(this, Common.ISUSERPHONE, Common.SIUSERPHONE);
-        Log.i("ssssss",sex);
-
         if (Utils.isNotEmpty(image_head)) {
             Picasso.with(this).load(image_head).into(iv_head_image);
         }
@@ -161,8 +159,6 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
             tv_information_nv.setText(str_sex_get_to);
         }
         if (Utils.isNotEmpty(old)) {
-            Log.i("gggggggghhha",old+"");
-//            String s_a = TimerToTimerUtil.stampToDate(old);
             tv_information_old.setText(old);
         }
         if (Utils.isNotEmpty(phone)) {
@@ -201,7 +197,6 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.rl_data_dialog:
                 String trim = tv_information_old.getText().toString().trim();
-                Log.i("sssssssrrraa",trim);
                 if (Utils.isNotEmpty(trim)){
                     str_trim = trim;
                 }else {
@@ -214,7 +209,7 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void setBgaAdpaterAndClickResult(InformationaBean result) {
-        Log.i("bbbbbbbb", "rrrrrrrrr");
+
         if (Utils.isNotEmpty(result.getData().getAvatar().getAccessUrl())) {
             Picasso.with(this).load(result.getData().getAvatar().getAccessUrl()).into(iv_head_image);
         }
@@ -233,7 +228,6 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
         }
         if (Utils.isNotEmpty(result.getData().getBirthday())) {
 
-            Log.i("gggggggghhha",result.getData().getBirthday()+"");
             tv_information_old.setText(TimerToTimerUtil.stampToInspectionDate(result.getData().getBirthday() + ""));
         }
         if (Utils.isNotEmpty(result.getData().getCompanyPhone())) {
@@ -324,9 +318,7 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
 
         }
         if (requestCode == SAVE_CODE) {
-            Log.e("hhhhhhhhhhh", "相册wai");
             if (null != data) {
-                Log.e("hhhhhhhhhhh", "相册");
                 // 加载本地库的图片
                 final Uri uri = data.getData();
                 new Thread(new Runnable() {
@@ -419,7 +411,7 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
     private void sendImageHttp(File file) {
 
         String login_detail = SharePreference.getStringSpParams(this, Common.ISSAVELOGIN, Common.SISAVELOGIN);
-        Log.i("eeeeeettt", login_detail);
+
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(login_detail, type);
@@ -428,13 +420,11 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
         hashMap.put("access_token", responseEntity.getData().getAccess_token());
         hashMap.put("images", file);
 
-        Log.i("dddddd", hashMap.toString() + "-----------" + Common.fileSend);
-
 
         HttpRequest.post(Common.fileSend, hashMap, new HttpCallBack() {
             @Override
             public void onSuccess(String responseJson) {
-                Log.i("oooooo---onSuccess---", responseJson);
+
                 Type type = new TypeToken<ResponseEntity<List<ImageReturnbean>>>() {
                 }.getType();
                 ResponseEntity<List<ImageReturnbean>> responseEntity = JsonUtil.fromJson(responseJson, type);
@@ -460,7 +450,7 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
 
             @Override
             public void onFailed(Exception e) {
-                Log.i("oooooo---onFailed---", e.toString());
+
             }
         });
     }
@@ -480,7 +470,7 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onClickRight(String value) {
                 wheelViewDialogFragment.dismiss();
-                Log.i("hhhhhhhaaa", value);
+
                 if (value.equals("男")) {
                     str_sex = "MAN";
                     tv_information_nv.setText("男");
@@ -501,7 +491,7 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
 
             @Override
             public void onAllcenter(String value) {
-                Log.i("ssssssssssttta","sssssssaaaa");
+
 
                 wheelViewDialogFragment.dismiss();
             }

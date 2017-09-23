@@ -388,6 +388,11 @@
             android:screenOrientation="portrait">
         </activity>
         <activity android:name=".ui.activity.OrderActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="wx4811bcb64cb3e434"/>
+            </intent-filter>
         </activity>
         <activity android:name=".ui.activity.OrderDetailActivity">
         </activity>

@@ -19,6 +19,7 @@
     <color name="ui_grad_line">#B2637385</color>
     <color name="ui_grad_back">#0C2D3230</color>
     <color name="ui_back">#202020</color>
+    <color name="ui_gray">#656565</color>
     <color name="ui_little_back">#33202020</color>
     <color name="ui_phone_item">#cee1cd</color>
     <color name="ui_line_black">#212D3231</color>

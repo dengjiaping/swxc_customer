@@ -52,6 +52,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import okhttp3.Call;
 
+/**
+ * 订单确认页面
+ */
 public class ConfirmOrderActivity extends BaseActivity implements View.OnClickListener {
 
     private static final int ADD_ADDRESS = 0X12;
@@ -171,6 +174,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         mTvGoodDesc.setText(data.getFeature());
         mTvGoodPrice.setText("￥ " + ArithmeticUtils.format(data.getMinPrice()));
         mTvOrderFare.setText("￥ " + ArithmeticUtils.format(data.getTransportMoney()));
+        mTvOrderTotal.setText("￥ " + ArithmeticUtils.format(data.getMinPrice()));
         mTvOrderAmount.setText(amount + "");
         mTvGoodAmount.setText("x " + amount);
         ImageDisplayUtil.showImageView(mContext, data.getImages().get(0).getThumbImageURL(), mIvGoodCover);
@@ -259,34 +263,35 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                         if (currentOrder == null) {
                             return;
                         }
-                        final String orderNumber = currentOrder.getData().getNumber();
+                        String orderNumber = currentOrder.getData().getNumber();
                         switch (currentOrder.getResponseCode()) {
                             case 1001:
-                                Toast.makeText(mContext, "提交订单成功", Toast.LENGTH_SHORT).show();
-                                mDialogPay = new DialogPay(mContext);
-                                mDialogPay.setPrice("¥" + ArithmeticUtils.format(currentOrder.getData().getShouldPay()));
-                                mDialogPay.show();
-                                mDialogPay.setListener(new DialogPay.onCallBackListener() {
-                                    @Override
-                                    public void closeBtn(DialogPay dialog) {
-                                        dialog.dismiss();
-                                    }
-
-                                    @Override
-                                    public void confirmBtn(DialogPay dialog) {
-                                        String defaultPay = dialog.getDefaultPay();
-                                        Log.e(BUG_TAG, defaultPay);
-                                        switch (defaultPay) {
-                                            case "weixin":
-                                                Toast.makeText(mContext, "正在进行微信支付", Toast.LENGTH_SHORT).show();
-                                                break;
-                                            case "zhifubao":
-                                                pay(orderNumber);
-                                                break;
-                                        }
-                                    }
-                                });
-
+                                Log.e(BUG_TAG, "提交成功");
+                                pay(orderNumber);
+//                                mDialogPay = new DialogPay(mContext);
+//                                mDialogPay.setPrice("¥" + ArithmeticUtils.format(currentOrder.getData().getShouldPay()));
+//                                mDialogPay.show();
+//                                mDialogPay.setListener(new DialogPay.onCallBackListener() {
+//                                    @Override
+//                                    public void closeBtn(DialogPay dialog) {
+//                                        dialog.dismiss();
+//                                    }
+//
+//                                    @Override
+//                                    public void confirmBtn(DialogPay dialog) {
+//                                        String defaultPay = dialog.getDefaultPay();
+////                                        Log.e(BUG_TAG, defaultPay);
+//                                        pay(orderNumber);
+////                                        switch (defaultPay) {
+////                                            case "weixin":
+////                                                Toast.makeText(mContext, "正在进行微信支付", Toast.LENGTH_SHORT).show();
+////                                                break;
+////                                            case "zhifubao":
+////                                                pay(orderNumber);
+////                                                break;
+////                                        }
+//                                    }
+//                                });
                                 break;
                             default:
                                 Toast.makeText(mContext, currentOrder.getMessage(), Toast.LENGTH_SHORT).show();
@@ -310,21 +315,31 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void pay(String orderNumber) {
+        Log.e(BUG_TAG, "支付宝支付");
+        Log.e(BUG_TAG, "支付宝支付    " + tokenString);
+        Log.e(BUG_TAG, "支付宝支付    " + orderNumber);
         OkGo.<String>post(GlobalConfig.payZhiFuBao)
                 .params("access_token", tokenString)
                 .params("orderNumber", orderNumber)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
-                        Log.e(BUG_TAG, response.body());
+                        Log.e(BUG_TAG, "支付宝支付   " + "获取数据成功");
                         Type type = new TypeToken<ResponseEntity<AliInfo>>() {
                         }.getType();
                         ResponseEntity<AliInfo> entity = JsonUtil.fromJson(response.body(), type);
+                        Log.e(BUG_TAG, entity.getMessage());
                         if (entity == null) {
                             return;
                         }
                         String zhiFuBaoResponse = entity.getData().getZhiFuBaoResponse();
                         AliPay.getInstance().pay(zhiFuBaoResponse, ConfirmOrderActivity.this);
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        Log.e(BUG_TAG, "支付宝支付   获取数据失败");
                     }
                 });
 

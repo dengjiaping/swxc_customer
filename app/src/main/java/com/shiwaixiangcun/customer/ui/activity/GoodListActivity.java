@@ -13,6 +13,10 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
@@ -42,6 +46,8 @@ public class GoodListActivity extends BaseActivity implements View.OnClickListen
     @BindView(R.id.rv_good_list)
     RecyclerView mRvGoodList;
     AdapterGoodList mAdapterGoodList;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout mRefreshLayout;
     private int flag = 0;
     private String type;
     private List<ElementBean.ElementsBean> mGoodList = new ArrayList<>();
@@ -88,6 +94,32 @@ public class GoodListActivity extends BaseActivity implements View.OnClickListen
                 Bundle bundle = new Bundle();
                 bundle.putInt("goodId", mGoodList.get(position).getGoodsId());
                 readyGo(GoodDetailActivity.class, bundle);
+            }
+        });
+        mRefreshLayout.setEnableHeaderTranslationContent(false);
+        mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(final RefreshLayout refreshlayout) {
+                refreshlayout.getLayout().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // TODO: 2017/9/23 下拉刷新
+
+                        refreshlayout.finishRefresh();
+                        refreshlayout.setLoadmoreFinished(false);
+                    }
+                }, 2000);
+            }
+        });
+        mRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                // TODO: 2017/9/23 上拉加载更多
+
+                refreshlayout.finishLoadmore();
+                refreshlayout.setLoadmoreFinished(true);
+
+
             }
         });
 //        mRvGoodList.addItemDecoration(new RecyclerViewDivider(this,LinearLayoutManager.VERTICAL,));

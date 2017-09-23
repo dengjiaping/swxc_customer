@@ -1,5 +1,6 @@
 package com.shiwaixiangcun.customer.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.event.EventCenter;
 import com.shiwaixiangcun.customer.event.SimpleEvent;
+import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
 import com.shiwaixiangcun.customer.model.GoodDetail;
@@ -29,6 +31,8 @@ import com.shiwaixiangcun.customer.ui.dialog.DialogSupport;
 import com.shiwaixiangcun.customer.utils.ArithmeticUtils;
 import com.shiwaixiangcun.customer.utils.GlideImageLoader;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
+import com.shiwaixiangcun.customer.utils.SharePreference;
+import com.shiwaixiangcun.customer.utils.Utils;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -99,10 +103,15 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
     List<GoodDetail.DataBean.ServicesBean> mListServices = new ArrayList<>();
     //商品的SKU
     List<GoodDetail.DataBean.SpecificationsBean> mListSpecifications = new ArrayList<>();
+    @BindView(R.id.rlayout_purchase)
+    RelativeLayout mRlayoutPurchase;
+    @BindView(R.id.tv_hint)
+    TextView mTvHint;
 
-    DialogSku dialogSku;
-
+    private DialogSku dialogSku;
     private int mGoodId;
+    private GoodDetail.DataBean goodBean;
+    private String isOrNotLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,8 +133,18 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
         }
         switch (simpleEvent.mEventValue) {
             case 1:
+
+
                 //更新界面
-                GoodDetail.DataBean goodBean = (GoodDetail.DataBean) simpleEvent.getData();
+                goodBean = (GoodDetail.DataBean) simpleEvent.getData();
+                if (goodBean.isPublished()) {
+                    // TODO: 2017/9/23 标记缺货状态
+                    mRlayoutPurchase.setVisibility(View.VISIBLE);
+                    mTvHint.setVisibility(View.GONE);
+                } else {
+                    mRlayoutPurchase.setVisibility(View.GONE);
+                    mTvHint.setVisibility(View.VISIBLE);
+                }
                 mTvTitle.setText(goodBean.getGoodsName());
                 mTvDesc.setText(goodBean.getFeature());
                 mTvPrice.setText("¥ " + ArithmeticUtils.format(goodBean.getMinPrice()));
@@ -182,6 +201,10 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
         Bundle bundle = getIntent().getExtras();
         mGoodId = bundle.getInt("goodId");
         Log.e(BUG_TAG, mGoodId + "");
+
+        /**
+
+         */
         requestContent();
         requestDetail();
     }
@@ -255,6 +278,7 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
      */
 
     private void initView() {
+        mTvHint.setVisibility(View.GONE);
         mIvShareRight.setVisibility(View.VISIBLE);
         mBannerDetails.setBannerStyle(BannerConfig.NOT_INDICATOR);
         dialogSku = new DialogSku(mContext, R.style.AlertDialogStyle, mGoodId);
@@ -272,16 +296,16 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
         webSettings.setJavaScriptEnabled(true);
 
 
-//设置自适应屏幕，两者合用
+        //设置自适应屏幕，两者合用
         webSettings.setUseWideViewPort(true); //将图片调整到适合webview的大小
         webSettings.setLoadWithOverviewMode(true); // 缩放至屏幕的大小
 
-//缩放操作
+        //缩放操作
         webSettings.setSupportZoom(true); //支持缩放，默认为true。是下面那个的前提。
         webSettings.setBuiltInZoomControls(true); //设置内置的缩放控件。若为false，则该WebView不可缩放
         webSettings.setDisplayZoomControls(false); //隐藏原生的缩放控件
 
-//其他细节操作
+        //其他细节操作
         webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK); //关闭webview中缓存
         webSettings.setAllowFileAccess(true); //设置可以访问文件
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true); //支持通过JS打开新窗口
@@ -291,21 +315,60 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-
+        isOrNotLogin = SharePreference.getStringSpParams(GoodDetailActivity.this, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
         switch (view.getId()) {
             case R.id.iv_share_right:
-                finish();
+                // TODO: 2017/9/23  分享
                 break;
             case R.id.back_left:
                 finish();
                 break;
             case R.id.rl_choice:
-                dialogSku.show();
+                if (Utils.isNotEmpty(isOrNotLogin)) {
+                    if (mListSpecifications.size() == 0) {
+                        Log.e(BUG_TAG, mListSpecifications.size() + "");
+                        goOrder();
+                    } else {
+                        dialogSku.show();
+                    }
+                } else {
+                    readyGo(LoginActivity.class);
+                }
+
                 break;
             case R.id.btn_purchase:
-                dialogSku.show();
+                if (Utils.isNotEmpty(isOrNotLogin)) {
+                    if (mListSpecifications.size() == 0) {
+                        Log.e(BUG_TAG, mListSpecifications.size() + "");
+                        goOrder();
+                    } else {
+                        dialogSku.show();
+                    }
+                } else {
+                    readyGo(LoginActivity.class);
+                }
                 break;
         }
+    }
+
+    /**
+     * 跳转至Order页面
+     */
+    private void goOrder() {
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        //商品ID
+        bundle.putInt("goodId", mGoodId);
+        //用户选择的属性名字
+        bundle.putString("value", null);
+        //用户确认的id
+        bundle.putString("id", null);
+        //商品信息
+        bundle.putParcelable("goodInfo", goodBean);
+        intent.putExtras(bundle);
+        intent.setClass(mContext, ConfirmOrderActivity.class);
+        startActivity(intent);
+
     }
 
     @Override

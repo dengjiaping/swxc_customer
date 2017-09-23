@@ -23,6 +23,10 @@ import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterJingxuan;
@@ -37,6 +41,7 @@ import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.ui.activity.BannerDetailsActivity;
 import com.shiwaixiangcun.customer.ui.activity.GoodDetailActivity;
 import com.shiwaixiangcun.customer.ui.activity.GoodListActivity;
+import com.shiwaixiangcun.customer.ui.activity.MallCategoryActivity;
 import com.shiwaixiangcun.customer.ui.activity.SearchActivity;
 import com.shiwaixiangcun.customer.utils.ArithmeticUtils;
 import com.shiwaixiangcun.customer.utils.GlideImageLoader;
@@ -60,7 +65,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
- * Created by Administrator on 2017/9/21.
+ * 商城 Fragment
  */
 
 public class FragmentMall extends BaseFragment implements View.OnClickListener {
@@ -75,6 +80,9 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
     RelativeLayout mRlayoutSearch;
     @BindView(R.id.activity_mall)
     LinearLayout mActivityMall;
+
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout mRefreshLayout;
     Unbinder unbinder;
 
     private int pinzhiGoodID = 0;
@@ -105,12 +113,14 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_mall, container, false);
+
         return view;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         unbinder = ButterKnife.bind(this, view);
+
         EventBus.getDefault().register(this);
         initHeaders();
         initView();
@@ -312,13 +322,13 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
      */
     private void initView() {
         mAdapterMall = new AdapterMall(mGuessList);
-        mRvMall.setLayoutManager(new LinearLayoutManager(mContext));
-        mRvMall.setAdapter(mAdapterMall);
-        mRvMall.addItemDecoration(new ItemDecoration(mContext, LinearLayoutManager.VERTICAL));
         mAdapterMall.addHeaderView(mBannerView);
         mAdapterMall.addHeaderView(mJingxuanView);
         mAdapterMall.addHeaderView(mSuggestView);
         mAdapterMall.addHeaderView(mTitleView);
+        mRvMall.setLayoutManager(new LinearLayoutManager(mContext));
+        mRvMall.addItemDecoration(new ItemDecoration(mContext, LinearLayoutManager.VERTICAL));
+        mRvMall.setAdapter(mAdapterMall);
         mAdapterMall.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -329,6 +339,32 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
         });
         mBackLeft.setOnClickListener(this);
         mRlayoutSearch.setOnClickListener(this);
+        mRefreshLayout.setEnableHeaderTranslationContent(false);
+        mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(final RefreshLayout refreshlayout) {
+                refreshlayout.getLayout().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // TODO: 2017/9/23 下拉刷新 
+                        requestData();
+                        refreshlayout.finishRefresh();
+                        refreshlayout.setLoadmoreFinished(false);
+                    }
+                }, 2000);
+            }
+        });
+        mRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                // TODO: 2017/9/23 上拉加载更多
+
+                refreshlayout.finishLoadmore();
+                refreshlayout.setLoadmoreFinished(true);
+
+
+            }
+        });
 
     }
 
@@ -431,7 +467,7 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
             case R.id.back_left:
-//                readyGo(MallCategoryActivity.class);
+                readyGo(MallCategoryActivity.class);
                 break;
             case R.id.rlayout_search:
                 bundle.putParcelable("keyword", keyword);
@@ -465,4 +501,6 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
         }
 
     }
+
+
 }

@@ -109,6 +109,7 @@ public class GoodDetail {
          * transportMoney : 23.3
          */
 
+
         private String categoryFullName;
         private int categoryId;
         private String cityName;

@@ -73,8 +73,6 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, IM
 
         @Override
         public void onClick(View v) {
-            // TODO Auto-generated method stub
-            Log.i("aaaaaaaaabbvva", "点击了版本更新");
             new checkNewestVersionAsyncTask().execute();
         }
     };
@@ -107,8 +105,6 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, IM
         if (Utils.isNotEmpty(isOrnotLogin_service)) {
             String head_image_path = SharePreference.getStringSpParams(mContext, Common.ISIMAGEHEAD, Common.SIIMAGEHEAD);
             String username = SharePreference.getStringSpParams(mContext, Common.ISUSERNAME, Common.SIUSERNAME);
-            Log.i("1111111111122", head_image_path);
-
             tv_user_name.setText(username);
             if (Utils.isNotEmpty(head_image_path)) {
                 Picasso.with(mContext).load(head_image_path).into(iv_head_my_image);
@@ -132,6 +128,7 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, IM
 
     private void layoutView(View view) {
         back_left = (ChangeLightImageView) view.findViewById(R.id.back_left);
+        back_left.setVisibility(View.GONE);
         rl_head_mine = (RelativeLayout) view.findViewById(R.id.rl_head_mine);
         rl_feed_back = (RelativeLayout) view.findViewById(R.id.rl_feed_back);
         tv_user_name = (TextView) view.findViewById(R.id.tv_user_name);

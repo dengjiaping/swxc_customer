@@ -2,6 +2,8 @@ package com.shiwaixiangcun.customer.ui.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -36,13 +38,15 @@ import com.shiwaixiangcun.customer.model.OrderBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.pay.AliInfo;
 import com.shiwaixiangcun.customer.pay.AliPay;
-import com.shiwaixiangcun.customer.pay.WXpay;
 import com.shiwaixiangcun.customer.pay.WeiXinInfo;
 import com.shiwaixiangcun.customer.ui.activity.OrderDetailActivity;
 import com.shiwaixiangcun.customer.ui.dialog.DialogInfo;
 import com.shiwaixiangcun.customer.utils.DisplayUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -58,7 +62,7 @@ import butterknife.BindView;
  * Created by Administrator on 2017/9/18.
  */
 
-public class OrderFragment extends LazyFragment {
+public class FragmentOrder extends LazyFragment {
     @BindView(R.id.rv_order)
     RecyclerView mRvOrder;
     @BindView(R.id.iv_no)
@@ -81,7 +85,7 @@ public class OrderFragment extends LazyFragment {
 
 
     public static Fragment getInstance(String title) {
-        OrderFragment fragment = new OrderFragment();
+        FragmentOrder fragment = new FragmentOrder();
         fragment.mTitle = title;
         return fragment;
     }
@@ -295,12 +299,10 @@ public class OrderFragment extends LazyFragment {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        Log.e(BUG_TAG, "onError");
                     }
 
                     @Override
                     public void onSuccess(Response<String> response) {
-                        Log.e(BUG_TAG, "onSuccess");
                         Log.e(BUG_TAG, response.body());
                         Type type = new TypeToken<ResponseEntity<WeiXinInfo>>() {
                         }.getType();
@@ -309,13 +311,48 @@ public class OrderFragment extends LazyFragment {
                             return;
                         }
                         WeiXinInfo.WeiXinResponseBean weiXinResponse = entity.getData().getWeiXinResponse();
+                        String APP_ID = weiXinResponse.getAppid();
+                        IWXAPI wxapi = WXAPIFactory.createWXAPI(mContext, APP_ID, false);
+                        wxapi.registerApp(APP_ID);
+                        if (wxapi != null) {
+                            if (isWxAppInstalled()) {
+                                PayReq req = new PayReq();
+                                req.appId = APP_ID;
+                                req.partnerId = weiXinResponse.getPartnerid();
+                                req.prepayId = weiXinResponse.getPrepayid();
+                                req.nonceStr = weiXinResponse.getNoncestr();
+                                req.timeStamp = weiXinResponse.getTimestamp();
+                                req.sign = weiXinResponse.getSign();
+                                wxapi.sendReq(req);
+                            }
+                        }
 
-                        WXpay wXpay = new WXpay(weiXinResponse);
-                        wXpay.createWXAPI(mContext);
-                        wXpay.sendPayReq();
 
                     }
                 });
+    }
+
+    /**
+     * 判断是否安装微信
+     *
+     * @return
+     */
+    private boolean isWxAppInstalled() {
+        final PackageManager packageManager = mContext.getPackageManager();// 获取packagemanager
+        List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);// 获取所有已安装程序的包信息
+        if (pinfo != null) {
+            for (int i = 0; i < pinfo.size(); i++) {
+                String pn = pinfo.get(i).packageName;
+                if (pn.equals("com.tencent.mm")) {
+                    return true;
+                }
+            }
+        }
+
+        Toast.makeText(mContext, "请安装微信", Toast.LENGTH_SHORT).show();
+        return false;
+
+
     }
 
     private void pay(String orderNumber) {

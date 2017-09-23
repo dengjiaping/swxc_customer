@@ -298,8 +298,8 @@ public class CategoryBean implements Parcelable {
                 private int id;
                 private String name;
                 private int parentId;
-                private Object parentIds;
-                private Object weight;
+                private String parentIds;
+                private String weight;
                 private List<?> children;
 
                 public String getCategoryImg() {
@@ -334,19 +334,19 @@ public class CategoryBean implements Parcelable {
                     this.parentId = parentId;
                 }
 
-                public Object getParentIds() {
+                public String getParentIds() {
                     return parentIds;
                 }
 
-                public void setParentIds(Object parentIds) {
+                public void setParentIds(String parentIds) {
                     this.parentIds = parentIds;
                 }
 
-                public Object getWeight() {
+                public String getWeight() {
                     return weight;
                 }
 
-                public void setWeight(Object weight) {
+                public void setWeight(String weight) {
                     this.weight = weight;
                 }
 

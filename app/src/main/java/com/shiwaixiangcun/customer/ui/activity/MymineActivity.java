@@ -158,7 +158,6 @@ public class MymineActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.rl_app_address:
                 if (Utils.isNotEmpty(isOrnotLogin_renting)) {
-
                     intent = new Intent(this, ManageAddressActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putBoolean("clickable", false);

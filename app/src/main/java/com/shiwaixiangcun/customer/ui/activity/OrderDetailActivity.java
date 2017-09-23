@@ -214,6 +214,8 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
 
         }
 
+        // TODO: 2017/9/23 设置配送信息
+
         //更新收货人信息
         OrderDetailBean.BuyersInfoBean buyersInfo = orderDetail.getBuyersInfo();
         mTvUserName.setText(buyersInfo.getDeliveryName());

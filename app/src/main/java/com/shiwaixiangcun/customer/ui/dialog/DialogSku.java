@@ -246,6 +246,11 @@ public class DialogSku extends Dialog implements DialogInterface.OnCancelListene
                 intent.putExtras(bundle);
                 intent.setClass(mContext, ConfirmOrderActivity.class);
                 mContext.startActivity(intent);
+
+                Log.e(BUG_TAG, "goodID:" + mGoodId);
+                Log.e(BUG_TAG, "value:" + nameBuilder.toString());
+                Log.e(BUG_TAG, "id:" + idBuilder.toString());
+                Log.e(BUG_TAG, "goodInfo:" + mGoodId);
                 dismiss();
                 break;
         }

@@ -12,30 +12,33 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 import com.shiwaixiangcun.customer.BaseActivity;
+import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterCategory;
+import com.shiwaixiangcun.customer.interfaces.CheckListener;
 import com.shiwaixiangcun.customer.interfaces.RvListener;
 import com.shiwaixiangcun.customer.model.CategoryBean;
 import com.shiwaixiangcun.customer.ui.fragment.CategoryDetailFragment;
+import com.shiwaixiangcun.customer.utils.ItemHeaderDecoration;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MallCategoryActivity extends BaseActivity implements View.OnClickListener {
+public class MallCategoryActivity extends BaseActivity implements View.OnClickListener, CheckListener {
 
     @BindView(R.id.back_left)
     ChangeLightImageView backLeft;
@@ -47,9 +50,8 @@ public class MallCategoryActivity extends BaseActivity implements View.OnClickLi
     RecyclerView rvCategory;
     @BindView(R.id.flayout_pin)
     FrameLayout flayoutPin;
-
+    List<String> mCategoryNameList = new ArrayList<>();
     private Context mContext;
-
     private CategoryBean mCategory;
     private AdapterCategory mAdapterCategory;
     private LinearLayoutManager mLinearLayoutManager;
@@ -64,43 +66,30 @@ public class MallCategoryActivity extends BaseActivity implements View.OnClickLi
         ButterKnife.bind(this);
         mContext = this;
         requestData();
-        init();
+        initView();
     }
 
     /**
      * 获取数据
      */
     private void requestData() { //获取asset目录下的资源文件
-        String assetsData = getAssetsData("sort.json");
-        mCategory = JsonUtil.fromJson(assetsData, CategoryBean.class);
-        if (mCategory == null) {
-            return;
-        }
-        List<CategoryBean.DataBean> mCategoryList = mCategory.getData();
-        List<String> mCategoryNameList = new ArrayList<>();
-        for (int i = 0, count = mCategoryList.size(); i < count; i++) {
-            mCategoryNameList.add(mCategoryList.get(i).getName());
-        }
+        OkGo.<String>get(GlobalConfig.getCategory)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        mCategory = JsonUtil.fromJson(response.body(), CategoryBean.class);
+                        if (mCategory == null) {
+                            return;
+                        }
+                        List<CategoryBean.DataBean> mCategoryList = mCategory.getData();
+                        for (int i = 0, count = mCategoryList.size(); i < count; i++) {
+                            mCategoryNameList.add(mCategoryList.get(i).getName());
+                        }
+                        mAdapterCategory.addData(mCategoryNameList);
+                        createFragment();
+                    }
+                });
 
-        mAdapterCategory = new AdapterCategory(mContext, mCategoryNameList, new RvListener() {
-            @Override
-            public void onItemClick(int id, int position) {
-
-            }
-        });
-        mAdapterCategory = new AdapterCategory(mContext, mCategoryNameList, new RvListener() {
-            @Override
-            public void onItemClick(int id, int position) {
-                setChecked(position, true);
-                if (mDetailFragment != null) {
-                    isMoved = true;
-                    targetPosition = position;
-                    setChecked(position, true);
-                }
-            }
-        });
-
-        createFragment();
     }
 
     private void setChecked(int position, boolean isLeft) {
@@ -116,11 +105,13 @@ public class MallCategoryActivity extends BaseActivity implements View.OnClickLi
 
             }
             mDetailFragment.setData(count);
+            ItemHeaderDecoration.setCurrentTag(String.valueOf(targetPosition));
         } else {
             if (isMoved) {
                 isMoved = false;
 
             } else mAdapterCategory.setCheckedPosition(position);
+            ItemHeaderDecoration.setCurrentTag(String.valueOf(position));
         }
         moveToCenter(position);
     }
@@ -140,33 +131,24 @@ public class MallCategoryActivity extends BaseActivity implements View.OnClickLi
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("right", (ArrayList<? extends Parcelable>) mCategory.getData());
         mDetailFragment.setArguments(bundle);
+        mDetailFragment.setListener(this);
         fragmentTransaction.add(R.id.flayout_pin, mDetailFragment);
         fragmentTransaction.commit();
     }
 
-    private String getAssetsData(String path) {
-        String result = "";
-        try {
-            //获取输入流
-            InputStream mAssets = getAssets().open(path);
-            //获取文件的字节数
-            int lenght = mAssets.available();
-            //创建byte数组
-            byte[] buffer = new byte[lenght];
-            //将文件中的数据写入到字节数组中
-            mAssets.read(buffer);
-            mAssets.close();
-            result = new String(buffer);
-            return result;
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.e("test", e.getMessage());
-            return result;
-        }
-    }
-
-    private void init() {
+    private void initView() {
         tvPageName.setText("商品分类");
+        mAdapterCategory = new AdapterCategory(mContext, mCategoryNameList, new RvListener() {
+            @Override
+            public void onItemClick(int id, int position) {
+                setChecked(position, true);
+                if (mDetailFragment != null) {
+                    isMoved = true;
+                    targetPosition = position;
+                    setChecked(position, true);
+                }
+            }
+        });
         backLeft.setOnClickListener(this);
         mLinearLayoutManager = new LinearLayoutManager(this);
         mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -182,6 +164,11 @@ public class MallCategoryActivity extends BaseActivity implements View.OnClickLi
                 finish();
                 break;
         }
+    }
+
+    @Override
+    public void check(int position, boolean isScroll) {
+        setChecked(position, isScroll);
     }
 
 

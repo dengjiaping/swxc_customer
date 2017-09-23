@@ -34,6 +34,13 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.ViewHo
         mContext = context;
     }
 
+    public void addData(List<String> list) {
+        mCateList.clear();
+        mCateList.addAll(list);
+        notifyDataSetChanged();
+
+    }
+
     public void setCheckedPosition(int checkedPosition) {
         this.checkedPosition = checkedPosition;
         notifyDataSetChanged();

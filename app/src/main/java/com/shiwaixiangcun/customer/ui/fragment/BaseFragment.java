@@ -110,6 +110,11 @@ public abstract class BaseFragment extends CubeFragment implements View.OnClickL
         }
     }
 
+    protected void readyGo(Class<?> clazz) {
+        Intent intent = new Intent(this.getActivity(), clazz);
+        startActivity(intent);
+    }
+
     protected void readyGo(Class<?> clazz, Bundle bundle) {
         Intent intent = new Intent(this.getActivity(), clazz);
         if (null != bundle) {
