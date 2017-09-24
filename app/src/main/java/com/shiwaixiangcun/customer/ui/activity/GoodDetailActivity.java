@@ -149,7 +149,7 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
                 mTvDesc.setText(goodBean.getFeature());
                 mTvPrice.setText("¥ " + ArithmeticUtils.format(goodBean.getMinPrice()));
                 mTvPriceFare.setText("¥ " + ArithmeticUtils.format(goodBean.getTransportMoney()));
-                mTvAmount.setText(goodBean.getSellerNumber() + "");
+                mTvAmount.setText(goodBean.getSalesVolume() + "");
                 //获取List
                 mListImage = goodBean.getImages();
                 mListServices = goodBean.getServices();
@@ -280,7 +280,8 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
     private void initView() {
         mTvHint.setVisibility(View.GONE);
         mIvShareRight.setVisibility(View.VISIBLE);
-        mBannerDetails.setBannerStyle(BannerConfig.NOT_INDICATOR);
+        mBannerDetails.setBannerStyle(BannerConfig.NUM_INDICATOR);
+
         dialogSku = new DialogSku(mContext, R.style.AlertDialogStyle, mGoodId);
         mTvPageName.setText("商品详情");
 

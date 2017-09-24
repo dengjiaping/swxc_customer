@@ -1,13 +1,18 @@
 
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
-
 android {
-
-
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
     useLibrary 'org.apache.http.legacy'
+    signingConfigs {
+        release {
+            keyAlias 'shiwaixiangcun'
+            keyPassword '123456'
+            storeFile file('doc/shiwaixiangcun.jks')
+            storePassword '123456'
+        }
+    }
 
     defaultConfig {
         applicationId "com.shiwaixiangcun.customer"
@@ -15,21 +20,41 @@ android {
         targetSdkVersion 25
         versionCode 4
         versionName "1.1.1"
+        signingConfig signingConfigs.release
+        multiDexEnabled true
     }
 
     buildTypes {
         release {
+            //混淆
             minifyEnabled false
+            // 移除无用的resource文件
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
+        debug {
+            minifyEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.release
 
+            //开发版本
+            manifestPlaceholders = [label: "@string/app_name_dev", CHANNEL_VALUE: "LeanCloud"]
+        }
     }
 
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']
         }
-
     }
 }
 

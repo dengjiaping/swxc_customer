@@ -37,7 +37,7 @@ public class DialogPay extends Dialog implements View.OnClickListener {
     @BindView(R.id.btn_pay)
     Button mBtnPay;
     private Context mContext;
-    private String defaultPay;
+    private int defaultPay = 2;
     private onCallBackListener listener;
 
     public DialogPay(@NonNull Context context) {
@@ -52,7 +52,7 @@ public class DialogPay extends Dialog implements View.OnClickListener {
         init();
     }
 
-    public String getDefaultPay() {
+    public int getDefaultPay() {
         return defaultPay;
     }
 
@@ -119,10 +119,10 @@ public class DialogPay extends Dialog implements View.OnClickListener {
             if (b) {
                 mCbZhifubao.setChecked(false);
                 mCbWeixin.setChecked(true);
-                defaultPay = "weixin";
+                defaultPay = 1;
             } else {
                 mCbWeixin.setChecked(false);
-                defaultPay = "";
+                defaultPay = 0;
             }
 
         }
@@ -134,10 +134,10 @@ public class DialogPay extends Dialog implements View.OnClickListener {
             if (b) {
                 mCbZhifubao.setChecked(true);
                 mCbWeixin.setChecked(false);
-                defaultPay = "zhifubao";
+                defaultPay = 2;
             } else {
                 mCbZhifubao.setChecked(false);
-                defaultPay = "";
+                defaultPay = 0;
             }
         }
     }

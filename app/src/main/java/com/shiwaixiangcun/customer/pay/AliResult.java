@@ -1,7 +1,7 @@
 package com.shiwaixiangcun.customer.pay;
 
 /**
- * Created by Administrator on 2017/9/22.
+ * 支付宝支付结果封装类
  */
 
 public class AliResult {

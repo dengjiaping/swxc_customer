@@ -137,7 +137,6 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         initData();
         initView();
         initEvent();
-        initData();
     }
 
     @Override
@@ -169,6 +168,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private void initView() {
         mTvPageName.setText("确认订单");
         //设置商品信息
+        mDialogPay = new DialogPay(this);
         mTvGoodName.setText(data.getGoodsName());
         mTvInformation.setText("运费￥ " + data.getTransportMoney() + " ,由 " + data.getShopName() + "负责发货");
         mTvGoodDesc.setText(data.getFeature());
@@ -263,35 +263,34 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                         if (currentOrder == null) {
                             return;
                         }
-                        String orderNumber = currentOrder.getData().getNumber();
+                        final String orderNumber = currentOrder.getData().getNumber();
                         switch (currentOrder.getResponseCode()) {
                             case 1001:
                                 Log.e(BUG_TAG, "提交成功");
-                                pay(orderNumber);
-//                                mDialogPay = new DialogPay(mContext);
-//                                mDialogPay.setPrice("¥" + ArithmeticUtils.format(currentOrder.getData().getShouldPay()));
-//                                mDialogPay.show();
-//                                mDialogPay.setListener(new DialogPay.onCallBackListener() {
-//                                    @Override
-//                                    public void closeBtn(DialogPay dialog) {
-//                                        dialog.dismiss();
-//                                    }
-//
-//                                    @Override
-//                                    public void confirmBtn(DialogPay dialog) {
-//                                        String defaultPay = dialog.getDefaultPay();
-////                                        Log.e(BUG_TAG, defaultPay);
-//                                        pay(orderNumber);
-////                                        switch (defaultPay) {
-////                                            case "weixin":
-////                                                Toast.makeText(mContext, "正在进行微信支付", Toast.LENGTH_SHORT).show();
-////                                                break;
-////                                            case "zhifubao":
-////                                                pay(orderNumber);
-////                                                break;
-////                                        }
-//                                    }
-//                                });
+                                mDialogPay.setPrice("¥" + ArithmeticUtils.format(currentOrder.getData().getShouldPay()));
+                                mDialogPay.show();
+                                mDialogPay.setListener(new DialogPay.onCallBackListener() {
+                                    @Override
+                                    public void closeBtn(DialogPay dialog) {
+                                        dialog.dismiss();
+                                    }
+
+                                    @Override
+                                    public void confirmBtn(DialogPay dialog) {
+                                        int defaultPay = dialog.getDefaultPay();
+                                        switch (defaultPay) {
+                                            case 1:
+                                                Toast.makeText(mContext, "正在进行微信支付", Toast.LENGTH_SHORT).show();
+                                                break;
+                                            case 2:
+                                                pay(orderNumber);
+                                                break;
+                                            case 0:
+                                                Toast.makeText(mContext, "请选择一种支付方式", Toast.LENGTH_SHORT).show();
+                                                break;
+                                        }
+                                    }
+                                });
                                 break;
                             default:
                                 Toast.makeText(mContext, currentOrder.getMessage(), Toast.LENGTH_SHORT).show();
@@ -339,6 +338,9 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
+
+                        Call rawCall = response.getRawCall();
+                        Log.e(BUG_TAG, rawCall.request().url().toString());
                         Log.e(BUG_TAG, "支付宝支付   获取数据失败");
                     }
                 });

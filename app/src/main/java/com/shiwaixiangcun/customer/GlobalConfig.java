@@ -35,7 +35,8 @@ public class GlobalConfig {
     public static String searchGood = DOMAIN + "/mi/goods/search/listpage.json";
 
     //支付
-    public static String payZhiFuBao = DOMAIN + "/mc/payZhiFuBao/ZhiFuBao.json";
+    public static String payZhiFuBao = DOMAIN + "/mc/pay/ZhiFuBao.json";
     public static String payWeiXin = DOMAIN + "/mc/pay/WeiXin.json";
     public static String getCategory = DOMAIN + "/mi/goods/category/tree.json";
+    public static String checkToken = DOMAIN + "/mc/validate/access/token.json";
 }

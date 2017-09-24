@@ -1,9 +1,8 @@
 package com.shiwaixiangcun.customer.ui.activity;
 
 import android.content.Intent;
-import android.os.CountDownTimer;
-
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.view.animation.AlphaAnimation;
 import android.widget.TextView;
@@ -31,7 +30,6 @@ public class StartPageActivity extends AppCompatActivity {
 
     private void layoutView() {
         tv_center_word = (TextView) findViewById(R.id.tv_center_word);
-
         AlphaAnimation alpha = new AlphaAnimation(0.0f, 1.0f);
         alpha.setDuration(500);
         alpha.setFillAfter(true);
@@ -48,7 +46,7 @@ public class StartPageActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                Intent intent = new Intent(StartPageActivity.this,HomeActivity.class);
+                Intent intent = new Intent(StartPageActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }

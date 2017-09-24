@@ -509,7 +509,8 @@ public class FragmentHome extends BaseFragment implements IHomeView, ViewPager.O
 
     @Override
     public void setHomeWeatherClick(WeatherDataBean result) {
-        String temperature = result.getRealtime().getWeather().getTemperature();
+        String temperature = "";
+        temperature = result.getRealtime().getWeather().getTemperature();
         String info = result.getRealtime().getWeather().getInfo();
 
         tv_weather_home.setText(info + " " + temperature + "°C");

@@ -1,7 +1,7 @@
 package com.shiwaixiangcun.customer.pay;
 
 /**
- * Created by Administrator on 2017/9/22.
+ * 从服务器获取的支付宝支付信息
  */
 
 public class AliInfo {

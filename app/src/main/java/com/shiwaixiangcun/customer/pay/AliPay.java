@@ -8,27 +8,18 @@ import com.shiwaixiangcun.customer.event.EventCenter;
 import com.shiwaixiangcun.customer.event.SimpleEvent;
 
 /**
- * 支付宝支付
+ * 支付宝支付工具
  */
 
 public class AliPay {
-
-    // 静态实例变量
-    private static AliPay instance;
     private String BUG_TAG = this.getClass().getSimpleName();
     private boolean isPay = false;
 
-    // 私有化构造函数
     private AliPay() {
-
     }
 
-    // 静态public方法，向整个应用提供单例获取方式
     public static AliPay getInstance() {
-        if (instance == null) {
-            instance = new AliPay();
-        }
-        return instance;
+        return AliPayBuilder.Instance;
     }
 
     public boolean isPay() {
@@ -53,14 +44,15 @@ public class AliPay {
                     // 判断resultStatus 为非“9000”则代表可能支付失败
                     // “8000” 代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
                 }
-
             }
         };
         // 必须异步调用
         Thread payThread = new Thread(payRunnable);
         payThread.start();
+    }
 
-
+    private static class AliPayBuilder {
+        private static AliPay Instance = new AliPay();
     }
 
 }
