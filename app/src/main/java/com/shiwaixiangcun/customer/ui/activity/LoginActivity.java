@@ -27,6 +27,7 @@ import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.LoginOutUtil;
 import com.shiwaixiangcun.customer.utils.RefreshTockenUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
+import com.shiwaixiangcun.customer.utils.SharedPreferenceUtil;
 import com.shiwaixiangcun.customer.utils.TimeCount;
 import com.shiwaixiangcun.customer.utils.TimerToTimerUtil;
 import com.shiwaixiangcun.customer.utils.Utils;
@@ -157,6 +158,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     mDialogLoading.show();
                     String access_token = responseEntity.getData().getAccess_token();
 
+                    SharedPreferenceUtil.getInstance().setString(Common.TOKEN, access_token);
                     SharePreference.saveStringToSpParams(LoginActivity.this, Common.ISSAVEACCOUNT, Common.SISAVEACCOUNT, et_username.getText().toString().trim());
                     SharePreference.saveStringToSpParams(LoginActivity.this, Common.ISSAVELOGIN, Common.SISAVELOGIN, responseJson);
 

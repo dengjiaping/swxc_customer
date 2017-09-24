@@ -14,6 +14,7 @@ public class GlobalConfig {
     public static String getBanner = OT_DOMAIN + "/mi/banner/listdata.json";
     private static String DEBUG_DOMAIN = "http://mk.shiwaixiangcun.cn";
     private static String DOMAIN = DEBUG_DOMAIN;
+    public static String getCategory = DOMAIN + "/mi/goods/category/tree.json";
     //地址相关接口
     public static String getAddress = DOMAIN + "/mc/delivery/address/listdata.json";
     public static String deleteAddress = DOMAIN + "/mc/delivery/address/remove.json";
@@ -37,6 +38,8 @@ public class GlobalConfig {
     //支付
     public static String payZhiFuBao = DOMAIN + "/mc/pay/ZhiFuBao.json";
     public static String payWeiXin = DOMAIN + "/mc/pay/WeiXin.json";
-    public static String getCategory = DOMAIN + "/mi/goods/category/tree.json";
+
+
+    //检查Token是否失效
     public static String checkToken = DOMAIN + "/mc/validate/access/token.json";
 }
