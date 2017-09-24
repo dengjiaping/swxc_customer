@@ -60,7 +60,7 @@
 -dontwarn android.support.**
 
 -keepattributes EnclosingMethod
-
+-keepattributes EnclosingMethod
  #如果有其它包有warning，在报出warning的包加入下面类似的-dontwarn 报名
 -dontwarn com.fengmap.*.**
 

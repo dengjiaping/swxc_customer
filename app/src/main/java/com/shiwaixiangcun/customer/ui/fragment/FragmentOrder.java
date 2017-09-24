@@ -314,17 +314,17 @@ public class FragmentOrder extends LazyFragment {
                         String APP_ID = weiXinResponse.getAppid();
                         IWXAPI wxapi = WXAPIFactory.createWXAPI(mContext, APP_ID, false);
                         wxapi.registerApp(APP_ID);
-                        if (wxapi != null) {
-                            if (isWxAppInstalled()) {
-                                PayReq req = new PayReq();
-                                req.appId = APP_ID;
-                                req.partnerId = weiXinResponse.getPartnerid();
-                                req.prepayId = weiXinResponse.getPrepayid();
-                                req.nonceStr = weiXinResponse.getNoncestr();
-                                req.timeStamp = weiXinResponse.getTimestamp();
-                                req.sign = weiXinResponse.getSign();
-                                wxapi.sendReq(req);
-                            }
+
+                        if (isWxAppInstalled()) {
+                            PayReq req = new PayReq();
+                            req.appId = APP_ID;
+                            req.partnerId = weiXinResponse.getPartnerid();
+                            req.prepayId = weiXinResponse.getPrepayid();
+                            req.nonceStr = weiXinResponse.getNoncestr();
+                            req.timeStamp = weiXinResponse.getTimestamp();
+                            req.sign = weiXinResponse.getSign();
+                            Toast.makeText(mContext, "正常调起支付", Toast.LENGTH_SHORT).show();
+                            wxapi.sendReq(req);
                         }
 
 

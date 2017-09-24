@@ -34,6 +34,7 @@ import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.pay.AliInfo;
 import com.shiwaixiangcun.customer.pay.AliPay;
+import com.shiwaixiangcun.customer.pay.PayUtil;
 import com.shiwaixiangcun.customer.ui.dialog.DialogPay;
 import com.shiwaixiangcun.customer.utils.ArithmeticUtils;
 import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
@@ -281,9 +282,10 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                                         switch (defaultPay) {
                                             case 1:
                                                 Toast.makeText(mContext, "正在进行微信支付", Toast.LENGTH_SHORT).show();
+                                                PayUtil.payWeixin(orderNumber, tokenString, ConfirmOrderActivity.this);
                                                 break;
                                             case 2:
-                                                pay(orderNumber);
+                                                PayUtil.payAli(orderNumber, tokenString, ConfirmOrderActivity.this);
                                                 break;
                                             case 0:
                                                 Toast.makeText(mContext, "请选择一种支付方式", Toast.LENGTH_SHORT).show();

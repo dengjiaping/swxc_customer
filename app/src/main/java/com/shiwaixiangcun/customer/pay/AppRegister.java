@@ -15,7 +15,7 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 public class AppRegister extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d("WeChatToMakerPayReceiver", "WeChatToMakerPayReceiver\nWeChatToMakerPayReceiver\nWeChatToMakerPayReceiver\n");
+        Log.d("注册微信", "注册微信支付");
 
         final IWXAPI api = WXAPIFactory.createWXAPI(context, null);
         api.registerApp("wx4811bcb64cb3e434");
