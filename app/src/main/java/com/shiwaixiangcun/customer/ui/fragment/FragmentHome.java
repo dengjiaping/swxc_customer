@@ -8,6 +8,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
@@ -66,6 +68,7 @@ import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 import com.shiwaixiangcun.customer.widget.pullableview.MyListener;
 import com.shiwaixiangcun.customer.widget.pullableview.PullToRefreshLayout;
 import com.shiwaixiangcun.customer.widget.pullableview.PullableListView;
+import com.shiwaixiangcun.customer.widget.tablayout.SlidingTabLayout;
 import com.squareup.picasso.Picasso;
 import com.yyydjk.library.BannerLayout;
 
@@ -83,6 +86,7 @@ import static com.lzy.okgo.utils.HttpUtils.runOnUiThread;
 
 public class FragmentHome extends BaseFragment implements IHomeView, ViewPager.OnPageChangeListener, View.OnClickListener, ListView.OnItemClickListener, ListView.OnScrollListener {
 
+    private final String[] mToolsTitle = {"健康服务", "物业服务", "优选服务"};
     private final long TIME_INTERVAL = 8000L;
     protected Activity mContext;
     private IHomePresenter ihomePresenter;
@@ -106,6 +110,8 @@ public class FragmentHome extends BaseFragment implements IHomeView, ViewPager.O
 //    private int[] imgIdArray;
 
 
+    private SlidingTabLayout mTabTools;
+    private ViewPager mVpTools;
     private boolean isLooper = false;
     private ViewGroup group;
     private TextView tv_online_service;
@@ -143,6 +149,9 @@ public class FragmentHome extends BaseFragment implements IHomeView, ViewPager.O
     private List<String> urls_image = new ArrayList<>();
     private long exitTime;
     private Toast mToast;
+    private View home_head_view;
+    private ArrayList<Fragment> mFragments = new ArrayList<>();
+    private ToolsPagerAdapter mAdapter;
 
     public static Fragment getInstance() {
         FragmentHome fragmentHome = new FragmentHome();
@@ -187,6 +196,9 @@ public class FragmentHome extends BaseFragment implements IHomeView, ViewPager.O
     private void layoutView(View view) {
         lv_details = (PullableListView) view.findViewById(R.id.lv_details);
         rl_net_not = (RelativeLayout) view.findViewById(R.id.rl_net_not);
+        back_left = (ChangeLightImageView) view.findViewById(R.id.back_left);
+        tv_page_name = (TextView) view.findViewById(R.id.tv_page_name);
+
         MyListener myListener = new MyListener();
         PullToRefreshLayout refresh_view = (PullToRefreshLayout) view.findViewById(R.id.refresh_view);
         refresh_view.setOnRefreshListener(myListener);
@@ -200,19 +212,29 @@ public class FragmentHome extends BaseFragment implements IHomeView, ViewPager.O
             }
         });
 
-        View home_head_view = LayoutInflater.from(mContext).inflate(R.layout.home_head_view, null);
+        initHeader(view);
+
+        lv_details.addHeaderView(home_head_view);
+
+//        viewPager.setNestedpParent((ViewGroup)viewPager.getParent());
+    }
+
+    /**
+     * 初始化列表头部
+     *
+     * @param view
+     */
+    private void initHeader(View view) {
+        home_head_view = LayoutInflater.from(mContext).inflate(R.layout.home_head_view, null);
         group = (ViewGroup) home_head_view.findViewById(R.id.viewGroup);
         viewPager = (DecoratorViewPager) home_head_view.findViewById(R.id.viewPager);
         viewPager.setNestedpParent((ViewGroup) viewPager.getParent());
-
-
         tv_online_service = (TextView) home_head_view.findViewById(R.id.tv_online_service);
         tv_house_renting = (TextView) home_head_view.findViewById(R.id.tv_house_renting);
         tv_look_decorating = (TextView) home_head_view.findViewById(R.id.tv_look_decorating);
         tv_health = (TextView) home_head_view.findViewById(R.id.tv_health);
         tv_announcement = (TextView) home_head_view.findViewById(R.id.tv_announcement);
         tv_more_more = (TextView) home_head_view.findViewById(R.id.tv_more_more);
-//        looperview = (LooperTextView) home_head_view.findViewById(R.id.looperview);
         viewAnimator = (ViewAnimator) home_head_view.findViewById(R.id.animator);
         rl_home_banner = (RelativeLayout) home_head_view.findViewById(R.id.rl_home_banner);
         bannerLayout = (BannerLayout) home_head_view.findViewById(R.id.banner);
@@ -221,18 +243,20 @@ public class FragmentHome extends BaseFragment implements IHomeView, ViewPager.O
         rl_weather = (RelativeLayout) home_head_view.findViewById(R.id.rl_weather);
         tv_weather_home = (TextView) home_head_view.findViewById(R.id.tv_weather_home);
 
-        back_left = (ChangeLightImageView) view.findViewById(R.id.back_left);
-        tv_page_name = (TextView) view.findViewById(R.id.tv_page_name);
 
-        lv_details.addHeaderView(home_head_view);
-
-//        viewPager.setNestedpParent((ViewGroup)viewPager.getParent());
+        //tabLayout
+        mTabTools = (SlidingTabLayout) home_head_view.findViewById(R.id.tablayout_tools);
+        mVpTools = (ViewPager) home_head_view.findViewById(R.id.vp_tools);
+        for (String title : mToolsTitle) {
+            mFragments.add(ToolFragment.getInstance(title));
+        }
+        mAdapter = new ToolsPagerAdapter(getFragmentManager());
+        mVpTools.setAdapter(mAdapter);
+        mTabTools.setViewPager(mVpTools);
     }
 
     private void initData() {
         tv_page_name.setText("世外生活");
-
-//        looperview.setTipList(generateTips());
         list_home.add("1");
         list_home.add("2");
         list_home.add("3");
@@ -713,6 +737,27 @@ public class FragmentHome extends BaseFragment implements IHomeView, ViewPager.O
         }
 
 
+    }
+
+    private class ToolsPagerAdapter extends FragmentPagerAdapter {
+        public ToolsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragments.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mToolsTitle[position];
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragments.get(position);
+        }
     }
 
 }

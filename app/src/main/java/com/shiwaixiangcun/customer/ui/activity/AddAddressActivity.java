@@ -158,7 +158,7 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
                             finish();
                             break;
                         case 1002:
-                            Toast.makeText(mContext, "地址已经存在", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, response.getMessage(), Toast.LENGTH_SHORT).show();
                             break;
                         default:
                             Toast.makeText(mContext, "保存失败", Toast.LENGTH_SHORT).show();

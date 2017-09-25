@@ -35,6 +35,8 @@ public class SearchActivity extends BaseActivity {
     Toolbar mToolbar;
     @BindView(R.id.fowtag)
     FlowTagLayout mFowTagLayout;
+    @BindView(R.id.tv_cancel)
+    TextView mTvCancel;
 
 
     private String mSearchString;
@@ -92,6 +94,13 @@ public class SearchActivity extends BaseActivity {
             }
         });
         mBackLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        mTvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();

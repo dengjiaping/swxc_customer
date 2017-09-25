@@ -12,6 +12,8 @@ public class GlobalConfig {
     private static String OT_DOMAIN = "http://ot.shiwaixiangcun.cn";
     //商城首页相关接口
     public static String getBanner = OT_DOMAIN + "/mi/banner/listdata.json";
+    private static String HM_DOMAIN = "http://hm.shiwaixiangcun.cn";
+    public static String getPhysical = HM_DOMAIN + "/mc/customer/detail.json";
     private static String DEBUG_DOMAIN = "http://mk.shiwaixiangcun.cn";
     private static String DOMAIN = DEBUG_DOMAIN;
     public static String getCategory = DOMAIN + "/mi/goods/category/tree.json";
@@ -34,12 +36,9 @@ public class GlobalConfig {
     public static String getGuessLike = DOMAIN + "/mi/goods/subject/listpage.json";
     public static String getKeyword = DOMAIN + "/mi/keywords.json";
     public static String searchGood = DOMAIN + "/mi/goods/search/listpage.json";
-
     //支付
     public static String payZhiFuBao = DOMAIN + "/mc/pay/ZhiFuBao.json";
     public static String payWeiXin = DOMAIN + "/mc/pay/WeiXin.json";
-
-
     //检查Token是否失效
     public static String checkToken = DOMAIN + "/mc/validate/access/token.json";
 }

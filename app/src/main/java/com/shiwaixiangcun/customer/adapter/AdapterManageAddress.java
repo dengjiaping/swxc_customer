@@ -7,7 +7,6 @@ package com.shiwaixiangcun.customer.adapter;/**
 import android.support.annotation.Nullable;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -44,6 +43,7 @@ public class AdapterManageAddress extends BaseQuickAdapter<AddressBean, BaseView
         helper.setChecked(R.id.cb_default, item.isDefaulted());
         if (item.isDefaulted()) {
             helper.getView(R.id.cb_default).setClickable(false);
+            helper.setText(R.id.tv_default, "默认地址");
         }
         helper.addOnClickListener(R.id.tv_delete);
         helper.addOnClickListener(R.id.tv_edit);

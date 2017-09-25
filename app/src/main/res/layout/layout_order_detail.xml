@@ -250,26 +250,25 @@
                         android:id="@+id/tv_user_message"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="8dp"
+                        android:layout_marginLeft="16dp"
                         android:background="@null"
                         android:gravity="center_vertical"
-                        android:hint="选填，对交易的说明"
+                        android:hint="该买家没有留言"
                         android:maxLines="1"
                         android:textColor="@color/mall_text"
                         android:textColorHint="@color/gray"
                         android:textSize="16sp"/>
-
-
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="54dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="4dp"
                     android:background="@color/white"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
+                    android:minHeight="54dp"
                     android:orientation="horizontal"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp">
@@ -279,22 +278,24 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
-                        android:text="快递信息"
+                        android:text="配送信息"
                         android:textColor="#FF2D3230"
                         android:textSize="16sp"/>
 
                     <TextView
+
                         android:id="@+id/tv_order_express"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="8dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="c"
+                        android:layout_marginLeft="16dp"
                         android:background="@null"
                         android:gravity="center_vertical"
-                        android:hint="申通快递"
-                        android:maxLines="1"
+                        android:hint="暂无快递信息"
                         android:textColor="@color/mall_text"
                         android:textColorHint="@color/gray"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp"
+                        tools:text="这是一这是一个这是一个这是一个这是一个这是一个这是一个这是一个这是一个这是一个这是一个这是一个个"/>
 
 
                 </LinearLayout>
@@ -329,7 +330,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="8dp"
+                            android:layout_marginLeft="16dp"
                             android:gravity="center"
                             android:orientation="horizontal"
                             android:text="8425600001235"
@@ -363,7 +364,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="8dp"
+                            android:layout_marginLeft="16dp"
                             android:gravity="center"
                             android:orientation="horizontal"
                             android:text="2017-8-21 18:21:23"
@@ -397,7 +398,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="8dp"
+                            android:layout_marginLeft="16dp"
                             android:gravity="center"
                             android:orientation="horizontal"
                             android:text="支付宝"

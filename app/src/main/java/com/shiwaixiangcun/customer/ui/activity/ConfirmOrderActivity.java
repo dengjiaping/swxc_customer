@@ -15,7 +15,6 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.lzy.okgo.OkGo;
-import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 import com.shiwaixiangcun.customer.BaseActivity;
@@ -32,8 +31,6 @@ import com.shiwaixiangcun.customer.model.CurrentOrder;
 import com.shiwaixiangcun.customer.model.GoodDetail;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
-import com.shiwaixiangcun.customer.pay.AliInfo;
-import com.shiwaixiangcun.customer.pay.AliPay;
 import com.shiwaixiangcun.customer.pay.PayUtil;
 import com.shiwaixiangcun.customer.ui.dialog.DialogPay;
 import com.shiwaixiangcun.customer.utils.ArithmeticUtils;
@@ -107,7 +104,6 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     @BindView(R.id.tv_total)
     TextView mTvTotal;
     @BindView(R.id.btn_commit)
-
     Button mBtnCommit;
     @BindView(R.id.tv_order_total)
     TextView mTvOrderTotal;
@@ -178,6 +174,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         mTvOrderTotal.setText("￥ " + ArithmeticUtils.format(data.getMinPrice()));
         mTvOrderAmount.setText(amount + "");
         mTvGoodAmount.setText("x " + amount);
+        mTvTotal.setText("￥ " + ArithmeticUtils.format(data.getMinPrice()));
         ImageDisplayUtil.showImageView(mContext, data.getImages().get(0).getThumbImageURL(), mIvGoodCover);
 
 
@@ -238,6 +235,11 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
      */
     private void putData() {
 
+        if (addressId == 0) {
+            Toast.makeText(mContext, "请添加地址", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         final String loginInfo = SharePreference.getStringSpParams(mContext, Common.ISSAVELOGIN, Common.SISAVELOGIN);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
@@ -264,10 +266,11 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                         if (currentOrder == null) {
                             return;
                         }
-                        final String orderNumber = currentOrder.getData().getNumber();
+
                         switch (currentOrder.getResponseCode()) {
                             case 1001:
                                 Log.e(BUG_TAG, "提交成功");
+                                final String orderNumber = currentOrder.getData().getNumber();
                                 mDialogPay.setPrice("¥" + ArithmeticUtils.format(currentOrder.getData().getShouldPay()));
                                 mDialogPay.show();
                                 mDialogPay.setListener(new DialogPay.onCallBackListener() {
@@ -315,39 +318,6 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
     }
 
-    private void pay(String orderNumber) {
-        Log.e(BUG_TAG, "支付宝支付");
-        Log.e(BUG_TAG, "支付宝支付    " + tokenString);
-        Log.e(BUG_TAG, "支付宝支付    " + orderNumber);
-        OkGo.<String>post(GlobalConfig.payZhiFuBao)
-                .params("access_token", tokenString)
-                .params("orderNumber", orderNumber)
-                .execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(Response<String> response) {
-                        Log.e(BUG_TAG, "支付宝支付   " + "获取数据成功");
-                        Type type = new TypeToken<ResponseEntity<AliInfo>>() {
-                        }.getType();
-                        ResponseEntity<AliInfo> entity = JsonUtil.fromJson(response.body(), type);
-                        Log.e(BUG_TAG, entity.getMessage());
-                        if (entity == null) {
-                            return;
-                        }
-                        String zhiFuBaoResponse = entity.getData().getZhiFuBaoResponse();
-                        AliPay.getInstance().pay(zhiFuBaoResponse, ConfirmOrderActivity.this);
-                    }
-
-                    @Override
-                    public void onError(Response<String> response) {
-                        super.onError(response);
-
-                        Call rawCall = response.getRawCall();
-                        Log.e(BUG_TAG, rawCall.request().url().toString());
-                        Log.e(BUG_TAG, "支付宝支付   获取数据失败");
-                    }
-                });
-
-    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void handleEvent(SimpleEvent simpleEvent) {
@@ -409,6 +379,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 break;
             case 0x13:
                 Log.e(BUG_TAG, "选择地址返回");
+                //// TODO: 2017/9/25 当用户直接点击返回时候处理
                 Bundle chooseBundle = data.getExtras();
                 mRLayoutNoAddress.setVisibility(View.GONE);
                 mRLayoutHasAddress.setVisibility(View.VISIBLE);

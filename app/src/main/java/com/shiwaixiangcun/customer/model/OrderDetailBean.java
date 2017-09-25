@@ -72,6 +72,15 @@ public class OrderDetailBean {
         private String deliveryName;
         private String deliveryPhone;
         private String deliveryWay;
+        private String expressWay;
+
+        public String getExpressWay() {
+            return expressWay;
+        }
+
+        public void setExpressWay(String expressWay) {
+            this.expressWay = expressWay;
+        }
 
         public String getLeavingMessage() {
             return leavingMessage;

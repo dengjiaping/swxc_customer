@@ -110,12 +110,6 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
 
     private Activity mContext;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_mall, container, false);
-
-        return view;
-    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -133,7 +127,9 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return null;
+        View view = inflater.inflate(R.layout.activity_mall, container, false);
+
+        return view;
     }
 
     @Override

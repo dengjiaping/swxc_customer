@@ -40,7 +40,7 @@ import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.utils.Utils;
 import com.shiwaixiangcun.customer.utils.VersionUpdateUtil;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
-import com.shiwaixiangcun.customer.widget.ImageViewPlus;
+import com.shiwaixiangcun.customer.widget.CircleImageView;
 import com.shiwaixiangcun.customer.widget.SelfLoginoutDialog;
 import com.squareup.picasso.Picasso;
 
@@ -80,7 +80,7 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, IM
     private RelativeLayout rl_head_mine;
     private RelativeLayout rl_feed_back;
     private TextView tv_user_name;
-    private ImageViewPlus iv_head_my_image;
+    private CircleImageView iv_head_my_image;
     private MyMineImpl myMine;
     private TextView tv_wy_phone;
     private RelativeLayout rl_wy_lay;
@@ -132,7 +132,7 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, IM
         rl_head_mine = (RelativeLayout) view.findViewById(R.id.rl_head_mine);
         rl_feed_back = (RelativeLayout) view.findViewById(R.id.rl_feed_back);
         tv_user_name = (TextView) view.findViewById(R.id.tv_user_name);
-        iv_head_my_image = (ImageViewPlus) view.findViewById(R.id.iv_head_my_image);
+        iv_head_my_image = (CircleImageView) view.findViewById(R.id.iv_head_my_image);
         tv_wy_phone = (TextView) view.findViewById(R.id.tv_wy_phone);
         rl_wy_lay = (RelativeLayout) view.findViewById(R.id.rl_wy_lay);
         rl_for_life = (RelativeLayout) view.findViewById(R.id.rl_for_life);

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -27,12 +28,15 @@ import com.shiwaixiangcun.customer.http.StringDialogCallBack;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.OrderDetailBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
+import com.shiwaixiangcun.customer.pay.PayUtil;
 import com.shiwaixiangcun.customer.ui.dialog.DialogInfo;
+import com.shiwaixiangcun.customer.ui.dialog.DialogPay;
 import com.shiwaixiangcun.customer.utils.ArithmeticUtils;
 import com.shiwaixiangcun.customer.utils.DateUtil;
 import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
+import com.shiwaixiangcun.customer.utils.StringUtil;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -100,6 +104,8 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     FrameLayout mRootView;
     @BindView(R.id.ll_info_price)
     LinearLayout mLlInfoPrice;
+    DialogPay mDialogPay;
+    OrderDetailBean.OrderInfoBean orderInfo;
     private int orderId = 0;
     private String tokenString;
 
@@ -157,8 +163,10 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void initView() {
+        mDialogPay = new DialogPay(mContext);
         mBackLeft.setOnClickListener(this);
         mTvPageName.setText("订单详情");
+        mBtnCommit.setOnClickListener(this);
 
     }
 
@@ -194,19 +202,23 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                 break;
             case "WaitPay":
                 mTvOrderStatus.setText("等待付款");
+                mBtnCommit.setVisibility(View.VISIBLE);
                 mBtnCommit.setText("立即付款");
                 break;
             case "WaitDeliver":
                 mTvOrderStatus.setText("等待卖家发货");
-                mBtnCommit.setVisibility(View.GONE);
                 mTvCancel.setVisibility(View.GONE);
                 mTvCue.setText("实际付款");
+                mBtnCommit.setVisibility(View.VISIBLE);
+//                mBtnCommit.setText("确认收货");
                 break;
             case "Delivered":
                 mTvOrderStatus.setText("已发货");
                 mTvCue.setText("实际付款");
                 mBtnCommit.setText("确认收货");
                 mTvCancel.setVisibility(View.GONE);
+                mBtnCommit.setVisibility(View.VISIBLE);
+                mBtnCommit.setText("确认收货");
                 break;
             case "Closed":
                 mTvOrderStatus.setText("已关闭");
@@ -222,21 +234,40 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
         mTvAddress.setText(buyersInfo.getDeliveryAddress());
         mTvUserPhone.setText(buyersInfo.getDeliveryPhone());
         mTvOrderInfo.setText(buyersInfo.getDeliveryWay());
-        mTvUserMessage.setText(buyersInfo.getLeavingMessage());
+        if (StringUtil.isEmpty(buyersInfo.getExpressWay())) {
+            mTvOrderExpress.setText("暂没有快递信息");
+        } else {
+            mTvOrderExpress.setText(buyersInfo.getExpressWay());
+        }
+        if (StringUtil.isEmpty(buyersInfo.getLeavingMessage())) {
+            mTvUserMessage.setText("无");
+        } else {
+            mTvUserMessage.setText(buyersInfo.getLeavingMessage());
+        }
 
         //更新订单信息
-        OrderDetailBean.OrderInfoBean orderInfo = orderDetail.getOrderInfo();
+        orderInfo = orderDetail.getOrderInfo();
         mTvOrderId.setText(orderInfo.getOrderNumber());
         mTvOrderDate.setText(DateUtil.getMillon(orderInfo.getOrderTime()));
         mTvOrderTotal.setText("¥ " + ArithmeticUtils.format(orderInfo.getRealPay()));
         mTvFare.setText("¥ " + ArithmeticUtils.format(orderInfo.getTransportMoney()));
         mTvTotal.setText("¥ " + ArithmeticUtils.format(orderInfo.getShouldPay()));
-        mTvOrderPayWay.setText(orderInfo.getPayWay());
+        switch (orderInfo.getPayWay()) {
+            case "WeiXin":
+                mTvOrderPayWay.setText("微信支付");
+                break;
+            case "ZhiFuBao":
+                mTvOrderPayWay.setText("支付宝支付");
+                break;
+            default:
+                mTvOrderPayWay.setText("未付款");
+                break;
+        }
 
 
         //更新商品的信息
         OrderDetailBean.GoodsDetailBean goodsDetailBean = orderDetail.getGoodsDetail().get(0);
-        mTvGoodDesc.setText(goodsDetailBean.getShopName());
+        mTvGoodDesc.setText(goodsDetailBean.getAttrDescription());
         mTvGoodTitle.setText(goodsDetailBean.getGoodName());
         mTvGoodPrice.setText("¥ " + ArithmeticUtils.format(goodsDetailBean.getPrice()));
         mTvGoodAmount.setText("x" + goodsDetailBean.getAmount());
@@ -255,6 +286,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
             case R.id.btn_commit:
                 switch (mBtnCommit.getText().toString()) {
                     case "确认收货":
+                        Log.e(BUG_TAG, "确认收货");
                         DialogInfo dialogInfo = new DialogInfo(mContext);
                         dialogInfo.setDialogTitle("确认收货");
                         dialogInfo.setDialogInfo("在您确认收货前，请检查商品是否完好，确定无误无损后再确认收货，确认收货后，订单将变为完成状态");
@@ -270,9 +302,10 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                                 dialog.dismiss();
                             }
                         });
-
+                        dialogInfo.show();
                         break;
                     case "立即付款":
+                        Log.e(BUG_TAG, "立即付款");
                         payOrder();
                         break;
                 }
@@ -303,7 +336,33 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
      *
      */
     private void payOrder() {
-        // TODO: 2017/9/19 支付 
+        // TODO: 2017/9/19 支付
+
+        mDialogPay.setPrice("¥" + ArithmeticUtils.format(orderInfo.getShouldPay()));
+        mDialogPay.show();
+        mDialogPay.setListener(new DialogPay.onCallBackListener() {
+            @Override
+            public void closeBtn(DialogPay dialog) {
+                dialog.dismiss();
+            }
+
+            @Override
+            public void confirmBtn(DialogPay dialog) {
+                int defaultPay = dialog.getDefaultPay();
+                switch (defaultPay) {
+                    case 1:
+                        Toast.makeText(mContext, "正在进行微信支付", Toast.LENGTH_SHORT).show();
+                        PayUtil.payWeixin(orderInfo.getOrderNumber(), tokenString, OrderDetailActivity.this);
+                        break;
+                    case 2:
+                        PayUtil.payAli(orderInfo.getOrderNumber(), tokenString, OrderDetailActivity.this);
+                        break;
+                    case 0:
+                        Toast.makeText(mContext, "请选择一种支付方式", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        });
 
     }
 

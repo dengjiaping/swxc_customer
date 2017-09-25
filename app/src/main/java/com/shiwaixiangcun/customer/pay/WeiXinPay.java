@@ -46,13 +46,6 @@ public class WeiXinPay {
      */
     public void sendPayReq() {
         PayReq request = new PayReq();
-        Log.e(Bug, mWeiXinResponseBean.getAppid());
-        Log.e(Bug, mWeiXinResponseBean.getNoncestr());
-        Log.e(Bug, mWeiXinResponseBean.getPackageX());
-        Log.e(Bug, mWeiXinResponseBean.getPartnerid());
-        Log.e(Bug, mWeiXinResponseBean.getPrepayid());
-        Log.e(Bug, mWeiXinResponseBean.getSign());
-        Log.e(Bug, mWeiXinResponseBean.getTimestamp());
         request.appId = mWeiXinResponseBean.getAppid();
         request.partnerId = mWeiXinResponseBean.getPartnerid();
         request.prepayId = mWeiXinResponseBean.getPrepayid();

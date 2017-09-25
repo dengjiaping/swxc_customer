@@ -9,7 +9,6 @@ import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
-import com.shiwaixiangcun.customer.ui.activity.ConfirmOrderActivity;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 
 import java.lang.reflect.Type;
@@ -70,7 +69,7 @@ public class PayUtil {
      * @param tokenString
      * @param context
      */
-    public static void payWeixin(String orderNumber, String tokenString, final ConfirmOrderActivity context) {
+    public static void payWeixin(String orderNumber, String tokenString, final Activity context) {
 
         OkGo.<String>post(GlobalConfig.payWeiXin)
                 .params("access_token", tokenString)

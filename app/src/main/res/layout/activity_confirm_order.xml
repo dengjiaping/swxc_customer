@@ -341,7 +341,7 @@
                             android:id="@+id/edt_message"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginLeft="8dp"
+                            android:layout_marginLeft="16dp"
                             android:background="@null"
                             android:hint="选填，对交易的说明"
                             android:maxLines="1"

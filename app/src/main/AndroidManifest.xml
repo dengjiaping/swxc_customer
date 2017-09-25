@@ -68,7 +68,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-
         </activity>
         <activity
             android:name=".ui.activity.OnlineServiceActivity"
@@ -357,7 +356,6 @@
         <activity android:name=".ui.activity.BigIamgeMerchatImageActivity"/>
         <activity android:name=".ui.activity.SurroundDetailsActivity"/>
         <activity android:name=".ui.activity.ViewMoreActivity"/>
-
         <activity
             android:name=".ui.activity.MallActivity"
             android:screenOrientation="portrait">
@@ -402,12 +400,8 @@
         </activity>
         <activity android:name=".ui.activity.SearchResultActivity">
         </activity>
-
         <activity android:name=".ui.activity.MainActivity">
-
         </activity>
-
-
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
@@ -422,14 +416,12 @@
             android:screenOrientation="behind"
             android:windowSoftInputMode="adjustResize|stateHidden">
         </activity>
-
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
             android:screenOrientation="portrait"/>
 
-
-        <!--注册微信-->
+        <!-- 注册微信 -->
         <receiver
             android:name=".pay.AppRegister"
             android:permission="com.tencent.mm.plugin.permission.SEND">
@@ -438,6 +430,10 @@
             </intent-filter>
         </receiver>
 
+        <activity android:name=".ui.activity.heath.PhysicalActivity">
+        </activity>
+        <activity android:name=".ui.activity.heath.HealthEvaluationActivity">
+        </activity>
     </application>
 
 </manifest>

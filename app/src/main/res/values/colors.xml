@@ -19,7 +19,7 @@
     <color name="ui_grad_line">#B2637385</color>
     <color name="ui_grad_back">#0C2D3230</color>
     <color name="ui_back">#202020</color>
-    <color name="ui_gray">#656565</color>
+    <color name="ui_gray">#bdc7bb</color>
     <color name="ui_little_back">#33202020</color>
     <color name="ui_phone_item">#cee1cd</color>
     <color name="ui_line_black">#212D3231</color>
@@ -57,6 +57,7 @@
     <color name="spec_list_item_disable">#ffbdbdbd</color>
     <color name="gray_text_60">#992d3230</color>
     <color name="black_text_100">#FF2D3230</color>
+    <color name="black_text_80">#cd2d3230</color>
     <color name="black_text_40">#6e2d3230</color>
     <color name="black_text_60">#992d3230</color>
     <color name="main_text_selected">#FF1CCC8C</color>

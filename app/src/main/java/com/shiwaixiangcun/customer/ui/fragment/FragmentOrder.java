@@ -200,6 +200,8 @@ public class FragmentOrder extends LazyFragment {
 
     private void requestData() {
         Log.e(BUG_TAG, "请求数据");
+
+        Log.e(BUG_TAG, tokenString);
         HttpParams httpParams = new HttpParams();
         httpParams.put("page.pn", 1);
         httpParams.put("page.size", 10);
@@ -291,7 +293,6 @@ public class FragmentOrder extends LazyFragment {
 
         String orderNumber = elementsBean.getOrderNumber();
         Log.e(BUG_TAG, orderNumber);
-        Log.e(BUG_TAG, tokenString);
         OkGo.<String>post(GlobalConfig.payWeiXin)
                 .params("access_token", tokenString)
                 .params("orderNumber", orderNumber)
@@ -432,6 +433,8 @@ public class FragmentOrder extends LazyFragment {
      * @param prompt       提示信息
      */
     private void commonRequest(final OrderBean.ElementsBean elementsBean, String url, final String prompt) {
+
+
         OkGo.<String>put(url)
                 .params("access_token", tokenString)
                 .params("id", elementsBean.getOrderId())
