@@ -22,7 +22,7 @@ import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
-import com.shiwaixiangcun.customer.model.BloodPressurebean;
+import com.shiwaixiangcun.customer.model.BloodPressureBean;
 import com.shiwaixiangcun.customer.model.BloodSugarBean;
 import com.shiwaixiangcun.customer.model.HealthAllActivity;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
@@ -74,7 +74,7 @@ public class HealthOkActivity extends AppCompatActivity implements View.OnClickL
     private RelativeLayout head_view;
     private HealthOkImpl healthOk;
     private List<WeightBean> elements_weight;
-    private List<BloodPressurebean> data_pressure;
+    private List<BloodPressureBean> data_pressure;
     private List<BloodSugarBean.DataBean.ElementsBean> elements_sugar;
     private List<PressureFatBean.DataBean.ElementsBean> elements_fat;
     private TextView tv_botton_not_all;
@@ -82,9 +82,9 @@ public class HealthOkActivity extends AppCompatActivity implements View.OnClickL
     private LinearLayout ll_low_health;
     private TextView tv_top_datacomplete;
     private TextView tv_low_datacomplete;
-    private List<BloodPressurebean> data_pressure_week;
-    private List<BloodPressurebean> data_pressure_month;
-    private List<BloodPressurebean> data_pressure_year;
+    private List<BloodPressureBean> data_pressure_week;
+    private List<BloodPressureBean> data_pressure_month;
+    private List<BloodPressureBean> data_pressure_year;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,7 +179,7 @@ public class HealthOkActivity extends AppCompatActivity implements View.OnClickL
                 startActivity(intent);
                 break;
             case R.id.rl_health_heart_rate:
-                Intent intent_heart = new Intent(this,HeartateActivity.class);
+                Intent intent_heart = new Intent(this, HeartActivity.class);
                 startActivity(intent_heart);
                 break;
             case R.id.rl_blood_sugar:
@@ -428,9 +428,9 @@ public class HealthOkActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onSuccess(String responseJson) {
                 Log.i("oooooo---onSuccess---hhhh", responseJson);
-                Type type = new TypeToken<ResponseEntity<List<BloodPressurebean>>>() {
+                Type type = new TypeToken<ResponseEntity<List<BloodPressureBean>>>() {
                 }.getType();
-                ResponseEntity<List<BloodPressurebean>> responseEntity = JsonUtil.fromJson(responseJson, type);
+                ResponseEntity<List<BloodPressureBean>> responseEntity = JsonUtil.fromJson(responseJson, type);
 
                 if (responseEntity.getResponseCode() == 1001) {
                     data_pressure = responseEntity.getData();

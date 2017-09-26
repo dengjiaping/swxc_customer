@@ -134,7 +134,7 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
 
     private void initData() {
 //        houseInformation = new HouseInformationImpl(this, "");
-//        houseInformation.setBgaAdpaterAndClick(this);
+//        houseInformation.setBgaAdapterAndClick(this);
         tv_page_name.setText("个人信息");
         String image_head = SharePreference.getStringSpParams(this, Common.ISIMAGEHEAD, Common.SIIMAGEHEAD);
         String name = SharePreference.getStringSpParams(this, Common.ISUSERNAME, Common.SIUSERNAME);

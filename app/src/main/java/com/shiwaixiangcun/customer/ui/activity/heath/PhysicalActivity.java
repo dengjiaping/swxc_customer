@@ -1,6 +1,8 @@
 package com.shiwaixiangcun.customer.ui.activity.heath;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -9,6 +11,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.reflect.TypeToken;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -42,13 +45,17 @@ public class PhysicalActivity extends BaseActivity implements View.OnClickListen
     ChangeLightImageView mBackLeft;
     @BindView(R.id.tv_page_name)
     TextView mTvPageName;
-    @BindView(R.id.rv_family)
-    RecyclerView mRvFamily;
+
     @BindView(R.id.fLayout_content)
     FrameLayout mFLayoutContent;
 
     AdapterFamily mAdapterFamily;
+    @BindView(R.id.rv_family)
+    RecyclerView mRvFamily;
+    FragmentManager fragmentManager;
+    FragmentTransaction ft;
     private List<HealthUserBean> mUserBeanList;
+    private FragmentHealth mFragmentHealth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,14 +91,17 @@ public class PhysicalActivity extends BaseActivity implements View.OnClickListen
                             case 1001:
                                 mUserBeanList.addAll(responseEntity.getData());
                                 mAdapterFamily.addData(mUserBeanList);
+                                Bundle bundle = new Bundle();
+                                bundle.putParcelable("health", mUserBeanList.get(0));
+                                mFragmentHealth.setArguments(bundle);
+                                ft = fragmentManager.beginTransaction();
+                                ft.add(R.id.fLayout_content, mFragmentHealth).commit();
                                 break;
                             default:
                                 Toast.makeText(mContext, "获取数据出错", Toast.LENGTH_SHORT).show();
                                 break;
                         }
                         Log.e(BUG_TAG, responseEntity.getMessage());
-
-
                     }
                 });
     }
@@ -105,6 +115,22 @@ public class PhysicalActivity extends BaseActivity implements View.OnClickListen
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         mRvFamily.setLayoutManager(layoutManager);
         mRvFamily.setAdapter(mAdapterFamily);
+        mFragmentHealth = FragmentHealth.getInstance();
+        fragmentManager = getSupportFragmentManager();
+
+        mAdapterFamily.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                FragmentHealth fragmentHealth = FragmentHealth.getInstance();
+                mAdapterFamily.setSelected(position);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("health", mUserBeanList.get(position));
+                fragmentHealth.setArguments(bundle);
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fLayout_content, fragmentHealth);
+                fragmentTransaction.commit();
+            }
+        });
     }
 
     @Override
@@ -113,6 +139,7 @@ public class PhysicalActivity extends BaseActivity implements View.OnClickListen
         switch (view.getId()) {
             case R.id.back_left:
                 finish();
+                break;
         }
     }
 }

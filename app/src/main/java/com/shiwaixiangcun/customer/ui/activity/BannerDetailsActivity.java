@@ -143,7 +143,7 @@ public class BannerDetailsActivity extends AppCompatActivity implements View.OnC
         bannerLink_detail = "http://"+bannerlink;
         Log.i("hhoop",bannerLink_detail);
 //        DetailImpl detail = new DetailImpl(this,articleId);
-//        detail.setBgaAdpaterAndClick(this);
+//        detail.setBgaAdapterAndClick(this);
         iv_share_right.setVisibility(View.VISIBLE);
         back_left.setOnClickListener(this);
         iv_share_right.setOnClickListener(this);

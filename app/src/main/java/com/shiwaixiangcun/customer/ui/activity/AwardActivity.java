@@ -1,10 +1,10 @@
 package com.shiwaixiangcun.customer.ui.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,8 +18,8 @@ import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AwardAdapter;
 import com.shiwaixiangcun.customer.model.AwardBean;
 import com.shiwaixiangcun.customer.presenter.impl.AwardImpl;
-import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 import com.shiwaixiangcun.customer.ui.IAwardView;
+import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +36,8 @@ public class AwardActivity extends AppCompatActivity implements View.OnClickList
     private int is_not_click = 0;
     private AwardImpl award;
     private int totalAmount = 0;
+    private Handler mHandler;
+    private int i = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +56,7 @@ public class AwardActivity extends AppCompatActivity implements View.OnClickList
 
     private void initData() {
         award = new AwardImpl(this);
-//        award.setBgaAdpaterAndClick(this,1);
+//        award.setBgaAdapterAndClick(this,1);
         tv_page_name.setText("活动");
 
         for (int i = 0; i < 10; i++) {
@@ -111,9 +113,6 @@ public class AwardActivity extends AppCompatActivity implements View.OnClickList
         startActivity(intent);
 
     }
-
-    private Handler mHandler;
-    private int i = 0;
 
     private void listen() {
         lv_award.setOnPullUpLoadListener(new LoadMoreListView.OnPullUpLoadListener() {

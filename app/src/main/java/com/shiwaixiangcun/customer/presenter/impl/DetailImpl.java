@@ -58,7 +58,7 @@ public class DetailImpl implements IDetailPresenter {
 //                Type type = new TypeToken<ResponseEntity>() {
 //                }.getType();
 //                ResponseEntity responseEntity = JsonUtil.fromJson(responseJson, ResponseEntity.class);
-//                iDetailView.setBgaAdpaterAndClickResult(responseEntity);
+//                iDetailView.setBgaAdapterAndClickResult(responseEntity);
 
 
             }

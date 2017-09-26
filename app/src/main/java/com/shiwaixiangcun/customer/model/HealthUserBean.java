@@ -1,11 +1,25 @@
 package com.shiwaixiangcun.customer.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Administrator on 2017/9/25.
  */
 
-public class HealthUserBean {
+public class HealthUserBean implements Parcelable {
 
+    public static final Parcelable.Creator<HealthUserBean> CREATOR = new Parcelable.Creator<HealthUserBean>() {
+        @Override
+        public HealthUserBean createFromParcel(Parcel source) {
+            return new HealthUserBean(source);
+        }
+
+        @Override
+        public HealthUserBean[] newArray(int size) {
+            return new HealthUserBean[size];
+        }
+    };
     /**
      * avatar : http://resource.shiwaixiangcun.cn/group1/M00/00/5D/rBKx51nAxkCAMihmAAP95b6Zb0o73.jpeg
      * bloodCreateTime : 1505697513000
@@ -65,6 +79,40 @@ public class HealthUserBean {
     private String totalStatus;
     private int triglyceride;
     private int weight;
+
+    public HealthUserBean() {
+    }
+
+    protected HealthUserBean(Parcel in) {
+        this.avatar = in.readString();
+        this.bloodCreateTime = in.readLong();
+        this.bloodStatus = in.readString();
+        this.bloodSugar = in.readDouble();
+        this.bmi = in.readDouble();
+        this.bmiCreateTime = in.readLong();
+        this.bmiStatus = in.readString();
+        this.customerId = in.readInt();
+        this.heartRate = in.readInt();
+        this.heartRateStatus = in.readString();
+        this.heartRateTime = in.readLong();
+        this.height = in.readInt();
+        this.lowLipo = in.readInt();
+        this.name = in.readString();
+        this.pressureCreateTime = in.readLong();
+        this.pressureStatus = in.readString();
+        this.relationship = in.readString();
+        this.relaxationBlood = in.readInt();
+        this.shrinkBlood = in.readInt();
+        this.sugarCreateTime = in.readLong();
+        this.sugarStatus = in.readString();
+        this.suggestion = in.readString();
+        this.testStatus = in.readString();
+        this.topLipo = in.readInt();
+        this.totalCholesterol = in.readInt();
+        this.totalStatus = in.readString();
+        this.triglyceride = in.readInt();
+        this.weight = in.readInt();
+    }
 
     public String getAvatar() {
         return avatar;
@@ -288,5 +336,42 @@ public class HealthUserBean {
 
     public void setWeight(int weight) {
         this.weight = weight;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.avatar);
+        dest.writeLong(this.bloodCreateTime);
+        dest.writeString(this.bloodStatus);
+        dest.writeDouble(this.bloodSugar);
+        dest.writeDouble(this.bmi);
+        dest.writeLong(this.bmiCreateTime);
+        dest.writeString(this.bmiStatus);
+        dest.writeInt(this.customerId);
+        dest.writeInt(this.heartRate);
+        dest.writeString(this.heartRateStatus);
+        dest.writeLong(this.heartRateTime);
+        dest.writeInt(this.height);
+        dest.writeInt(this.lowLipo);
+        dest.writeString(this.name);
+        dest.writeLong(this.pressureCreateTime);
+        dest.writeString(this.pressureStatus);
+        dest.writeString(this.relationship);
+        dest.writeInt(this.relaxationBlood);
+        dest.writeInt(this.shrinkBlood);
+        dest.writeLong(this.sugarCreateTime);
+        dest.writeString(this.sugarStatus);
+        dest.writeString(this.suggestion);
+        dest.writeString(this.testStatus);
+        dest.writeInt(this.topLipo);
+        dest.writeInt(this.totalCholesterol);
+        dest.writeString(this.totalStatus);
+        dest.writeInt(this.triglyceride);
+        dest.writeInt(this.weight);
     }
 }

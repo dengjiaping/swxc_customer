@@ -62,7 +62,7 @@ public class HeartateImpl implements IHeartatePresenter {
                 }.getType();
                 ResponseEntity<PageBean<HeartateBean>> responseEntity = JsonUtil.fromJson(responseJson, type);
                 if (responseEntity.getResponseCode() == 1001) {
-                    iHeartateView.setBgaAdpaterAndClickResult(responseEntity);
+                    iHeartateView.setBgaAdapterAndClickResult(responseEntity);
                 } else if (responseEntity.getResponseCode() == 1018) {
                     RefreshTockenUtil.sendIntDataInvatation(context, refresh_token);
                 } else if (responseEntity.getResponseCode() == 1019) {

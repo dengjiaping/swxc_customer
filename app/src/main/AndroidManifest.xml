@@ -63,11 +63,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.activity.StartPageActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.activity.OnlineServiceActivity"
@@ -148,7 +144,7 @@
             android:name=".ui.activity.BloodDataActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.activity.HeartateActivity"
+            android:name=".ui.activity.HeartActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.activity.BloodSugarActivity"
@@ -218,7 +214,9 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
         <activity
             android:name=".ui.activity.HomeActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait">
+
+        </activity>
         <activity android:name=".ui.activity.BigImageActivity"/>
 
         <!-- 百度统计 -->
@@ -401,6 +399,11 @@
         <activity android:name=".ui.activity.SearchResultActivity">
         </activity>
         <activity android:name=".ui.activity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"

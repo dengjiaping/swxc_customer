@@ -4,21 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/ui_white"
     android:orientation="vertical"
     tools:context="com.shiwaixiangcun.customer.ui.activity.heath.PhysicalActivity">
 
     <include layout="@layout/top_bar_white"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_family"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp">
+        android:layout_height="90dp">
 
-    </android.support.v7.widget.RecyclerView>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_family"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true">
+
+        </android.support.v7.widget.RecyclerView>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="@color/color_divider_0.1"/>
 
     <FrameLayout
         android:id="@+id/fLayout_content"
         android:layout_width="match_parent"
-        android:layout_height="0dp"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
 </LinearLayout>

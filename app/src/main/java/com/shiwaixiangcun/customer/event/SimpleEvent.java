@@ -20,6 +20,7 @@ public class SimpleEvent {
     public static final int UPDATE_GOOD_DETAIL = 7;
     public static final int PAY_SUCCESS = 8;
     public static final int PAY_DEFAULT = 9;
+    public static final int UPDATE_BLOOD_PRESSURE = 10;
     /**
      * 操作类型
      */

@@ -129,7 +129,7 @@ public class SurroundDetailsActivity extends AppCompatActivity implements View.O
         str_web += "?articleId="+articleId;
         Log.i("hhoop",str_web);
 //        DetailImpl detail = new DetailImpl(this,articleId);
-//        detail.setBgaAdpaterAndClick(this);
+//        detail.setBgaAdapterAndClick(this);
         iv_share_right.setVisibility(View.VISIBLE);
         back_left.setOnClickListener(this);
         iv_share_right.setOnClickListener(this);

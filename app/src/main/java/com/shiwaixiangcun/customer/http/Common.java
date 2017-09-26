@@ -22,7 +22,7 @@ public class Common implements Serializable {
 //
 //    public static String domainhm = "http://hm.hxteb.com/";
     public static String domains = "http://pm.shiwaixiangcun.cn/";
-    public static String domainhm = "http://hm.shiwaixiangcun.cn/";
+    public static String domainhm = "http://hm.shiwaixiangcun.cn";
     /**
      * 登录
      */
@@ -120,7 +120,7 @@ public class Common implements Serializable {
     /**
      * 血压 get
      */
-    public static String pressureBlood = domainhm + "mc/pressure//blood/newsevenitem.json";
+    public static String pressureBlood = domainhm + "/mc/pressure/history/record.json";
     /**
      * 心率 get
      */

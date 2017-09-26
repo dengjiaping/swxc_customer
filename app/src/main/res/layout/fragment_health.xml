@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/cv_bp"
+            android:layout_width="match_parent"
+            android:layout_height="98dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/shape_green_gradient">
+
+            <TextView
+                android:id="@+id/tv_bp_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:text="血压"
+                android:textColor="@color/white"
+                android:textSize="22sp"/>
+
+            <TextView
+                android:id="@+id/tv_bp_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tv_bp_name"
+                android:layout_gravity="center"
+                android:layout_marginLeft="4dp"
+                android:layout_toRightOf="@+id/tv_bp_name"
+                android:text="(mmHg)"
+                android:textColor="@color/white"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tv_bp_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="16dp"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="26sp"/>
+
+            <TextView
+                android:id="@+id/tv_bp_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="16dp"
+                android:layout_marginRight="16dp"
+                android:text="0"
+                android:textColor="@color/white"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/cv_p"
+            android:layout_width="match_parent"
+            android:layout_height="98dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/shape_green_gradient">
+
+            <TextView
+                android:id="@+id/tv_p_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:text="心率"
+                android:textColor="@color/white"
+                android:textSize="22sp"/>
+
+            <TextView
+                android:id="@+id/tv_p_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tv_p_name"
+                android:layout_gravity="center"
+                android:layout_marginLeft="4dp"
+                android:layout_toRightOf="@+id/tv_p_name"
+                android:text="(bpm)"
+                android:textColor="@color/white"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tv_p_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="16dp"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="26sp"/>
+
+            <TextView
+                android:id="@+id/tv_p_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="16dp"
+                android:layout_marginRight="16dp"
+                android:text="0"
+                android:textColor="@color/white"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/cv_glu"
+            android:layout_width="match_parent"
+            android:layout_height="98dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/shape_green_gradient">
+
+            <TextView
+                android:id="@+id/tv_glu_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:text="血糖"
+                android:textColor="@color/white"
+                android:textSize="22sp"/>
+
+            <TextView
+                android:id="@+id/tv_glu_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tv_glu_name"
+                android:layout_gravity="center"
+                android:layout_marginLeft="4dp"
+                android:layout_toRightOf="@+id/tv_glu_name"
+                android:text="(mmol/L)"
+                android:textColor="@color/white"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tv_glu_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="16dp"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="26sp"/>
+
+            <TextView
+                android:id="@+id/tv_glu_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="16dp"
+                android:layout_marginRight="16dp"
+                android:text="今天 4:30"
+                android:textColor="@color/white"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/cv_bw"
+            android:layout_width="match_parent"
+            android:layout_height="98dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/shape_green_gradient">
+
+            <TextView
+                android:id="@+id/tv_bw_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:text="体重"
+                android:textColor="@color/white"
+                android:textSize="22sp"/>
+
+            <TextView
+                android:id="@+id/tv_bw_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tv_bw_name"
+                android:layout_gravity="center"
+                android:layout_marginLeft="4dp"
+                android:layout_toRightOf="@+id/tv_bw_name"
+                android:text="(Kg)"
+                android:textColor="@color/white"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tv_bw_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="16dp"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="26sp"/>
+
+            <TextView
+                android:id="@+id/tv_bw_other"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="16dp"
+                android:text="0"
+                android:textColor="#FFFFFFFF"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/tv_bw_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="16dp"
+                android:layout_marginRight="16dp"
+                android:text="0"
+                android:textColor="@color/white"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/cv_tc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/shape_green_gradient"
+            android:minHeight="98dp">
+
+            <TextView
+                android:id="@+id/tv_tc_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:text="血脂"
+                android:textColor="@color/white"
+                android:textSize="22sp"/>
+
+            <TextView
+                android:id="@+id/tv_tc_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tv_tc_name"
+                android:layout_gravity="center"
+                android:layout_marginLeft="4dp"
+                android:layout_toRightOf="@+id/tv_tc_name"
+                android:text="(mmol/L)"
+                android:textColor="@color/white"
+                android:textSize="14sp"/>
+
+            <LinearLayout
+                android:id="@+id/llayout_tc_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_tc_name"
+                android:orientation="vertical">
+
+                <include layout="@layout/layout_health_detail"/>
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/tv_tc_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/llayout_tc_detail"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="16dp"
+                android:paddingBottom="16dp"
+                android:text="0"
+                android:textColor="@color/white"/>
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>

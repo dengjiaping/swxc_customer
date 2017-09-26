@@ -1,6 +1,6 @@
 package com.shiwaixiangcun.customer.ui;
 
-import com.shiwaixiangcun.customer.model.BloodPressurebean;
+import com.shiwaixiangcun.customer.model.BloodPressureBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 
 import java.util.List;
@@ -14,7 +14,7 @@ public interface IBloodPressureView {
      * 设置过后的回调
      * @param result
      */
-    void setBgaAdpaterAndClickResult(ResponseEntity<List<BloodPressurebean>> result);
+    void setBgaAdapterAndClickResult(ResponseEntity<List<BloodPressureBean>> result);
 
 
 }

@@ -96,7 +96,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="visible">
 
             <com.shiwaixiangcun.customer.widget.tablayout.SlidingTabLayout
                 android:id="@+id/tablayout_tools"
@@ -143,8 +144,8 @@
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tv_online_service"

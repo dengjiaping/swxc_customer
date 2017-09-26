@@ -152,6 +152,11 @@ public class DateUtil {
         return time.compareTo(begTime) >= 0 && time.compareTo(endTime) <= 0;
     }
 
+    public static String getTimestampString(String dateString) {
+        Date date = str2Date(dateString);
+        return getTimestampString(date);
+    }
+
     public static String getTimestampString(Date messageDate) {
         try {
             Locale curLocale = Locale.CHINA;

@@ -287,7 +287,6 @@
                         android:id="@+id/tv_order_express"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="c"
                         android:layout_marginLeft="16dp"
                         android:background="@null"
                         android:gravity="center_vertical"

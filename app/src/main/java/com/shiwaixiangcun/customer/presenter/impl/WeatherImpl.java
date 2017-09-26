@@ -54,7 +54,7 @@ public class WeatherImpl implements IWeatherPresenter {
 //
 //                WeatherDataBean weatherDataBean = new WeatherDataBean(result);
 //
-//                iWeatherView.setBgaAdpaterAndClickResult(weatherDataBean);
+//                iWeatherView.setBgaAdapterAndClickResult(weatherDataBean);
 
             }
 

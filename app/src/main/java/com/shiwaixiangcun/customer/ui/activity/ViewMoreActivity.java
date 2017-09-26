@@ -131,7 +131,7 @@ public class ViewMoreActivity extends AppCompatActivity implements View.OnClickL
         str_web += "?id="+articleId;
         Log.e("hhoop",str_web);
 //        DetailImpl detail = new DetailImpl(this,articleId);
-//        detail.setBgaAdpaterAndClick(this);
+//        detail.setBgaAdapterAndClick(this);
         iv_share_right.setVisibility(View.GONE);
         back_left.setOnClickListener(this);
         iv_share_right.setOnClickListener(this);

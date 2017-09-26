@@ -13,7 +13,7 @@ public interface IHeartateView {
      * 设置过后的回调
      * @param result
      */
-    void setBgaAdpaterAndClickResult(ResponseEntity<PageBean<HeartateBean>> result);
+    void setBgaAdapterAndClickResult(ResponseEntity<PageBean<HeartateBean>> result);
 
 
 }

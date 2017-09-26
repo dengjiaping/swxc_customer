@@ -9,7 +9,7 @@ import android.content.Context;
 
 public interface IBloodPressurePresenter {
 
-    void setBgaAdpaterAndClick(Context context);
+    void setBgaAdapterAndClick(Context context);
 
 
 }

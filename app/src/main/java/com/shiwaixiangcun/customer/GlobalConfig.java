@@ -8,13 +8,14 @@ package com.shiwaixiangcun.customer;
 public class GlobalConfig {
 
     //测试地址
-
+    private static String HM_DOMAIN = "http://hm.shiwaixiangcun.cn";
+    //健康地址获取
+    public static String getPhysical = HM_DOMAIN + "/mc/customer/detail.json";
+    public static String getHeartRate = HM_DOMAIN + "/mc/pressure/heartrate.json";
+    private static String DEBUG_DOMAIN = "http://mk.shiwaixiangcun.cn";
     private static String OT_DOMAIN = "http://ot.shiwaixiangcun.cn";
     //商城首页相关接口
     public static String getBanner = OT_DOMAIN + "/mi/banner/listdata.json";
-    private static String HM_DOMAIN = "http://hm.shiwaixiangcun.cn";
-    public static String getPhysical = HM_DOMAIN + "/mc/customer/detail.json";
-    private static String DEBUG_DOMAIN = "http://mk.shiwaixiangcun.cn";
     private static String DOMAIN = DEBUG_DOMAIN;
     public static String getCategory = DOMAIN + "/mi/goods/category/tree.json";
     //地址相关接口
