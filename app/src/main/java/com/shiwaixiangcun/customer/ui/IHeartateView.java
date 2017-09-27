@@ -1,6 +1,6 @@
 package com.shiwaixiangcun.customer.ui;
 
-import com.shiwaixiangcun.customer.model.HeartateBean;
+import com.shiwaixiangcun.customer.model.HeartRateBean;
 import com.shiwaixiangcun.customer.model.PageBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 
@@ -13,7 +13,7 @@ public interface IHeartateView {
      * 设置过后的回调
      * @param result
      */
-    void setBgaAdapterAndClickResult(ResponseEntity<PageBean<HeartateBean>> result);
+    void setBgaAdapterAndClickResult(ResponseEntity<PageBean<HeartRateBean>> result);
 
 
 }

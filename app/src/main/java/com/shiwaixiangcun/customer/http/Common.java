@@ -11,7 +11,8 @@ public class Common implements Serializable {
     //保存地址
     public static final String ADDRESS = "address";
     public static final String DEFAULT_ADDRESS = "defaultAddress";
-    public static final String TOKEN = "TOKEN";
+    public static final String TOKEN = "token";
+    public static final String REFRESH_TOKEN = "refreash";
     //测试服务器
     public static String domain = "http://shiwaixiangcun.cn/";
 

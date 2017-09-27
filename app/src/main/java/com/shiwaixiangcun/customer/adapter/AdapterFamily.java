@@ -1,6 +1,7 @@
 package com.shiwaixiangcun.customer.adapter;
 
 import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -34,12 +35,11 @@ public class AdapterFamily extends BaseQuickAdapter<HealthUserBean, BaseViewHold
             circleImageView.setBorderWidth(DisplayUtil.dip2px(mContext, 3));
         } else {
             circleImageView.setBorderWidth(0);
-
         }
+        Log.e("adapter", item.getName().trim());
         if (StringUtil.isEmpty(item.getName())) {
             helper.setText(R.id.tv_name, "");
         } else {
-
             helper.setText(R.id.tv_name, "(" + item.getName() + ")");
         }
         helper.setText(R.id.tv_relationship, item.getRelationship());
@@ -75,7 +75,5 @@ public class AdapterFamily extends BaseQuickAdapter<HealthUserBean, BaseViewHold
     public void setSelected(int position) {
         this.checkedPosition = position;
         notifyDataSetChanged();
-
-
     }
 }

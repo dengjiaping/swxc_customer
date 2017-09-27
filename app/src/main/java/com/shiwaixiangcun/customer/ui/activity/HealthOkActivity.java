@@ -75,7 +75,7 @@ public class HealthOkActivity extends AppCompatActivity implements View.OnClickL
     private HealthOkImpl healthOk;
     private List<WeightBean> elements_weight;
     private List<BloodPressureBean> data_pressure;
-    private List<BloodSugarBean.DataBean.ElementsBean> elements_sugar;
+    //    private List<BloodSugarBean.DataBean.ElementsBean> elements_sugar;
     private List<PressureFatBean.DataBean.ElementsBean> elements_fat;
     private TextView tv_botton_not_all;
     private LinearLayout ll_top_health;
@@ -179,12 +179,12 @@ public class HealthOkActivity extends AppCompatActivity implements View.OnClickL
                 startActivity(intent);
                 break;
             case R.id.rl_health_heart_rate:
-                Intent intent_heart = new Intent(this, HeartActivity.class);
+                Intent intent_heart = new Intent(this, HeartRateActivity.class);
                 startActivity(intent_heart);
                 break;
             case R.id.rl_blood_sugar:
                 Intent intent_boold = new Intent(this,BloodSugarActivity.class);
-                intent_boold.putExtra("list_sugar",(Serializable)elements_sugar);
+//                intent_boold.putExtra("list_sugar",(Serializable)elements_sugar);
                 startActivity(intent_boold);
                 break;
             case R.id.rl_weight_person:
@@ -471,13 +471,13 @@ public class HealthOkActivity extends AppCompatActivity implements View.OnClickL
                 Log.i("oooooo---onSuccess---sugar", responseJson);
                 BloodSugarBean bloodSugarBean = new Gson().fromJson(responseJson, BloodSugarBean.class);
 
-                if (bloodSugarBean.getResponseCode() == 1001) {
-                    elements_sugar = bloodSugarBean.getData().getElements();
-                } else if (bloodSugarBean.getResponseCode() == 1018) {
-                    RefreshTockenUtil.sendIntDataInvatation(context, refresh_token);
-                } else if (bloodSugarBean.getResponseCode() == 1019) {
-                    LoginOutUtil.sendLoginOutUtil(context);
-                }
+//                if (bloodSugarBean.getResponseCode() == 1001) {
+//                    elements_sugar = bloodSugarBean.getData().getElements();
+//                } else if (bloodSugarBean.getResponseCode() == 1018) {
+//                    RefreshTockenUtil.sendIntDataInvatation(context, refresh_token);
+//                } else if (bloodSugarBean.getResponseCode() == 1019) {
+//                    LoginOutUtil.sendLoginOutUtil(context);
+//                }
             }
 
             @Override

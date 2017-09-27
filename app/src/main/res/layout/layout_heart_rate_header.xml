@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/ui_white">
+
+    <LinearLayout
+
+        android:id="@+id/ll_top_heart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="78dp">
+
+        <TextView
+            android:id="@+id/tv_heart_normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="心率"
+            android:textColor="@color/word_white"
+            android:textSize="28dp"/>
+
+        <TextView
+            android:id="@+id/tv_heart_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="42dp"
+            android:textColor="@color/word_white"
+            android:textSize="48sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="bpm"
+            android:textColor="@color/word_white"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/tv_heart_create_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="78dp"
+            android:textColor="@color/word_little_white"
+            android:textSize="14sp"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_content_center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_top_heart"
+        android:background="@color/ui_white">
+
+        <TextView
+            android:id="@+id/tv_heart_introduce"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/word_grad"
+            android:textSize="14sp"
+            tools:text="心率是指正常人安静状态下每分钟心跳的次数，也叫作静心率，一般为60-100次每分，可因年龄
+·性别或其他生理因素产生个体差异，运动时候，心率会加快"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_heart_little_title"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_below="@+id/rl_content_center"
+        android:layout_marginBottom="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/ui_white">
+
+        <TextView
+            android:layout_width="4dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:background="@color/ui_green"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:text="心率数据"
+            android:textColor="@color/word_black_heart"
+            android:textSize="16sp"/>
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:layout_below="@+id/rl_heart_little_title"
+        android:background="@drawable/divider_bg"/>
+
+
+</RelativeLayout>

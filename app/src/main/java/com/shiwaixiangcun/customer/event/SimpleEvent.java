@@ -21,6 +21,9 @@ public class SimpleEvent {
     public static final int PAY_SUCCESS = 8;
     public static final int PAY_DEFAULT = 9;
     public static final int UPDATE_BLOOD_PRESSURE = 10;
+    public static final int UPDATE_HEART_RATE = 11;
+    public static final int UPDATE_BLOOD_SUGAR = 12;
+    public static final int UPDATE_WIGHT = 13;
     /**
      * 操作类型
      */

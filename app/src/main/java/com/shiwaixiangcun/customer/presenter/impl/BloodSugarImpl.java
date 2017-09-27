@@ -14,8 +14,6 @@ import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.presenter.IBloodSugarPresenter;
 import com.shiwaixiangcun.customer.ui.IBloodSugarView;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
-import com.shiwaixiangcun.customer.utils.LoginOutUtil;
-import com.shiwaixiangcun.customer.utils.RefreshTockenUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
 
 import java.lang.reflect.Type;
@@ -62,13 +60,13 @@ public class BloodSugarImpl implements IBloodSugarPresenter {
                 BloodSugarBean bloodSugarBean = new Gson().fromJson(responseJson, BloodSugarBean.class);
 
 
-                if (bloodSugarBean.getResponseCode() == 1001) {
-                    iBloodSugarView.setBgaAdpaterAndClickResult(bloodSugarBean);
-                } else if (bloodSugarBean.getResponseCode() == 1018) {
-                    RefreshTockenUtil.sendIntDataInvatation(context, refresh_token);
-                } else if (bloodSugarBean.getResponseCode() == 1019) {
-                    LoginOutUtil.sendLoginOutUtil(context);
-                }
+//                if (bloodSugarBean.getResponseCode() == 1001) {
+//                    iBloodSugarView.setBgaAdpaterAndClickResult(bloodSugarBean);
+//                } else if (bloodSugarBean.getResponseCode() == 1018) {
+//                    RefreshTockenUtil.sendIntDataInvatation(context, refresh_token);
+//                } else if (bloodSugarBean.getResponseCode() == 1019) {
+//                    LoginOutUtil.sendLoginOutUtil(context);
+//                }
             }
 
             @Override

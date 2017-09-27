@@ -157,8 +157,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     mDialogLoading = new DialogLoading(LoginActivity.this, "正在登录...");
                     mDialogLoading.show();
                     String access_token = responseEntity.getData().getAccess_token();
+                    String refresh_token = responseEntity.getData().getRefresh_token();
+
 
                     SharedPreferenceUtil.getInstance().setString(Common.TOKEN, access_token);
+                    SharedPreferenceUtil.getInstance().setString(Common.REFRESH_TOKEN, refresh_token);
                     SharePreference.saveStringToSpParams(LoginActivity.this, Common.ISSAVEACCOUNT, Common.SISAVEACCOUNT, et_username.getText().toString().trim());
                     SharePreference.saveStringToSpParams(LoginActivity.this, Common.ISSAVELOGIN, Common.SISAVELOGIN, responseJson);
 

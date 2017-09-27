@@ -144,7 +144,7 @@
             android:name=".ui.activity.BloodDataActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.activity.HeartActivity"
+            android:name=".ui.activity.HeartRateActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.activity.BloodSugarActivity"
@@ -437,6 +437,8 @@
         </activity>
         <activity android:name=".ui.activity.heath.HealthEvaluationActivity">
         </activity>
+        <activity android:name=".ui.activity.heath.HealthSchemeActivity"/>
+        <activity android:name=".ui.activity.heath.CommonActivity"/>
     </application>
 
 </manifest>

@@ -11,8 +11,11 @@ import android.widget.TextView;
 
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.model.HealthUserBean;
+import com.shiwaixiangcun.customer.ui.activity.BloodFatActivity;
 import com.shiwaixiangcun.customer.ui.activity.BloodPressureActivity;
-import com.shiwaixiangcun.customer.ui.activity.HeartActivity;
+import com.shiwaixiangcun.customer.ui.activity.BloodSugarActivity;
+import com.shiwaixiangcun.customer.ui.activity.HeartRateActivity;
+import com.shiwaixiangcun.customer.ui.activity.WeightActivity;
 import com.shiwaixiangcun.customer.ui.fragment.BaseFragment;
 import com.shiwaixiangcun.customer.utils.DateUtil;
 import com.shiwaixiangcun.customer.utils.StringUtil;
@@ -23,6 +26,8 @@ import butterknife.Unbinder;
 
 /**
  * Created by Administrator on 2017/9/26.
+ * <p>
+ * 健康z状况
  */
 
 public class FragmentHealth extends BaseFragment implements View.OnClickListener {
@@ -199,13 +204,13 @@ public class FragmentHealth extends BaseFragment implements View.OnClickListener
         }
         switch (status) {
             case "DANGER":
-                view.setBackground(getResources().getDrawable(R.drawable.shape_red_gradient));
+                view.setBackground(getResources().getDrawable(R.drawable.shape_red_corner_gradient));
                 break;
             case "NORMAL":
-                view.setBackground(getResources().getDrawable(R.drawable.shape_green_gradient));
+                view.setBackground(getResources().getDrawable(R.drawable.shape_green_corner_gradient));
                 break;
             case "WARNING":
-                view.setBackground(getResources().getDrawable(R.drawable.shape_yellow_gradient));
+                view.setBackground(getResources().getDrawable(R.drawable.shape_yellow_corner_gradient));
                 break;
 
         }
@@ -220,21 +225,27 @@ public class FragmentHealth extends BaseFragment implements View.OnClickListener
     @Override
     public void onClick(View view) {
         Bundle bundle = new Bundle();
+        bundle.putInt("customID", mHealthUserBean.getCustomerId());
         switch (view.getId()) {
+            //跳转至血压详情界面
             case R.id.cv_bp:
-                bundle.putInt("customID", mHealthUserBean.getCustomerId());
                 readyGo(BloodPressureActivity.class, bundle);
                 break;
+            //跳转至体重详情界面
             case R.id.cv_bw:
-
+                readyGo(WeightActivity.class, bundle);
                 break;
+            //跳转至血糖详情页面
             case R.id.cv_glu:
-//                readyGo();
+                readyGo(BloodSugarActivity.class, bundle);
                 break;
+            //跳转至心率详情界面
             case R.id.cv_p:
-                readyGo(HeartActivity.class);
+                readyGo(HeartRateActivity.class, bundle);
                 break;
+            //跳转至血脂详情界面
             case R.id.cv_tc:
+                readyGo(BloodFatActivity.class, bundle);
                 break;
         }
 

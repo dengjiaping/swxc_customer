@@ -1,91 +1,104 @@
 package com.shiwaixiangcun.customer.ui.activity;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
+import com.jaeger.recyclerviewdivider.RecyclerViewDivider;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.R;
-import com.shiwaixiangcun.customer.adapter.WeightHistoryAdapter;
-import com.shiwaixiangcun.customer.model.PageBean;
-import com.shiwaixiangcun.customer.model.ResponseEntity;
+import com.shiwaixiangcun.customer.adapter.AdapterWeightHistory;
 import com.shiwaixiangcun.customer.model.WeightBean;
-import com.shiwaixiangcun.customer.presenter.impl.WeightHistoryImpl;
-import com.shiwaixiangcun.customer.ui.IWeightHistoryView;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
-import com.shiwaixiangcun.customer.widget.pullableview.MyListener;
-import com.shiwaixiangcun.customer.widget.pullableview.PullToRefreshLayout;
-import com.shiwaixiangcun.customer.widget.pullableview.PullableListView;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class WeightHistoryActivity extends AppCompatActivity implements View.OnClickListener,IWeightHistoryView{
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-    private ChangeLightImageView back_left;
-    private PullableListView lv_weight_history;
-    private RelativeLayout head_view;
-    private WeightHistoryImpl weightHistory;
+public class WeightHistoryActivity extends BaseActivity implements View.OnClickListener {
+
+    @BindView(R.id.back_left)
+    ChangeLightImageView mBackLeft;
+    @BindView(R.id.tv_page_name)
+    TextView mTvPageName;
+    @BindView(R.id.tv_top_right)
+    TextView mTvTopRight;
+    @BindView(R.id.iv_share_right)
+    ImageView mIvShareRight;
+    @BindView(R.id.iv_sao_right)
+    ImageView mIvSaoRight;
+    @BindView(R.id.ll_image_right)
+    LinearLayout mLlImageRight;
+    @BindView(R.id.top_bar_write)
+    RelativeLayout mTopBarWrite;
+    @BindView(R.id.rv_weight)
+    RecyclerView mRvWeight;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout mRefreshLayout;
+    @BindView(R.id.activity_sugar_history)
+    LinearLayout mActivitySugarHistory;
+    List<WeightBean.ElementsBean> mHistoryList = new ArrayList<>();
+    private AdapterWeightHistory mHistoryAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weight_history);
+        ButterKnife.bind(this);
         //        百度统计
         StatService.setLogSenderDelayed(10);
         StatService.setSendLogStrategy(this, SendStrategyEnum.APP_START, 1, false);
         StatService.setSessionTimeOut(30);
 
-        layoutView();
+        mHistoryList = new ArrayList<>();
+        Bundle bundle = getIntent().getExtras();
+        mHistoryList = bundle.getParcelableArrayList("blood_history");
+        Log.e(BUG_TAG, mHistoryList.size() + "");
+
+        initView();
         initData();
     }
 
-    private void layoutView() {
-        head_view = (RelativeLayout) findViewById(R.id.head_view);
-        MyListener myListener = new MyListener();
-        PullToRefreshLayout refresh_view = (PullToRefreshLayout) findViewById(R.id.refresh_view);
-        refresh_view.setOnRefreshListener(myListener);
-        myListener.setRefreshListener(new MyListener.onRefreshListener() {
-            @Override
-            public void refreshScence(boolean isnot) {
-                weightHistory.setBgaAdpaterAndClick(WeightHistoryActivity.this);
-            }
-        });
-
-        back_left = (ChangeLightImageView) findViewById(R.id.back_left);
-        lv_weight_history = (PullableListView) findViewById(R.id.lv_weight_history);
-    }
-
     private void initData() {
-        head_view.setBackgroundColor(Color.parseColor("#FFFFFF"));
-        weightHistory = new WeightHistoryImpl(this,"");
-        weightHistory.setBgaAdpaterAndClick(this);
-        back_left.setOnClickListener(this);
+        mHistoryAdapter = new AdapterWeightHistory(mHistoryList);
+        mRvWeight.setLayoutManager(new LinearLayoutManager(this));
+        mRvWeight.setAdapter(mHistoryAdapter);
+
+        RecyclerViewDivider divider = new RecyclerViewDivider.Builder(this)
+                .setStyle(RecyclerViewDivider.Style.BETWEEN)
+                .setDrawableRes(R.drawable.divider)
+                .build();
+        mRvWeight.addItemDecoration(divider);
     }
+
+    private void initView() {
+        mTvPageName.setText("体重数据");
+        mBackLeft.setOnClickListener(this);
+
+    }
+
 
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        switch (id){
+        switch (id) {
             case R.id.back_left:
                 finish();
                 break;
         }
     }
 
-    @Override
-    public void setBgaAdpaterAndClickResult( ResponseEntity<PageBean<WeightBean>> result) {
-        if (result.getData().getElements() != null && result.getData().getElements().size() != 0){
-            List<WeightBean> weight_history = result.getData().getElements();
-
-            WeightHistoryAdapter weightHistoryAdapter = new WeightHistoryAdapter(weight_history,this);
-            lv_weight_history.setAdapter(weightHistoryAdapter);
-
-
-        }
-    }
 
     @Override
     protected void onResume() {

@@ -24,7 +24,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_isnot_kf"
+            android:layout_below="@+id/tv_kf"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
@@ -82,10 +82,10 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginTop="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
+            android:layout_marginTop="4dp"
             android:orientation="horizontal">
 
             <TextView
@@ -135,9 +135,9 @@
                 android:textColor="@color/word_black"
                 android:textSize="16sp" />
             <TextView
-                android:layout_marginLeft="4dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
                 android:text="mmol/L"
                 android:textColor="@color/word_grad_sub"
                 android:textSize="14sp" />

@@ -7,7 +7,7 @@ import com.google.gson.reflect.TypeToken;
 import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
-import com.shiwaixiangcun.customer.model.HeartateBean;
+import com.shiwaixiangcun.customer.model.HeartRateBean;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.PageBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
@@ -58,9 +58,9 @@ public class HeartateImpl implements IHeartatePresenter {
             @Override
             public void onSuccess(String responseJson) {
                 Log.i("oooooo---onSuccess---", responseJson);
-                Type type = new TypeToken<ResponseEntity<PageBean<HeartateBean>>>() {
+                Type type = new TypeToken<ResponseEntity<PageBean<HeartRateBean>>>() {
                 }.getType();
-                ResponseEntity<PageBean<HeartateBean>> responseEntity = JsonUtil.fromJson(responseJson, type);
+                ResponseEntity<PageBean<HeartRateBean>> responseEntity = JsonUtil.fromJson(responseJson, type);
                 if (responseEntity.getResponseCode() == 1001) {
                     iHeartateView.setBgaAdapterAndClickResult(responseEntity);
                 } else if (responseEntity.getResponseCode() == 1018) {

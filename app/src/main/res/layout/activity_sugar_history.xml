@@ -1,33 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_sugar_history"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.shiwaixiangcun.customer.ui.activity.SugarHistoryActivity">
-    <include android:id="@+id/include"
-        layout="@layout/top_bar_white"/>
 
-    <com.shiwaixiangcun.customer.widget.pullableview.PullToRefreshLayout
-        android:id="@+id/refresh_view"
+    <include layout="@layout/top_bar_white"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="@drawable/divider"/>
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/include">
+        app:srlEnableLoadmore="true"
+        app:srlEnablePureScrollMode="true">
 
-        <include layout="@layout/refresh_black_head" />
-        <!-- 支持所有实现Pullable接口的View -->
-
-        <com.shiwaixiangcun.customer.widget.pullableview.PullableListView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/lv_blood_sugar_data"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/include"
-            android:layout_marginTop="1dp"
-            android:divider="#00000000"
-            android:dividerHeight="0dp"/>
+            android:layout_height="match_parent">
 
-        <include layout="@layout/load_more" />
-    </com.shiwaixiangcun.customer.widget.pullableview.PullToRefreshLayout>
+        </android.support.v7.widget.RecyclerView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 
-</RelativeLayout>
+</LinearLayout>

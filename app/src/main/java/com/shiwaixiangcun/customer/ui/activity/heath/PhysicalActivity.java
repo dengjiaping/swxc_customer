@@ -37,7 +37,7 @@ import butterknife.ButterKnife;
 
 
 /**
- * 体征数据Activity
+ * Desc：    体征数据
  */
 public class PhysicalActivity extends BaseActivity implements View.OnClickListener {
 

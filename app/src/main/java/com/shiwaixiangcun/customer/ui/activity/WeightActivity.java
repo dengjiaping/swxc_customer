@@ -1,213 +1,256 @@
 package com.shiwaixiangcun.customer.ui.activity;
 
-import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PointF;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
+import com.google.gson.reflect.TypeToken;
 import com.idtk.smallchart.chart.CurveChart;
 import com.idtk.smallchart.data.CurveData;
-import com.idtk.smallchart.data.PointShape;
 import com.idtk.smallchart.interfaces.iData.ICurveData;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.shiwaixiangcun.customer.BaseActivity;
+import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
-import com.shiwaixiangcun.customer.model.PageBean;
+import com.shiwaixiangcun.customer.event.EventCenter;
+import com.shiwaixiangcun.customer.event.SimpleEvent;
+import com.shiwaixiangcun.customer.http.Common;
+import com.shiwaixiangcun.customer.http.StringDialogCallBack;
+import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.model.WeightBean;
-import com.shiwaixiangcun.customer.presenter.impl.WeightImpl;
-import com.shiwaixiangcun.customer.ui.IWeightView;
-import com.shiwaixiangcun.customer.utils.DisplayUtil;
-import com.shiwaixiangcun.customer.utils.TimeToTime;
+import com.shiwaixiangcun.customer.utils.DateUtil;
+import com.shiwaixiangcun.customer.utils.JsonUtil;
+import com.shiwaixiangcun.customer.utils.LoginOutUtil;
+import com.shiwaixiangcun.customer.utils.RefreshTockenUtil;
+import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
-import com.shiwaixiangcun.customer.widget.pullableview.MyListener;
-import com.shiwaixiangcun.customer.widget.pullableview.PullToRefreshLayout;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WeightActivity extends BaseActivity implements View.OnClickListener,IWeightView{
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
+public class WeightActivity extends BaseActivity implements View.OnClickListener {
+
+    @BindView(R.id.tv_weight_name)
+    TextView mTvWeightName;
+    @BindView(R.id.tv_weight_data)
+    TextView mTvWeightData;
+    @BindView(R.id.tv_weight_bmi)
+    TextView mTvWeightBmi;
+    @BindView(R.id.tv_weight_time)
+    TextView mTvWeightTime;
+    @BindView(R.id.ll_weight_back)
+    LinearLayout mLlWeightBack;
+    @BindView(R.id.tv_weight_zt)
+    TextView mTvWeightZt;
+    @BindView(R.id.tv_weight_introduce)
+    TextView mTvWeightIntroduce;
+    @BindView(R.id.tv_weight_dream)
+    TextView mTvWeightDream;
+    @BindView(R.id.textView)
+    TextView mTextView;
+    @BindView(R.id.textView2)
+    TextView mTextView2;
+    @BindView(R.id.curveChart)
+    CurveChart mCurveChart;
+    @BindView(R.id.rl_history_blood)
+    RelativeLayout mRlHistoryBlood;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout mRefreshLayout;
+    @BindView(R.id.back_left)
+    ChangeLightImageView mBackLeft;
+    @BindView(R.id.tv_page_name)
+    TextView mTvPageName;
+    @BindView(R.id.tv_top_right)
+    TextView mTvTopRight;
+    @BindView(R.id.iv_share_right)
+    ImageView mIvShareRight;
+    @BindView(R.id.iv_sao_right)
+    ImageView mIvSaoRight;
+    @BindView(R.id.ll_image_right)
+    LinearLayout mLlImageRight;
+    @BindView(R.id.top_bar_transparent)
+    RelativeLayout mTopBarTransparent;
+    @BindView(R.id.activity_blood_pressure)
+    RelativeLayout mActivityBloodPressure;
     private ChangeLightImageView back_left;
 
     private ArrayList<ICurveData> mDataList = new ArrayList<>();
     private CurveData mCurveData = new CurveData();
     private ArrayList<PointF> mPointArrayList = new ArrayList<>();
-    private LinearLayout ll_weight_back;
-    private TextView tv_weight_name;
-    private TextView tv_weight_data;
-    private TextView tv_weight_bmi;
-    private TextView tv_weight_time;
-    private TextView tv_weight_dream;
-    private RelativeLayout rl_history_blood;
-    private TextView tv_weight_introduce;
-    private RelativeLayout head_view;
-    private WeightImpl weight;
-    private CurveChart curveChart;
-    private List<WeightBean> mylist;
-    private TextView tv_weight_zt;
+
+    private List<WeightBean.ElementsBean> mWeightList;
+
+
+    private int customId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weight);
+        ButterKnife.bind(this);
         //        百度统计
         StatService.setLogSenderDelayed(10);
         StatService.setSendLogStrategy(this, SendStrategyEnum.APP_START, 1, false);
         StatService.setSessionTimeOut(30);
 
-        Intent intent = getIntent();
-        mylist = (List<WeightBean>)intent.getSerializableExtra("list_weight");
-        Log.i("ggggggaaaa",mylist.get(0).getWeight()+"");
-
+        Bundle bundle = getIntent().getExtras();
+        customId = bundle.getInt("customID");
+        EventCenter.getInstance().register(this);
+        //        百度统计
+        StatService.setLogSenderDelayed(10);
+        StatService.setSendLogStrategy(this, SendStrategyEnum.APP_START, 1, false);
+        StatService.setSessionTimeOut(30);
         layoutView();
-        initData();
+        requestData();
+        mWeightList = new ArrayList<>();
+//        initData();
 
-//        curveChart.setData(mCurveData);
+    }
+
+    private void requestData() {
+
+        String login_detail = SharePreference.getStringSpParams(mContext, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        Log.i(BUG_TAG, login_detail);
+        Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
+        }.getType();
+        ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(login_detail, type);
+        final String refresh_token = responseEntity.getData().getRefresh_token();
+        OkGo.<String>get(GlobalConfig.getWeight)
+                .params("access_token", responseEntity.getData().getAccess_token())
+                .params("customerId", customId)
+                .params("page.pn", 1)
+                .params("page.size", 7)
+                .execute(new StringDialogCallBack(this) {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        Log.e(BUG_TAG, "onsuccess");
+                        Type type = new TypeToken<ResponseEntity<WeightBean>>() {
+                        }.getType();
+                        ResponseEntity<WeightBean> responseEntity = JsonUtil.fromJson(response.body(), type);
+                        if (responseEntity == null) {
+                            return;
+                        }
+                        Log.e(BUG_TAG, responseEntity.getResponseCode() + "");
+                        switch (responseEntity.getResponseCode()) {
+                            case 1001:
+
+                                WeightBean.ElementsBean elementsBean = responseEntity.getData().getElements().get(0);
+                                EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_WIGHT, 1, elementsBean));
+                                mWeightList.addAll(responseEntity.getData().getElements());
+                                break;
+                            case 1018:
+                                RefreshTockenUtil.sendIntDataInvatation(mContext, refresh_token);
+                                break;
+                            case 1019:
+                                LoginOutUtil.sendLoginOutUtil(mContext);
+                                break;
+                        }
+                    }
+
+                });
 
     }
 
     private void layoutView() {
-        MyListener myListener = new MyListener();
-        PullToRefreshLayout refresh_view = (PullToRefreshLayout) findViewById(R.id.refresh_view);
-        refresh_view.setOnRefreshListener(myListener);
-        myListener.setRefreshListener(new MyListener.onRefreshListener() {
-            @Override
-            public void refreshScence(boolean isnot) {
-                weight.setBgaAdpaterAndClick(WeightActivity.this);
-            }
-        });
-        head_view = (RelativeLayout) findViewById(R.id.head_view);
+        mBackLeft.setOnClickListener(this);
+        mRlHistoryBlood.setOnClickListener(this);
 
-        back_left = (ChangeLightImageView) findViewById(R.id.back_left);
-        ll_weight_back = (LinearLayout) findViewById(R.id.ll_weight_back);
-        tv_weight_name = (TextView) findViewById(R.id.tv_weight_name);
-        tv_weight_data = (TextView) findViewById(R.id.tv_weight_data);
-        tv_weight_bmi = (TextView) findViewById(R.id.tv_weight_bmi);
-        tv_weight_time = (TextView) findViewById(R.id.tv_weight_time);
-        tv_weight_dream = (TextView) findViewById(R.id.tv_weight_dream);
-        rl_history_blood = (RelativeLayout) findViewById(R.id.rl_history_blood);
-        tv_weight_introduce = (TextView) findViewById(R.id.tv_weight_introduce);
-        curveChart = (CurveChart)findViewById(R.id.curveChart);
-        tv_weight_zt = (TextView) findViewById(R.id.tv_weight_zt);
     }
 
-//    private void initData() {
-//
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void updateUI(SimpleEvent simpleEvent) {
+        if (simpleEvent == null || simpleEvent.mEventType != SimpleEvent.UPDATE_WIGHT) {
+            return;
+        }
+        WeightBean.ElementsBean elementsBean = (WeightBean.ElementsBean) simpleEvent.getData();
+        String healthStatus = elementsBean.getHealthStatus();
+        String statusEnum = elementsBean.getStatusEnum();
+        setBackground(healthStatus, statusEnum);
 
-//    }
+        mTvWeightData.setText(elementsBean.getWeight() + "");
+        mTvWeightBmi.setText(elementsBean.getBmi() + "");
+        mTvWeightTime.setText(DateUtil.getMillon(elementsBean.getCreateTime()));
+        mTvWeightDream.setText(elementsBean.getWeightDream() + "");
+        mTvWeightIntroduce.setText(elementsBean.getSuggestion());
 
+    }
+
+    /**
+     * 设置头部颜色
+     *
+     * @param healthStatus 状态
+     */
+    private void setBackground(String healthStatus, String statusEnum) {
+        switch (healthStatus) {
+            case "NORMAL":
+                mLlWeightBack.setBackground(getResources().getDrawable(R.drawable.shape_green_gradient));
+                break;
+            case "WARNING":
+                mLlWeightBack.setBackground(getResources().getDrawable(R.drawable.shape_yellow_gradient));
+
+                break;
+            case "DANGER":
+                mLlWeightBack.setBackground(getResources().getDrawable(R.drawable.shape_red_gradient));
+                break;
+
+        }
+        switch (statusEnum) {
+            case "Zhengchang":
+                mTvWeightName.setText("体重正常");
+                mTvWeightZt.setText("您的体重正常");
+                mTvWeightZt.setTextColor(Color.parseColor("#15B77C"));
+                break;
+            case "Piangao":
+                mTvWeightName.setText("偏胖");
+                mTvWeightZt.setText("您的身体偏胖");
+                mTvWeightZt.setTextColor(Color.parseColor("#F96B21"));
+                break;
+            case "Paindi":
+                mTvWeightName.setText("偏瘦");
+                mTvWeightZt.setText("您的身体偏瘦");
+                mTvWeightZt.setTextColor(Color.parseColor("#F96B21"));
+                break;
+            case "Yzpiangao":
+                mTvWeightName.setText("肥胖");
+                mTvWeightZt.setText("你的身体肥胖");
+                mTvWeightZt.setTextColor(Color.parseColor("#D53635"));
+                break;
+        }
+    }
+    
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        switch (id){
+        switch (id) {
             case R.id.back_left:
                 finish();
                 break;
             case R.id.rl_history_blood:
-                Intent intent = new Intent(this,WeightHistoryActivity.class);
-                startActivity(intent);
+                Bundle bundle = new Bundle();
+                bundle.putParcelableArrayList("blood_history", (ArrayList<? extends Parcelable>) mWeightList);
+                readyGo(WeightHistoryActivity.class, bundle);
                 break;
         }
     }
-
-    private void initData() {
-        weight = new WeightImpl(this,"");
-        weight.setBgaAdpaterAndClick(this);
-
-        back_left.setOnClickListener(this);
-        rl_history_blood.setOnClickListener(this);
-        if (null != mylist){
-            for (int i = 0; i < mylist.size(); i++) {
-                mPointArrayList.add(new PointF(i, mylist.get(i).getWeight()));
-            }
-            mCurveData.setValue(mPointArrayList);
-            mCurveData.setColor(Color.parseColor("#1CCC8C"));
-
-            Drawable drawable_b = ContextCompat.getDrawable(this, R.drawable.fade_red);
-            mCurveData.setDrawable(drawable_b);
-
-            mCurveData.setPointShape(PointShape.CIRCLE);
-
-
-
-            mCurveData.setPaintWidth(DisplayUtil.px2dip(this,3));
-            mCurveData.setTextSize(DisplayUtil.px2dip(this,10));
-            mDataList.add(mCurveData);
-            Log.i("wwwwwwwwww",mDataList.size()+"");
-            if (mPointArrayList.size() > 1){
-                curveChart.setDataList(mDataList);
-            }
-
-        }
-
-
-    }
-
-    @Override
-    public void setBgaAdpaterAndClickResult(ResponseEntity<PageBean<WeightBean>> result) {
-        if (result.getData().getElements() != null && result.getData().getElements().size() != 0){
-
-            String healthStatus = result.getData().getElements().get(0).getHealthStatus();
-            if (healthStatus.equals("NORMAL")){
-                tv_weight_name.setText("体重正常");
-                tv_weight_zt.setText("您的体重正常");
-                tv_weight_zt.setTextColor(Color.parseColor("#15B77C"));
-                Resources resources = this.getResources();
-                Drawable drawable = resources.getDrawable(R.drawable.back_start_end);
-                Drawable drawable_a = resources.getDrawable(R.drawable.back_start_end);
-                ll_weight_back.setBackgroundDrawable(drawable);
-                head_view.setBackgroundDrawable(drawable_a);
-            }else if (healthStatus.equals("WARNING")){
-                tv_weight_name.setText("偏胖");
-                tv_weight_zt.setText("您的身体偏胖");
-                tv_weight_zt.setTextColor(Color.parseColor("#F96B21"));
-                Resources resources = this.getResources();
-                Drawable drawable = resources.getDrawable(R.drawable.back_start_end_yj);
-                Drawable drawable_a = resources.getDrawable(R.drawable.back_start_end_yj);
-                ll_weight_back.setBackgroundDrawable(drawable);
-                head_view.setBackgroundDrawable(drawable_a);
-            }else if (healthStatus.equals("DANGER")){
-                tv_weight_name.setText("肥胖");
-                tv_weight_zt.setText("您的身体偏胖");
-                tv_weight_zt.setTextColor(Color.parseColor("#D53635"));
-                Resources resources = this.getResources();
-                Drawable drawable = resources.getDrawable(R.drawable.back_start_end_wx);
-                Drawable drawable_a = resources.getDrawable(R.drawable.back_start_end_wx);
-                ll_weight_back.setBackgroundDrawable(drawable);
-                head_view.setBackgroundDrawable(drawable_a);
-            }
-            String statusEnum = result.getData().getElements().get(0).getStatusEnum();
-            if (statusEnum.equals("Zhengchang")){
-                tv_weight_name.setText("体重正常");
-            }else if (statusEnum.equals("Piangao")){
-                tv_weight_name.setText("偏胖");
-            }else if (statusEnum.equals("Paindi")){
-                tv_weight_name.setText("偏瘦");
-            }else if (statusEnum.equals("Yzpiangao")){
-                tv_weight_name.setText("肥胖");
-            }
-
-            tv_weight_data.setText(result.getData().getElements().get(0).getWeight()+"");
-            tv_weight_bmi.setText(result.getData().getElements().get(0).getBmi()+"");
-            tv_weight_time.setText(TimeToTime.stampToDate(result.getData().getElements().get(0).getCreateTime()+""));
-            tv_weight_dream.setText(result.getData().getElements().get(0).getWeightDream()+"");
-            tv_weight_introduce.setText(result.getData().getElements().get(0).getSuggestion());
-
-
-
-        }
-    }
-
     @Override
     protected void onResume() {
         super.onResume();

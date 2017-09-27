@@ -9,9 +9,12 @@ public class GlobalConfig {
 
     //测试地址
     private static String HM_DOMAIN = "http://hm.shiwaixiangcun.cn";
+    public static String getEvaluating = HM_DOMAIN + "/mi/assessment/view.htm";
     //健康地址获取
     public static String getPhysical = HM_DOMAIN + "/mc/customer/detail.json";
     public static String getHeartRate = HM_DOMAIN + "/mc/pressure/heartrate.json";
+    public static String getBloodSugar = HM_DOMAIN + "/mc/sugar/list.json";
+    public static String getWeight = HM_DOMAIN + "/mc/bmi/list.json";
     private static String DEBUG_DOMAIN = "http://mk.shiwaixiangcun.cn";
     private static String OT_DOMAIN = "http://ot.shiwaixiangcun.cn";
     //商城首页相关接口

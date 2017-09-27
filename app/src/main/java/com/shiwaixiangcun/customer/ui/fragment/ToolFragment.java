@@ -15,7 +15,11 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterTool;
 import com.shiwaixiangcun.customer.model.ToolBean;
+import com.shiwaixiangcun.customer.ui.activity.HouseRentingActivity;
+import com.shiwaixiangcun.customer.ui.activity.LookDecoratingActivity;
+import com.shiwaixiangcun.customer.ui.activity.SurroundLifeActivity;
 import com.shiwaixiangcun.customer.ui.activity.heath.HealthEvaluationActivity;
+import com.shiwaixiangcun.customer.ui.activity.heath.HealthSchemeActivity;
 import com.shiwaixiangcun.customer.ui.activity.heath.PhysicalActivity;
 
 import java.util.ArrayList;
@@ -75,7 +79,6 @@ public class ToolFragment extends Fragment {
                 mToolList.addAll(mPropetyList);
                 break;
             case "优选服务":
-
                 mToolList.addAll(mSelectiveList);
                 break;
         }
@@ -102,6 +105,38 @@ public class ToolFragment extends Fragment {
                     case 2:
                         readyGo(HealthEvaluationActivity.class);
                         break;
+                    case 3:
+                        readyGo(HealthSchemeActivity.class);
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        break;
+                    case 6:
+                        break;
+                    case 7:
+                        break;
+                    case 8:
+//                        readyGo();
+                        break;
+                    case 9:
+                        readyGo(LookDecoratingActivity.class);
+                        break;
+                    case 10:
+                        readyGo(HouseRentingActivity.class);
+                        break;
+                    case 11:
+                        break;
+                    case 12:
+                        readyGo(SurroundLifeActivity.class);
+                        break;
+                    case 13:
+                        break;
+                    case 14:
+                        break;
+                    case 15:
+                        break;
+
                 }
             }
         });
