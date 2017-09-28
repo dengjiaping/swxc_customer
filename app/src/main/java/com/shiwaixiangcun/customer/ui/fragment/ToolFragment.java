@@ -1,26 +1,32 @@
 package com.shiwaixiangcun.customer.ui.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterTool;
+import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.model.ToolBean;
+import com.shiwaixiangcun.customer.ui.activity.AwardActivity;
 import com.shiwaixiangcun.customer.ui.activity.HouseRentingActivity;
+import com.shiwaixiangcun.customer.ui.activity.LoginActivity;
 import com.shiwaixiangcun.customer.ui.activity.LookDecoratingActivity;
+import com.shiwaixiangcun.customer.ui.activity.OnlineServiceActivity;
 import com.shiwaixiangcun.customer.ui.activity.SurroundLifeActivity;
 import com.shiwaixiangcun.customer.ui.activity.heath.HealthEvaluationActivity;
-import com.shiwaixiangcun.customer.ui.activity.heath.HealthSchemeActivity;
 import com.shiwaixiangcun.customer.ui.activity.heath.PhysicalActivity;
+import com.shiwaixiangcun.customer.ui.activity.heath.WebActivity;
+import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +52,8 @@ public class ToolFragment extends Fragment {
     private List<ToolBean> mPropetyList;
     private List<ToolBean> mSelectiveList;
     private String mTitle;
+    private Activity mActivity;
+    private boolean hasLogin = false;
 
     public static Fragment getInstance(String title) {
 
@@ -59,6 +67,7 @@ public class ToolFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tool, container, false);
         unbinder = ButterKnife.bind(this, view);
+        mActivity = this.getActivity();
         return view;
     }
 
@@ -88,53 +97,91 @@ public class ToolFragment extends Fragment {
 
     private void initView() {
 
+        String isLogin = (String) AppSharePreferenceMgr.get(this.getActivity(), Common.USER_IS_LOGIN, "notLogin");
+        if (isLogin.equals("notLogin")) {
+            hasLogin = false;
+        }
+        if (isLogin.equals("isLogin")) {
+            hasLogin = true;
+        }
         mAdapterTool = new AdapterTool(R.layout.layout_tool);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this.getActivity(), 4);
         mRvTools.setLayoutManager(gridLayoutManager);
         mRvTools.setAdapter(mAdapterTool);
-
         mAdapterTool.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 ToolBean toolBean = mToolList.get(position);
-                Log.e(BUG_TAG, "点击的id" + toolBean.id);
+                Bundle bundle = new Bundle();
                 switch (toolBean.id) {
                     case 1:
-                        readyGo(PhysicalActivity.class);
+                        //体征数据
+                        if (hasLogin) {
+                            readyGo(PhysicalActivity.class);
+                        } else {
+                            readyGo(LoginActivity.class);
+                        }
                         break;
                     case 2:
+                        //健康评测
                         readyGo(HealthEvaluationActivity.class);
                         break;
                     case 3:
-                        readyGo(HealthSchemeActivity.class);
+                        //健康方案
+                        bundle.putInt("type", 3);
+                        readyGo(WebActivity.class, bundle);
                         break;
                     case 4:
+                        //健康动态
+                        bundle.putInt("type", 4);
+                        readyGo(WebActivity.class, bundle);
                         break;
                     case 5:
+                        //预约挂号
+                        bundle.putInt("type", 5);
+                        readyGo(WebActivity.class, bundle);
                         break;
                     case 6:
+                        //预约挂号
+                        readyGo(TeatActivity.class);
                         break;
                     case 7:
+                        //在线问诊
                         break;
                     case 8:
-//                        readyGo();
+                        //在线报修
+                        readyGo(OnlineServiceActivity.class);
                         break;
                     case 9:
+                        //找装修
                         readyGo(LookDecoratingActivity.class);
                         break;
                     case 10:
+                        //房屋租售
                         readyGo(HouseRentingActivity.class);
                         break;
                     case 11:
+                        //在线缴费
+                        Toast.makeText(mActivity, "暂未开通此功能", Toast.LENGTH_SHORT).show();
                         break;
                     case 12:
+                        //周边生活
                         readyGo(SurroundLifeActivity.class);
                         break;
                     case 13:
+                        //活动
+                        readyGo(AwardActivity.class);
                         break;
                     case 14:
+                        //建康保险
+                        bundle.putInt("type", 14);
+                        readyGo(WebActivity.class, bundle);
                         break;
+
                     case 15:
+                        //旅游度假
+                        bundle.putInt("type", 15);
+                        readyGo(WebActivity.class, bundle);
                         break;
 
                 }

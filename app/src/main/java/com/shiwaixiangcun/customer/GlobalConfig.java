@@ -6,19 +6,23 @@ package com.shiwaixiangcun.customer;
  */
 
 public class GlobalConfig {
-
-    //测试地址
     private static String HM_DOMAIN = "http://hm.shiwaixiangcun.cn";
     public static String getEvaluating = HM_DOMAIN + "/mi/assessment/view.htm";
     //健康地址获取
     public static String getPhysical = HM_DOMAIN + "/mc/customer/detail.json";
     public static String getHeartRate = HM_DOMAIN + "/mc/pressure/heartrate.json";
     public static String getBloodSugar = HM_DOMAIN + "/mc/sugar/list.json";
+    //测试地址
     public static String getWeight = HM_DOMAIN + "/mc/bmi/list.json";
-    private static String DEBUG_DOMAIN = "http://mk.shiwaixiangcun.cn";
+    public static String getBloodFat = HM_DOMAIN + "/mc/blood/fat.json";
+    //Token相关接口
+    public static String checkToken = HM_DOMAIN + "/mc/validate/access/token.json";
+    private static String NO_DOMAIN = "http://shiwaixiangcun.cn";
+    public static String refreshToken = NO_DOMAIN + "/oauth2/token";
     private static String OT_DOMAIN = "http://ot.shiwaixiangcun.cn";
     //商城首页相关接口
     public static String getBanner = OT_DOMAIN + "/mi/banner/listdata.json";
+    private static String DEBUG_DOMAIN = "http://mk.shiwaixiangcun.cn";
     private static String DOMAIN = DEBUG_DOMAIN;
     public static String getCategory = DOMAIN + "/mi/goods/category/tree.json";
     //地址相关接口
@@ -40,9 +44,7 @@ public class GlobalConfig {
     public static String getGuessLike = DOMAIN + "/mi/goods/subject/listpage.json";
     public static String getKeyword = DOMAIN + "/mi/keywords.json";
     public static String searchGood = DOMAIN + "/mi/goods/search/listpage.json";
-    //支付
+    //支付相关接口
     public static String payZhiFuBao = DOMAIN + "/mc/pay/ZhiFuBao.json";
     public static String payWeiXin = DOMAIN + "/mc/pay/WeiXin.json";
-    //检查Token是否失效
-    public static String checkToken = DOMAIN + "/mc/validate/access/token.json";
 }

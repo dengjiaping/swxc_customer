@@ -63,7 +63,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.activity.StartPageActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
 
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity
             android:name=".ui.activity.OnlineServiceActivity"
@@ -138,37 +142,31 @@
             android:name=".ui.activity.HealthOkActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.activity.BloodPressureActivity"
+            android:name=".ui.activity.heath.BloodPressureActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.activity.BloodDataActivity"
+            android:name=".ui.activity.heath.BloodHistoryActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.activity.HeartRateActivity"
+            android:name=".ui.activity.heath.HeartRateActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.activity.BloodSugarActivity"
+            android:name=".ui.activity.heath.BloodSugarActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.activity.WeightActivity"
+            android:name=".ui.activity.heath.WeightActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.activity.BloodFatActivity"
+            android:name=".ui.activity.heath.BloodFatActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".fragment.CurveChatActivity"
+            android:name=".ui.activity.heath.BloodSugarHistoryActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.activity.BloodSugarDataActivity"
+            android:name=".ui.activity.heath.WeightHistoryActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.activity.SugarHistoryActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".ui.activity.WeightHistoryActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".ui.activity.BloodFatDataActivity"
+            android:name=".ui.activity.heath.BloodFatHistoryActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.activity.ForLifeActivity"
@@ -215,7 +213,6 @@
         <activity
             android:name=".ui.activity.HomeActivity"
             android:screenOrientation="portrait">
-
         </activity>
         <activity android:name=".ui.activity.BigImageActivity"/>
 
@@ -346,7 +343,6 @@
         <activity android:name=".ui.activity.SurroundTopActivity"/>
         <activity android:name=".ui.activity.SurroundDetailActivity"/>
         <activity android:name=".ui.activity.AwardActivity"/>
-        <activity android:name=".ui.activity.ActivityActivity"/>
         <activity android:name=".ui.activity.WeatherActivity"/>
         <activity android:name=".ui.activity.SwitchCityActivity"/>
         <activity android:name=".ui.activity.BigIamgeMerchanActivity"/>
@@ -355,55 +351,51 @@
         <activity android:name=".ui.activity.SurroundDetailsActivity"/>
         <activity android:name=".ui.activity.ViewMoreActivity"/>
         <activity
-            android:name=".ui.activity.MallActivity"
+            android:name=".ui.activity.mall.MallActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".ui.activity.MallCategoryActivity"
+            android:name=".ui.activity.mall.MallCategoryActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".ui.activity.SearchActivity"
+            android:name=".ui.activity.mall.SearchActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".ui.activity.GoodDetailActivity"
+            android:name=".ui.activity.mall.GoodDetailActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".ui.activity.ConfirmOrderActivity"
+            android:name=".ui.activity.mall.ConfirmOrderActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".ui.activity.AddAddressActivity"
+            android:name=".ui.activity.mall.AddAddressActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".ui.activity.EditAddressActivity"
+            android:name=".ui.activity.mall.EditAddressActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".ui.activity.ChooseAddressActivity"
+            android:name=".ui.activity.mall.ChooseAddressActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".ui.activity.ManageAddressActivity"
+            android:name=".ui.activity.mall.ManageAddressActivity"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ui.activity.OrderActivity">
+        <activity android:name=".ui.activity.mall.OrderActivity">
         </activity>
-        <activity android:name=".ui.activity.OrderDetailActivity">
+        <activity android:name=".ui.activity.mall.OrderDetailActivity">
         </activity>
-        <activity android:name=".ui.activity.GoodListActivity">
+        <activity android:name=".ui.activity.mall.GoodListActivity">
         </activity>
-        <activity android:name=".ui.activity.SearchResultActivity">
+        <activity android:name=".ui.activity.mall.SearchResultActivity">
         </activity>
         <activity android:name=".ui.activity.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
@@ -439,6 +431,10 @@
         </activity>
         <activity android:name=".ui.activity.heath.HealthSchemeActivity"/>
         <activity android:name=".ui.activity.heath.CommonActivity"/>
+        <activity android:name=".ui.activity.heath.WebActivity">
+        </activity>
+        <activity android:name=".ui.fragment.TeatActivity">
+        </activity>
     </application>
 
 </manifest>

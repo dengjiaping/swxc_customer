@@ -2,6 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center"
@@ -42,13 +43,13 @@
 
     <TextView
 
-        android:id="@+id/tv_name"
+        android:id="@+id/tv_family_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_relationship"
         android:layout_centerInParent="true"
-        android:text="(西门吹雪)"
         android:textColor="#FF444444"
-        android:textSize="12sp"/>
+        android:textSize="12sp"
+        tools:text="(一个测试)"/>
 
 </RelativeLayout>

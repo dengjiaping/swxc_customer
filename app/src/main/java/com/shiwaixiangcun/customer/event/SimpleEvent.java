@@ -24,6 +24,9 @@ public class SimpleEvent {
     public static final int UPDATE_HEART_RATE = 11;
     public static final int UPDATE_BLOOD_SUGAR = 12;
     public static final int UPDATE_WIGHT = 13;
+    public static final int UPDATE_BLOOD_FAT = 14;
+    public static final int REFRESH_TOKEN = 15;
+    public static final int CHECK_TOKEN = 16;
     /**
      * 操作类型
      */

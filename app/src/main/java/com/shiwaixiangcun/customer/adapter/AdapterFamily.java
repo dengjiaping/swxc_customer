@@ -37,10 +37,10 @@ public class AdapterFamily extends BaseQuickAdapter<HealthUserBean, BaseViewHold
             circleImageView.setBorderWidth(0);
         }
         Log.e("adapter", item.getName().trim());
-        if (StringUtil.isEmpty(item.getName())) {
-            helper.setText(R.id.tv_name, "");
+        if (StringUtil.isEmpty(item.getName().trim())) {
+            helper.setText(R.id.tv_family_name, "");
         } else {
-            helper.setText(R.id.tv_name, "(" + item.getName() + ")");
+            helper.setText(R.id.tv_family_name, "(" + item.getName() + ")");
         }
         helper.setText(R.id.tv_relationship, item.getRelationship());
         ImageDisplayUtil.showImageView(mContext, item.getAvatar(), circleImageView);

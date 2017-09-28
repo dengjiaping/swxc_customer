@@ -5,7 +5,6 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +17,7 @@ import android.widget.Toast;
 
 import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
+import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.share.OnekeyShare;
@@ -31,12 +31,10 @@ import java.util.HashMap;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 
-public class BannerDetailsActivity extends AppCompatActivity implements View.OnClickListener,IDetailView{
+public class BannerDetailsActivity extends BaseActivity implements View.OnClickListener, IDetailView {
     private ChangeLightImageView back_left;
     private ImageView iv_share_right;
     private ObservableWebView webview;
-
-
     private TextView tv_page_name;
     private TextView tv_top;
     private String bannerlink;
@@ -52,8 +50,6 @@ public class BannerDetailsActivity extends AppCompatActivity implements View.OnC
         Bitmap bmp= BitmapFactory.decodeResource(res, R.drawable.start_page);
         shareimage = SdCordUtil.saveMyBitmap("shareimage", bmp);
 
-
-        Log.i("sssssaaafa","sss====");
         Intent intent = getIntent();
         bannerlink = intent.getStringExtra("bannerlink");
         Log.i("sssssaaafa",bannerlink+"");
@@ -70,18 +66,6 @@ public class BannerDetailsActivity extends AppCompatActivity implements View.OnC
 
 
 
-//        HttpRequest.post("ww").executeEntity(new HttpCallBack<ResponseEntity<Object>>() {
-//
-//            @Override
-//            public void onSuccess(ResponseEntity<ResponseEntity<Object>> responseEntity) {
-//
-//            }
-//
-//            @Override
-//            public void onFailed(Exception e) {
-//
-//            }
-//        });
 
         webview = (ObservableWebView) findViewById(R.id.webview);
         //允许加载html网页
@@ -90,7 +74,6 @@ public class BannerDetailsActivity extends AppCompatActivity implements View.OnC
         //设置WebView属性，能够执行Javascript脚本
         webview.getSettings().setJavaScriptEnabled(true);
 
-        Log.i("ssssaaaaa========",bannerLink_detail);
         //加载需要显示的网页
         webview.loadUrl(bannerLink_detail);
         //设置Web视图
@@ -101,16 +84,15 @@ public class BannerDetailsActivity extends AppCompatActivity implements View.OnC
             public void onScroll(int dx, int dy) {
                 int scrollY = webview.getScrollY();
                 if (scrollY > 300){
-//                    if (Utils.isNotEmpty(detailtitle)){
-//                        tv_page_name.setText(detailtitle);
-                        tv_top.setVisibility(View.VISIBLE);
-//                    }
+
+                    tv_top.setVisibility(View.VISIBLE);
+
 
                 }else {
                     tv_page_name.setText("");
                     tv_top.setVisibility(View.GONE);
                 }
-                Log.i("hhhoiioa",dx+"=----"+dy+"------=="+scrollY);
+
             }
         });
 
@@ -120,7 +102,6 @@ public class BannerDetailsActivity extends AppCompatActivity implements View.OnC
             public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
                 Log.d("ANDROID_LAB", "TITLE=" + title);
-//                txtTitle.setText("ReceivedTitle:" +title);
                 title_str = title;
             }
 
@@ -142,8 +123,6 @@ public class BannerDetailsActivity extends AppCompatActivity implements View.OnC
     private void initData() {
         bannerLink_detail = "http://"+bannerlink;
         Log.i("hhoop",bannerLink_detail);
-//        DetailImpl detail = new DetailImpl(this,articleId);
-//        detail.setBgaAdapterAndClick(this);
         iv_share_right.setVisibility(View.VISIBLE);
         back_left.setOnClickListener(this);
         iv_share_right.setOnClickListener(this);
@@ -162,16 +141,6 @@ public class BannerDetailsActivity extends AppCompatActivity implements View.OnC
         }
     }
 
-//    @Override
-//    //设置回退
-//    //覆盖Activity类的onKeyDown(int keyCoder,KeyEvent event)方法
-//    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        if ((keyCode == KeyEvent.KEYCODE_BACK) && webview.canGoBack()) {
-//            webview.goBack(); //goBack()表示返回WebView的上一页面
-//            return true;
-//        }
-//        return false;
-//    }
 
     @Override
     public void setBgaAdpaterAndClickResult(ResponseEntity result) {
@@ -221,7 +190,7 @@ public class BannerDetailsActivity extends AppCompatActivity implements View.OnC
             }
         });
 
-// 启动分享GUI
+
         oks.show(this);
     }
 

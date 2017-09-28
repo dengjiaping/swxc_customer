@@ -32,7 +32,7 @@ import com.shiwaixiangcun.customer.interfaces.TagClick;
 import com.shiwaixiangcun.customer.model.GoodDetail;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.model.StockBean;
-import com.shiwaixiangcun.customer.ui.activity.ConfirmOrderActivity;
+import com.shiwaixiangcun.customer.ui.activity.mall.ConfirmOrderActivity;
 import com.shiwaixiangcun.customer.utils.ArithmeticUtils;
 import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;

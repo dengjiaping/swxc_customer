@@ -13,6 +13,7 @@ public class Common implements Serializable {
     public static final String DEFAULT_ADDRESS = "defaultAddress";
     public static final String TOKEN = "token";
     public static final String REFRESH_TOKEN = "refreash";
+    public static final String USER_IS_LOGIN = "isLogin";
     //测试服务器
     public static String domain = "http://shiwaixiangcun.cn/";
 

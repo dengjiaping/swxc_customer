@@ -54,7 +54,6 @@ import com.shiwaixiangcun.customer.ui.activity.HouseRentingActivity;
 import com.shiwaixiangcun.customer.ui.activity.LoginActivity;
 import com.shiwaixiangcun.customer.ui.activity.LookDecoratingActivity;
 import com.shiwaixiangcun.customer.ui.activity.MoreMoreActivity;
-import com.shiwaixiangcun.customer.ui.activity.MymineActivity;
 import com.shiwaixiangcun.customer.ui.activity.OnlineServiceActivity;
 import com.shiwaixiangcun.customer.ui.activity.ResidentCertificationActivity;
 import com.shiwaixiangcun.customer.ui.activity.SurroundLifeActivity;
@@ -64,7 +63,6 @@ import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.NoFastClickUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.utils.Utils;
-import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 import com.shiwaixiangcun.customer.widget.pullableview.MyListener;
 import com.shiwaixiangcun.customer.widget.pullableview.PullToRefreshLayout;
 import com.shiwaixiangcun.customer.widget.pullableview.PullableListView;
@@ -135,7 +133,6 @@ public class FragmentHome extends BaseFragment implements IHomeView, ViewPager.O
         }
     };
     private List<AnnouncementBean> elements_headline;
-    private ChangeLightImageView back_left;
     private List<BannerBean> list_banner;
     private RelativeLayout rl_net_not;
     private TextView tv_page_name;
@@ -196,7 +193,6 @@ public class FragmentHome extends BaseFragment implements IHomeView, ViewPager.O
     private void layoutView(View view) {
         lv_details = (PullableListView) view.findViewById(R.id.lv_details);
         rl_net_not = (RelativeLayout) view.findViewById(R.id.rl_net_not);
-        back_left = (ChangeLightImageView) view.findViewById(R.id.back_left);
         tv_page_name = (TextView) view.findViewById(R.id.tv_page_name);
 
         MyListener myListener = new MyListener();
@@ -271,7 +267,6 @@ public class FragmentHome extends BaseFragment implements IHomeView, ViewPager.O
         tv_announcement.setOnClickListener(this);
         tv_more_more.setOnClickListener(this);
         lv_details.setOnItemClickListener(this);
-        back_left.setOnClickListener(this);
 
         lv_details.setOnScrollListener(this);
         tv_surrounding_life.setOnClickListener(this);
@@ -409,18 +404,7 @@ public class FragmentHome extends BaseFragment implements IHomeView, ViewPager.O
                 intent = new Intent(mContext, CommunityAnnouncementActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.back_left:
-//                String isOrnotLogin_mine = SharePreference.getStringSpParams(HomeActivity.this, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
-//                if (Utils.isNotEmpty(isOrnotLogin_mine)) {
-                intent = new Intent(mContext, MymineActivity.class);
-                startActivity(intent);
-//                } else {
-//                    intent = new Intent(this,LoginActivity.class);
-//                    startActivity(intent);
-//
-//                }
 
-                break;
             case R.id.tv_surrounding_life:
                 intent = new Intent(mContext, SurroundLifeActivity.class);
                 startActivity(intent);

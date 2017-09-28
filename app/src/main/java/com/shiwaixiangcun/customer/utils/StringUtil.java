@@ -1,5 +1,9 @@
 package com.shiwaixiangcun.customer.utils;
 
+
+/**
+ * 字符串工具
+ */
 public class StringUtil {
 
     public static boolean isEmpty(CharSequence str) {

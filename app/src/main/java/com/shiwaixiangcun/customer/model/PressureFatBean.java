@@ -9,249 +9,144 @@ import java.util.List;
 
 public class PressureFatBean implements Serializable {
 
+
     /**
-     * data : {"elements":[{"createTime":1497592618000,"healthStatus":"NORMAL","id":147,"lowLipo":2.5,"lowLipoStatus":"NORMAL","source":null,"statusEnum":"Zhengchang","suggestion":"请保持当前的健康生活方式，适当做一些有氧运动，如慢跑、骑自行车、跳绳、健身操等","topLipo":3.1,"topLipo1Status":"NORMAL","totalCholesterol":5,"totalCholesterolStatus":"NORMAL","triglyceride":1.5,"triglycerideStatus":"WARNING"}],"page":1,"size":7,"totalAmount":1,"totalPages":1}
-     * message : 操作成功
-     * responseCode : 1001
-     * success : true
+     * elements : [{"createTime":1494237529000,"customerId":126,"healthStatus":"WARNING","id":28,"lowLipo":0.1,"topLipo":0.8,"totalCholesterol":2.8,"triglyceride":10}]
+     * page : 1
+     * size : 10
+     * totalAmount : 1
+     * totalPages : 1
      */
 
-    private DataBean data;
-    private String message;
-    private int responseCode;
-    private boolean success;
+    private int page;
+    private int size;
+    private int totalAmount;
+    private int totalPages;
+    private List<ElementsBean> elements;
 
-    public DataBean getData() {
-        return data;
+    public int getPage() {
+        return page;
     }
 
-    public void setData(DataBean data) {
-        this.data = data;
+    public void setPage(int page) {
+        this.page = page;
     }
 
-    public String getMessage() {
-        return message;
+    public int getSize() {
+        return size;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setSize(int size) {
+        this.size = size;
     }
 
-    public int getResponseCode() {
-        return responseCode;
+    public int getTotalAmount() {
+        return totalAmount;
     }
 
-    public void setResponseCode(int responseCode) {
-        this.responseCode = responseCode;
+    public void setTotalAmount(int totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
-    public boolean isSuccess() {
-        return success;
+    public int getTotalPages() {
+        return totalPages;
     }
 
-    public void setSuccess(boolean success) {
-        this.success = success;
+    public void setTotalPages(int totalPages) {
+        this.totalPages = totalPages;
     }
 
-    public static class DataBean implements Serializable {
+    public List<ElementsBean> getElements() {
+        return elements;
+    }
+
+    public void setElements(List<ElementsBean> elements) {
+        this.elements = elements;
+    }
+
+    public static class ElementsBean {
         /**
-         * elements : [{"createTime":1497592618000,"healthStatus":"NORMAL","id":147,"lowLipo":2.5,"lowLipoStatus":"NORMAL","source":null,"statusEnum":"Zhengchang","suggestion":"请保持当前的健康生活方式，适当做一些有氧运动，如慢跑、骑自行车、跳绳、健身操等","topLipo":3.1,"topLipo1Status":"NORMAL","totalCholesterol":5,"totalCholesterolStatus":"NORMAL","triglyceride":1.5,"triglycerideStatus":"WARNING"}]
-         * page : 1
-         * size : 7
-         * totalAmount : 1
-         * totalPages : 1
+         * createTime : 1494237529000
+         * customerId : 126
+         * healthStatus : WARNING
+         * id : 28
+         * lowLipo : 0.1
+         * topLipo : 0.8
+         * totalCholesterol : 2.8
+         * triglyceride : 10
          */
 
-        private int page;
-        private int size;
-        private int totalAmount;
-        private int totalPages;
-        private List<ElementsBean> elements;
+        private long createTime;
+        private int customerId;
+        private String healthStatus;
+        private int id;
+        private double lowLipo;
+        private double topLipo;
+        private double totalCholesterol;
+        private int triglyceride;
 
-        public int getPage() {
-            return page;
+        public long getCreateTime() {
+            return createTime;
         }
 
-        public void setPage(int page) {
-            this.page = page;
+        public void setCreateTime(long createTime) {
+            this.createTime = createTime;
         }
 
-        public int getSize() {
-            return size;
+        public int getCustomerId() {
+            return customerId;
         }
 
-        public void setSize(int size) {
-            this.size = size;
+        public void setCustomerId(int customerId) {
+            this.customerId = customerId;
         }
 
-        public int getTotalAmount() {
-            return totalAmount;
+        public String getHealthStatus() {
+            return healthStatus;
         }
 
-        public void setTotalAmount(int totalAmount) {
-            this.totalAmount = totalAmount;
+        public void setHealthStatus(String healthStatus) {
+            this.healthStatus = healthStatus;
         }
 
-        public int getTotalPages() {
-            return totalPages;
+        public int getId() {
+            return id;
         }
 
-        public void setTotalPages(int totalPages) {
-            this.totalPages = totalPages;
+        public void setId(int id) {
+            this.id = id;
         }
 
-        public List<ElementsBean> getElements() {
-            return elements;
+        public double getLowLipo() {
+            return lowLipo;
         }
 
-        public void setElements(List<ElementsBean> elements) {
-            this.elements = elements;
+        public void setLowLipo(double lowLipo) {
+            this.lowLipo = lowLipo;
         }
 
-        public static class ElementsBean implements Serializable{
-            /**
-             * createTime : 1497592618000
-             * healthStatus : NORMAL
-             * id : 147
-             * lowLipo : 2.5
-             * lowLipoStatus : NORMAL
-             * source : null
-             * statusEnum : Zhengchang
-             * suggestion : 请保持当前的健康生活方式，适当做一些有氧运动，如慢跑、骑自行车、跳绳、健身操等
-             * topLipo : 3.1
-             * topLipo1Status : NORMAL
-             * totalCholesterol : 5
-             * totalCholesterolStatus : NORMAL
-             * triglyceride : 1.5
-             * triglycerideStatus : WARNING
-             */
+        public double getTopLipo() {
+            return topLipo;
+        }
 
-            private long createTime;
-            private String healthStatus;
-            private int id;
-            private double lowLipo;
-            private String lowLipoStatus;
-            private Object source;
-            private String statusEnum;
-            private String suggestion;
-            private double topLipo;
-            private String topLipo1Status;
-            private double totalCholesterol;
-            private String totalCholesterolStatus;
-            private double triglyceride;
-            private String triglycerideStatus;
+        public void setTopLipo(double topLipo) {
+            this.topLipo = topLipo;
+        }
 
-            public long getCreateTime() {
-                return createTime;
-            }
+        public double getTotalCholesterol() {
+            return totalCholesterol;
+        }
 
-            public void setCreateTime(long createTime) {
-                this.createTime = createTime;
-            }
+        public void setTotalCholesterol(double totalCholesterol) {
+            this.totalCholesterol = totalCholesterol;
+        }
 
-            public String getHealthStatus() {
-                return healthStatus;
-            }
+        public int getTriglyceride() {
+            return triglyceride;
+        }
 
-            public void setHealthStatus(String healthStatus) {
-                this.healthStatus = healthStatus;
-            }
-
-            public int getId() {
-                return id;
-            }
-
-            public void setId(int id) {
-                this.id = id;
-            }
-
-            public double getLowLipo() {
-                return lowLipo;
-            }
-
-            public void setLowLipo(double lowLipo) {
-                this.lowLipo = lowLipo;
-            }
-
-            public String getLowLipoStatus() {
-                return lowLipoStatus;
-            }
-
-            public void setLowLipoStatus(String lowLipoStatus) {
-                this.lowLipoStatus = lowLipoStatus;
-            }
-
-            public Object getSource() {
-                return source;
-            }
-
-            public void setSource(Object source) {
-                this.source = source;
-            }
-
-            public String getStatusEnum() {
-                return statusEnum;
-            }
-
-            public void setStatusEnum(String statusEnum) {
-                this.statusEnum = statusEnum;
-            }
-
-            public String getSuggestion() {
-                return suggestion;
-            }
-
-            public void setSuggestion(String suggestion) {
-                this.suggestion = suggestion;
-            }
-
-            public double getTopLipo() {
-                return topLipo;
-            }
-
-            public void setTopLipo(double topLipo) {
-                this.topLipo = topLipo;
-            }
-
-            public String getTopLipo1Status() {
-                return topLipo1Status;
-            }
-
-            public void setTopLipo1Status(String topLipo1Status) {
-                this.topLipo1Status = topLipo1Status;
-            }
-
-            public double getTotalCholesterol() {
-                return totalCholesterol;
-            }
-
-            public void setTotalCholesterol(double totalCholesterol) {
-                this.totalCholesterol = totalCholesterol;
-            }
-
-            public String getTotalCholesterolStatus() {
-                return totalCholesterolStatus;
-            }
-
-            public void setTotalCholesterolStatus(String totalCholesterolStatus) {
-                this.totalCholesterolStatus = totalCholesterolStatus;
-            }
-
-            public double getTriglyceride() {
-                return triglyceride;
-            }
-
-            public void setTriglyceride(double triglyceride) {
-                this.triglyceride = triglyceride;
-            }
-
-            public String getTriglycerideStatus() {
-                return triglycerideStatus;
-            }
-
-            public void setTriglycerideStatus(String triglycerideStatus) {
-                this.triglycerideStatus = triglycerideStatus;
-            }
+        public void setTriglyceride(int triglyceride) {
+            this.triglyceride = triglyceride;
         }
     }
 }

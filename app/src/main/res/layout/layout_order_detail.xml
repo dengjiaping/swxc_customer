@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/ui_gray"
-    tools:context="com.shiwaixiangcun.customer.ui.activity.ConfirmOrderActivity">
+    tools:context="com.shiwaixiangcun.customer.ui.activity.mall.ConfirmOrderActivity">
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"

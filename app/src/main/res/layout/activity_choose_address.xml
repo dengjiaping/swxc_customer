@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/bg_gray"
     android:orientation="vertical"
-    tools:context="com.shiwaixiangcun.customer.ui.activity.ChooseAddressActivity">
+    tools:context="com.shiwaixiangcun.customer.ui.activity.mall.ChooseAddressActivity">
 
     <include layout="@layout/top_bar_white"/>
 

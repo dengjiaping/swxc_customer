@@ -22,10 +22,9 @@ import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterFamily;
 import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.model.HealthUserBean;
-import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
+import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
-import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
 import java.lang.reflect.Type;
@@ -45,10 +44,8 @@ public class PhysicalActivity extends BaseActivity implements View.OnClickListen
     ChangeLightImageView mBackLeft;
     @BindView(R.id.tv_page_name)
     TextView mTvPageName;
-
     @BindView(R.id.fLayout_content)
     FrameLayout mFLayoutContent;
-
     AdapterFamily mAdapterFamily;
     @BindView(R.id.rv_family)
     RecyclerView mRvFamily;
@@ -70,14 +67,10 @@ public class PhysicalActivity extends BaseActivity implements View.OnClickListen
      * 请求数据
      */
     private void initData() {
-        String login_detail = SharePreference.getStringSpParams(this, Common.ISSAVELOGIN, Common.SISAVELOGIN);
-        Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
-        }.getType();
-        ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(login_detail, type);
-        final String refresh_token = responseEntity.getData().getRefresh_token();
-        Log.e(BUG_TAG, responseEntity.getData().getAccess_token());
+        String tokenString = (String) AppSharePreferenceMgr.get(mContext, Common.TOKEN, "token");
+        Log.e(BUG_TAG, tokenString);
         OkGo.<String>get(GlobalConfig.getPhysical)
-                .params("access_token", responseEntity.getData().getAccess_token())
+                .params("access_token", tokenString)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -89,10 +82,16 @@ public class PhysicalActivity extends BaseActivity implements View.OnClickListen
                         }
                         switch (responseEntity.getResponseCode()) {
                             case 1001:
+                                boolean visible = false;
+                                if (responseEntity.getData().size() == 1) {
+                                    mRvFamily.setVisibility(View.GONE);
+                                    visible = true;
+                                }
                                 mUserBeanList.addAll(responseEntity.getData());
                                 mAdapterFamily.addData(mUserBeanList);
                                 Bundle bundle = new Bundle();
                                 bundle.putParcelable("health", mUserBeanList.get(0));
+                                bundle.putBoolean("visible", visible);
                                 mFragmentHealth.setArguments(bundle);
                                 ft = fragmentManager.beginTransaction();
                                 ft.add(R.id.fLayout_content, mFragmentHealth).commit();
@@ -124,6 +123,7 @@ public class PhysicalActivity extends BaseActivity implements View.OnClickListen
                 FragmentHealth fragmentHealth = FragmentHealth.getInstance();
                 mAdapterFamily.setSelected(position);
                 Bundle bundle = new Bundle();
+                bundle.putBoolean("visible", false);
                 bundle.putParcelable("health", mUserBeanList.get(position));
                 fragmentHealth.setArguments(bundle);
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

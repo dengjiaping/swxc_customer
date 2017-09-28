@@ -39,7 +39,7 @@ import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.pay.AliInfo;
 import com.shiwaixiangcun.customer.pay.AliPay;
 import com.shiwaixiangcun.customer.pay.WeiXinInfo;
-import com.shiwaixiangcun.customer.ui.activity.OrderDetailActivity;
+import com.shiwaixiangcun.customer.ui.activity.mall.OrderDetailActivity;
 import com.shiwaixiangcun.customer.ui.dialog.DialogInfo;
 import com.shiwaixiangcun.customer.utils.DisplayUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;

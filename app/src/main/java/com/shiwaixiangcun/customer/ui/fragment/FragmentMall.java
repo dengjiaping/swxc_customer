@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.jaeger.recyclerviewdivider.RecyclerViewDivider;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.callback.StringCallback;
@@ -39,14 +40,13 @@ import com.shiwaixiangcun.customer.model.Keyword;
 import com.shiwaixiangcun.customer.model.MallBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.ui.activity.BannerDetailsActivity;
-import com.shiwaixiangcun.customer.ui.activity.GoodDetailActivity;
-import com.shiwaixiangcun.customer.ui.activity.GoodListActivity;
-import com.shiwaixiangcun.customer.ui.activity.MallCategoryActivity;
-import com.shiwaixiangcun.customer.ui.activity.SearchActivity;
+import com.shiwaixiangcun.customer.ui.activity.mall.GoodDetailActivity;
+import com.shiwaixiangcun.customer.ui.activity.mall.GoodListActivity;
+import com.shiwaixiangcun.customer.ui.activity.mall.MallCategoryActivity;
+import com.shiwaixiangcun.customer.ui.activity.mall.SearchActivity;
 import com.shiwaixiangcun.customer.utils.ArithmeticUtils;
 import com.shiwaixiangcun.customer.utils.GlideImageLoader;
 import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
-import com.shiwaixiangcun.customer.utils.ItemDecoration;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 import com.youth.banner.Banner;
@@ -323,8 +323,17 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
         mAdapterMall.addHeaderView(mSuggestView);
         mAdapterMall.addHeaderView(mTitleView);
         mRvMall.setLayoutManager(new LinearLayoutManager(mContext));
-        mRvMall.addItemDecoration(new ItemDecoration(mContext, LinearLayoutManager.VERTICAL));
+
         mRvMall.setAdapter(mAdapterMall);
+        RecyclerViewDivider divider = new RecyclerViewDivider.Builder(this.getActivity())
+                .setOrientation(RecyclerViewDivider.VERTICAL)
+                .setStyle(RecyclerViewDivider.Style.END)
+                .setSize(10f)
+                .setMarginLeft(8)
+                .setMarginRight(8)
+                .setDrawableRes(R.drawable.divider)
+                .build();
+        mRvMall.addItemDecoration(divider);
         mAdapterMall.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {

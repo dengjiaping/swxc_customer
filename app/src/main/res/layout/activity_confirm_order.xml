@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.shiwaixiangcun.customer.ui.activity.ConfirmOrderActivity">
+    tools:context="com.shiwaixiangcun.customer.ui.activity.mall.ConfirmOrderActivity">
 
     <include layout="@layout/top_bar_white"/>
 

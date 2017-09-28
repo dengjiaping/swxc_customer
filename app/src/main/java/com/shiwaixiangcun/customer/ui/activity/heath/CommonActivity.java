@@ -37,7 +37,6 @@ public class CommonActivity extends BaseActivity implements View.OnClickListener
     WebView mWebView;
 
     private ToolBean mToolBean;
-
     private String type = "";
     private StringBuilder url = new StringBuilder();
 

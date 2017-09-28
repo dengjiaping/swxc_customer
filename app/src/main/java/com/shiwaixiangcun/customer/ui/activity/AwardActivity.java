@@ -24,7 +24,10 @@ import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AwardActivity extends AppCompatActivity implements View.OnClickListener,IAwardView,ListView.OnItemClickListener{
+/**
+ * 活动页面
+ */
+public class AwardActivity extends AppCompatActivity implements View.OnClickListener, IAwardView, ListView.OnItemClickListener {
 
     private ChangeLightImageView back_left;
     private TextView tv_page_name;
@@ -60,10 +63,10 @@ public class AwardActivity extends AppCompatActivity implements View.OnClickList
         tv_page_name.setText("活动");
 
         for (int i = 0; i < 10; i++) {
-            list_award.add("hahhaha"+i);
+            list_award.add("hahhaha" + i);
         }
 
-        awardAdapter = new AwardAdapter(list_award_image,this);
+        awardAdapter = new AwardAdapter(list_award_image, this);
         lv_award.setAdapter(awardAdapter);
 
 
@@ -77,7 +80,7 @@ public class AwardActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        switch (id){
+        switch (id) {
             case R.id.back_left:
                 finish();
                 break;
@@ -86,7 +89,7 @@ public class AwardActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void setBgaAdpaterAndClickResult(AwardBean result) {
-        if (is_not_click == 0){
+        if (is_not_click == 0) {
             list_award_image.clear();
         }
 
@@ -97,15 +100,15 @@ public class AwardActivity extends AppCompatActivity implements View.OnClickList
         list_award_image.addAll(elements);
         awardAdapter.notifyDataSetChanged();
 
-        if (list_award_image.size() == 0){
-            Toast.makeText(AwardActivity.this,"现在还没有活动呦",Toast.LENGTH_LONG).show();
+        if (list_award_image.size() == 0) {
+            Toast.makeText(AwardActivity.this, "现在还没有活动呦", Toast.LENGTH_LONG).show();
         }
 
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Log.e("nnnnnnnnnnna",i+"");
+        Log.e("nnnnnnnnnnna", i + "");
         Intent intent = new Intent(this, SurroundDetailsActivity.class);
         intent.putExtra("articleId", list_award_image.get(i).getId() + "");
 //        intent.putExtra("detailtitle", elements_headline.get(i - 1).getTitle() + "");
@@ -129,17 +132,17 @@ public class AwardActivity extends AppCompatActivity implements View.OnClickList
                 super.handleMessage(msg);
                 if (msg.what == 0x123) {
                     i = 1;
-                    Log.e("vvvvvvvvvvvvvcc","刷新");
+                    Log.e("vvvvvvvvvvvvvcc", "刷新");
                     is_not_click = 0;
-                    award.setBgaAdpaterAndClick(AwardActivity.this,1);
+                    award.setBgaAdpaterAndClick(AwardActivity.this, 1);
                     refreshable_layout.finishRefreshing();
                 } else if (msg.what == 0x124) {
                     refreshable_layout.finishRefreshing();
-                    Log.e("vvvvvvvvvvvvvcc","加载---"+i);
-                    if (i < (Math.round(totalAmount/10)+1)*2) {
+                    Log.e("vvvvvvvvvvvvvcc", "加载---" + i);
+                    if (i < (Math.round(totalAmount / 10) + 1) * 2) {
                         i++;
                         is_not_click = 1;
-                        award.setBgaAdpaterAndClick(AwardActivity.this,i);
+                        award.setBgaAdpaterAndClick(AwardActivity.this, i);
                         lv_award.onPullUpLoadFinished(true);
                     } else {
                         lv_award.onPullUpLoadFinished(false);

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
 
     android:orientation="vertical"
-    tools:context="com.shiwaixiangcun.customer.ui.activity.GoodDetailActivity">
+    tools:context="com.shiwaixiangcun.customer.ui.activity.mall.GoodDetailActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

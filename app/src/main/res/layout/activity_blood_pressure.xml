@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_blood_pressure"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.shiwaixiangcun.customer.ui.activity.BloodPressureActivity">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/activity_blood_pressure"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
 
-    <com.shiwaixiangcun.customer.widget.pullableview.PullToRefreshLayout
-        android:id="@+id/refresh_view"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <include layout="@layout/refresh_head" />
-        <!-- 支持所有实现Pullable接口的View -->
+        android:layout_height="match_parent"
+        app:srlEnableLoadmore="true"
+        app:srlEnablePureScrollMode="true">
 
         <com.shiwaixiangcun.customer.widget.pullableview.PullableScrollView
 
@@ -40,7 +38,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/word_white"
-                        android:textSize="28dp" />
+                        android:textSize="28dp"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -54,7 +52,7 @@
                             android:layout_marginTop="42dp"
                             android:text="121"
                             android:textColor="@color/word_white"
-                            android:textSize="48sp" />
+                            android:textSize="48sp"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -62,7 +60,7 @@
                             android:layout_marginTop="42dp"
                             android:text="/"
                             android:textColor="@color/word_white"
-                            android:textSize="48sp" />
+                            android:textSize="48sp"/>
 
                         <TextView
                             android:id="@+id/tv_relax_blood"
@@ -71,7 +69,7 @@
                             android:layout_marginTop="42dp"
                             android:text="90"
                             android:textColor="@color/word_white"
-                            android:textSize="48sp" />
+                            android:textSize="48sp"/>
                     </LinearLayout>
 
                     <TextView
@@ -80,7 +78,7 @@
                         android:layout_marginTop="10dp"
                         android:text="mmHg"
                         android:textColor="@color/word_white"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
 
                     <TextView
                         android:id="@+id/tv_blood_pressure_time"
@@ -90,7 +88,7 @@
                         android:layout_marginTop="78dp"
                         android:text="2017/01/01 16:00"
                         android:textColor="@color/word_little_white"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
                 </LinearLayout>
 
                 <TextView
@@ -101,7 +99,7 @@
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="20dp"
                     android:textColor="@color/word_green"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"/>
 
                 <TextView
                     android:id="@+id/tv_pressure_introduce"
@@ -111,7 +109,7 @@
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
                     android:textColor="@color/word_grad"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -119,7 +117,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="20dp"
-                    android:background="@color/ui_base_color" />
+                    android:background="@color/ui_base_color"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -135,7 +133,7 @@
                         android:text="控压目标（mmHg）"
 
                         android:textColor="@color/word_black"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -150,7 +148,7 @@
                             android:lines="1"
                             android:text="收缩压 90-120"
                             android:textColor="@color/word_grad"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -159,7 +157,7 @@
                             android:lines="1"
                             android:text="舒张压 60-90"
                             android:textColor="@color/word_grad"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"/>
                     </LinearLayout>
 
                 </RelativeLayout>
@@ -167,7 +165,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="10dp"
-                    android:background="@color/ui_base_color" />
+                    android:background="@color/ui_base_color"/>
 
                 <RelativeLayout
 
@@ -178,7 +176,7 @@
                         android:layout_width="4dp"
                         android:layout_height="20dp"
                         android:layout_centerVertical="true"
-                        android:background="@color/ui_green" />
+                        android:background="@color/ui_green"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -187,7 +185,7 @@
                         android:layout_marginLeft="20dp"
                         android:text="血压趋势"
                         android:textColor="@color/word_black_heart"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"/>
                 </RelativeLayout>
 
 
@@ -195,7 +193,7 @@
 
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/ui_base_color" />
+                    android:background="@color/ui_base_color"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -223,12 +221,12 @@
                             android:gravity="center"
                             android:text="日"
                             android:textColor="@color/word_green"
-                            android:textSize="13sp" />
+                            android:textSize="13sp"/>
 
                         <TextView
                             android:layout_width="1dp"
                             android:layout_height="match_parent"
-                            android:background="@color/ui_green" />
+                            android:background="@color/ui_green"/>
 
                         <TextView
                             android:id="@+id/tv_week"
@@ -239,12 +237,12 @@
                             android:gravity="center"
                             android:text="周"
                             android:textColor="@color/word_green"
-                            android:textSize="13sp" />
+                            android:textSize="13sp"/>
 
                         <TextView
                             android:layout_width="1dp"
                             android:layout_height="match_parent"
-                            android:background="@color/ui_green" />
+                            android:background="@color/ui_green"/>
 
                         <TextView
                             android:id="@+id/tv_month"
@@ -255,12 +253,12 @@
                             android:gravity="center"
                             android:text="月"
                             android:textColor="@color/word_green"
-                            android:textSize="13sp" />
+                            android:textSize="13sp"/>
 
                         <TextView
                             android:layout_width="1dp"
                             android:layout_height="match_parent"
-                            android:background="@color/ui_green" />
+                            android:background="@color/ui_green"/>
 
                         <TextView
                             android:id="@+id/tv_year"
@@ -271,7 +269,7 @@
                             android:gravity="center"
                             android:text="年"
                             android:textColor="@color/word_green"
-                            android:textSize="13sp" />
+                            android:textSize="13sp"/>
                     </LinearLayout>
                 </RelativeLayout>
 
@@ -281,7 +279,7 @@
                     android:layout_marginLeft="16dp"
                     android:text="mmHg"
                     android:textColor="@color/word_little_grad"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
 
                 <LinearLayout
 
@@ -298,7 +296,7 @@
 
                             android:id="@+id/curveChart"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -310,11 +308,8 @@
                         <com.idtk.smallchart.chart.CurveChart
                             android:id="@+id/curveChart_relax"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"/>
                     </LinearLayout>
-
-
-
 
 
                 </LinearLayout>
@@ -322,7 +317,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="10dp"
-                    android:background="@color/ui_base_color" />
+                    android:background="@color/ui_base_color"/>
 
                 <RelativeLayout
                     android:id="@+id/rl_history_blood"
@@ -336,7 +331,7 @@
                         android:layout_centerVertical="true"
                         android:text="历史数据"
                         android:textColor="@color/word_black"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -349,7 +344,7 @@
                             android:layout_height="wrap_content"
                             android:text="历史数据"
                             android:textColor="@color/word_grad"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"/>
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -357,21 +352,20 @@
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="20dp"
-                            android:src="@mipmap/to_right" />
+                            android:src="@mipmap/to_right"/>
                     </LinearLayout>
                 </RelativeLayout>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="10dp"
-                    android:background="@color/ui_base_color" />
+                    android:background="@color/ui_base_color"/>
             </LinearLayout>
         </com.shiwaixiangcun.customer.widget.pullableview.PullableScrollView>
 
-        <include layout="@layout/load_more" />
-    </com.shiwaixiangcun.customer.widget.pullableview.PullToRefreshLayout>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <include
-        android:id="@+id/include"
-        layout="@layout/top_bar_transparent" />
+
+        layout="@layout/top_bar_transparent"/>
 </RelativeLayout>

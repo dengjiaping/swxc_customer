@@ -63,19 +63,7 @@ public class OnlineServiceActivity extends BasePhotoActivity implements AdapterV
     private RelativeLayout rl_success_submit;
     private Button btn_ok;
     private boolean isnotImage = false;
-    //    Timer timer = new Timer();
-//    TimerTask task = new TimerTask() {
-//        @Override
-//        public void run() {
-//
-//            runOnUiThread(new Runnable() {      // UI thread
-//                @Override
-//                public void run() {
-//                    finish();
-//                }
-//            });
-//        }
-//    };
+
     private TextView tv_page_name;
     private HashMap<String, File> hash_image = new HashMap<>();
     /**

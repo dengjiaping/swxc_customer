@@ -5,17 +5,13 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.model.HealthUserBean;
-import com.shiwaixiangcun.customer.ui.activity.BloodFatActivity;
-import com.shiwaixiangcun.customer.ui.activity.BloodPressureActivity;
-import com.shiwaixiangcun.customer.ui.activity.BloodSugarActivity;
-import com.shiwaixiangcun.customer.ui.activity.HeartRateActivity;
-import com.shiwaixiangcun.customer.ui.activity.WeightActivity;
 import com.shiwaixiangcun.customer.ui.fragment.BaseFragment;
 import com.shiwaixiangcun.customer.utils.DateUtil;
 import com.shiwaixiangcun.customer.utils.StringUtil;
@@ -96,7 +92,13 @@ public class FragmentHealth extends BaseFragment implements View.OnClickListener
     RelativeLayout mCvTc;
 
     Unbinder unbinder;
-
+    @BindView(R.id.iv_health_status)
+    ImageView mIvHealthStatus;
+    @BindView(R.id.tv_center_health)
+    TextView mTvCenterHealth;
+    @BindView(R.id.tv_bottom_health)
+    TextView mTvBottomHealth;
+    boolean visible = false;
     public static FragmentHealth getInstance() {
 
         FragmentHealth fragmentHealth = new FragmentHealth();
@@ -121,6 +123,7 @@ public class FragmentHealth extends BaseFragment implements View.OnClickListener
         unbinder = ButterKnife.bind(this, view);
         Bundle bundle = getArguments();//从activity传过来的Bundle
         if (bundle != null) {
+            visible = bundle.getBoolean("visible");
             mHealthUserBean = bundle.getParcelable("health");
         }
 
@@ -149,7 +152,27 @@ public class FragmentHealth extends BaseFragment implements View.OnClickListener
      * @param healthUserBean
      */
     private void initData(HealthUserBean healthUserBean) {
+        if (visible) {
+            mIvHealthStatus.setVisibility(View.VISIBLE);
+        } else {
+            mIvHealthStatus.setVisibility(View.GONE);
+        }
+        switch (healthUserBean.getTotalStatus()) {
+            case "NORMAL":
+                mIvHealthStatus.setImageResource(R.mipmap.heart_green);
+                mTvCenterHealth.setText("非常好");
+                break;
+            case "WARNING":
+                mIvHealthStatus.setImageResource(R.mipmap.health_jx);
+                mTvCenterHealth.setText("警告");
+                break;
+            case "DANGER":
+                mIvHealthStatus.setImageResource(R.mipmap.health_wx);
+                mTvCenterHealth.setText("紧急");
+                break;
+        }
 
+        mTvBottomHealth.setText(healthUserBean.getSuggestion());
         //进行血压初始化
         setVisible(healthUserBean.getPressureStatus(), mCvBp);
         mTvBpName.setText("血压");
@@ -186,8 +209,6 @@ public class FragmentHealth extends BaseFragment implements View.OnClickListener
         mTvTchoData.setText(String.valueOf(healthUserBean.getTotalCholesterol()));
         mTvTgData.setText(String.valueOf(healthUserBean.getTriglyceride()));
         mTvHdlData.setText(String.valueOf(healthUserBean.getTopLipo()));
-//
-
 
     }
 

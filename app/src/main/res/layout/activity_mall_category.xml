@@ -5,7 +5,7 @@
               android:layout_height="match_parent"
               android:background="@color/white"
               android:orientation="vertical"
-              tools:context="com.shiwaixiangcun.customer.ui.activity.MallCategoryActivity">
+              tools:context="com.shiwaixiangcun.customer.ui.activity.mall.MallCategoryActivity">
 
     <include layout="@layout/top_bar_white"/>
 

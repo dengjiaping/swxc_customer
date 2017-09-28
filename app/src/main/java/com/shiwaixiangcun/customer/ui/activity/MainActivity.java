@@ -56,9 +56,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mLlayoutHome.setOnClickListener(this);
         mLlayoutMall.setOnClickListener(this);
         mLlayoutMe.setOnClickListener(this);
-//        mFragmentHome = new FragmentHome();
-//        mFragmentMall = new FragmentMall();
-//        mFragmentMe = new FragmentMe();
         mFragmentManager = getSupportFragmentManager();
         setTabSelected(0);
         setSelect(mLlayoutHome, true);

@@ -3,7 +3,6 @@ package com.shiwaixiangcun.customer.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +14,7 @@ import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
@@ -23,11 +23,11 @@ import com.shiwaixiangcun.customer.model.InformationaBean;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.ui.dialog.DialogLoading;
+import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.LoginOutUtil;
 import com.shiwaixiangcun.customer.utils.RefreshTockenUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
-import com.shiwaixiangcun.customer.utils.SharedPreferenceUtil;
 import com.shiwaixiangcun.customer.utils.TimeCount;
 import com.shiwaixiangcun.customer.utils.TimerToTimerUtil;
 import com.shiwaixiangcun.customer.utils.Utils;
@@ -36,7 +36,7 @@ import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
     private static final String BUG_TAG = "LogActivity";
     private TimeCount time;
@@ -121,16 +121,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
 
 
-//        HttpRequest.get("http://www.baidu.com").executeJson(new HttpCallBack() {
-//
-//            @Override
-//            public void onSuccess(String responseJson) {
-//            }
-//
-//            @Override
-//            public void onFailed(Exception e) {
-//            }
-//        });
     }
 
     //登录
@@ -158,10 +148,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     mDialogLoading.show();
                     String access_token = responseEntity.getData().getAccess_token();
                     String refresh_token = responseEntity.getData().getRefresh_token();
-
-
-                    SharedPreferenceUtil.getInstance().setString(Common.TOKEN, access_token);
-                    SharedPreferenceUtil.getInstance().setString(Common.REFRESH_TOKEN, refresh_token);
+                    AppSharePreferenceMgr.put(mContext, Common.TOKEN, access_token);
+                    AppSharePreferenceMgr.put(mContext, Common.REFRESH_TOKEN, refresh_token);
+                    AppSharePreferenceMgr.put(mContext, Common.USER_IS_LOGIN, "islogin");
                     SharePreference.saveStringToSpParams(LoginActivity.this, Common.ISSAVEACCOUNT, Common.SISAVEACCOUNT, et_username.getText().toString().trim());
                     SharePreference.saveStringToSpParams(LoginActivity.this, Common.ISSAVELOGIN, Common.SISAVELOGIN, responseJson);
 

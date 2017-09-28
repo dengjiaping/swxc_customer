@@ -8,6 +8,7 @@ import java.io.ByteArrayOutputStream;
 
 /**
  * Created by Administrator on 2017/4/20.
+ * 压缩图片
  */
 
 public class CompressionImageUtil {

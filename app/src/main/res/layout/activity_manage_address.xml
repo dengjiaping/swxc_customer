@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:background="@color/bg_gray"
     android:orientation="vertical"
-    tools:context="com.shiwaixiangcun.customer.ui.activity.ManageAddressActivity">
+    tools:context="com.shiwaixiangcun.customer.ui.activity.mall.ManageAddressActivity">
 
     <include layout="@layout/top_bar_white"/>
 

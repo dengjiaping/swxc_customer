@@ -32,6 +32,11 @@ import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.model.WeightBean;
 import com.shiwaixiangcun.customer.presenter.impl.HealthOkImpl;
 import com.shiwaixiangcun.customer.ui.IHealthOkView;
+import com.shiwaixiangcun.customer.ui.activity.heath.BloodFatActivity;
+import com.shiwaixiangcun.customer.ui.activity.heath.BloodPressureActivity;
+import com.shiwaixiangcun.customer.ui.activity.heath.BloodSugarActivity;
+import com.shiwaixiangcun.customer.ui.activity.heath.HeartRateActivity;
+import com.shiwaixiangcun.customer.ui.activity.heath.WeightActivity;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.LoginOutUtil;
 import com.shiwaixiangcun.customer.utils.RefreshTockenUtil;
@@ -76,7 +81,7 @@ public class HealthOkActivity extends AppCompatActivity implements View.OnClickL
     private List<WeightBean> elements_weight;
     private List<BloodPressureBean> data_pressure;
     //    private List<BloodSugarBean.DataBean.ElementsBean> elements_sugar;
-    private List<PressureFatBean.DataBean.ElementsBean> elements_fat;
+//    private List<PressureFatBean.DataBean.ElementsBean> elements_fat;
     private TextView tv_botton_not_all;
     private LinearLayout ll_top_health;
     private LinearLayout ll_low_health;
@@ -194,7 +199,7 @@ public class HealthOkActivity extends AppCompatActivity implements View.OnClickL
                 break;
             case R.id.ll_blood_fat:
                 Intent intent_fat = new Intent(this,BloodFatActivity.class);
-                intent_fat.putExtra("list_fat",(Serializable) elements_fat);
+//                intent_fat.putExtra("list_fat",(Serializable) elements_fat);
                 startActivity(intent_fat);
                 break;
         }
@@ -510,14 +515,14 @@ public class HealthOkActivity extends AppCompatActivity implements View.OnClickL
 //                }.getType();
 //                ResponseEntity<PageBean<BloodFatBean>> responseEntity = JsonUtil.fromJson(responseJson, type);
                 PressureFatBean pressureFatBean = new Gson().fromJson(responseJson, PressureFatBean.class);
-
-                if (pressureFatBean.getResponseCode() == 1001) {
-                    elements_fat = pressureFatBean.getData().getElements();
-                } else if (pressureFatBean.getResponseCode() == 1018) {
-                    RefreshTockenUtil.sendIntDataInvatation(context, refresh_token);
-                } else if (pressureFatBean.getResponseCode() == 1019) {
-                    LoginOutUtil.sendLoginOutUtil(context);
-                }
+//
+//                if (pressureFatBean.getResponseCode() == 1001) {
+//                    elements_fat = pressureFatBean.getData().getElements();
+//                } else if (pressureFatBean.getResponseCode() == 1018) {
+//                    RefreshTockenUtil.sendIntDataInvatation(context, refresh_token);
+//                } else if (pressureFatBean.getResponseCode() == 1019) {
+//                    LoginOutUtil.sendLoginOutUtil(context);
+//                }
             }
 
             @Override

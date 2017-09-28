@@ -1,19 +1,21 @@
 package com.shiwaixiangcun.customer.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.v7.app.AppCompatActivity;
 import android.view.animation.AlphaAnimation;
 import android.widget.TextView;
 
 import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
+import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.R;
 
-public class StartPageActivity extends AppCompatActivity {
+public class StartPageActivity extends BaseActivity {
 
+    CountDownTimer cdt;
     private TextView tv_center_word;
+    private String token;
+    private String refreshToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +25,6 @@ public class StartPageActivity extends AppCompatActivity {
         StatService.setLogSenderDelayed(10);
         StatService.setSendLogStrategy(this, SendStrategyEnum.APP_START, 1, false);
         StatService.setSessionTimeOut(30);
-
         layoutView();
         initData();
     }
@@ -37,8 +38,9 @@ public class StartPageActivity extends AppCompatActivity {
 
     }
 
+
     private void initData() {
-        CountDownTimer cdt = new CountDownTimer(1500, 100) {
+        cdt = new CountDownTimer(1500, 100) {
             @Override
             public void onTick(long millisUntilFinished) {
 //                tv_hello.setText(millisUntilFinished + "");
@@ -46,13 +48,51 @@ public class StartPageActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                Intent intent = new Intent(StartPageActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+                readyGoThenKill(MainActivity.class);
+
             }
         };
         cdt.start();
+//        token = (String) AppSharePreferenceMgr.get(mContext, Common.TOKEN, "token");
+//        refreshToken = (String) AppSharePreferenceMgr.get(mContext, Common.REFRESH_TOKEN, "refresh_token");
+//
+//        TokenUtils.checkToken(token);
+
+
     }
+
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    public void updateUI(SimpleEvent simpleEvent) {
+//        if (simpleEvent == null) {
+//            return;
+//        }
+//        if (simpleEvent.mEventType == SimpleEvent.CHECK_TOKEN) {
+//            switch (simpleEvent.mEventValue) {
+//                case 1:
+//                    Log.e(BUG_TAG, "检查有效");
+//                    cdt.start();
+//                    break;
+//                case 2:
+//                    Log.e(BUG_TAG, "检查无效");
+//                    TokenUtils.refreshToken(mContext,refreshToken);
+//                    break;
+//            }
+//        }
+//        if (simpleEvent.mEventType == SimpleEvent.REFRESH_TOKEN) {
+//            switch (simpleEvent.mEventValue) {
+//                case 1:
+//                    Log.e(BUG_TAG, "刷新成功");
+//                    cdt.start();
+//                    break;
+//                case 2:
+//                    Log.e(BUG_TAG, "刷新失败");
+//                    readyGoThenKill(LoginActivity.class);
+//                    break;
+//            }
+//        }
+
+
+//    }
 
     @Override
     protected void onResume() {
@@ -63,6 +103,7 @@ public class StartPageActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+
         StatService.onPause(this);
     }
 }

@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.shiwaixiangcun.customer.ui.activity.SugarHistoryActivity">
+    tools:context="com.shiwaixiangcun.customer.ui.activity.heath.BloodSugarHistoryActivity">
 
     <include layout="@layout/top_bar_white"/>
 

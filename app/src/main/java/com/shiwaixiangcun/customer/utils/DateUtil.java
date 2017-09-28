@@ -24,7 +24,6 @@ import java.util.Locale;
 
 @SuppressLint("SimpleDateFormat")
 public class DateUtil {
-
     private static final long INTERVAL_IN_MILLISECONDS = 30 * 1000;
     private static final String FORMAT = "yyyy-MM-dd HH:mm:ss";
 
@@ -401,5 +400,32 @@ public class DateUtil {
             }
         }
         return str;
+    }
+
+    /**
+     * 时间信息类
+     */
+    static class TimeInfo {
+        private long startTime;
+        private long endTime;
+
+        public TimeInfo() {
+        }
+
+        public long getStartTime() {
+            return this.startTime;
+        }
+
+        public void setStartTime(long paramLong) {
+            this.startTime = paramLong;
+        }
+
+        public long getEndTime() {
+            return this.endTime;
+        }
+
+        public void setEndTime(long paramLong) {
+            this.endTime = paramLong;
+        }
     }
 }
