@@ -238,6 +238,15 @@ public class OrderDetailBean {
         private double price;
         private String shopName;
         private double subtotal;
+        private int goodsId;
+
+        public int getGoodsId() {
+            return goodsId;
+        }
+
+        public void setGoodsId(int goodsId) {
+            this.goodsId = goodsId;
+        }
 
         public String getAttrDescription() {
             return attrDescription;

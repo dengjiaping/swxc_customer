@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
                 android:id="@+id/activity_blood_pressure"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -95,9 +96,9 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="20dp"
-                    android:text="您的体重正常"
                     android:textColor="@color/word_green"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    tools:text="您的体重正常"/>
 
                 <TextView
                     android:id="@+id/tv_weight_introduce"
@@ -106,9 +107,9 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
-                    android:text="请继续保持当前的健康生活方式"
                     android:textColor="@color/word_grad"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp"
+                    tools:text="请继续保持当前的健康生活方式"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -156,53 +157,62 @@
                     android:layout_height="10dp"
                     android:background="@color/ui_base_color"/>
 
-                <RelativeLayout
-
-                    android:layout_width="match_parent"
-                    android:layout_height="54dp">
-
-                    <TextView
-                        android:id="@+id/textView"
-                        android:layout_width="4dp"
-                        android:layout_height="25dp"
-                        android:layout_centerVertical="true"
-                        android:background="@color/ui_green"/>
-
-                    <TextView
-                        android:id="@+id/textView2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/textView"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginStart="14dp"
-                        android:layout_toEndOf="@+id/textView"
-                        android:text="体重趋势"
-                        android:textColor="@color/word_black_heart"
-                        android:textSize="16sp"/>
-                </RelativeLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/ui_base_color"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="18dp"
-                    android:text="kg"/>
-
                 <LinearLayout
+                    android:id="@+id/llayout_chart"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <lecho.lib.hellocharts.view.LineChartView
-                        android:id="@+id/curveChart"
-                        android:layout_width="match_parent"
-                        android:layout_height="300dp"/>
 
+                    <RelativeLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="54dp">
+
+                        <TextView
+                            android:id="@+id/textView"
+                            android:layout_width="4dp"
+                            android:layout_height="25dp"
+                            android:layout_centerVertical="true"
+                            android:background="@color/ui_green"/>
+
+                        <TextView
+                            android:id="@+id/textView2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/textView"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginStart="14dp"
+                            android:layout_toEndOf="@+id/textView"
+                            android:text="体重趋势"
+                            android:textColor="@color/word_black_heart"
+                            android:textSize="16sp"/>
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/ui_base_color"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="18dp"
+                        android:text="kg"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <lecho.lib.hellocharts.view.LineChartView
+                            android:id="@+id/curveChart"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:layout_margin="8dp"/>
+
+                    </LinearLayout>
                 </LinearLayout>
 
                 <TextView

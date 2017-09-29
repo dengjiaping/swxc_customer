@@ -139,6 +139,7 @@ public class SearchResultActivity extends BaseActivity implements View.OnClickLi
 
     private void initView() {
 
+        mEditSearch.setText(searchKey);
 
         mRvSearchResult.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new AdapterSearchResult(mList);
@@ -147,7 +148,7 @@ public class SearchResultActivity extends BaseActivity implements View.OnClickLi
 
         RecyclerViewDivider divider = new RecyclerViewDivider.Builder(this)
                 .setOrientation(RecyclerViewDivider.VERTICAL)
-                .setStyle(RecyclerViewDivider.Style.END)
+                .setStyle(RecyclerViewDivider.Style.BOTH)
                 .setMarginLeft(8)
                 .setMarginRight(8)
                 .setDrawableRes(R.drawable.divider)

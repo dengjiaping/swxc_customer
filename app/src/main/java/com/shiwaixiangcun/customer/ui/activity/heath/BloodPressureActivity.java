@@ -1,9 +1,8 @@
 package com.shiwaixiangcun.customer.ui.activity.heath;
 
-import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.PointF;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,9 +13,6 @@ import android.widget.TextView;
 import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
 import com.google.gson.reflect.TypeToken;
-import com.idtk.smallchart.chart.CurveChart;
-import com.idtk.smallchart.data.CurveData;
-import com.idtk.smallchart.interfaces.iData.ICurveData;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.R;
@@ -45,6 +41,13 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import lecho.lib.hellocharts.model.Axis;
+import lecho.lib.hellocharts.model.AxisValue;
+import lecho.lib.hellocharts.model.Line;
+import lecho.lib.hellocharts.model.LineChartData;
+import lecho.lib.hellocharts.model.PointValue;
+import lecho.lib.hellocharts.model.ValueShape;
+import lecho.lib.hellocharts.view.LineChartView;
 
 /**
  * 血压页面
@@ -73,10 +76,6 @@ public class BloodPressureActivity extends BaseActivity implements View.OnClickL
     TextView mTvMonth;
     @BindView(R.id.tv_year)
     TextView mTvYear;
-    @BindView(R.id.curveChart)
-    CurveChart mCurveChart;
-    @BindView(R.id.curveChart_relax)
-    CurveChart mCurveChartRelax;
     @BindView(R.id.rl_history_blood)
     RelativeLayout mRlHistoryBlood;
     @BindView(R.id.refreshLayout)
@@ -97,32 +96,21 @@ public class BloodPressureActivity extends BaseActivity implements View.OnClickL
     RelativeLayout mTopBarTransparent;
     @BindView(R.id.activity_blood_pressure)
     RelativeLayout mActivityBloodPressure;
-    private ChangeLightImageView back_left;
-    private RelativeLayout rl_history_blood;
-    private LinearLayout ll_blood_pressure;
-    private TextView tv_shrink_blood;
-    private TextView tv_relax_blood;
-    private TextView tv_blood_name;
-    private TextView tv_blood_pressure_time;
-    private TextView tv_pressure_introduce;
-    private RelativeLayout head_view;
-    private CurveChart curveChart;
-    private ArrayList<PointF> mPointArrayList = new ArrayList<>();
-    private ArrayList<PointF> mPointArrayList_relax = new ArrayList<>();
-    private CurveData mCurveData = new CurveData();
-    private CurveData mCurveData_relax = new CurveData();
-    private ArrayList<ICurveData> mDataList = new ArrayList<>();
-    private ArrayList<ICurveData> mDataList_relax = new ArrayList<>();
-    private CurveChart curveChart_relax;
-    private TextView tv_day;
-    private TextView tv_week;
-    private TextView tv_month;
-    private TextView tv_year;
-    private TextView tv_pressure_qs;
+    @BindView(R.id.curveChart)
+    LineChartView mCurveChart;
+    @BindView(R.id.curveChart_relax)
+    LineChartView mCurveChartRelax;
+    @BindView(R.id.llayout_chart)
+    LinearLayout mLlayoutChart;
+
 
     private int customId;
 
     private List<BloodPressureBean.ElementsBean> mList = new ArrayList<>();
+
+    private List<PointValue> mRelaxationList = new ArrayList<>();
+    private List<PointValue> mShrinkList = new ArrayList<>();
+    private List<AxisValue> mAxisValueList = new ArrayList<>();
 
 
     @Override
@@ -131,7 +119,7 @@ public class BloodPressureActivity extends BaseActivity implements View.OnClickL
         setContentView(R.layout.activity_blood_pressure);
         ButterKnife.bind(this);
         EventCenter.getInstance().register(this);
-        //        百度统计
+        // 百度统计
         StatService.setLogSenderDelayed(10);
         StatService.setSendLogStrategy(this, SendStrategyEnum.APP_START, 1, false);
         StatService.setSessionTimeOut(30);
@@ -151,7 +139,7 @@ public class BloodPressureActivity extends BaseActivity implements View.OnClickL
     }
 
     private void initData() {
-        String login_detail = SharePreference.getStringSpParams(mContext, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        String login_detail = SharePreference.getStringSpParams(mContext, Common.IS_SAVE_LOGIN, Common.SISAVELOGIN);
         Log.i(BUG_TAG, login_detail);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
@@ -172,10 +160,10 @@ public class BloodPressureActivity extends BaseActivity implements View.OnClickL
                 }
                 switch (responseEntity.getResponseCode()) {
                     case 1001:
-//                        configuration(responseEntity.getData().getElements());
                         BloodPressureBean.ElementsBean elementsBean = responseEntity.getData().getElements().get(0);
                         EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_BLOOD_PRESSURE, 1, elementsBean));
                         mList.addAll(responseEntity.getData().getElements());
+                        configuration(responseEntity.getData().getElements());
                         break;
                     case 1018:
                         RefreshTockenUtil.sendIntDataInvatation(mContext, refresh_token);
@@ -194,6 +182,92 @@ public class BloodPressureActivity extends BaseActivity implements View.OnClickL
 
     }
 
+    /**
+     * 绘制图表
+     *
+     * @param elements
+     */
+    private void configuration(List<BloodPressureBean.ElementsBean> elements) {
+        if (elements == null) {
+            return;
+        }
+        if (elements.size() < 2) {
+            mLlayoutChart.setVisibility(View.GONE);
+        }
+        //初始化表格的数据
+        for (int i = 0; i < elements.size(); i++) {
+            BloodPressureBean.ElementsBean elementsBean = elements.get(i);
+            mAxisValueList.add(new AxisValue(i).setLabel(i + ""));
+            mShrinkList.add(new PointValue(i, elementsBean.getShrinkBlood()));
+            mRelaxationList.add(new PointValue(i, elementsBean.getRelaxationBlood()));
+        }
+        //绘制收缩压曲线
+        Line shrinkLine = new Line(mShrinkList).setColor(Color.parseColor("#FE9020"));  //折线的颜色（橙色）
+        List<Line> lines = new ArrayList<Line>();
+        shrinkLine.setShape(ValueShape.CIRCLE);//折线图上每个数据点的形状  这里是圆形 （有三种 ：ValueShape.SQUARE  ValueShape.CIRCLE  ValueShape.DIAMOND）
+        shrinkLine.setCubic(true);//曲线是否平滑，即是曲线还是折线
+        shrinkLine.setFilled(false);//是否填充曲线的面积
+        shrinkLine.setHasLabels(false);//曲线的数据坐标是否加上备注
+        shrinkLine.setStrokeWidth(1);
+        shrinkLine.setHasLines(true);//是否用线显示。如果为false 则没有曲线只有点显示
+        shrinkLine.setHasPoints(true);//是否显示圆点 如果为false 则没有原点只有点显示（每个数据点都是个大的圆点）
+        lines.add(shrinkLine);
+
+        //绘制舒张压线
+        Line relaxLine = new Line(mRelaxationList).setColor(Color.parseColor("#1CCC8C"));
+        List<Line> relaxLines = new ArrayList<Line>();
+        relaxLine.setShape(ValueShape.CIRCLE);//折线图上每个数据点的形状  这里是圆形 （有三种 ：ValueShape.SQUARE  ValueShape.CIRCLE  ValueShape.DIAMOND）
+        relaxLine.setCubic(true);//曲线是否平滑，即是曲线还是折线
+        relaxLine.setFilled(false);//是否填充曲线的面积
+        relaxLine.setStrokeWidth(1);
+        relaxLine.setHasLabels(false);//曲线的数据坐标是否加上备注
+//      line.setHasLabelsOnlyForSelected(true);//点击数据坐标提示数据（设置了这个line.setHasLabels(true);就无效）
+        relaxLine.setHasLines(true);//是否用线显示。如果为false 则没有曲线只有点显示
+        relaxLine.setHasPoints(true);//是否显示圆点 如果为false 则没有原点只有点显示（每个数据点都是个大的圆点）
+        relaxLines.add(relaxLine);
+
+
+        //舒张压数据
+        LineChartData relaxData = new LineChartData();
+        //收缩压数据
+        LineChartData shrinkData = new LineChartData();
+        shrinkData.setLines(lines);
+        relaxData.setLines(relaxLines);
+
+        //坐标轴
+        Axis axisX = new Axis(); //X轴
+        axisX.setHasTiltedLabels(false);  //X坐标轴字体是斜的显示还是直的，true是斜的显示
+        axisX.setTextColor(getResources().getColor(R.color.black_text_80));  //设置字体颜色
+        //axisX.setName("date");  //表格名称
+        axisX.setTextSize(10);//设置字体大小
+        axisX.setMaxLabelChars(7); //最多几个X轴坐标，意思就是你的缩放让X轴上数据的个数7<=x<=mAxisXValues.length
+        axisX.setValues(mAxisValueList);  //填充X轴的坐标名称
+        axisX.isAutoGenerated();
+
+        relaxData.setAxisXBottom(axisX);
+        shrinkData.setAxisXBottom(axisX); //x 轴在底部
+        //data.setAxisXTop(axisX);  //x 轴在顶部
+        axisX.setHasLines(true); //x 轴分割线
+
+        // Y轴是根据数据的大小自动设置Y轴上限(在下面我会给出固定Y轴数据个数的解决方案)
+        Axis axisY = new Axis();  //Y轴
+        axisY.setName("mmHg");//y轴标注
+        axisY.setTextColor(getResources().getColor(R.color.black_text_80));
+        axisY.setTextSize(10);//设置字体大小
+        axisY.setHasLines(true);
+        relaxData.setAxisYLeft(axisY);
+        shrinkData.setAxisYLeft(axisY);  //Y轴设置在左边
+
+        //data.setAxisYRight(axisY);  //y轴设置在右边
+
+
+        //设置行为属性，支持缩放、滑动以及平移
+
+        mCurveChart.setLineChartData(shrinkData);
+
+        mCurveChartRelax.setLineChartData(relaxData);
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void updateUI(SimpleEvent simpleEvent) {
         if (simpleEvent == null || simpleEvent.mEventType != SimpleEvent.UPDATE_BLOOD_PRESSURE) {
@@ -207,7 +281,7 @@ public class BloodPressureActivity extends BaseActivity implements View.OnClickL
         mTvRelaxBlood.setText(elementsBean.getRelaxationBlood() + "");
         mTvPressureIntroduce.setText(elementsBean.getSuggestion());
         mTvBloodPressureTime.setText(DateUtil.getMillon(elementsBean.getCreateTime()));
-
+        Log.e(BUG_TAG, elementsBean.getSuggestion());
 
     }
 
@@ -306,57 +380,55 @@ public class BloodPressureActivity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.rl_history_blood:
                 Bundle bundle = new Bundle();
-//                bundle.putParcelableArray("blood_pressure");
-                Intent intent = new Intent(this, BloodHistoryActivity.class);
-                startActivity(intent);
+                bundle.putParcelableArrayList("blood_pressure", (ArrayList<? extends Parcelable>) mList);
+                readyGo(BloodHistoryActivity.class, bundle);
                 break;
             case R.id.tv_day:
 
-                tv_day.setTextColor(Color.parseColor("#FFFFFF"));
-                tv_week.setTextColor(Color.parseColor("#1CCC8C"));
-                tv_month.setTextColor(Color.parseColor("#1CCC8C"));
-                tv_year.setTextColor(Color.parseColor("#1CCC8C"));
-
-                tv_day.setBackgroundColor(Color.parseColor("#1CCC8C"));
-                tv_week.setBackgroundColor(Color.parseColor("#FFFFFF"));
-                tv_month.setBackgroundColor(Color.parseColor("#FFFFFF"));
-                tv_year.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                mTvDay.setTextColor(Color.parseColor("#FFFFFF"));
+                mTvWeek.setTextColor(Color.parseColor("#1CCC8C"));
+                mTvMonth.setTextColor(Color.parseColor("#1CCC8C"));
+                mTvYear.setTextColor(Color.parseColor("#1CCC8C"));
+                mTvDay.setBackgroundColor(Color.parseColor("#1CCC8C"));
+                mTvWeek.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                mTvMonth.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                mTvYear.setBackgroundColor(Color.parseColor("#FFFFFF"));
                 break;
             case R.id.tv_week:
 
-                tv_day.setTextColor(Color.parseColor("#1CCC8C"));
-                tv_week.setTextColor(Color.parseColor("#FFFFFF"));
-                tv_month.setTextColor(Color.parseColor("#1CCC8C"));
-                tv_year.setTextColor(Color.parseColor("#1CCC8C"));
+                mTvDay.setTextColor(Color.parseColor("#1CCC8C"));
+                mTvWeek.setTextColor(Color.parseColor("#FFFFFF"));
+                mTvMonth.setTextColor(Color.parseColor("#1CCC8C"));
+                mTvYear.setTextColor(Color.parseColor("#1CCC8C"));
 
-                tv_day.setBackgroundColor(Color.parseColor("#FFFFFF"));
-                tv_week.setBackgroundColor(Color.parseColor("#1CCC8C"));
-                tv_month.setBackgroundColor(Color.parseColor("#FFFFFF"));
-                tv_year.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                mTvDay.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                mTvWeek.setBackgroundColor(Color.parseColor("#1CCC8C"));
+                mTvMonth.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                mTvYear.setBackgroundColor(Color.parseColor("#FFFFFF"));
                 break;
             case R.id.tv_month:
 
-                tv_day.setTextColor(Color.parseColor("#1CCC8C"));
-                tv_week.setTextColor(Color.parseColor("#1CCC8C"));
-                tv_month.setTextColor(Color.parseColor("#FFFFFF"));
-                tv_year.setTextColor(Color.parseColor("#1CCC8C"));
+                mTvDay.setTextColor(Color.parseColor("#1CCC8C"));
+                mTvWeek.setTextColor(Color.parseColor("#1CCC8C"));
+                mTvMonth.setTextColor(Color.parseColor("#FFFFFF"));
+                mTvYear.setTextColor(Color.parseColor("#1CCC8C"));
 
-                tv_day.setBackgroundColor(Color.parseColor("#FFFFFF"));
-                tv_week.setBackgroundColor(Color.parseColor("#FFFFFF"));
-                tv_month.setBackgroundColor(Color.parseColor("#1CCC8C"));
-                tv_year.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                mTvDay.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                mTvWeek.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                mTvMonth.setBackgroundColor(Color.parseColor("#1CCC8C"));
+                mTvYear.setBackgroundColor(Color.parseColor("#FFFFFF"));
                 break;
             case R.id.tv_year:
 
-                tv_day.setTextColor(Color.parseColor("#1CCC8C"));
-                tv_week.setTextColor(Color.parseColor("#1CCC8C"));
-                tv_month.setTextColor(Color.parseColor("#1CCC8C"));
-                tv_year.setTextColor(Color.parseColor("#FFFFFF"));
+                mTvDay.setTextColor(Color.parseColor("#1CCC8C"));
+                mTvWeek.setTextColor(Color.parseColor("#1CCC8C"));
+                mTvMonth.setTextColor(Color.parseColor("#1CCC8C"));
+                mTvYear.setTextColor(Color.parseColor("#FFFFFF"));
 
-                tv_day.setBackgroundColor(Color.parseColor("#FFFFFF"));
-                tv_week.setBackgroundColor(Color.parseColor("#FFFFFF"));
-                tv_month.setBackgroundColor(Color.parseColor("#FFFFFF"));
-                tv_year.setBackgroundColor(Color.parseColor("#1CCC8C"));
+                mTvDay.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                mTvWeek.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                mTvMonth.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                mTvYear.setBackgroundColor(Color.parseColor("#1CCC8C"));
                 break;
         }
 

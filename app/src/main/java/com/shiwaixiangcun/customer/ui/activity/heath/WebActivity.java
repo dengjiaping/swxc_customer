@@ -13,14 +13,23 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 import com.shiwaixiangcun.customer.BaseActivity;
+import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
+import com.shiwaixiangcun.customer.event.EventCenter;
+import com.shiwaixiangcun.customer.event.SimpleEvent;
 import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.lang.reflect.Type;
 
@@ -51,10 +60,13 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
     private StringBuilder urlBuilder = new StringBuilder();
     private String tokenString;
 
+    private int userId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
+        EventCenter.getInstance().register(this);
         ButterKnife.bind(this);
         initData();
         initWebview();
@@ -101,6 +113,10 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
                 urlBuilder.append("https://wy.guahao.com/fastorder/hospital");
                 mTvPageName.setText("预约挂号");
                 break;
+            case 7:
+                mTvPageName.setText("在线问诊");
+                requestDoctor();
+                break;
             case 14:
                 urlBuilder.append("https://ztg.zhongan.com/promote/showcase/landingH5.htm?promoteType=2&promotionCode=INST170970022019&redirectType=h5");
                 mTvPageName.setText("健康保险");
@@ -120,15 +136,49 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
 
     }
 
+    private void requestDoctor() {
+        OkGo.<String>get(GlobalConfig.getDoctor)
+                .params("access_token", tokenString)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        Log.e(BUG_TAG, response.body());
+                        DoctorBean doctorBean = JsonUtil.fromJson(response.body(), DoctorBean.class);
+                        if (doctorBean == null) {
+                            return;
+                        }
+                        EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_DOCTOR, 1, doctorBean.getData()));
+                    }
+                });
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void updateUI(SimpleEvent simpleEvent) {
+        if (simpleEvent == null || simpleEvent.mEventType != SimpleEvent.UPDATE_DOCTOR) {
+            return;
+        }
+        DoctorBean.DataBean data = (DoctorBean.DataBean) simpleEvent.getData();
+
+        urlBuilder.append("https://test.chunyu.me/cooperation/wap/login/")
+                .append("?atime=").append(data.getAtime())
+                .append("&partner=").append(data.getPartner())
+                .append("&sign=").append(data.getSign())
+                .append("&user_id=").append(data.getUser_id());
+        mWebView.loadUrl(urlBuilder.toString());
+
+    }
+
+
     private void initData() {
         Bundle bundle = getIntent().getExtras();
         type = bundle.getInt("type", -1);
 
-        String loginInfo = SharePreference.getStringSpParams(mContext, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        String loginInfo = SharePreference.getStringSpParams(mContext, Common.IS_SAVE_LOGIN, Common.SISAVELOGIN);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(loginInfo, type);
         tokenString = responseEntity.getData().getAccess_token();
+//        userId=responseEntity.getData().get
 
 
     }
@@ -161,6 +211,99 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             view.loadUrl(url);
             return true;
+        }
+    }
+
+    private final class DoctorBean {
+
+        /**
+         * data : {"atime":"1506666038","partner":"shiwaishenghuo","sign":"5b14863c5731b810","user_id":"15520447006"}
+         * message : 操作成功
+         * responseCode : 1001
+         * success : true
+         */
+
+        private DataBean data;
+        private String message;
+        private int responseCode;
+        private boolean success;
+
+        public DataBean getData() {
+            return data;
+        }
+
+        public void setData(DataBean data) {
+            this.data = data;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+
+        public int getResponseCode() {
+            return responseCode;
+        }
+
+        public void setResponseCode(int responseCode) {
+            this.responseCode = responseCode;
+        }
+
+        public boolean isSuccess() {
+            return success;
+        }
+
+        public void setSuccess(boolean success) {
+            this.success = success;
+        }
+
+        public class DataBean {
+            /**
+             * atime : 1506666038
+             * partner : shiwaishenghuo
+             * sign : 5b14863c5731b810
+             * user_id : 15520447006
+             */
+
+            private String atime;
+            private String partner;
+            private String sign;
+            private String user_id;
+
+            public String getAtime() {
+                return atime;
+            }
+
+            public void setAtime(String atime) {
+                this.atime = atime;
+            }
+
+            public String getPartner() {
+                return partner;
+            }
+
+            public void setPartner(String partner) {
+                this.partner = partner;
+            }
+
+            public String getSign() {
+                return sign;
+            }
+
+            public void setSign(String sign) {
+                this.sign = sign;
+            }
+
+            public String getUser_id() {
+                return user_id;
+            }
+
+            public void setUser_id(String user_id) {
+                this.user_id = user_id;
+            }
         }
     }
 }

@@ -1,78 +1,94 @@
 package com.shiwaixiangcun.customer.ui.activity.heath;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
+import com.jaeger.recyclerviewdivider.RecyclerViewDivider;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.shiwaixiangcun.customer.R;
-import com.shiwaixiangcun.customer.adapter.PressureHistoryAdapter;
-import com.shiwaixiangcun.customer.model.BloodPressureDataBean;
-import com.shiwaixiangcun.customer.model.PageBean;
-import com.shiwaixiangcun.customer.model.ResponseEntity;
-import com.shiwaixiangcun.customer.presenter.impl.BloodDataImpl;
-import com.shiwaixiangcun.customer.ui.IBloodDataView;
+import com.shiwaixiangcun.customer.adapter.AdapterBloodPressure;
+import com.shiwaixiangcun.customer.model.BloodPressureBean;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
-import com.shiwaixiangcun.customer.widget.pullableview.MyListener;
-import com.shiwaixiangcun.customer.widget.pullableview.PullToRefreshLayout;
-import com.shiwaixiangcun.customer.widget.pullableview.PullableListView;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 /**
  * 血压历史记录
  */
 
-public class BloodHistoryActivity extends AppCompatActivity implements View.OnClickListener, IBloodDataView {
+public class BloodHistoryActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private ChangeLightImageView back_left;
-    private TextView tv_page_name;
-    private PullableListView lv_blood_pressure_data;
-    private RelativeLayout head_view;
-    private BloodDataImpl bloodData;
+
+    @BindView(R.id.back_left)
+    ChangeLightImageView mBackLeft;
+    @BindView(R.id.tv_page_name)
+    TextView mTvPageName;
+    @BindView(R.id.tv_top_right)
+    TextView mTvTopRight;
+    @BindView(R.id.iv_share_right)
+    ImageView mIvShareRight;
+    @BindView(R.id.iv_sao_right)
+    ImageView mIvSaoRight;
+    @BindView(R.id.ll_image_right)
+    LinearLayout mLlImageRight;
+    @BindView(R.id.top_bar_write)
+    RelativeLayout mTopBarWrite;
+    @BindView(R.id.rv_blood_pressure_history)
+    RecyclerView mRvBloodPressureHistory;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout mRefreshLayout;
+    @BindView(R.id.activity_sugar_history)
+    LinearLayout mActivitySugarHistory;
+
+    private List<BloodPressureBean.ElementsBean> mHistoryList = new ArrayList<>();
+    private AdapterBloodPressure mHistoryAdapter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blood_data);
+        ButterKnife.bind(this);
         //        百度统计
         StatService.setLogSenderDelayed(10);
         StatService.setSendLogStrategy(this, SendStrategyEnum.APP_START, 1, false);
         StatService.setSessionTimeOut(30);
-
-        layoutView();
+        Bundle bundle = getIntent().getExtras();
+        mHistoryList = bundle.getParcelableArrayList("blood_pressure");
+        initView();
         initData();
     }
 
-    private void layoutView() {
-        head_view = (RelativeLayout) findViewById(R.id.head_view);
-        MyListener myListener = new MyListener();
-        PullToRefreshLayout refresh_view = (PullToRefreshLayout) findViewById(R.id.refresh_view);
-        refresh_view.setOnRefreshListener(myListener);
-        myListener.setRefreshListener(new MyListener.onRefreshListener() {
-            @Override
-            public void refreshScence(boolean isnot) {
-                bloodData.setBgaAdpaterAndClick(BloodHistoryActivity.this);
-            }
-        });
-
-
-        back_left = (ChangeLightImageView) findViewById(R.id.back_left);
-        tv_page_name = (TextView) findViewById(R.id.tv_page_name);
-        lv_blood_pressure_data = (PullableListView) findViewById(R.id.lv_blood_pressure_data);
+    private void initView() {
+        mTvPageName.setText("血压数据");
+        mBackLeft.setOnClickListener(this);
+        mActivitySugarHistory.setOnClickListener(this);
     }
 
+
     private void initData() {
-        head_view.setBackgroundColor(Color.parseColor("#FFFFFF"));
-        bloodData = new BloodDataImpl(this, "");
-        bloodData.setBgaAdpaterAndClick(this);
-        tv_page_name.setText("血压数据");
-        back_left.setOnClickListener(this);
+        mHistoryAdapter = new AdapterBloodPressure(mHistoryList);
+        mRvBloodPressureHistory.setLayoutManager(new LinearLayoutManager(this));
+        mRvBloodPressureHistory.setAdapter(mHistoryAdapter);
+
+        RecyclerViewDivider divider = new RecyclerViewDivider.Builder(this)
+                .setStyle(RecyclerViewDivider.Style.BETWEEN)
+                .setDrawableRes(R.drawable.divider)
+                .build();
+        mRvBloodPressureHistory.addItemDecoration(divider);
 
     }
 
@@ -86,15 +102,6 @@ public class BloodHistoryActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
-    @Override
-    public void setBgaAdpaterAndClickResult(ResponseEntity<PageBean<BloodPressureDataBean>> result) {
-        if (result.getData().getElements() != null && result.getData().getElements().size() != 0) {
-            List<BloodPressureDataBean> blood_pressure_data = result.getData().getElements();
-            PressureHistoryAdapter pressureHistoryAdapter = new PressureHistoryAdapter(blood_pressure_data, this);
-            lv_blood_pressure_data.setAdapter(pressureHistoryAdapter);
-
-        }
-    }
 
     @Override
     protected void onResume() {

@@ -31,7 +31,6 @@
                     android:id="@+id/ll_blood_sugar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/shape_green_gradient"
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
                     android:paddingTop="50dp">
@@ -40,9 +39,9 @@
                         android:id="@+id/tv_sugar_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="血糖正常"
                         android:textColor="@color/word_white"
-                        android:textSize="28dp"/>
+                        android:textSize="28dp"
+                        tools:text="血糖正常"/>
 
                     <TextView
                         android:id="@+id/tv_kf"
@@ -58,9 +57,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="0.0"
                         android:textColor="@color/word_white"
-                        android:textSize="48sp"/>
+                        android:textSize="48sp"
+                        tools:text="0.0"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -87,9 +86,9 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="20dp"
-                    android:text="你的血糖正常"
                     android:textColor="@color/word_green"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    tools:text="你的血糖正常"/>
 
                 <TextView
                     android:id="@+id/tv_health_introduce"
@@ -98,9 +97,9 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
-                    android:text="请保持当前的健康生活方式"
                     android:textColor="@color/word_grad"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp"
+                    tools:text="请保持当前的健康生活方式"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -161,41 +160,52 @@
                     android:layout_height="10dp"
                     android:background="@color/ui_base_color"/>
 
-                <RelativeLayout
-
-                    android:layout_width="match_parent"
-                    android:layout_height="54dp">
-
-                    <TextView
-                        android:layout_width="4dp"
-                        android:layout_height="20dp"
-                        android:layout_centerVertical="true"
-                        android:background="@color/ui_green"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="20dp"
-                        android:text="血糖趋势"
-                        android:textColor="@color/word_black_heart"
-                        android:textSize="16sp"/>
-                </RelativeLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/ui_base_color"/>
 
                 <LinearLayout
+                    android:id="@+id/llayout_chart"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <com.idtk.smallchart.chart.CurveChart
-                        android:id="@+id/curveChart"
+
+                    <RelativeLayout
+
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="54dp">
+
+                        <TextView
+                            android:layout_width="4dp"
+                            android:layout_height="20dp"
+                            android:layout_centerVertical="true"
+                            android:background="@color/ui_green"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="20dp"
+                            android:text="血糖趋势"
+                            android:textColor="@color/word_black_heart"
+                            android:textSize="16sp"/>
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/ui_base_color"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <lecho.lib.hellocharts.view.LineChartView
+
+                            android:id="@+id/curveChart"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:layout_margin="16dp"/>
+                    </LinearLayout>
                 </LinearLayout>
 
                 <TextView

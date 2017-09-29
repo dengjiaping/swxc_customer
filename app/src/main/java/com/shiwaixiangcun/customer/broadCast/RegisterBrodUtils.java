@@ -1,20 +1,19 @@
 package com.shiwaixiangcun.customer.broadCast;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.view.View;
-import android.widget.Toast;
 
 /**
  * Created by Administrator on 2017/4/1.
  */
 
-public class RegistBrodUtils {
+public class RegisterBrodUtils {
 
     public static ConnectionChangeReceiver myReceiver;
     private static boolean isNet = false;
+    private static OnIsNetStateScenceListener onIsNetStateScenceListener;
 
     //广播注册
     public static void registerReceiver(final Activity a_regist, final View view) {
@@ -39,21 +38,18 @@ public class RegistBrodUtils {
 
     }
 
-
     //取消广播注册
     public static void unregisterReceiver(Activity a_unRegist) {
         a_unRegist.unregisterReceiver(myReceiver);
     }
 
-    private static OnIsNetStateScenceListener onIsNetStateScenceListener;
+    public static void setIsNetStateScenceListener(OnIsNetStateScenceListener onIsNetStateScenceListener) {
+        RegisterBrodUtils.onIsNetStateScenceListener = onIsNetStateScenceListener;
+    }
 
     //是否注册
     public interface OnIsNetStateScenceListener {
         void isNetStateScence(Boolean b);
-    }
-
-    public static void setIsNetStateScenceListener(OnIsNetStateScenceListener onIsNetStateScenceListener) {
-        RegistBrodUtils.onIsNetStateScenceListener = onIsNetStateScenceListener;
     }
 
 

@@ -18,9 +18,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.scwang.smartrefresh.header.MaterialHeader
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            app:srlAccentColor="@color/black_text_100"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_mall"
@@ -31,6 +32,7 @@
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:srlAccentColor="@color/black_text_100"
             app:srlClassicsSpinnerStyle="Translate"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 

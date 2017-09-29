@@ -223,7 +223,7 @@ public class HttpRequest {
 
 
     public static String getTokenByApplication() {
-        String login_detail = SharePreference.getStringSpParams(App.getInstance(), Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        String login_detail = SharePreference.getStringSpParams(App.getInstance(), Common.IS_SAVE_LOGIN, Common.SISAVELOGIN);
         if (Utils.isNotEmpty(login_detail)) {
             Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
             }.getType();

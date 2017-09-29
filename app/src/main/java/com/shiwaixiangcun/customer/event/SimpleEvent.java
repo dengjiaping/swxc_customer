@@ -27,6 +27,7 @@ public class SimpleEvent {
     public static final int UPDATE_BLOOD_FAT = 14;
     public static final int REFRESH_TOKEN = 15;
     public static final int CHECK_TOKEN = 16;
+    public static final int UPDATE_DOCTOR = 17;
     /**
      * 操作类型
      */

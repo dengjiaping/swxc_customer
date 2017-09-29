@@ -7,9 +7,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -32,28 +31,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * ToolFragment;
  */
 
-public class ToolFragment extends Fragment {
+public class ToolFragment extends LazyFragment {
 
     private static String BUG_TAG = "ToolFragment";
 
     @BindView(R.id.rv_tools)
     RecyclerView mRvTools;
     AdapterTool mAdapterTool;
-    Unbinder unbinder;
     private List<ToolBean> mToolList;
     private List<ToolBean> mHeathList;
     private List<ToolBean> mPropetyList;
     private List<ToolBean> mSelectiveList;
     private String mTitle;
     private Activity mActivity;
-    private boolean hasLogin = false;
+    private boolean hasLogin = true;
 
     public static Fragment getInstance(String title) {
 
@@ -62,20 +58,51 @@ public class ToolFragment extends Fragment {
         return fragment;
     }
 
-    @Nullable
+
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_tool, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        mActivity = this.getActivity();
-        return view;
+    protected int getContentViewLayoutID() {
+        return R.layout.fragment_tool;
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    protected void initViewsAndEvents(View view) {
         initView();
         initData();
+
+
+    }
+
+    @Override
+    protected void onFirstUserVisible() {
+        String isLogin = (String) AppSharePreferenceMgr.get(this.getActivity(), Common.USER_IS_LOGIN, "notLogin");
+        hasLogin = isLogin.equals("islogin");
+
+    }
+
+    @Override
+    protected void onUserVisible() {
+        String isLogin = (String) AppSharePreferenceMgr.get(this.getActivity(), Common.USER_IS_LOGIN, "notLogin");
+        Log.e(BUG_TAG, "是否登录" + isLogin);
+        if (isLogin == null) {
+            hasLogin = false;
+        }
+        if (isLogin.equals("notLogin")) {
+            hasLogin = false;
+        }
+        if (isLogin.equals("islogin")) {
+            hasLogin = true;
+        }
+
+    }
+
+    @Override
+    protected void onUserInvisible() {
+
+    }
+
+    @Override
+    protected void DestroyViewAndThing() {
+
     }
 
     private void initData() {
@@ -95,15 +122,15 @@ public class ToolFragment extends Fragment {
         mAdapterTool.addData(mToolList);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
+
     private void initView() {
 
-        String isLogin = (String) AppSharePreferenceMgr.get(this.getActivity(), Common.USER_IS_LOGIN, "notLogin");
-        if (isLogin.equals("notLogin")) {
-            hasLogin = false;
-        }
-        if (isLogin.equals("isLogin")) {
-            hasLogin = true;
-        }
+
         mAdapterTool = new AdapterTool(R.layout.layout_tool);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this.getActivity(), 4);
         mRvTools.setLayoutManager(gridLayoutManager);
@@ -116,11 +143,9 @@ public class ToolFragment extends Fragment {
                 switch (toolBean.id) {
                     case 1:
                         //体征数据
-                        if (hasLogin) {
-                            readyGo(PhysicalActivity.class);
-                        } else {
-                            readyGo(LoginActivity.class);
-                        }
+
+                        readyGo(PhysicalActivity.class);
+
                         break;
                     case 2:
                         //健康评测
@@ -129,12 +154,16 @@ public class ToolFragment extends Fragment {
                     case 3:
                         //健康方案
                         bundle.putInt("type", 3);
+
                         readyGo(WebActivity.class, bundle);
+
+
                         break;
                     case 4:
-                        //健康动态
-                        bundle.putInt("type", 4);
+
                         readyGo(WebActivity.class, bundle);
+
+
                         break;
                     case 5:
                         //预约挂号
@@ -142,11 +171,14 @@ public class ToolFragment extends Fragment {
                         readyGo(WebActivity.class, bundle);
                         break;
                     case 6:
-                        //预约挂号
-                        readyGo(TeatActivity.class);
+                        //健康食谱
+                        Toast.makeText(mContext, "暂未开通此功能", Toast.LENGTH_SHORT).show();
+//                        readyGo(TeatActivity.class);
                         break;
                     case 7:
                         //在线问诊
+                        bundle.putInt("type", 7);
+                        readyGo(WebActivity.class, bundle);
                         break;
                     case 8:
                         //在线报修
@@ -158,11 +190,21 @@ public class ToolFragment extends Fragment {
                         break;
                     case 10:
                         //房屋租售
-                        readyGo(HouseRentingActivity.class);
+                        if (hasLogin) {
+                            readyGo(HouseRentingActivity.class);
+                        } else {
+                            readyGo(LoginActivity.class);
+                        }
+
                         break;
                     case 11:
                         //在线缴费
-                        Toast.makeText(mActivity, "暂未开通此功能", Toast.LENGTH_SHORT).show();
+                        if (hasLogin) {
+                            Toast.makeText(mActivity, "暂未开通此功能", Toast.LENGTH_SHORT).show();
+                        } else {
+                            readyGo(LoginActivity.class);
+                        }
+
                         break;
                     case 12:
                         //周边生活
@@ -197,6 +239,7 @@ public class ToolFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mActivity = this.getActivity();
         mHeathList = new ArrayList<>();
         mSelectiveList = new ArrayList<>();
         mPropetyList = new ArrayList<>();
@@ -236,12 +279,6 @@ public class ToolFragment extends Fragment {
         mSelectiveList.add(jiankangbaoxian);
         mSelectiveList.add(lvyoudujia);
 
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 
 

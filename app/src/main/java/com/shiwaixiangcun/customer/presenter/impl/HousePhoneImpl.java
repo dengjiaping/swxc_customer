@@ -53,7 +53,7 @@ public class HousePhoneImpl implements IHousePhonePresenter {
 
     //房屋号码
     private void sendHousePhoneHttp(Context context) {
-        String login_detail = SharePreference.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        String login_detail = SharePreference.getStringSpParams(context, Common.IS_SAVE_LOGIN, Common.SISAVELOGIN);
         Log.i("eeeeeettt", login_detail);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
@@ -87,7 +87,7 @@ public class HousePhoneImpl implements IHousePhonePresenter {
 
     //绑定房屋
     private void sendBindPhoneHttp(Context context) {
-        String login_detail = SharePreference.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        String login_detail = SharePreference.getStringSpParams(context, Common.IS_SAVE_LOGIN, Common.SISAVELOGIN);
         Log.i("eeeeeettt", login_detail);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();

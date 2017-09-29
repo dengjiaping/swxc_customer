@@ -42,8 +42,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import lecho.lib.hellocharts.gesture.ContainerScrollType;
-import lecho.lib.hellocharts.gesture.ZoomType;
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.AxisValue;
 import lecho.lib.hellocharts.model.Line;
@@ -102,14 +100,16 @@ public class BloodFatActivity extends BaseActivity implements View.OnClickListen
     RelativeLayout mTopBarTransparent;
     @BindView(R.id.activity_blood_pressure)
     RelativeLayout mActivityBloodPressure;
+    @BindView(R.id.curveChart_t)
+    LineChartView mCurveChartT;
     @BindView(R.id.curveChart_a)
     LineChartView mCurveChartA;
     @BindView(R.id.curveChart_b)
     LineChartView mCurveChartB;
     @BindView(R.id.curveChart_c)
     LineChartView mCurveChartC;
-    @BindView(R.id.curveChart_d)
-    LineChartView mCurveChartD;
+    @BindView(R.id.llayout_chart)
+    LinearLayout mLlayoutChart;
 
 
     private int customId = 0;
@@ -138,58 +138,121 @@ public class BloodFatActivity extends BaseActivity implements View.OnClickListen
 
     }
 
-    private void initChart() {
-        initChartA();
-    }
 
     /**
      * 初始化胆固醇表格
+     *
+     * @param bloodFatList
      */
-    private void initChartA() {
-        List<PointValue> mPoint = new ArrayList<>();
-        List<AxisValue> mAxisXValues = new ArrayList<AxisValue>();
-        Log.e(BUG_TAG, mBloodFatList.size() + "");
-        for (int i = 1; i < 3; i++) {
-//            BloodFatBean.ElementsBean elementsBean = mBloodFatList.get(i - 1);
-            mAxisXValues.add(new AxisValue(i));
-            mPoint.add(new PointValue(i, i + 3));
-//            Log.e(BUG_TAG, elementsBean.getTotalCholesterol() + "");
+    private void initChart(List<BloodFatBean.ElementsBean> bloodFatList) {
+        if (bloodFatList.size() < 2) {
+            mLlayoutChart.setVisibility(View.GONE);
         }
-        List<Line> lines = new ArrayList<Line>();
-        Line line = new Line(mPoint).setColor(Color.parseColor("#FFCD41"));
-        line.setStrokeWidth(1);
-        line.setShape(ValueShape.CIRCLE);
-        line.setFilled(false);
-        line.setCubic(true);//曲线是否平滑，即是曲线还是折线
-        line.setHasLines(false);//是否用线显示。如果为false 则没有曲线只有点显示
-        line.setHasPoints(true);//是否显示圆点 如果为false 则没有原点只有点显示（每个数据点都是个大的圆点）
-        lines.add(line);
-        LineChartData data = new LineChartData();
-        data.setLines(lines);
 
+        Log.e(BUG_TAG, bloodFatList.size() + "");
+        /***
+         * 统一定义
+         * 甘油三酯     A
+         * 高密度脂蛋白 B
+         * 低密度脂蛋白 C
+         * 总胆固醇     T
+         *
+         */
+        List<PointValue> mPointT = new ArrayList<>();
+        //总胆固醇 数据点
+        List<PointValue> mPointA = new ArrayList<>();
+        //高密度脂蛋白 数据点
+        List<PointValue> mPointB = new ArrayList<>();
+        //低密度脂蛋白 数据点
+        List<PointValue> mPointC = new ArrayList<>();
+
+
+        List<Line> linesT = new ArrayList<Line>();
+        List<Line> linesC = new ArrayList<>();
+        List<Line> linesA = new ArrayList<>();
+        List<Line> linesB = new ArrayList<>();
+
+
+        List<AxisValue> mAxisXValues = new ArrayList<AxisValue>();
+
+        for (int i = 0; i < bloodFatList.size(); i++) {
+            BloodFatBean.ElementsBean elementsBean = bloodFatList.get(i);
+            mPointT.add(new PointValue(i, elementsBean.getTotalCholesterol()));
+            mPointA.add(new PointValue(i, elementsBean.getTriglyceride()));
+            mPointB.add(new PointValue(i, elementsBean.getTopLipo()));
+            mPointC.add(new PointValue(i, elementsBean.getLowLipo()));
+            mAxisXValues.add(new AxisValue(i).setLabel(i + ""));
+        }
         //坐标轴
         Axis axisX = new Axis(); //X轴
         axisX.setHasTiltedLabels(false);  //X坐标轴字体是斜的显示还是直的，true是斜的显示
-        axisX.setTextColor(Color.BLACK);  //设置字体颜色
-        axisX.setName("time");  //表格名称
+        axisX.setTextColor(getResources().getColor(R.color.black_text_80));  //设置字体颜色
         axisX.setTextSize(6);//设置字体大小
         axisX.setMaxLabelChars(7); //最多几个X轴坐标，意思就是你的缩放让X轴上数据的个数7<=x<=mAxisXValues.length
         axisX.setValues(mAxisXValues);  //填充X轴的坐标名称
         axisX.setHasLines(false); //x 轴分割线
         // Y轴是根据数据的大小自动设置Y轴上限(在下面我会给出固定Y轴数据个数的解决方案)
         Axis axisY = new Axis();  //Y轴
-        axisY.setName("Kg");//y轴标注
+        axisY.setName("mmol/L");//y轴标注
         axisY.setHasLines(true);
         axisY.setHasSeparationLine(true);
         axisY.setTextSize(6);//设置字体大小
-        data.setAxisXBottom(axisX); //x 轴在底部
-        data.setAxisYLeft(axisY);  //Y轴设置在左边
-        mCurveChartA.setInteractive(true);
-        mCurveChartA.setZoomType(ZoomType.HORIZONTAL);
-        mCurveChartA.setMaxZoom((float) 2);//最大方法比例
-        mCurveChartA.setContainerScrollEnabled(true, ContainerScrollType.HORIZONTAL);
-        mCurveChartA.setLineChartData(data);
-        mCurveChartA.setVisibility(View.VISIBLE);
+
+
+        LineChartData dataT = new LineChartData();
+        LineChartData dataA = new LineChartData();
+        LineChartData dataB = new LineChartData();
+        LineChartData dataC = new LineChartData();
+
+        Line lineT = new Line(mPointT).setColor(getResources().getColor(R.color.ui_green));
+        Line lineA = new Line(mPointA).setColor(getResources().getColor(R.color.ui_green));
+        Line lineB = new Line(mPointB).setColor(getResources().getColor(R.color.ui_green));
+        Line lineC = new Line(mPointC).setColor(getResources().getColor(R.color.ui_green));
+
+        initLine(lineT);
+        initLine(lineA);
+        initLine(lineB);
+        initLine(lineC);
+
+        linesT.add(lineT);
+        linesA.add(lineA);
+        linesB.add(lineB);
+        linesC.add(lineC);
+
+
+        dataT.setLines(linesT);
+        dataA.setLines(linesA);
+        dataB.setLines(linesB);
+        dataC.setLines(linesC);
+
+
+        dataT.setAxisXBottom(axisX); //x 轴在底部
+        dataT.setAxisYLeft(axisY);  //Y轴设置在左边
+        dataA.setAxisXBottom(axisX); //x 轴在底部
+        dataA.setAxisYLeft(axisY);  //Y轴设置在左边
+        dataB.setAxisXBottom(axisX); //x 轴在底部
+        dataB.setAxisYLeft(axisY);  //Y轴设置在左边
+        dataC.setAxisXBottom(axisX); //x 轴在底部
+        dataC.setAxisYLeft(axisY);  //Y轴设置在左边
+
+
+        mCurveChartT.setInteractive(true);
+        mCurveChartT.setLineChartData(dataT);
+        mCurveChartA.setLineChartData(dataA);
+        mCurveChartB.setLineChartData(dataB);
+        mCurveChartC.setLineChartData(dataC);
+
+    }
+
+    private void initLine(Line line) {
+        line.setStrokeWidth(1);
+        line.setShape(ValueShape.CIRCLE);
+        line.setFilled(false);
+        line.setCubic(true);//曲线是否平滑，即是曲线还是折线
+        line.setHasLines(true);//是否用线显示。如果为false 则没有曲线只有点显示
+        line.setHasPoints(true);//是否显示圆点 如果为false 则没有原点只有点显示（每个数据点都是个大的圆点）
+
+
     }
 
 
@@ -210,8 +273,6 @@ public class BloodFatActivity extends BaseActivity implements View.OnClickListen
         mTvLowLipo.setText(elementsBean.getLowLipo() + "");
         mTvFatTime.setText(DateUtil.getMillon(elementsBean.getCreateTime()));
         mTvBloodFatIntroduce.setText(elementsBean.getSuggestion());
-
-//        initChart();
 
     }
 
@@ -238,7 +299,11 @@ public class BloodFatActivity extends BaseActivity implements View.OnClickListen
 
                 break;
             case "DANGER":
-//                mLlBloodSugar.setBackground(getResources().getDrawable(R.drawable.shape_red_gradient));
+
+                mTvBloodFatName.setText("血脂危险");
+                mTvFatTx.setText("您的血脂处于危险状态");
+                mTvFatTx.setTextColor(Color.parseColor("#F96B21"));
+                mLlBloodFat.setBackground(getResources().getDrawable(R.drawable.shape_red_gradient));
                 break;
 
         }
@@ -272,7 +337,7 @@ public class BloodFatActivity extends BaseActivity implements View.OnClickListen
      */
     private void initData() {
 
-        String login_detail = SharePreference.getStringSpParams(mContext, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        String login_detail = SharePreference.getStringSpParams(mContext, Common.IS_SAVE_LOGIN, Common.SISAVELOGIN);
         Log.i(BUG_TAG, login_detail);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
@@ -298,8 +363,8 @@ public class BloodFatActivity extends BaseActivity implements View.OnClickListen
 
                                 BloodFatBean.ElementsBean elementsBean = responseEntity.getData().getElements().get(0);
                                 mBloodFatList.addAll(responseEntity.getData().getElements());
-                                initChart();
                                 EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_BLOOD_FAT, 1, elementsBean));
+                                initChart(mBloodFatList);
 
                                 break;
                             case 1018:
@@ -346,4 +411,6 @@ public class BloodFatActivity extends BaseActivity implements View.OnClickListen
         EventCenter.getInstance().unregister(this);
         StatService.onPause(this);
     }
+
+
 }

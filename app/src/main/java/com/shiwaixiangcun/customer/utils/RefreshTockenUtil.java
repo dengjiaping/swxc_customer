@@ -43,7 +43,7 @@ public class RefreshTockenUtil implements Serializable {
                         String access_token = responseEntity.getData().getAccess_token();
                         Log.i("ooooooooooo", access_token);
                         SharePreference.saveStringToSpParams(context, Common.ISORNOLOGIN, Common.SIORNOLOGIN, "yesLogin");
-                        SharePreference.saveStringToSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN, responseJson);
+                        SharePreference.saveStringToSpParams(context, Common.IS_SAVE_LOGIN, Common.SISAVELOGIN, responseJson);
 
 
 //                        sendInformationHttp(context);

@@ -224,6 +224,7 @@ public class FragmentOrder extends LazyFragment {
                             return;
                         }
                         mOrder = order.getData();
+
                         if (mOrder.getTotalAmount() == 0) {
                             mLlayoutNodata.setVisibility(View.VISIBLE);
                         }
@@ -260,7 +261,7 @@ public class FragmentOrder extends LazyFragment {
                 break;
         }
 
-        String loginInfo = SharePreference.getStringSpParams(mContext, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        String loginInfo = SharePreference.getStringSpParams(mContext, Common.IS_SAVE_LOGIN, Common.SISAVELOGIN);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(loginInfo, type);

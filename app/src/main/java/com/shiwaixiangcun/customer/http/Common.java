@@ -12,7 +12,7 @@ public class Common implements Serializable {
     public static final String ADDRESS = "address";
     public static final String DEFAULT_ADDRESS = "defaultAddress";
     public static final String TOKEN = "token";
-    public static final String REFRESH_TOKEN = "refreash";
+    public static final String REFRESH_TOKEN = "refresh";
     public static final String USER_IS_LOGIN = "isLogin";
     //测试服务器
     public static String domain = "http://shiwaixiangcun.cn/";
@@ -192,10 +192,10 @@ public class Common implements Serializable {
     public static String ISORNOLOGIN = "isornologin";
     public static String SIORNOLOGIN = "siornologin";
     //    保存账号
-    public static String ISSAVEACCOUNT = "issaveaccount";
-    public static String SISAVEACCOUNT = "sisaveaccount";
+    public static String IS_SAVE_ACCOUNT = "issaveaccount";
+    public static String SI_SAVE_ACCOUNT = "sisaveaccount";
     //    保存登录信息
-    public static String ISSAVELOGIN = "issavelogin";
+    public static String IS_SAVE_LOGIN = "issavelogin";
     public static String SISAVELOGIN = "sisavelogin";
     //    选定的房产
     public static String ISSELECTHOSE = "isselecthose";
@@ -224,4 +224,6 @@ public class Common implements Serializable {
     public static String ISRESIDENT = "isresident";
     public static String SIRESIDENT = "siresident";
 
+    //站点id
+    public static int siteID = 1;
 }

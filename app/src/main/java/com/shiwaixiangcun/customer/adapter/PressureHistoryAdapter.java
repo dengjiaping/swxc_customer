@@ -45,7 +45,7 @@ public class PressureHistoryAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder mViewHolder = null;
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.adapter_blood_pressure_data, null);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_blood_pressure_data, null);
             mViewHolder = new ViewHolder();
             mViewHolder.tv_pressure_data_time = (TextView)convertView.findViewById(R.id.tv_pressure_data_time);
             mViewHolder.tv_pressure_data_shrinkBlood = (TextView)convertView.findViewById(R.id.tv_pressure_data_shrinkBlood);

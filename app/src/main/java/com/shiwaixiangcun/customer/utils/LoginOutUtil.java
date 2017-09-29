@@ -30,7 +30,7 @@ public class LoginOutUtil implements Serializable {
 
         Toast.makeText(context, "您的账号在其他设备登录", Toast.LENGTH_LONG).show();
         //登出
-        String login_detail = SharePreference.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        String login_detail = SharePreference.getStringSpParams(context, Common.IS_SAVE_LOGIN, Common.SISAVELOGIN);
         Log.i("eeeeeettt", login_detail);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();

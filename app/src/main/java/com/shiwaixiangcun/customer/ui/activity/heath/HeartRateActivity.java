@@ -100,7 +100,7 @@ public class HeartRateActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void initData() {
-        String login_detail = SharePreference.getStringSpParams(mContext, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        String login_detail = SharePreference.getStringSpParams(mContext, Common.IS_SAVE_LOGIN, Common.SISAVELOGIN);
         Log.i(BUG_TAG, login_detail);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();

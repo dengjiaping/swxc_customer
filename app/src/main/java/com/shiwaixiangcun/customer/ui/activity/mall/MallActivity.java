@@ -54,7 +54,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * 商城Activity
+ * 商城主页面Activity
  */
 
 public class MallActivity extends BaseActivity implements View.OnClickListener {
@@ -293,7 +293,6 @@ public class MallActivity extends BaseActivity implements View.OnClickListener {
         RecyclerViewDivider divider = new RecyclerViewDivider.Builder(this)
                 .setOrientation(RecyclerViewDivider.VERTICAL)
                 .setStyle(RecyclerViewDivider.Style.BETWEEN)
-                .setSize(10f)
                 .setMarginLeft(72)
                 .setMarginRight(8)
                 .setDrawableRes(R.drawable.divider)

@@ -1,11 +1,8 @@
 package com.shiwaixiangcun.customer.ui.activity.heath;
 
 import android.graphics.Color;
-import android.graphics.PointF;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,10 +13,6 @@ import android.widget.TextView;
 import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
 import com.google.gson.reflect.TypeToken;
-import com.idtk.smallchart.chart.CurveChart;
-import com.idtk.smallchart.data.CurveData;
-import com.idtk.smallchart.data.PointShape;
-import com.idtk.smallchart.interfaces.iData.ICurveData;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -34,7 +27,6 @@ import com.shiwaixiangcun.customer.model.BloodSugarBean;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.utils.DateUtil;
-import com.shiwaixiangcun.customer.utils.DisplayUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.LoginOutUtil;
 import com.shiwaixiangcun.customer.utils.RefreshTockenUtil;
@@ -50,6 +42,13 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import lecho.lib.hellocharts.model.Axis;
+import lecho.lib.hellocharts.model.AxisValue;
+import lecho.lib.hellocharts.model.Line;
+import lecho.lib.hellocharts.model.LineChartData;
+import lecho.lib.hellocharts.model.PointValue;
+import lecho.lib.hellocharts.model.ValueShape;
+import lecho.lib.hellocharts.view.LineChartView;
 
 /**
  * 血糖详情Activity
@@ -70,8 +69,6 @@ public class BloodSugarActivity extends BaseActivity implements View.OnClickList
     TextView mTvSugarQs;
     @BindView(R.id.tv_health_introduce)
     TextView mTvHealthIntroduce;
-    @BindView(R.id.curveChart)
-    CurveChart mCurveChart;
     @BindView(R.id.rl_history_blood)
     RelativeLayout mRlHistoryBlood;
     @BindView(R.id.refreshLayout)
@@ -92,15 +89,17 @@ public class BloodSugarActivity extends BaseActivity implements View.OnClickList
     RelativeLayout mTopBarTransparent;
     @BindView(R.id.activity_blood_pressure)
     RelativeLayout mActivityBloodPressure;
-
-
-    private ArrayList<ICurveData> mDataList = new ArrayList<>();
-    private CurveData mCurveData = new CurveData();
-    private ArrayList<PointF> mPointArrayList = new ArrayList<>();
-    private CurveChart curveChart;
+    @BindView(R.id.curveChart)
+    LineChartView mCurveChart;
+    @BindView(R.id.llayout_chart)
+    LinearLayout mLlayoutChart;
     private List<BloodSugarBean.ElementsBean> mBloodSugarList;
 
     private int customId = 0;
+    //血糖数据点
+    private List<PointValue> mSugarList = new ArrayList<>();
+    //X坐标
+    private List<AxisValue> mAxisXList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,17 +113,17 @@ public class BloodSugarActivity extends BaseActivity implements View.OnClickList
         StatService.setLogSenderDelayed(10);
         StatService.setSendLogStrategy(this, SendStrategyEnum.APP_START, 1, false);
         StatService.setSessionTimeOut(30);
-        layoutView();
+        initView();
         requestData();
         mBloodSugarList = new ArrayList<>();
-        initData();
+
     }
 
     /**
      * 请求数据
      */
     private void requestData() {
-        String login_detail = SharePreference.getStringSpParams(mContext, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        String login_detail = SharePreference.getStringSpParams(mContext, Common.IS_SAVE_LOGIN, Common.SISAVELOGIN);
         Log.i(BUG_TAG, login_detail);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
@@ -152,7 +151,7 @@ public class BloodSugarActivity extends BaseActivity implements View.OnClickList
                                 BloodSugarBean.ElementsBean elementsBean = responseEntity.getData().getElements().get(0);
                                 EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_BLOOD_SUGAR, 1, elementsBean));
                                 mBloodSugarList.addAll(responseEntity.getData().getElements());
-//                                mAdapter.notifyDataSetChanged();
+                                initChart(mBloodSugarList);
 
                                 break;
                             case 1018:
@@ -167,38 +166,74 @@ public class BloodSugarActivity extends BaseActivity implements View.OnClickList
                 });
     }
 
-    private void layoutView() {
-
-        mBackLeft.setOnClickListener(this);
-        mRlHistoryBlood.setOnClickListener(this);
-        curveChart = (CurveChart) findViewById(R.id.curveChart);
-    }
-
-    private void initData() {
-
-        if (null != mBloodSugarList) {
-            for (int i = 0; i < mBloodSugarList.size(); i++) {
-                mPointArrayList.add(new PointF(i, Float.parseFloat(mBloodSugarList.get(i).getBloodSugar() + "")));
-            }
-            mCurveData.setValue(mPointArrayList);
-            mCurveData.setColor(Color.parseColor("#1CCC8C"));
-            Drawable drawable_b = ContextCompat.getDrawable(this, R.drawable.fade_red);
-            mCurveData.setDrawable(drawable_b);
-
-            mCurveData.setPointShape(PointShape.CIRCLE);
-
-
-            mCurveData.setPaintWidth(DisplayUtil.px2dip(this, 3));
-            mCurveData.setTextSize(DisplayUtil.px2dip(this, 10));
-            mDataList.add(mCurveData);
-            Log.i("wwwwwwwwww", mDataList.size() + "");
-            if (mPointArrayList.size() > 1) {
-                curveChart.setDataList(mDataList);
-            }
-
+    /**
+     * 设置图表数据
+     *
+     * @param bloodSugarList
+     */
+    private void initChart(List<BloodSugarBean.ElementsBean> bloodSugarList) {
+        if (bloodSugarList == null) {
+            return;
         }
 
+        if (bloodSugarList.size() < 2) {
+            // TODO: 2017/9/29 绘制一个点
+            mLlayoutChart.setVisibility(View.GONE);
+        }
+        Log.e(BUG_TAG, "" + bloodSugarList.size());
+        for (int i = 0; i < bloodSugarList.size(); i++) {
+            BloodSugarBean.ElementsBean elementsBean = bloodSugarList.get(i);
+            mSugarList.add(new PointValue(i, (float) elementsBean.getBloodSugar()));
+            mAxisXList.add(new AxisValue(i).setLabel(i + ""));
+        }
+
+        LineChartData lineChartData = new LineChartData();
+        //设置线的属性
+        Line line = new Line(mSugarList);
+        line.setColor(getResources().getColor(R.color.ui_green));
+        line.setShape(ValueShape.CIRCLE);//折线图上每个数据点的形状  这里是圆形 （有三种 ：ValueShape.SQUARE  ValueShape.CIRCLE  ValueShape.DIAMOND）
+        line.setCubic(true);//曲线是否平滑，即是曲线还是折线
+        line.setFilled(false);//是否填充曲线的面积
+        line.setHasLabels(false);//曲线的数据坐标是否加上备注
+        line.setStrokeWidth(1);
+        line.setHasLines(true);//是否用线显示。如果为false 则没有曲线只有点显示
+        line.setHasPoints(true);//是否显示圆点 如果为false 则没有原点只有点显示（每个数据点都是个大的圆点）
+        //将所有线条添加至数组中
+        List<Line> lines = new ArrayList<>();
+        lines.add(line);
+
+        lineChartData.setLines(lines);
+        //设置坐标轴
+
+        //X轴
+        Axis axisX = new Axis(); //X轴
+        axisX.setHasTiltedLabels(false);  //X坐标轴字体是斜的显示还是直的，true是斜的显示
+        axisX.setTextColor(getResources().getColor(R.color.black_text_80));  //设置字体颜色
+        //axisX.setName("date");  //表格名称
+        axisX.setTextSize(10);//设置字体大小
+        axisX.setMaxLabelChars(7); //最多几个X轴坐标，意思就是你的缩放让X轴上数据的个数7<=x<=mAxisXValues.length
+        axisX.setValues(mAxisXList);  //填充X轴的坐标名称
+        axisX.isAutoGenerated();
+        axisX.setHasLines(true); //x 轴分割线
+        lineChartData.setAxisXBottom(axisX);
+
+
+        // Y轴
+        Axis axisY = new Axis();  //Y轴
+        axisY.setName("mmol/L");//y轴标注
+        axisY.setTextColor(getResources().getColor(R.color.black_text_80));
+        axisY.setTextSize(10);//设置字体大小
+        axisY.setHasLines(true);
+        lineChartData.setAxisYLeft(axisY);
+
+        mCurveChart.setLineChartData(lineChartData);
     }
+
+    private void initView() {
+        mBackLeft.setOnClickListener(this);
+        mRlHistoryBlood.setOnClickListener(this);
+    }
+
 
     @Override
     public void onClick(View view) {

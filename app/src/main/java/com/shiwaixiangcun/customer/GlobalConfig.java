@@ -17,6 +17,7 @@ public class GlobalConfig {
     public static String getBloodFat = HM_DOMAIN + "/mc/blood/fat.json";
     //Token相关接口
     public static String checkToken = HM_DOMAIN + "/mc/validate/access/token.json";
+    public static String getDoctor = HM_DOMAIN + "/mc/chunyu/view.json";
     private static String NO_DOMAIN = "http://shiwaixiangcun.cn";
     public static String refreshToken = NO_DOMAIN + "/oauth2/token";
     private static String OT_DOMAIN = "http://ot.shiwaixiangcun.cn";

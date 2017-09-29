@@ -87,7 +87,7 @@ public class ManageAddressActivity extends BaseActivity implements View.OnClickL
      * 获取Token
      */
     private void initToken() {
-        String login_info = SharePreference.getStringSpParams(this, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        String login_info = SharePreference.getStringSpParams(this, Common.IS_SAVE_LOGIN, Common.SISAVELOGIN);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(login_info, type);

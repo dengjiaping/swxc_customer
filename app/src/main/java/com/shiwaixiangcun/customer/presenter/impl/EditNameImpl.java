@@ -48,7 +48,7 @@ public class EditNameImpl implements IEditNamePresenter {
 
     //编辑姓名
     private void sendGetRentHttp(final Context context) {
-        String login_detail = SharePreference.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        String login_detail = SharePreference.getStringSpParams(context, Common.IS_SAVE_LOGIN, Common.SISAVELOGIN);
         Log.i("eeeeeettt", login_detail);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();

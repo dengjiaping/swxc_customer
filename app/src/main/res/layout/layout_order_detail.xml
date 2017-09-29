@@ -121,6 +121,7 @@
                     android:src="@mipmap/divider_address"/>
 
                 <LinearLayout
+                    android:id="@+id/llayout_good_info"
                     android:layout_width="match_parent"
                     android:layout_height="130dp"
                     android:background="@color/white"
@@ -276,8 +277,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="16dp"
                         android:text="配送信息"
                         android:textColor="#FF2D3230"
                         android:textSize="16sp"/>
@@ -287,10 +287,13 @@
                         android:id="@+id/tv_order_express"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+
                         android:layout_marginLeft="16dp"
+                        android:layout_marginTop="16dp"
                         android:background="@null"
                         android:gravity="center_vertical"
                         android:hint="暂无快递信息"
+                        android:minHeight="54dp"
                         android:textColor="@color/mall_text"
                         android:textColorHint="@color/gray"
                         android:textSize="16sp"

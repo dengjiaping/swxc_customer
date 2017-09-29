@@ -19,6 +19,7 @@ import java.util.List;
 public class AdapterJingxuan extends BaseQuickAdapter<MallBean.DataBean.DailySelectionListBean, BaseViewHolder> {
 
 
+
     public AdapterJingxuan(@Nullable List<MallBean.DataBean.DailySelectionListBean> data) {
         super(R.layout.item_jingxuan, data);
     }
@@ -29,6 +30,10 @@ public class AdapterJingxuan extends BaseQuickAdapter<MallBean.DataBean.DailySel
         helper.setText(R.id.tv_daily_title, item.getGoodsName());
 
         ImageDisplayUtil.showImageView(mContext, item.getImagePath(), (ImageView) helper.getView(R.id.iv_daily_icon));
+    }
+
+    public void clearData() {
+
     }
 
 

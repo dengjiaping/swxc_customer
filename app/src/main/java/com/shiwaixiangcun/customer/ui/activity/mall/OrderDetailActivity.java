@@ -18,6 +18,7 @@ import com.google.gson.reflect.TypeToken;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
@@ -106,6 +107,21 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     LinearLayout mLlInfoPrice;
     DialogPay mDialogPay;
     OrderDetailBean.OrderInfoBean orderInfo;
+    @BindView(R.id.llayout_good_info)
+    LinearLayout mLlayoutGoodInfo;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout mRefreshLayout;
+    @BindView(R.id.tv_top_right)
+    TextView mTvTopRight;
+    @BindView(R.id.iv_share_right)
+    ImageView mIvShareRight;
+    @BindView(R.id.iv_sao_right)
+    ImageView mIvSaoRight;
+    @BindView(R.id.ll_image_right)
+    LinearLayout mLlImageRight;
+    @BindView(R.id.top_bar_write)
+    RelativeLayout mTopBarWrite;
+    int goodsId = 0;
     private int orderId = 0;
     private String tokenString;
 
@@ -127,7 +143,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void initData() {
-        String loginInfo = SharePreference.getStringSpParams(mContext, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        String loginInfo = SharePreference.getStringSpParams(mContext, Common.IS_SAVE_LOGIN, Common.SISAVELOGIN);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(loginInfo, type);
@@ -164,6 +180,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
 
     private void initView() {
         mDialogPay = new DialogPay(mContext);
+        mLlayoutGoodInfo.setOnClickListener(this);
         mBackLeft.setOnClickListener(this);
         mTvPageName.setText("订单详情");
         mBtnCommit.setOnClickListener(this);
@@ -224,6 +241,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                 mTvOrderStatus.setText("已关闭");
                 break;
 
+
         }
 
         // TODO: 2017/9/23 设置配送信息
@@ -244,6 +262,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
         } else {
             mTvUserMessage.setText(buyersInfo.getLeavingMessage());
         }
+
 
         //更新订单信息
         orderInfo = orderDetail.getOrderInfo();
@@ -267,6 +286,8 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
 
         //更新商品的信息
         OrderDetailBean.GoodsDetailBean goodsDetailBean = orderDetail.getGoodsDetail().get(0);
+
+        goodsId = goodsDetailBean.getGoodsId();
         mTvGoodDesc.setText(goodsDetailBean.getAttrDescription());
         mTvGoodTitle.setText(goodsDetailBean.getGoodName());
         mTvGoodPrice.setText("¥ " + ArithmeticUtils.format(goodsDetailBean.getPrice()));
@@ -328,6 +349,13 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                     }
                 });
 
+                break;
+
+            case R.id.llayout_good_info:
+                Bundle bundle = new Bundle();
+                //// TODO: 2017/9/29  
+                bundle.putInt("goodId", goodsId);
+                readyGo(GoodDetailActivity.class, bundle);
                 break;
         }
     }

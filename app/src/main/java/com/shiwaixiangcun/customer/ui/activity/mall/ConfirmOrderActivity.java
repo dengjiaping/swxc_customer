@@ -240,7 +240,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             return;
         }
 
-        final String loginInfo = SharePreference.getStringSpParams(mContext, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        final String loginInfo = SharePreference.getStringSpParams(mContext, Common.IS_SAVE_LOGIN, Common.SISAVELOGIN);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(loginInfo, type);
@@ -255,6 +255,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         params.put("leavingMessage", mStrMessage);
         params.put("sellerId", data.getSellerId());
         params.put("access_token", tokenString);
+        params.put("siteId", Common.siteID);
         OkGo.<String>post(GlobalConfig.putOrder)
                 .params(params)
                 .isSpliceUrl(true)
@@ -269,7 +270,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
                         switch (currentOrder.getResponseCode()) {
                             case 1001:
-                                Log.e(BUG_TAG, "提交成功");
+                                Toast.makeText(mContext, "提交订单成功", Toast.LENGTH_SHORT).show();
                                 final String orderNumber = currentOrder.getData().getNumber();
                                 mDialogPay.setPrice("¥" + ArithmeticUtils.format(currentOrder.getData().getShouldPay()));
                                 mDialogPay.show();

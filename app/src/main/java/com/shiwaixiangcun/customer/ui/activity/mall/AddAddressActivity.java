@@ -124,7 +124,7 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
             }
 
             //获取token值
-            final String login_detail = SharePreference.getStringSpParams(this, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+            final String login_detail = SharePreference.getStringSpParams(this, Common.IS_SAVE_LOGIN, Common.SISAVELOGIN);
             Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
             }.getType();
             final ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(login_detail, type);

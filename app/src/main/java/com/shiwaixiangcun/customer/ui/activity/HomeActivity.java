@@ -30,7 +30,7 @@ import com.google.gson.reflect.TypeToken;
 import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.ComListAdapter;
-import com.shiwaixiangcun.customer.broadCast.RegistBrodUtils;
+import com.shiwaixiangcun.customer.broadCast.RegisterBrodUtils;
 import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.imageloader.GlideImageLoader;
 import com.shiwaixiangcun.customer.model.AnnouncementBean;
@@ -143,7 +143,7 @@ public class HomeActivity extends BaseActivity implements IHomeView, ViewPager.O
 
         layoutView();
         // 广播注册
-        RegistBrodUtils.registerReceiver(this, rl_net_not);
+        RegisterBrodUtils.registerReceiver(this, rl_net_not);
         initData();
 
 

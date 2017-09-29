@@ -582,7 +582,7 @@ public class ResidentCertificationActivity extends Activity implements View.OnCl
 
     //某单元下得房屋
     private void sendHouseHttp(Context context, int id, final String little_total, final int value) {
-        String login_detail = SharePreference.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        String login_detail = SharePreference.getStringSpParams(context, Common.IS_SAVE_LOGIN, Common.SISAVELOGIN);
         Log.i("eeeeeettt", login_detail);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();

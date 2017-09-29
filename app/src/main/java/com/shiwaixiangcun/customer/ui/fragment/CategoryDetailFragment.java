@@ -1,6 +1,7 @@
 package com.shiwaixiangcun.customer.ui.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterDetail;
@@ -17,6 +17,7 @@ import com.shiwaixiangcun.customer.interfaces.CheckListener;
 import com.shiwaixiangcun.customer.interfaces.RvListener;
 import com.shiwaixiangcun.customer.model.CategoryBean;
 import com.shiwaixiangcun.customer.model.RightBean;
+import com.shiwaixiangcun.customer.ui.activity.mall.CategoryActivity;
 import com.shiwaixiangcun.customer.utils.ItemHeaderDecoration;
 
 import java.util.ArrayList;
@@ -160,7 +161,12 @@ public class CategoryDetailFragment extends Fragment implements CheckListener {
         mAdapterDetail = new AdapterDetail(mList, mContext, new RvListener() {
             @Override
             public void onItemClick(int id, int position) {
-                Toast.makeText(mContext, mList.get(position).getName(), Toast.LENGTH_SHORT).show();
+                Bundle bundle = new Bundle();
+                bundle.putString("goodName", mList.get(position).getName());
+                Intent intent = new Intent();
+                intent.putExtras(bundle);
+                intent.setClass(mContext, CategoryActivity.class);
+                mContext.startActivity(intent);
             }
         });
         mDetailRecyclerView.setLayoutManager(mGridLayoutManager);

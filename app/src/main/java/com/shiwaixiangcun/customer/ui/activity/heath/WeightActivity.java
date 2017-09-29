@@ -1,7 +1,6 @@
 package com.shiwaixiangcun.customer.ui.activity.heath;
 
 import android.graphics.Color;
-import android.graphics.PointF;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
@@ -14,8 +13,6 @@ import android.widget.TextView;
 import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
 import com.google.gson.reflect.TypeToken;
-import com.idtk.smallchart.data.CurveData;
-import com.idtk.smallchart.interfaces.iData.ICurveData;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -45,7 +42,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import lecho.lib.hellocharts.gesture.ZoomType;
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.AxisValue;
 import lecho.lib.hellocharts.model.Line;
@@ -101,11 +97,8 @@ public class WeightActivity extends BaseActivity implements View.OnClickListener
     RelativeLayout mActivityBloodPressure;
     @BindView(R.id.curveChart)
     LineChartView mCurveChart;
-    private ChangeLightImageView back_left;
-
-    private ArrayList<ICurveData> mDataList = new ArrayList<>();
-    private CurveData mCurveData = new CurveData();
-    private ArrayList<PointF> mPointArrayList = new ArrayList<>();
+    @BindView(R.id.llayout_chart)
+    LinearLayout mLlayoutChart;
 
     private List<WeightBean.ElementsBean> mWeightList;
 
@@ -132,13 +125,13 @@ public class WeightActivity extends BaseActivity implements View.OnClickListener
         layoutView();
         requestData();
         mWeightList = new ArrayList<>();
-//        initData();
+
 
     }
 
     private void requestData() {
 
-        String login_detail = SharePreference.getStringSpParams(mContext, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+        String login_detail = SharePreference.getStringSpParams(mContext, Common.IS_SAVE_LOGIN, Common.SISAVELOGIN);
         Log.i(BUG_TAG, login_detail);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
@@ -166,6 +159,8 @@ public class WeightActivity extends BaseActivity implements View.OnClickListener
                                 WeightBean.ElementsBean elementsBean = responseEntity.getData().getElements().get(0);
                                 EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_WIGHT, 1, elementsBean));
                                 mWeightList.addAll(responseEntity.getData().getElements());
+
+                                initChart(mWeightList);
                                 break;
                             case 1018:
                                 RefreshTockenUtil.sendIntDataInvatation(mContext, refresh_token);
@@ -180,50 +175,56 @@ public class WeightActivity extends BaseActivity implements View.OnClickListener
 
     }
 
-    private void layoutView() {
-        mBackLeft.setOnClickListener(this);
-        mRlHistoryBlood.setOnClickListener(this);
-        //坐标点
-        List<PointValue> mPointValues = new ArrayList<PointValue>();
+    private void initChart(List<WeightBean.ElementsBean> weightList) { //坐标点
+        List<PointValue> mWightList = new ArrayList<PointValue>();
 
         List<AxisValue> mAxisXValues = new ArrayList<AxisValue>();
-        for (int i = 0; i < 7; i++) {
-            mPointValues.add(new PointValue(i, i * i));
-            mAxisXValues.add(new AxisValue(i).setLabel(i * 2 + ""));
+        if (weightList.size() < 2) {
+            mLlayoutChart.setVisibility(View.GONE);
         }
-        Line line = new Line(mPointValues).setColor(Color.parseColor("#FFCD41"));  //折线的颜色（橙色）
+        for (int i = 0; i < weightList.size(); i++) {
+            mWightList.add(new PointValue(i, weightList.get(i).getWeight()));
+            mAxisXValues.add(new AxisValue(i).setLabel(i + ""));
+        }
+
+        LineChartData data = new LineChartData();
+        Line line = new Line(mWightList).setColor(getResources().getColor(R.color.ui_green));  //折线的颜色（橙色）
         List<Line> lines = new ArrayList<Line>();
         line.setShape(ValueShape.CIRCLE);//折线图上每个数据点的形状  这里是圆形 （有三种 ：ValueShape.SQUARE  ValueShape.CIRCLE  ValueShape.DIAMOND）
         line.setCubic(true);//曲线是否平滑，即是曲线还是折线
         line.setFilled(false);//是否填充曲线的面积
+        line.setStrokeWidth(1);
         line.setHasLabels(false);//曲线的数据坐标是否加上备注
-//      line.setHasLabelsOnlyForSelected(true);//点击数据坐标提示数据（设置了这个line.setHasLabels(true);就无效）
         line.setHasLines(true);//是否用线显示。如果为false 则没有曲线只有点显示
         line.setHasPoints(true);//是否显示圆点 如果为false 则没有原点只有点显示（每个数据点都是个大的圆点）
         lines.add(line);
-        LineChartData data = new LineChartData();
+
+        //添加线条
         data.setLines(lines);
         //坐标轴
         Axis axisX = new Axis(); //X轴
         axisX.setHasTiltedLabels(true);  //X坐标轴字体是斜的显示还是直的，true是斜的显示
-        axisX.setTextColor(Color.BLACK);  //设置字体颜色
-        axisX.setName("time");  //表格名称
+        axisX.setTextColor(getResources().getColor(R.color.black_text_80));  //设置字体颜色
         axisX.setTextSize(6);//设置字体大小
-        axisX.setMaxLabelChars(8); //最多几个X轴坐标，意思就是你的缩放让X轴上数据的个数7<=x<=mAxisXValues.length
+        axisX.setMaxLabelChars(10); //最多几个X轴坐标，意思就是你的缩放让X轴上数据的个数7<=x<=mAxisXValues.length
         axisX.setValues(mAxisXValues);  //填充X轴的坐标名称
         axisX.setHasLines(true); //x 轴分割线
         // Y轴是根据数据的大小自动设置Y轴上限(在下面我会给出固定Y轴数据个数的解决方案)
         Axis axisY = new Axis();  //Y轴
         axisY.setName("Kg");//y轴标注
-        axisY.setTextSize(6);//设置字体大小
+        axisY.setTextSize(10);//设置字体大小
         data.setAxisXBottom(axisX); //x 轴在底部
         data.setAxisYLeft(axisY);  //Y轴设置在左边
-        mCurveChart.setInteractive(true);
-        mCurveChart.setZoomType(ZoomType.HORIZONTAL);
-        mCurveChart.setMaxZoom((float) 2);//最大方法比例
-//        mCurveChart.setContainerScrollEnabled(true, ContainerScrollType.HORIZONTAL);
+
         mCurveChart.setLineChartData(data);
-        mCurveChart.setVisibility(View.VISIBLE);
+
+
+    }
+
+    private void layoutView() {
+        mBackLeft.setOnClickListener(this);
+        mRlHistoryBlood.setOnClickListener(this);
+
 
     }
 
@@ -242,6 +243,7 @@ public class WeightActivity extends BaseActivity implements View.OnClickListener
         mTvWeightTime.setText(DateUtil.getMillon(elementsBean.getCreateTime()));
         mTvWeightDream.setText(elementsBean.getWeightDream() + "");
         mTvWeightIntroduce.setText(elementsBean.getSuggestion());
+        Log.e(BUG_TAG, elementsBean.getSuggestion());
 
     }
 

@@ -2,6 +2,7 @@ package com.shiwaixiangcun.customer.ui.activity.heath;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,14 @@ public class FragmentHealth extends BaseFragment implements View.OnClickListener
     private static String BUG_TAG = "fragment—health";
 
     HealthUserBean mHealthUserBean;
+
+    boolean visible = false;
+    @BindView(R.id.iv_health_status)
+    ImageView mIvHealthStatus;
+    @BindView(R.id.tv_center_health)
+    TextView mTvCenterHealth;
+    @BindView(R.id.tv_bottom_health)
+    TextView mTvBottomHealth;
     @BindView(R.id.tv_bp_name)
     TextView mTvBpName;
     @BindView(R.id.tv_bp_detail)
@@ -90,15 +99,8 @@ public class FragmentHealth extends BaseFragment implements View.OnClickListener
     TextView mTvTcDate;
     @BindView(R.id.cv_tc)
     RelativeLayout mCvTc;
-
     Unbinder unbinder;
-    @BindView(R.id.iv_health_status)
-    ImageView mIvHealthStatus;
-    @BindView(R.id.tv_center_health)
-    TextView mTvCenterHealth;
-    @BindView(R.id.tv_bottom_health)
-    TextView mTvBottomHealth;
-    boolean visible = false;
+
     public static FragmentHealth getInstance() {
 
         FragmentHealth fragmentHealth = new FragmentHealth();
@@ -120,14 +122,14 @@ public class FragmentHealth extends BaseFragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
         View view = inflater.inflate(R.layout.fragment_health, container, false);
-        unbinder = ButterKnife.bind(this, view);
         Bundle bundle = getArguments();//从activity传过来的Bundle
         if (bundle != null) {
             visible = bundle.getBoolean("visible");
             mHealthUserBean = bundle.getParcelable("health");
         }
 
-
+        Log.e(BUG_TAG, mHealthUserBean.getAvatar());
+        unbinder = ButterKnife.bind(this, view);
         return view;
     }
 
@@ -157,33 +159,36 @@ public class FragmentHealth extends BaseFragment implements View.OnClickListener
         } else {
             mIvHealthStatus.setVisibility(View.GONE);
         }
-        switch (healthUserBean.getTotalStatus()) {
-            case "NORMAL":
-                mIvHealthStatus.setImageResource(R.mipmap.heart_green);
-                mTvCenterHealth.setText("非常好");
-                break;
-            case "WARNING":
-                mIvHealthStatus.setImageResource(R.mipmap.health_jx);
-                mTvCenterHealth.setText("警告");
-                break;
-            case "DANGER":
-                mIvHealthStatus.setImageResource(R.mipmap.health_wx);
-                mTvCenterHealth.setText("紧急");
-                break;
+        if (healthUserBean.getTotalStatus() != null) {
+
+            switch (healthUserBean.getTotalStatus()) {
+                case "NORMAL":
+                    mIvHealthStatus.setImageResource(R.mipmap.heart_green);
+                    mTvCenterHealth.setText("非常好");
+                    break;
+                case "WARNING":
+                    mIvHealthStatus.setImageResource(R.mipmap.health_jx);
+                    mTvCenterHealth.setText("警告");
+                    break;
+                case "DANGER":
+                    mIvHealthStatus.setImageResource(R.mipmap.health_wx);
+                    mTvCenterHealth.setText("紧急");
+                    break;
+            }
         }
 
-        mTvBottomHealth.setText(healthUserBean.getSuggestion());
+        mTvBottomHealth.setText(healthUserBean.getSuggestion() + "");
         //进行血压初始化
         setVisible(healthUserBean.getPressureStatus(), mCvBp);
         mTvBpName.setText("血压");
         mTvBpDetail.setText("(mmHg)");
         mTvBpData.setText(String.format("%d/%d", healthUserBean.getShrinkBlood(), healthUserBean.getRelaxationBlood()));
-        mTvBpDate.setText(DateUtil.getMillon(healthUserBean.getPressureCreateTime()));
+        mTvBpDate.setText(DateUtil.getMillon(healthUserBean.getPressureCreateTime()) + "");
         //初始化心率
         setVisible(healthUserBean.getHeartRateStatus(), mCvP);
         mTvPName.setText("心率");
         mTvPDetail.setText("(bpm)");
-        mTvPData.setText(String.valueOf(healthUserBean.getHeartRate()));
+        mTvPData.setText(String.valueOf(healthUserBean.getHeartRate()) + "");
         mTvPDate.setText(DateUtil.getMillon(healthUserBean.getHeartRateTime()));
 
         //初始化血糖

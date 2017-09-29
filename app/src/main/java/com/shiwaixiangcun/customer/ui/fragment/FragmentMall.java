@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,6 +71,7 @@ import butterknife.Unbinder;
 
 public class FragmentMall extends BaseFragment implements View.OnClickListener {
 
+    private static String TAG = "fragmentMall";
     @BindView(R.id.back_left)
     ChangeLightImageView mBackLeft;
     @BindView(R.id.edt_search)
@@ -85,7 +87,6 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
     SmartRefreshLayout mRefreshLayout;
     Unbinder unbinder;
 
-    private int pinzhiGoodID = 0;
 
     private AdapterMall mAdapterMall;
     private List<ElementBean.ElementsBean> mGuessList = new ArrayList<>();
@@ -110,6 +111,9 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
 
     private Activity mContext;
 
+    private int pinzhiGoodID = 0;
+    private int mCurrentPg = 1;
+
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -121,7 +125,7 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
         requestKeyword();
         requestBanner();
         requestData();
-        requestGood("GuessLike", 5, 1, 20);
+        requestGood("GuessLike", 5, mCurrentPg, 20, false);
     }
 
 
@@ -171,12 +175,13 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
     /**
      * 请求商品列表
      *
-     * @param type  请求类型
-     * @param flag  标志位
-     * @param start 请求页码
-     * @param size  每页数目
+     * @param type   请求类型
+     * @param flag   标志位
+     * @param start  请求页码
+     * @param size   每页数目
+     * @param isPull 类型（判断是上拉加载还是，下拉刷新）
      */
-    private void requestGood(String type, final int flag, int start, int size) {
+    private void requestGood(String type, final int flag, int start, int size, final boolean isPull) {
 
         HttpParams params = new HttpParams();
         params.put("goodsSubjectValue", type);
@@ -204,6 +209,12 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
                                     return;
                                 }
                                 EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_MALL, flag, data.getData()));
+                                if (isPull) {
+                                    EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_MALL, 10, data.getData()));
+                                }
+                                break;
+                            default:
+                                Toast.makeText(mContext, "获取数据失败", Toast.LENGTH_SHORT).show();
                                 break;
                         }
                     }
@@ -292,6 +303,7 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
      * 请求商城首页数据
      */
     private void requestData() {
+        Log.e(TAG, "请求数据");
         OkGo.<String>get(GlobalConfig.getMallHome)
                 .cacheKey("mall")            // 设置当前请求的缓存key,建议每个不同功能的请求设置一个
                 .cacheMode(CacheMode.DEFAULT)    // 缓存模式，详细请看缓存介绍
@@ -328,9 +340,8 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
         RecyclerViewDivider divider = new RecyclerViewDivider.Builder(this.getActivity())
                 .setOrientation(RecyclerViewDivider.VERTICAL)
                 .setStyle(RecyclerViewDivider.Style.END)
-                .setSize(10f)
-                .setMarginLeft(8)
-                .setMarginRight(8)
+                .setMarginLeft(16)
+                .setMarginRight(16)
                 .setDrawableRes(R.drawable.divider)
                 .build();
         mRvMall.addItemDecoration(divider);
@@ -344,7 +355,6 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
         });
         mBackLeft.setOnClickListener(this);
         mRlayoutSearch.setOnClickListener(this);
-        mRefreshLayout.setEnableHeaderTranslationContent(false);
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(final RefreshLayout refreshlayout) {
@@ -353,8 +363,7 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
                     public void run() {
                         // TODO: 2017/9/23 下拉刷新 
                         requestData();
-                        refreshlayout.finishRefresh();
-                        refreshlayout.setLoadmoreFinished(false);
+
                     }
                 }, 2000);
             }
@@ -364,8 +373,11 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
             public void onLoadmore(RefreshLayout refreshlayout) {
                 // TODO: 2017/9/23 上拉加载更多
 
-                refreshlayout.finishLoadmore();
-                refreshlayout.setLoadmoreFinished(true);
+
+                requestGood("GuessLike", 5, mCurrentPg + 1, 20, true);
+                mCurrentPg++;
+                mRefreshLayout.finishLoadmore();
+                mRefreshLayout.setLoadmoreFinished(true);
 
 
             }
@@ -446,16 +458,28 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
                 MallBean.DataBean.HotSellBean hotDataBean = mallData.getHotSell();
                 MallBean.DataBean.NewGoodsSaleBean newDataBean = mallData.getNewGoodsSale();
                 //更新品质好货
-                mJingXuanAdapter.addData(mallData.getDailySelectionList());
+                jingxuanList.clear();
+                jingxuanList.addAll(mallData.getDailySelectionList());
+                mJingXuanAdapter.notifyDataSetChanged();
                 mTvPinzhiPrice.setText("¥ " + ArithmeticUtils.format(pinzhiData.getMinPrice()));
                 mTvPinzhiTitle.setText(pinzhiData.getGoodsName());
                 pinzhiGoodID = pinzhiData.getGoodsId();
                 ImageDisplayUtil.showImageView(mContext, pinzhiData.getImagePath(), mIvPinzhiCover);
-
                 //更新热卖商品
                 ImageDisplayUtil.showImageView(mContext, hotDataBean.getImagePath(), mIvHotCover);
                 //更新新品热卖
                 ImageDisplayUtil.showImageView(mContext, newDataBean.getImagePath(), mIvNewCover);
+
+                mRefreshLayout.finishRefresh();
+                mRefreshLayout.setLoadmoreFinished(false);
+                break;
+
+            case 10:
+                ElementBean guessDataMore = (ElementBean) simpleEvent.getData();
+                mGuessList.addAll(guessDataMore.getElements());
+                mAdapterMall.notifyDataSetChanged();
+
+                break;
 
         }
     }

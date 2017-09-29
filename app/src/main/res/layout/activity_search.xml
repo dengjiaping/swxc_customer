@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_gray"
+    android:background="@color/bg_white"
     android:orientation="vertical"
     tools:context="com.shiwaixiangcun.customer.ui.activity.mall.SearchActivity">
 
@@ -26,6 +26,8 @@
             android:orientation="horizontal">
 
             <com.shiwaixiangcun.customer.widget.ChangeLightImageView
+
+
                 android:id="@+id/back_left"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -52,9 +54,11 @@
                 android:textSize="14sp"/>
 
             <TextView
+
                 android:id="@+id/tv_cancel"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_gravity="center_vertical"
                 android:clickable="true"
                 android:text="取消"

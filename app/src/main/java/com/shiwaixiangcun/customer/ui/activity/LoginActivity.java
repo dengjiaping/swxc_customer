@@ -1,6 +1,5 @@
 package com.shiwaixiangcun.customer.ui.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.R;
@@ -37,8 +35,6 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
-
-    private static final String BUG_TAG = "LogActivity";
     private TimeCount time;
     private TextView tv_get_verification;
     private Button btn_login;
@@ -60,12 +56,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         StatService.setSessionTimeOut(30);
 
 
-        layoutView();
+        initView();
         initData();
 
     }
 
-    private void layoutView() {
+    private void initView() {
         tv_get_verification = (TextView) findViewById(R.id.tv_get_verification);
         btn_login = (Button) findViewById(R.id.btn_login);
         et_get_psw = (EditText) findViewById(R.id.et_get_psw);
@@ -78,7 +74,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private void initData() {
         time = new TimeCount(60000, 1000, tv_get_verification);
         tv_get_verification.setOnClickListener(this);
-        et_username.setText(SharePreference.getStringSpParams(this, Common.ISSAVEACCOUNT, Common.SISAVEACCOUNT));
+
+        et_username.setText((CharSequence) AppSharePreferenceMgr.get(this, Common.IS_SAVE_ACCOUNT, ""));
+//        et_username.setText(SharePreference.getStringSpParams(this, Common.IS_SAVE_ACCOUNT, Common.SI_SAVE_ACCOUNT));
         btn_login.setOnClickListener(this);
         back_left.setOnClickListener(this);
     }
@@ -143,21 +141,32 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 }.getType();
                 ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(responseJson, type);
 
-                if (responseEntity.getResponseCode() == 1003) {
-                    mDialogLoading = new DialogLoading(LoginActivity.this, "正在登录...");
-                    mDialogLoading.show();
-                    String access_token = responseEntity.getData().getAccess_token();
-                    String refresh_token = responseEntity.getData().getRefresh_token();
-                    AppSharePreferenceMgr.put(mContext, Common.TOKEN, access_token);
-                    AppSharePreferenceMgr.put(mContext, Common.REFRESH_TOKEN, refresh_token);
-                    AppSharePreferenceMgr.put(mContext, Common.USER_IS_LOGIN, "islogin");
-                    SharePreference.saveStringToSpParams(LoginActivity.this, Common.ISSAVEACCOUNT, Common.SISAVEACCOUNT, et_username.getText().toString().trim());
-                    SharePreference.saveStringToSpParams(LoginActivity.this, Common.ISSAVELOGIN, Common.SISAVELOGIN, responseJson);
+                if (responseEntity == null) {
+                    Toast.makeText(mContext, "服务器出错", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                switch (responseEntity.getResponseCode()) {
+                    case 1003:
+                        mDialogLoading = new DialogLoading(LoginActivity.this, "正在登录...");
+                        mDialogLoading.show();
+                        String access_token = responseEntity.getData().getAccess_token();
+                        String refresh_token = responseEntity.getData().getRefresh_token();
 
-                    sendInformationHttp(LoginActivity.this);
-
-                } else if (responseEntity.getResponseCode() == 1016) {
-                    Toast.makeText(LoginActivity.this, "验证码错误", Toast.LENGTH_LONG).show();
+                        //保存用户的Token 值
+                        AppSharePreferenceMgr.put(mContext, Common.TOKEN, access_token);
+                        AppSharePreferenceMgr.put(mContext, Common.REFRESH_TOKEN, refresh_token);
+                        //保存用户登录的账号
+                        AppSharePreferenceMgr.put(mContext, Common.IS_SAVE_ACCOUNT, et_username.getText().toString().trim());
+                        //保存用户的登录信息
+                        AppSharePreferenceMgr.put(LoginActivity.this, Common.IS_SAVE_LOGIN, responseJson);
+                        requestInformation(access_token, refresh_token);
+                        break;
+                    case 1016:
+                        Toast.makeText(LoginActivity.this, "验证码错误", Toast.LENGTH_LONG).show();
+                        break;
+                    default:
+                        Toast.makeText(LoginActivity.this, "登录出错", Toast.LENGTH_LONG).show();
+                        break;
                 }
 
             }
@@ -169,67 +178,62 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
 
-    //个人信息
-    private void sendInformationHttp(final Context context) {
-        String login_detail = SharePreference.getStringSpParams(context, Common.ISSAVELOGIN, Common.SISAVELOGIN);
-        Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
-        }.getType();
-        ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(login_detail, type);
-        final String refresh_token = responseEntity.getData().getRefresh_token();
+    /**
+     * 获取当前登录用户的用户信息
+     *
+     * @param token         登录时获取到的Token
+     * @param refresh_token 登录时获取的Refresh_token
+     */
+    private void requestInformation(final String token, final String refresh_token) {
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("access_token", responseEntity.getData().getAccess_token());
+        hashMap.put("access_token", token);
 
         HttpRequest.get(Common.information, hashMap, new HttpCallBack() {
             @Override
             public void onSuccess(String responseJson) {
-                InformationaBean user = new Gson().fromJson(responseJson, InformationaBean.class);
-                if (user.getResponseCode() == 1001) {
-//                    List<Cookie> allCookie = OkGo.getInstance().getCookieJar().getCookieStore().getAllCookie();
-//                    for (Cookie cookie : allCookie) {
-//
-//                        String name = cookie.name();
-//                        String value = cookie.value();
-//                        Log.e("bbbbbbbbbbbm", name + "------" + value);
-//                        if (name.equals("uid")) {
-//                            Log.e("bbbbbbbbbbbm---------------", value);
-//                        SharePreference.saveStringToSpParams(LoginActivity.this,Common.ISCOOKIE,Common.SICOOKIE,value);
-//                        }
-//
-//                    }
-                    SharePreference.saveStringToSpParams(LoginActivity.this, Common.ISORNOLOGIN, Common.SIORNOLOGIN, "yesLogin");
-                    if (Utils.isNotEmpty(user.getData().getAvatar())) {
-                        if (Utils.isNotEmpty(user.getData().getAvatar().getAccessUrl())) {
-                            SharePreference.saveStringToSpParams(LoginActivity.this, Common.ISIMAGEHEAD, Common.SIIMAGEHEAD, user.getData().getAvatar().getAccessUrl());
+                InformationaBean user = JsonUtil.fromJson(responseJson, InformationaBean.class);
+                if (user == null) {
+                    return;
+                }
+                switch (user.getResponseCode()) {
+                    case 1001:
+                        AppSharePreferenceMgr.put(mContext, Common.USER_IS_LOGIN, "islogin");
+                        SharePreference.saveStringToSpParams(LoginActivity.this, Common.ISORNOLOGIN, Common.SIORNOLOGIN, "isLogin");
+                        if (Utils.isNotEmpty(user.getData().getAvatar())) {
+                            if (Utils.isNotEmpty(user.getData().getAvatar().getAccessUrl())) {
+                                SharePreference.saveStringToSpParams(mContext, Common.ISIMAGEHEAD, Common.SIIMAGEHEAD, user.getData().getAvatar().getAccessUrl());
+                            } else {
+                                SharePreference.saveStringToSpParams(mContext, Common.ISIMAGEHEAD, Common.SIIMAGEHEAD, "");
+                            }
                         } else {
-                            SharePreference.saveStringToSpParams(LoginActivity.this, Common.ISIMAGEHEAD, Common.SIIMAGEHEAD, "");
+                            SharePreference.saveStringToSpParams(mContext, Common.ISIMAGEHEAD, Common.SIIMAGEHEAD, "");
                         }
-                    } else {
-                        SharePreference.saveStringToSpParams(LoginActivity.this, Common.ISIMAGEHEAD, Common.SIIMAGEHEAD, "");
-                    }
 
-
-                    SharePreference.saveStringToSpParams(LoginActivity.this, Common.ISUSERNAME, Common.SIUSERNAME, user.getData().getName());
-                    SharePreference.saveStringToSpParams(LoginActivity.this, Common.ISUSERSEX, Common.SIUSERSEX, user.getData().getSex());
-                    SharePreference.saveStringToSpParams(LoginActivity.this, Common.ISUSEROLD, Common.SIUSEROLD, TimerToTimerUtil.stampToInspectionDate(user.getData().getBirthday() + ""));
-                    SharePreference.saveStringToSpParams(LoginActivity.this, Common.ISUSERPHONE, Common.SIUSERPHONE, user.getData().getPhone());
-                    mDialogLoading.close();
-                    if (Utils.isNotEmpty(mineLogin)) {
-                        if (mineLogin.equals("mineLogin")) {
-                            Intent intent = new Intent();
-                            setResult(RESULT_OK, intent);
+                        SharePreference.saveStringToSpParams(mContext, Common.ISUSERNAME, Common.SIUSERNAME, user.getData().getName());
+                        SharePreference.saveStringToSpParams(mContext, Common.ISUSERSEX, Common.SIUSERSEX, user.getData().getSex());
+                        SharePreference.saveStringToSpParams(mContext, Common.ISUSEROLD, Common.SIUSEROLD, TimerToTimerUtil.stampToInspectionDate(user.getData().getBirthday() + ""));
+                        SharePreference.saveStringToSpParams(mContext, Common.ISUSERPHONE, Common.SIUSERPHONE, user.getData().getPhone());
+                        mDialogLoading.close();
+                        if (Utils.isNotEmpty(mineLogin)) {
+                            if (mineLogin.equals("mineLogin")) {
+                                Intent intent = new Intent();
+                                setResult(RESULT_OK, intent);
+                            }
                         }
-                    }
-                    finish();
-                } else if (user.getResponseCode() == 1018) {
-                    RefreshTockenUtil.sendIntDataInvatation(context, refresh_token);
-                } else if (user.getResponseCode() == 1019) {
-                    LoginOutUtil.sendLoginOutUtil(context);
+                        finish();
+                        break;
+                    case 1018:
+                        RefreshTockenUtil.sendIntDataInvatation(mContext, refresh_token);
+                        break;
+                    case 1019:
+                        LoginOutUtil.sendLoginOutUtil(mContext);
+                        break;
                 }
             }
 
             @Override
             public void onFailed(Exception e) {
-                Toast.makeText(context, "登录失败", Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, "获取信息失败", Toast.LENGTH_LONG).show();
                 mDialogLoading.close();
             }
         });

@@ -141,7 +141,7 @@ public class EditAddressActivity extends BaseActivity implements View.OnClickLis
                 imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
             }
             //获取token值
-            String login_detail = SharePreference.getStringSpParams(this, Common.ISSAVELOGIN, Common.SISAVELOGIN);
+            String login_detail = SharePreference.getStringSpParams(this, Common.IS_SAVE_LOGIN, Common.SISAVELOGIN);
             Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
             }.getType();
             final ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(login_detail, type);

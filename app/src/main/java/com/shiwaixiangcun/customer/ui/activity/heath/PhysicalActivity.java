@@ -22,9 +22,10 @@ import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterFamily;
 import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.model.HealthUserBean;
+import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
-import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
+import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
 import java.lang.reflect.Type;
@@ -53,6 +54,7 @@ public class PhysicalActivity extends BaseActivity implements View.OnClickListen
     FragmentTransaction ft;
     private List<HealthUserBean> mUserBeanList;
     private FragmentHealth mFragmentHealth;
+    private String tokenString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,13 +69,19 @@ public class PhysicalActivity extends BaseActivity implements View.OnClickListen
      * 请求数据
      */
     private void initData() {
-        String tokenString = (String) AppSharePreferenceMgr.get(mContext, Common.TOKEN, "token");
+        final String loginInfo = SharePreference.getStringSpParams(mContext, Common.IS_SAVE_LOGIN, Common.SISAVELOGIN);
+        Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
+        }.getType();
+        ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(loginInfo, type);
+        tokenString = responseEntity.getData().getAccess_token();
         Log.e(BUG_TAG, tokenString);
         OkGo.<String>get(GlobalConfig.getPhysical)
                 .params("access_token", tokenString)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
+                        Log.e(BUG_TAG, response.getRawCall().request().toString());
+                        Log.e(BUG_TAG, response.body());
                         Type type = new TypeToken<ResponseEntity<List<HealthUserBean>>>() {
                         }.getType();
                         ResponseEntity<List<HealthUserBean>> responseEntity = JsonUtil.fromJson(response.body(), type);

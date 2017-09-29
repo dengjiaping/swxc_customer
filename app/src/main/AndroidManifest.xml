@@ -395,7 +395,6 @@
         <activity android:name=".ui.activity.mall.SearchResultActivity">
         </activity>
         <activity android:name=".ui.activity.MainActivity">
-
         </activity>
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
@@ -434,6 +433,8 @@
         <activity android:name=".ui.activity.heath.WebActivity">
         </activity>
         <activity android:name=".ui.fragment.TeatActivity">
+        </activity>
+        <activity android:name=".ui.activity.mall.CategoryActivity">
         </activity>
     </application>
 

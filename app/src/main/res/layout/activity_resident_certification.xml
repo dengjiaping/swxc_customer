@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/activity_resident_certification"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/ui_base_color"
-    tools:context="com.shiwaixiangcun.customer.ui.activity.ResidentCertificationActivity">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/activity_resident_certification"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/ui_base_color"
+                tools:context="com.shiwaixiangcun.customer.ui.activity.ResidentCertificationActivity">
 
     <include
         android:id="@+id/include"
@@ -35,7 +35,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
             android:gravity="center"
-            android:text="在线报修目前仅限\n恒信天鹅堡住户通过认证才能使用"
+            android:text="房屋租售目前仅限\n恒信天鹅堡住户通过认证才能使用"
             android:textColor="@color/word_grad"
             android:textSize="14sp" />
 
@@ -109,10 +109,10 @@
                 app:npv_ItemPaddingHorizental="5dp"
                 app:npv_ItemPaddingVertical="5dp"
                 app:npv_ShowCount="5"
+                app:npv_TextArray="@array/main_priority_menu_new"
                 app:npv_TextSizeNormal="16sp"
                 app:npv_TextSizeSelected="20sp"
-                app:npv_WrapSelectorWheel="true"
-                app:npv_TextArray="@array/main_priority_menu_new"/>
+                app:npv_WrapSelectorWheel="true"/>
             <com.shiwaixiangcun.customer.widget.WheelView
                 android:id="@+id/WheelView_t"
                 android:layout_width="0dp"
@@ -124,10 +124,10 @@
                 app:npv_ItemPaddingHorizental="5dp"
                 app:npv_ItemPaddingVertical="5dp"
                 app:npv_ShowCount="5"
+                app:npv_TextArray="@array/main_priority_menu_new"
                 app:npv_TextSizeNormal="16sp"
                 app:npv_TextSizeSelected="20sp"
-                app:npv_WrapSelectorWheel="true"
-                app:npv_TextArray="@array/main_priority_menu_new"/>
+                app:npv_WrapSelectorWheel="true"/>
             <com.shiwaixiangcun.customer.widget.WheelView
                 android:id="@+id/WheelView_h"
                 android:layout_width="0dp"
@@ -139,10 +139,10 @@
                 app:npv_ItemPaddingHorizental="5dp"
                 app:npv_ItemPaddingVertical="5dp"
                 app:npv_ShowCount="5"
+                app:npv_TextArray="@array/main_priority_menu_new"
                 app:npv_TextSizeNormal="16sp"
                 app:npv_TextSizeSelected="20sp"
-                app:npv_WrapSelectorWheel="true"
-                app:npv_TextArray="@array/main_priority_menu_new"/>
+                app:npv_WrapSelectorWheel="true"/>
             <com.shiwaixiangcun.customer.widget.WheelView
                 android:id="@+id/WheelView_f"
                 android:layout_width="0dp"
@@ -154,27 +154,27 @@
                 app:npv_ItemPaddingHorizental="5dp"
                 app:npv_ItemPaddingVertical="5dp"
                 app:npv_ShowCount="5"
+                app:npv_TextArray="@array/main_priority_menu_new"
                 app:npv_TextSizeNormal="16sp"
                 app:npv_TextSizeSelected="20sp"
-                app:npv_WrapSelectorWheel="true"
-                app:npv_TextArray="@array/main_priority_menu_new"/>
+                app:npv_WrapSelectorWheel="true"/>
 
         </LinearLayout>
     </LinearLayout>
 
     <Button
+        android:id="@+id/btn_to_other"
         android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_height="44dp"
-        android:layout_marginBottom="30dp"
         android:background="@drawable/acr_blue_bg"
         android:gravity="center"
         android:text="下一步"
         android:textColor="@color/word_white"
-        android:textSize="16sp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/btn_to_other" />
+        android:textSize="16sp"/>
 
 </RelativeLayout>

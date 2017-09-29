@@ -42,7 +42,7 @@ public class AdapterFamily extends BaseQuickAdapter<HealthUserBean, BaseViewHold
         } else {
             helper.setText(R.id.tv_family_name, "(" + item.getName() + ")");
         }
-        helper.setText(R.id.tv_relationship, item.getRelationship());
+        helper.setText(R.id.tv_relationship, item.getRelationship() + "");
         ImageDisplayUtil.showImageView(mContext, item.getAvatar(), circleImageView);
         if (item.getTotalStatus() == null) {
             return;

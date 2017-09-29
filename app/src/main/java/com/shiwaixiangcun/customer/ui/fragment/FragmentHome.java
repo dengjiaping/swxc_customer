@@ -33,7 +33,7 @@ import com.baidu.mobstat.StatService;
 import com.google.gson.reflect.TypeToken;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.ComListAdapter;
-import com.shiwaixiangcun.customer.broadCast.RegistBrodUtils;
+import com.shiwaixiangcun.customer.broadCast.RegisterBrodUtils;
 import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.imageloader.GlideImageLoader;
 import com.shiwaixiangcun.customer.model.AnnouncementBean;
@@ -180,7 +180,7 @@ public class FragmentHome extends BaseFragment implements IHomeView, ViewPager.O
 
         layoutView(view);
         // 广播注册
-        RegistBrodUtils.registerReceiver(mContext, rl_net_not);
+        RegisterBrodUtils.registerReceiver(mContext, rl_net_not);
         initData();
     }
 
