@@ -81,7 +81,7 @@ public class GoodListActivity extends BaseActivity implements View.OnClickListen
                 mTvPageName.setText("热卖商品");
                 break;
             case 3:
-                mTvPageName.setText("新品热卖");
+                mTvPageName.setText("新品特卖");
                 break;
         }
 

@@ -67,7 +67,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     TextView mTvGoodTitle;
     @BindView(R.id.tv_good_desc)
     TextView mTvGoodDesc;
-    @BindView(R.id.tv_good_price)
+    @BindView(R.id.tv_good_item_price)
     TextView mTvGoodPrice;
     @BindView(R.id.tv_good_amount)
     TextView mTvGoodAmount;
@@ -81,7 +81,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     TextView mTvOrderId;
     @BindView(R.id.tv_order_date)
     TextView mTvOrderDate;
-    @BindView(R.id.tv_order_total)
+    @BindView(R.id.tv_good_total)
     TextView mTvOrderTotal;
     @BindView(R.id.tv_fare)
     TextView mTvFare;
@@ -91,7 +91,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     TextView mTvPageName;
     @BindView(R.id.tv_cancel)
     TextView mTvCancel;
-    @BindView(R.id.tv_total)
+    @BindView(R.id.should_pay)
     TextView mTvTotal;
     @BindView(R.id.btn_commit)
     Button mBtnCommit;
@@ -122,8 +122,11 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     @BindView(R.id.top_bar_write)
     RelativeLayout mTopBarWrite;
     int goodsId = 0;
+    DialogInfo dialogDelete;
+    DialogInfo dialogCancel;
     private int orderId = 0;
     private String tokenString;
+//    DialogPay dialog
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -184,6 +187,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
         mBackLeft.setOnClickListener(this);
         mTvPageName.setText("订单详情");
         mBtnCommit.setOnClickListener(this);
+        mTvCancel.setOnClickListener(this);
 
     }
 
@@ -220,6 +224,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
             case "WaitPay":
                 mTvOrderStatus.setText("等待付款");
                 mBtnCommit.setVisibility(View.VISIBLE);
+                mTvCancel.setVisibility(View.VISIBLE);
                 mBtnCommit.setText("立即付款");
                 break;
             case "WaitDeliver":
@@ -239,6 +244,8 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                 break;
             case "Closed":
                 mTvOrderStatus.setText("已关闭");
+                mBtnCommit.setVisibility(View.VISIBLE);
+                mBtnCommit.setText("删除订单");
                 break;
 
 
@@ -329,14 +336,32 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                         Log.e(BUG_TAG, "立即付款");
                         payOrder();
                         break;
+                    case "删除订单":
+                        Log.e(BUG_TAG, "删除订单");
+                        dialogDelete = new DialogInfo(mContext);
+                        dialogDelete.setDialogTitle("删除订单");
+                        dialogDelete.setDialogInfo("您确定要删除订单吗？");
+                        dialogDelete.setListener(new DialogInfo.onCallBackListener() {
+                            @Override
+                            public void closeBtn(DialogInfo dialog) {
+                                dialog.dismiss();
+                            }
+
+                            @Override
+                            public void confirmBtn(DialogInfo dialog) {
+                                deleteOrder();
+                                dialog.dismiss();
+                            }
+                        });
+                        break;
                 }
 
                 break;
             case R.id.tv_cancel:
-                DialogInfo dialogInfo = new DialogInfo(mContext);
-                dialogInfo.setDialogTitle("取消订单");
-                dialogInfo.setDialogInfo("您确定要取消订单吗？取消订单后，订单将变为关闭状态。");
-                dialogInfo.setListener(new DialogInfo.onCallBackListener() {
+                dialogCancel = new DialogInfo(mContext);
+                dialogCancel.setDialogTitle("取消订单");
+                dialogCancel.setDialogInfo("您确定要取消订单吗？取消订单后，订单将变为关闭状态。");
+                dialogCancel.setListener(new DialogInfo.onCallBackListener() {
                     @Override
                     public void closeBtn(DialogInfo dialog) {
                         dialog.dismiss();
@@ -359,6 +384,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                 break;
         }
     }
+
 
     /**
      *
@@ -400,7 +426,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
 
     private void confirmOrder() {
 
-        commonRequest(orderId, GlobalConfig.cancelOrder, "确认订单");
+        commonRequest(orderId, GlobalConfig.cancelOrder, "确认收货");
     }
 
     /**
@@ -412,6 +438,13 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
 
     }
 
+    /**
+     * 删除订单
+     */
+    private void deleteOrder() {
+
+        commonRequest(orderId, GlobalConfig.deleteOrder, "删除订单");
+    }
 
     private void commonRequest(int orderId, String url, final String prompt) {
         OkGo.<String>put(url)
@@ -421,6 +454,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
+                        Log.e(BUG_TAG, response.getRawCall().request().toString());
                         String body = response.body();
                         if (body == null) {
                             return;

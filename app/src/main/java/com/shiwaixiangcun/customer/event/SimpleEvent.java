@@ -28,6 +28,7 @@ public class SimpleEvent {
     public static final int REFRESH_TOKEN = 15;
     public static final int CHECK_TOKEN = 16;
     public static final int UPDATE_DOCTOR = 17;
+    public static final int UPDATE_CATEGORY = 18;
     /**
      * 操作类型
      */

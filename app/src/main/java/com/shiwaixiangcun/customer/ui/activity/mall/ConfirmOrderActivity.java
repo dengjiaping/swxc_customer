@@ -17,6 +17,7 @@ import com.google.gson.reflect.TypeToken;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
@@ -57,12 +58,21 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
     private static final int ADD_ADDRESS = 0X12;
     private static final int CHOOSE_ADDRESS = 0x13;
+
+    String userName;
+    String userPhone;
+    String userAddress;
+    AddressBean defaultAddress;
     @BindView(R.id.back_left)
     ChangeLightImageView mBackLeft;
     @BindView(R.id.tv_page_name)
     TextView mTvPageName;
     @BindView(R.id.tv_top_right)
     TextView mTvTopRight;
+    @BindView(R.id.iv_share_right)
+    ImageView mIvShareRight;
+    @BindView(R.id.iv_sao_right)
+    ImageView mIvSaoRight;
     @BindView(R.id.ll_image_right)
     LinearLayout mLlImageRight;
     @BindView(R.id.top_bar_write)
@@ -84,11 +94,11 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     @BindView(R.id.iv_good_cover)
     ImageView mIvGoodCover;
     @BindView(R.id.tv_good_title)
-    TextView mTvGoodName;
+    TextView mTvGoodTitle;
     @BindView(R.id.tv_good_desc)
     TextView mTvGoodDesc;
-    @BindView(R.id.tv_good_price)
-    TextView mTvGoodPrice;
+    @BindView(R.id.tv_good_item_price)
+    TextView mTvGoodItemPrice;
     @BindView(R.id.tv_good_amount)
     TextView mTvGoodAmount;
     @BindView(R.id.iv_reduce)
@@ -101,18 +111,16 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     TextView mTvInformation;
     @BindView(R.id.edt_message)
     EditText mEdtMessage;
-    @BindView(R.id.tv_total)
-    TextView mTvTotal;
+    @BindView(R.id.tv_good_total)
+    TextView mTvGoodTotal;
+    @BindView(R.id.tv_fare_price)
+    TextView mTvFarePrice;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout mRefreshLayout;
+    @BindView(R.id.should_pay)
+    TextView mShouldPay;
     @BindView(R.id.btn_commit)
     Button mBtnCommit;
-    @BindView(R.id.tv_order_total)
-    TextView mTvOrderTotal;
-    @BindView(R.id.tv_order_fare)
-    TextView mTvOrderFare;
-    String userName;
-    String userPhone;
-    String userAddress;
-    AddressBean defaultAddress;
     private boolean hasAddress = false;
     private int mGoodId;
     private String mStrMessage;
@@ -124,6 +132,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private String tokenString;
     private int addressId;
     private DialogPay mDialogPay;
+    private double goodPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,6 +158,10 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         mChooseValue = bundle.getString("value");
         mChooseId = bundle.getString("id");
         data = bundle.getParcelable("goodInfo");
+        goodPrice = bundle.getDouble("goodPrice", 0);
+        if (goodPrice == 0) {
+            goodPrice = data.getMinPrice();
+        }
 
 
     }
@@ -166,15 +179,22 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         mTvPageName.setText("确认订单");
         //设置商品信息
         mDialogPay = new DialogPay(this);
-        mTvGoodName.setText(data.getGoodsName());
+        mTvGoodTitle.setText(data.getGoodsName());
         mTvInformation.setText("运费￥ " + data.getTransportMoney() + " ,由 " + data.getShopName() + "负责发货");
-        mTvGoodDesc.setText(data.getFeature());
-        mTvGoodPrice.setText("￥ " + ArithmeticUtils.format(data.getMinPrice()));
-        mTvOrderFare.setText("￥ " + ArithmeticUtils.format(data.getTransportMoney()));
-        mTvOrderTotal.setText("￥ " + ArithmeticUtils.format(data.getMinPrice()));
+        mTvGoodDesc.setText(mChooseValue);
+        if (goodPrice == 0) {
+            mTvGoodItemPrice.setText(("￥ " + ArithmeticUtils.format(data.getMinPrice())));
+            mTvGoodTotal.setText("￥ " + ArithmeticUtils.format(data.getMinPrice()));
+        } else {
+            mTvGoodItemPrice.setText("￥ " + ArithmeticUtils.format(goodPrice));
+            mTvGoodTotal.setText("￥ " + ArithmeticUtils.format(goodPrice));
+        }
+        mTvFarePrice.setText("￥ " + ArithmeticUtils.format(data.getTransportMoney()));
+
         mTvOrderAmount.setText(amount + "");
         mTvGoodAmount.setText("x " + amount);
-        mTvTotal.setText("￥ " + ArithmeticUtils.format(data.getMinPrice()));
+        double allPrice = ArithmeticUtils.add(goodPrice, data.getTransportMoney());
+        mShouldPay.setText("￥ " + ArithmeticUtils.format(allPrice));
         ImageDisplayUtil.showImageView(mContext, data.getImages().get(0).getThumbImageURL(), mIvGoodCover);
 
 
@@ -267,7 +287,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                         if (currentOrder == null) {
                             return;
                         }
-
+                        Log.e(BUG_TAG, currentOrder.getResponseCode() + "");
                         switch (currentOrder.getResponseCode()) {
                             case 1001:
                                 Toast.makeText(mContext, "提交订单成功", Toast.LENGTH_SHORT).show();
@@ -337,7 +357,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 break;
             case SimpleEvent.CONFIRM_ORDER:
                 if (simpleEvent.mEventValue == 2) {
-                    if (amount == 0) {
+                    if (amount == 1) {
                         Toast.makeText(mContext, "至少需要选择一个商品", Toast.LENGTH_SHORT).show();
                     } else {
                         amount -= 1;
@@ -347,11 +367,16 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                     amount += 1;
                 }
 
-                double total_good = ArithmeticUtils.mul(amount, data.getMinPrice(), 2);
-                double total_order = ArithmeticUtils.add(total_good, data.getTransportMoney());
+                double good_total = ArithmeticUtils.mul(amount, goodPrice, 2);
+                double should_pay = ArithmeticUtils.add(good_total, data.getTransportMoney());
 
-                mTvTotal.setText("￥ " + ArithmeticUtils.format(total_good));
-                mTvOrderTotal.setText("￥ " + ArithmeticUtils.format(total_order));
+                if (amount == 0) {
+                    mShouldPay.setText("￥ " + ArithmeticUtils.format(data.getTransportMoney()));
+                } else {
+                    mShouldPay.setText("￥ " + ArithmeticUtils.format(should_pay));
+                }
+
+                mTvGoodTotal.setText("￥ " + ArithmeticUtils.format(good_total));
                 mTvOrderAmount.setText(amount + "");
                 mTvGoodAmount.setText("x " + amount);
                 break;
@@ -361,38 +386,33 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        switch (requestCode) {
-            case 0x12:
-                Log.e(BUG_TAG, "添加地址返回");
-                Bundle addBundle = data.getExtras();
-
-                mRLayoutNoAddress.setVisibility(View.GONE);
-                mRLayoutHasAddress.setVisibility(View.VISIBLE);
-                addressId = addBundle.getInt("addressID", 0);
-                userName = addBundle.getString("userName");
-                userPhone = addBundle.getString("userPhone");
-                userAddress = addBundle.getString("userAddress");
-                mTvUserName.setText(userName);
-                mTvUserPhone.setText(userPhone);
-                mTvAddress.setText(userAddress);
-                break;
-            case 0x13:
-                Log.e(BUG_TAG, "选择地址返回");
-                //// TODO: 2017/9/25 当用户直接点击返回时候处理
-                Bundle chooseBundle = data.getExtras();
-                mRLayoutNoAddress.setVisibility(View.GONE);
-                mRLayoutHasAddress.setVisibility(View.VISIBLE);
-                addressId = chooseBundle.getInt("addressID", 0);
-                userName = chooseBundle.getString("userName");
-                userPhone = chooseBundle.getString("userPhone");
-                userAddress = chooseBundle.getString("userAddress");
-                mTvUserName.setText(userName);
-                mTvUserPhone.setText(userPhone);
-                mTvAddress.setText(userAddress);
-                break;
+        if (requestCode == ADD_ADDRESS && resultCode == 0x12) {
+            Log.e(BUG_TAG, "添加地址返回");
+            Bundle addBundle = data.getExtras();
+            mRLayoutNoAddress.setVisibility(View.GONE);
+            mRLayoutHasAddress.setVisibility(View.VISIBLE);
+            addressId = addBundle.getInt("addressID", 0);
+            userName = addBundle.getString("userName");
+            userPhone = addBundle.getString("userPhone");
+            userAddress = addBundle.getString("userAddress");
+            mTvUserName.setText(userName);
+            mTvUserPhone.setText(userPhone);
+            mTvAddress.setText(userAddress);
         }
+        if (requestCode == CHOOSE_ADDRESS && resultCode == 0x13) {
+            Log.e(BUG_TAG, "选择地址返回");
+            Bundle chooseBundle = data.getExtras();
+            mRLayoutNoAddress.setVisibility(View.GONE);
+            mRLayoutHasAddress.setVisibility(View.VISIBLE);
+            addressId = chooseBundle.getInt("addressID", 0);
+            userName = chooseBundle.getString("userName");
+            userPhone = chooseBundle.getString("userPhone");
+            userAddress = chooseBundle.getString("userAddress");
+            mTvUserName.setText(userName);
+            mTvUserPhone.setText(userPhone);
+            mTvAddress.setText(userAddress);
+        }
+
 
     }
 

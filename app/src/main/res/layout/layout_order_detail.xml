@@ -177,7 +177,7 @@
 
                             <TextView
 
-                                android:id="@+id/tv_good_price"
+                                android:id="@+id/tv_good_item_price"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentLeft="true"
@@ -437,7 +437,7 @@
                             android:textSize="16sp"/>
 
                         <TextView
-                            android:id="@+id/tv_order_total"
+                            android:id="@+id/tv_good_total"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
@@ -544,13 +544,13 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="8dp"
-                    android:layout_toLeftOf="@+id/tv_total"
+                    android:layout_toLeftOf="@+id/should_pay"
                     android:text="合计:"
                     android:textColor="#FF2D3230"
                     android:textSize="16sp"/>
 
                 <TextView
-                    android:id="@+id/tv_total"
+                    android:id="@+id/should_pay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#FFFF1717"

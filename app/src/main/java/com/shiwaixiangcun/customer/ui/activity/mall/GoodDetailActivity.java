@@ -23,8 +23,6 @@ import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.event.EventCenter;
 import com.shiwaixiangcun.customer.event.SimpleEvent;
 import com.shiwaixiangcun.customer.http.Common;
-import com.shiwaixiangcun.customer.http.HttpCallBack;
-import com.shiwaixiangcun.customer.http.HttpRequest;
 import com.shiwaixiangcun.customer.model.GoodDetail;
 import com.shiwaixiangcun.customer.ui.activity.LoginActivity;
 import com.shiwaixiangcun.customer.ui.dialog.DialogSku;
@@ -78,7 +76,7 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
     LinearLayout mLlayoutService;
     @BindView(R.id.textView4)
     TextView mTextView4;
-    @BindView(R.id.tv_categoty)
+    @BindView(R.id.tv_category)
     TextView mTvCategory;
     @BindView(R.id.iv_arrow)
     ImageView mIvArrow;
@@ -114,6 +112,8 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
     private GoodDetail.DataBean goodBean;
     private String isOrNotLogin;
 
+    private StringBuilder strSpecification = new StringBuilder();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,8 +134,6 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
         }
         switch (simpleEvent.mEventValue) {
             case 1:
-
-
                 //更新界面
                 goodBean = (GoodDetail.DataBean) simpleEvent.getData();
                 if (goodBean.isPublished()) {
@@ -169,8 +167,15 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
                     services.add(service);
                 }
 
+
+                //设置 用户需要选择的规格
                 if (mListSpecifications.size() == 0) {
                     mRlChoice.setVisibility(View.GONE);
+                } else {
+                    for (GoodDetail.DataBean.SpecificationsBean specificationsBean : mListSpecifications) {
+                        strSpecification.append(specificationsBean.getName()).append("  ");
+                    }
+                    mTvCategory.setText(strSpecification.toString().trim());
                 }
                 if (mListServices.size() == 0) {
                     mLlayoutService.setVisibility(View.GONE);
@@ -217,23 +222,23 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
 
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("id", mGoodId);
-        HttpRequest.get(GlobalConfig.getGoodDetail, hashMap, new HttpCallBack() {
-            @Override
-            public void onSuccess(String responseJson) {
-                GoodDetail goodDetail = JsonUtil.fromJson(responseJson, GoodDetail.class);
-                if (null == goodDetail) {
-                    return;
-                }
-                if (1001 == goodDetail.getResponseCode()) {
-                    GoodDetail.DataBean data = goodDetail.getData();
-                    EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_GOOD_DETAIL, 1, data));
-                }
-            }
+        OkGo.<String>get(GlobalConfig.getGoodDetail)
+                .params("id", mGoodId)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        Log.e(BUG_TAG, response.getRawCall().request().toString());
+                        GoodDetail goodDetail = JsonUtil.fromJson(response.body(), GoodDetail.class);
+                        if (null == goodDetail) {
+                            return;
+                        }
+                        if (1001 == goodDetail.getResponseCode()) {
+                            GoodDetail.DataBean data = goodDetail.getData();
+                            EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_GOOD_DETAIL, 1, data));
+                        }
+                    }
+                });
 
-            @Override
-            public void onFailed(Exception e) {
-            }
-        });
 
     }
 
@@ -247,6 +252,7 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
                     @Override
                     public void onSuccess(Response<String> response) {
                         Log.e(BUG_TAG, "onSuccess");
+
                         String html = response.body();
                         EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_GOOD_DETAIL, 2, html));
                     }
@@ -282,8 +288,7 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
         mTvHint.setVisibility(View.GONE);
         mIvShareRight.setVisibility(View.VISIBLE);
         mBannerDetails.setBannerStyle(BannerConfig.NUM_INDICATOR);
-
-        dialogSku = new DialogSku(mContext, R.style.AlertDialogStyle, mGoodId);
+        dialogSku = new DialogSku(this, R.style.AlertDialogStyle, mGoodId);
         mTvPageName.setText("商品详情");
 
         initWebView();

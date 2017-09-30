@@ -78,6 +78,7 @@ public class ManageAddressActivity extends BaseActivity implements View.OnClickL
         ButterKnife.bind(this);
         Bundle bundle = getIntent().getExtras();
         clickable = bundle.getBoolean("clickable");
+        Log.e(BUG_TAG, "是否可以点击" + clickable);
         initToken();
         initView();
         initEvent();
@@ -173,7 +174,7 @@ public class ManageAddressActivity extends BaseActivity implements View.OnClickL
                     AddressBean addressInfo = mAddressBeanList.get(position);
                     Intent intent = new Intent();
                     Bundle bundle = new Bundle();
-                    bundle.putInt("addressID",addressInfo.getId());
+                    bundle.putInt("addressID", addressInfo.getId());
                     bundle.putString("userName", addressInfo.getDeliveryName());
                     bundle.putString("userPhone", addressInfo.getDeliveryPhone());
                     bundle.putString("userAddress", addressInfo.getDeliveryAddress());

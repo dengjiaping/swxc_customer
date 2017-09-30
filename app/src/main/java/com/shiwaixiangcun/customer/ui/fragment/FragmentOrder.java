@@ -187,8 +187,9 @@ public class FragmentOrder extends LazyFragment {
                         cancelOrder(elementsBean);
                         break;
                     case "确认收货":
-                        DialogInfo dialogInfo = new DialogInfo(mContext);
-                        dialogInfo.show();
+//                        DialogInfo dialogInfo = new DialogInfo(mContext);
+//                        dialogInfo.setDialogTitle();
+//                        dialogInfo.show();
                         configOrder(elementsBean);
                         break;
                 }
@@ -198,6 +199,9 @@ public class FragmentOrder extends LazyFragment {
 
     }
 
+    /**
+     * 请求订单数据
+     */
     private void requestData() {
         Log.e(BUG_TAG, "请求数据");
 
@@ -212,6 +216,7 @@ public class FragmentOrder extends LazyFragment {
                 .execute(new StringDialogCallBack(mContext) {
                     @Override
                     public void onSuccess(Response<String> response) {
+                        Log.e(BUG_TAG, response.getRawCall().request().toString());
                         if (response == null) {
                             return;
                         }
@@ -254,10 +259,10 @@ public class FragmentOrder extends LazyFragment {
                 stature = "WaitPay";
                 break;
             case "待收货":
-                stature = "WaitDeliver";
+                stature = "Delivered";
                 break;
             case "已完成":
-                stature = "Closed";
+                stature = "Finished";
                 break;
         }
 

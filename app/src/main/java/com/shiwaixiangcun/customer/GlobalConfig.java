@@ -48,4 +48,5 @@ public class GlobalConfig {
     //支付相关接口
     public static String payZhiFuBao = DOMAIN + "/mc/pay/ZhiFuBao.json";
     public static String payWeiXin = DOMAIN + "/mc/pay/WeiXin.json";
+    public static String searchCategory = DOMAIN + "/mi/goods/category/listpage.json";
 }

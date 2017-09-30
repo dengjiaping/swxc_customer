@@ -84,9 +84,9 @@ import static com.lzy.okgo.utils.HttpUtils.runOnUiThread;
 
 public class FragmentHome extends BaseFragment implements IHomeView, ViewPager.OnPageChangeListener, View.OnClickListener, ListView.OnItemClickListener, ListView.OnScrollListener {
 
-    private final String[] mToolsTitle = {"健康服务", "物业服务", "优选服务"};
     private final long TIME_INTERVAL = 8000L;
     protected Activity mContext;
+    private List<String> mToolsTitle = new ArrayList<>();
     private IHomePresenter ihomePresenter;
     private PullableListView lv_details;
     private List<String> list_home = new ArrayList<>();
@@ -152,12 +152,14 @@ public class FragmentHome extends BaseFragment implements IHomeView, ViewPager.O
 
     public static Fragment getInstance() {
         FragmentHome fragmentHome = new FragmentHome();
+
         return fragmentHome;
     }
 
     @Override
     protected View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main, null);
+
         return view;
     }
 
@@ -172,6 +174,12 @@ public class FragmentHome extends BaseFragment implements IHomeView, ViewPager.O
         StatService.setSessionTimeOut(30);
 
 
+        String jiangkang = "健康服务";
+        String wuye = "物业服务";
+        String youxuan = "优选服务";
+        mToolsTitle.add(jiangkang);
+        mToolsTitle.add(wuye);
+        mToolsTitle.add(youxuan);
         ihomePresenter = new HomePresenterImpl(this);
         ihomePresenter.setBgaAdpaterAndClick(mContext);
         ihomePresenter.setAnnouncement(mContext);
@@ -735,7 +743,7 @@ public class FragmentHome extends BaseFragment implements IHomeView, ViewPager.O
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return mToolsTitle[position];
+            return mToolsTitle.get(position);
         }
 
         @Override

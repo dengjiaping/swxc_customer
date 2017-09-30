@@ -64,7 +64,7 @@ public class AdapterDetail extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             ((DetailHolder) holder).mTvName.setText(rightBean.getName());
 
             Glide.with(mContext).load(rightBean.getCategoryImg())
-                    .error(R.mipmap.m)
+                    .error(R.drawable.start_page)
                     .into(((DetailHolder) holder).mIvCover);
         }
 

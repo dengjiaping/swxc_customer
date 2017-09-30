@@ -107,6 +107,9 @@ public class ToolFragment extends LazyFragment {
 
     private void initData() {
         mToolList = new ArrayList<>();
+        if (mTitle == null) {
+            return;
+        }
         switch (mTitle) {
             case "健康服务":
                 mToolList.addAll(mHeathList);

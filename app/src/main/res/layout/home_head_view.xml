@@ -59,7 +59,8 @@
         android:layout_width="match_parent"
         android:layout_height="54dp"
         android:background="@color/ui_white"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/tv_weather_title"

@@ -104,7 +104,7 @@ public class CategoryDetailFragment extends Fragment implements CheckListener {
                     body.setId(childrenBean.getId());
                     body.setCategoryImg(childrenBean.getCategoryImg());
                     body.setParentId(childrenBean.getParentId());
-                    body.setParentIds(childrenBean.getParentIds());
+                    body.setParentIds(childrenBean.getParentIds() + "");
                     body.setWeight(childrenBean.getWeight());
                     mList.add(body);
                 }
@@ -162,7 +162,8 @@ public class CategoryDetailFragment extends Fragment implements CheckListener {
             @Override
             public void onItemClick(int id, int position) {
                 Bundle bundle = new Bundle();
-                bundle.putString("goodName", mList.get(position).getName());
+                bundle.putInt("categoryId", mList.get(position).getId());
+                bundle.putString("categoryName", mList.get(position).getName());
                 Intent intent = new Intent();
                 intent.putExtras(bundle);
                 intent.setClass(mContext, CategoryActivity.class);
