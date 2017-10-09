@@ -411,7 +411,6 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
     private void sendImageHttp(File file) {
 
         String login_detail = SharePreference.getStringSpParams(this, Common.IS_SAVE_LOGIN, Common.SISAVELOGIN);
-
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(login_detail, type);

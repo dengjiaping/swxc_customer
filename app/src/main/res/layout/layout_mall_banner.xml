@@ -10,8 +10,9 @@
         android:id="@+id/banner_mall"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        app:indicator_drawable_selected="@color/indicator"
-        app:indicator_drawable_unselected="@android:color/white"
+        app:indicator_drawable_selected="@color/indicator_selected"
+        app:indicator_drawable_unselected="@color/indicator_unselected"
+
         app:indicator_height="2dp"
         app:indicator_margin="4dp"
         app:indicator_width="15dp" />

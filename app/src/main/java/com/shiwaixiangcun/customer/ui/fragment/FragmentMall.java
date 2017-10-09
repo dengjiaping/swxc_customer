@@ -35,6 +35,7 @@ import com.shiwaixiangcun.customer.adapter.AdapterJingxuan;
 import com.shiwaixiangcun.customer.adapter.AdapterMall;
 import com.shiwaixiangcun.customer.event.EventCenter;
 import com.shiwaixiangcun.customer.event.SimpleEvent;
+import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.model.BannerBean;
 import com.shiwaixiangcun.customer.model.ElementBean;
 import com.shiwaixiangcun.customer.model.Keyword;
@@ -71,7 +72,7 @@ import butterknife.Unbinder;
 
 public class FragmentMall extends BaseFragment implements View.OnClickListener {
 
-    private static String TAG = "fragmentMall";
+    private static String BUG_TAG = "fragmentMall";
     @BindView(R.id.back_left)
     ChangeLightImageView mBackLeft;
     @BindView(R.id.edt_search)
@@ -194,6 +195,8 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
                     @Override
                     public void onSuccess(Response<String> response) {
 
+                        Log.e(BUG_TAG, response.getRawCall().request().toString());
+
                         String jsonString = response.body();
                         Type type = new TypeToken<ResponseEntity<ElementBean>>() {
                         }.getType();
@@ -227,7 +230,7 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
     private void requestBanner() {
         HttpParams params = new HttpParams();
         params.put("position", "SWSH_MARKET_01");
-        params.put("siteId", "1");
+        params.put("siteId", Common.siteID);
         OkGo.<String>get(GlobalConfig.getBanner)
                 .params(params)
                 .execute(new StringCallback() {
@@ -238,6 +241,7 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
 
                     @Override
                     public void onSuccess(Response<String> response) {
+                        Log.e("fragmentmall", response.getRawCall().request().toString());
                         String jsonString = response.body();
                         Type type = new TypeToken<ResponseEntity<List<BannerBean>>>() {
                         }.getType();
@@ -361,9 +365,7 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
                 refreshlayout.getLayout().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        // TODO: 2017/9/23 下拉刷新 
                         requestData();
-
                     }
                 }, 2000);
             }
@@ -371,9 +373,6 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
         mRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                // TODO: 2017/9/23 上拉加载更多
-
-
                 requestGood("GuessLike", 5, mCurrentPg + 1, 20, true);
                 mCurrentPg++;
                 mRefreshLayout.finishLoadmore();
@@ -437,6 +436,8 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
                     @Override
                     public void OnBannerClick(int position) {
                         Intent intent = new Intent(mContext, BannerDetailsActivity.class);
+
+                        Log.e("fragmentMall", "banner连接：" + dataList.get(position).getLink() + "");
                         intent.putExtra("bannerlink", dataList.get(position).getLink() + "");
                         startActivity(intent);
 

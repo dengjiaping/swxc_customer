@@ -13,20 +13,28 @@ public interface IHomeView {
 
 
     /**
-     * 设置过后的回调
+     *首页第一个Banner
      * @param result
      */
-    void setBgaAdpaterAndClickResult(String result);
+    void setBannerFirst(String result);
 
 
     /**
+     * 首页第二个Banner
+     * @param request
+     */
+    void setBannerSecond(String request);
+
+    /**
      * 公告
+     *
      * @param result
      */
     void setAnnouncementResult(ResponseEntity<PageBean<AnnouncementBean>> result);
 
     /**
      * 公告
+     *
      * @param result
      */
     void setHeadlineResult(ResponseEntity<PageBean<AnnouncementBean>> result);

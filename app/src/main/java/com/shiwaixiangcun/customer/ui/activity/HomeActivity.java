@@ -8,9 +8,7 @@ import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -26,13 +24,11 @@ import android.widget.ViewAnimator;
 
 import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
-import com.google.gson.reflect.TypeToken;
 import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.ComListAdapter;
 import com.shiwaixiangcun.customer.broadCast.RegisterBrodUtils;
 import com.shiwaixiangcun.customer.http.Common;
-import com.shiwaixiangcun.customer.imageloader.GlideImageLoader;
 import com.shiwaixiangcun.customer.model.AnnouncementBean;
 import com.shiwaixiangcun.customer.model.BannerBean;
 import com.shiwaixiangcun.customer.model.InformationBean;
@@ -42,8 +38,6 @@ import com.shiwaixiangcun.customer.model.WeatherDataBean;
 import com.shiwaixiangcun.customer.presenter.IHomePresenter;
 import com.shiwaixiangcun.customer.presenter.impl.HomePresenterImpl;
 import com.shiwaixiangcun.customer.ui.IHomeView;
-import com.shiwaixiangcun.customer.utils.DecoratorViewPager;
-import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.NoFastClickUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.utils.Utils;
@@ -52,9 +46,7 @@ import com.shiwaixiangcun.customer.widget.pullableview.MyListener;
 import com.shiwaixiangcun.customer.widget.pullableview.PullToRefreshLayout;
 import com.shiwaixiangcun.customer.widget.pullableview.PullableListView;
 import com.squareup.picasso.Picasso;
-import com.yyydjk.library.BannerLayout;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,7 +60,7 @@ public class HomeActivity extends BaseActivity implements IHomeView, ViewPager.O
     private IHomePresenter ihomePresenter;
     private PullableListView lv_details;
     private List<String> list_home = new ArrayList<>();
-    private DecoratorViewPager viewPager;
+//    private DecoratorViewPager viewPager;
     /**
      * 装点点的ImageView数组
      */
@@ -115,7 +107,7 @@ public class HomeActivity extends BaseActivity implements IHomeView, ViewPager.O
     private TextView tv_page_name;
     private int i_ata = 0;
     private RelativeLayout rl_home_banner;
-    private BannerLayout bannerLayout;
+    //    private BannerLayout bannerLayout;
     private TextView tv_surrounding_life;
     private TextView tv_awards;
     private RelativeLayout rl_weather;
@@ -136,7 +128,8 @@ public class HomeActivity extends BaseActivity implements IHomeView, ViewPager.O
 
 
         ihomePresenter = new HomePresenterImpl(this);
-        ihomePresenter.setBgaAdpaterAndClick(HomeActivity.this);
+        ihomePresenter.setBannerFirst(HomeActivity.this);
+        ihomePresenter.setBannerSecond(HomeActivity.this);
         ihomePresenter.setAnnouncement(HomeActivity.this);
         ihomePresenter.setHeadline(HomeActivity.this);
         ihomePresenter.setWeatherHomeClick(HomeActivity.this, "101260209");
@@ -158,7 +151,8 @@ public class HomeActivity extends BaseActivity implements IHomeView, ViewPager.O
         myListener.setRefreshListener(new MyListener.onRefreshListener() {
             @Override
             public void refreshScence(boolean isnot) {
-                ihomePresenter.setBgaAdpaterAndClick(HomeActivity.this);
+                ihomePresenter.setBannerFirst(HomeActivity.this);
+                ihomePresenter.setBannerSecond(HomeActivity.this);
                 ihomePresenter.setAnnouncement(HomeActivity.this);
                 ihomePresenter.setHeadline(HomeActivity.this);
                 ihomePresenter.setWeatherHomeClick(HomeActivity.this, "101260209");
@@ -167,8 +161,8 @@ public class HomeActivity extends BaseActivity implements IHomeView, ViewPager.O
 
         View home_head_view = LayoutInflater.from(this).inflate(R.layout.home_head_view, null);
         group = (ViewGroup) home_head_view.findViewById(R.id.viewGroup);
-        viewPager = (DecoratorViewPager) home_head_view.findViewById(R.id.viewPager);
-        viewPager.setNestedpParent((ViewGroup) viewPager.getParent());
+//        viewPager = (DecoratorViewPager) home_head_view.findViewById(R.id.viewPager);
+//        viewPager.setNestedpParent((ViewGroup) viewPager.getParent());
 
 
         tv_online_service = (TextView) home_head_view.findViewById(R.id.tv_online_service);
@@ -180,7 +174,7 @@ public class HomeActivity extends BaseActivity implements IHomeView, ViewPager.O
 //        looperview = (LooperTextView) home_head_view.findViewById(R.id.looperview);
         viewAnimator = (ViewAnimator) home_head_view.findViewById(R.id.animator);
         rl_home_banner = (RelativeLayout) home_head_view.findViewById(R.id.rl_home_banner);
-        bannerLayout = (BannerLayout) home_head_view.findViewById(R.id.banner);
+//        bannerLayout = (BannerLayout) home_head_view.findViewById(R.id.banner);
         tv_surrounding_life = (TextView) home_head_view.findViewById(R.id.tv_surrounding_life);
         tv_awards = (TextView) home_head_view.findViewById(R.id.tv_awards);
         rl_weather = (RelativeLayout) home_head_view.findViewById(R.id.rl_weather);
@@ -227,59 +221,34 @@ public class HomeActivity extends BaseActivity implements IHomeView, ViewPager.O
         });
 
 
-        viewPager.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                v.getParent().requestDisallowInterceptTouchEvent(true);
-                return false;
-            }
-        });
-
-        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
-            @Override
-            public void onPageSelected(int arg0) {
-            }
-
-            @Override
-            public void onPageScrolled(int arg0, float arg1, int arg2) {
-                viewPager.getParent().requestDisallowInterceptTouchEvent(true);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int arg0) {
-            }
-        });
-
-    }
-
-    private void initViewpager(List<String> urls_image) {
-        final List<String> urls = new ArrayList<>();
-        urls.add("http://img3.imgtn.bdimg.com/it/u=2674591031,2960331950&fm=23&gp=0.jpg");
-        urls.add("http://img5.imgtn.bdimg.com/it/u=3639664762,1380171059&fm=23&gp=0.jpg");
-        urls.add("http://img0.imgtn.bdimg.com/it/u=1095909580,3513610062&fm=23&gp=0.jpg");
-        urls.add("http://img4.imgtn.bdimg.com/it/u=1030604573,1579640549&fm=23&gp=0.jpg");
-        urls.add("http://img5.imgtn.bdimg.com/it/u=2583054979,2860372508&fm=23&gp=0.jpg");
-        bannerLayout.setImageLoader(new GlideImageLoader());
-        bannerLayout.setViewUrls(urls_image);
-
-        //添加监听事件
-        bannerLayout.setOnBannerItemClickListener(new BannerLayout.OnBannerItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                if (Utils.isNotEmpty(list_banner.get(position).getLink())) {
-                    Intent intent = new Intent(HomeActivity.this, BannerDetailsActivity.class);
-                    intent.putExtra("bannerlink", list_banner.get(position).getLink() + "");
-//                        intent.putExtra("titledetail", list_banner.get(finalPosition).get)
-                    startActivity(intent);
-                }
-            }
-        });
-
+//        viewPager.setOnTouchListener(new View.OnTouchListener() {
+//
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                v.getParent().requestDisallowInterceptTouchEvent(true);
+//                return false;
+//            }
+//        });
+//
+//        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//
+//            @Override
+//            public void onPageSelected(int arg0) {
+//            }
+//
+//            @Override
+//            public void onPageScrolled(int arg0, float arg1, int arg2) {
+//                viewPager.getParent().requestDisallowInterceptTouchEvent(true);
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int arg0) {
+//            }
+//        });
 
     }
 
+    //
     public void showNext() {
         viewAnimator.setOutAnimation(this, R.anim.slide_out_up);
         viewAnimator.setInAnimation(this, R.anim.slide_in_down);
@@ -385,23 +354,29 @@ public class HomeActivity extends BaseActivity implements IHomeView, ViewPager.O
     }
 
     @Override
-    public void setBgaAdpaterAndClickResult(String result) {
-        Log.e(BUG_TAG, result);
-        Type type = new TypeToken<ResponseEntity<List<BannerBean>>>() {
-        }.getType();
-        ResponseEntity<List<BannerBean>> responseEntity = JsonUtil.fromJson(result, type);
-        list_banner = responseEntity.getData();
-        urls_image.clear();
-        for (int i = 0; i < list_banner.size(); i++) {
-            urls_image.add(list_banner.get(i).getImagePath());
-        }
+    public void setBannerFirst(String result) {
+//        Log.e(BUG_TAG, result);
+//        Type type = new TypeToken<ResponseEntity<List<BannerBean>>>() {
+//        }.getType();
+//        ResponseEntity<List<BannerBean>> responseEntity = JsonUtil.fromJson(result, type);
+//        list_banner = responseEntity.getData();
+//        urls_image.clear();
+//        for (int i = 0; i < list_banner.size(); i++) {
+//            urls_image.add(list_banner.get(i).getImagePath());
+//        }
+//
+//        if (list_banner.size() == 0) {
+//            rl_home_banner.setVisibility(View.GONE);
+//        } else {
+//            rl_home_banner.setVisibility(View.VISIBLE);
+//            initViewpager(urls_image);
+//        }
 
-        if (list_banner.size() == 0) {
-            rl_home_banner.setVisibility(View.GONE);
-        } else {
-            rl_home_banner.setVisibility(View.VISIBLE);
-            initViewpager(urls_image);
-        }
+    }
+
+    @Override
+    public void setBannerSecond(String result) {
+
 
     }
 
@@ -532,11 +507,11 @@ public class HomeActivity extends BaseActivity implements IHomeView, ViewPager.O
         }
         if (mImageViews.length != 0) {
             //设置Adapter
-            viewPager.setAdapter(new MyAdapter());
-            //设置监听，主要是设置点点的背景
-            viewPager.setOnPageChangeListener(this);
-            //设置ViewPager的默认项, 设置为长度的100倍，这样子开始就能往左滑动
-            viewPager.setCurrentItem((mImageViews.length) * 100);
+//            viewPager.setAdapter(new MyAdapter());
+//            //设置监听，主要是设置点点的背景
+//            viewPager.setOnPageChangeListener(this);
+//            //设置ViewPager的默认项, 设置为长度的100倍，这样子开始就能往左滑动
+//            viewPager.setCurrentItem((mImageViews.length) * 100);
         }
 
 
@@ -557,7 +532,7 @@ public class HomeActivity extends BaseActivity implements IHomeView, ViewPager.O
                         @Override
                         public void run() {
                             //这里是设置当前页的下一页
-                            viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+//                            viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
                         }
                     });
                 }

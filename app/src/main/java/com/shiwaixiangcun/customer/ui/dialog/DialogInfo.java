@@ -36,7 +36,7 @@ public class DialogInfo extends Dialog {
     private onCallBackListener listener;
 
     public DialogInfo(@NonNull Context context) {
-        this(context, 0);
+        super(context, R.style.AlertDialogStyle);
         this.mContext = context;
         initView();
     }
@@ -49,8 +49,6 @@ public class DialogInfo extends Dialog {
     }
 
     private void initView() {
-
-
         setContentView(R.layout.layout_dialog_info);
         ButterKnife.bind(this);
     }

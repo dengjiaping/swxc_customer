@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -24,6 +25,7 @@ import com.shiwaixiangcun.customer.event.EventCenter;
 import com.shiwaixiangcun.customer.event.SimpleEvent;
 import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.model.GoodDetail;
+import com.shiwaixiangcun.customer.share.OnekeyShare;
 import com.shiwaixiangcun.customer.ui.activity.LoginActivity;
 import com.shiwaixiangcun.customer.ui.dialog.DialogSku;
 import com.shiwaixiangcun.customer.ui.dialog.DialogSupport;
@@ -49,6 +51,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
 
 /**
  * 商品详情Activity
@@ -111,7 +115,7 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
     private int mGoodId;
     private GoodDetail.DataBean goodBean;
     private String isOrNotLogin;
-
+    private StringBuilder shareUrl = new StringBuilder();
     private StringBuilder strSpecification = new StringBuilder();
 
     @Override
@@ -138,11 +142,13 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
                 goodBean = (GoodDetail.DataBean) simpleEvent.getData();
                 if (goodBean.isPublished()) {
                     // TODO: 2017/9/23 标记缺货状态
+                    mRlChoice.setVisibility(View.VISIBLE);
                     mRlayoutPurchase.setVisibility(View.VISIBLE);
                     mTvHint.setVisibility(View.GONE);
                 } else {
                     mRlayoutPurchase.setVisibility(View.GONE);
                     mTvHint.setVisibility(View.VISIBLE);
+                    mRlChoice.setVisibility(View.GONE);
                 }
                 mTvTitle.setText(goodBean.getGoodsName());
                 mTvDesc.setText(goodBean.getFeature());
@@ -207,12 +213,9 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
         Bundle bundle = getIntent().getExtras();
         mGoodId = bundle.getInt("goodId");
         Log.e(BUG_TAG, mGoodId + "");
-
-        /**
-
-         */
-        requestContent();
         requestDetail();
+        requestContent();
+
     }
 
     /**
@@ -253,6 +256,7 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
                     public void onSuccess(Response<String> response) {
                         Log.e(BUG_TAG, "onSuccess");
 
+                        Log.e(BUG_TAG, response.getRawCall().request().toString());
                         String html = response.body();
                         EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_GOOD_DETAIL, 2, html));
                     }
@@ -325,7 +329,7 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
         isOrNotLogin = SharePreference.getStringSpParams(GoodDetailActivity.this, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
         switch (view.getId()) {
             case R.id.iv_share_right:
-                // TODO: 2017/9/23  分享
+                showShare();
                 break;
             case R.id.back_left:
                 finish();
@@ -357,6 +361,57 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
                 break;
         }
     }
+
+    private void showShare() {
+
+        shareUrl.append(GlobalConfig.shareGoods).append(mGoodId).append(".htm");
+        OnekeyShare oks = new OnekeyShare();
+        //关闭sso授权
+        oks.disableSSOWhenAuthorize();
+        // title标题，印象笔记、邮箱、信息、微信、人人网、QQ和QQ空间使用
+        oks.setTitle(goodBean.getShopName());
+        // titleUrl是标题的网络链接，仅在Linked-in,QQ和QQ空间使用
+
+        oks.setTitleUrl(shareUrl.toString());
+        // text是分享文本，所有平台都需要这个字段
+        oks.setText(goodBean.getGoodsName());
+        //分享网络图片，新浪微博分享网络图片需要通过审核后申请高级写入接口，否则请注释掉测试新浪微博
+        oks.setImageUrl(goodBean.getImages().get(0).getThumbImageURL());
+        // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
+
+        // url仅在微信（包括好友和朋友圈）中使用
+        oks.setUrl(shareUrl.toString());
+        // comment是我对这条分享的评论，仅在人人网和QQ空间使用
+//        oks.setComment(detailContent);
+        // site是分享此内容的网站名称，仅在QQ空间使用
+        oks.setSite(getResources().getResourceName(R.string.app_name));
+        // siteUrl是分享此内容的网站地址，仅在QQ空间使用
+        oks.setSiteUrl(shareUrl.toString());
+        Log.e(BUG_TAG, shareUrl.toString());
+        oks.setCallback(new PlatformActionListener() {
+            @Override
+            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+
+                Toast.makeText(mContext, "分享成功", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onError(Platform platform, int i, Throwable throwable) {
+
+                Toast.makeText(mContext, "分享失败", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onCancel(Platform platform, int i) {
+
+                Toast.makeText(mContext, "取消", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        // 启动分享GUI
+        oks.show(this);
+    }
+
 
     /**
      * 跳转至Order页面

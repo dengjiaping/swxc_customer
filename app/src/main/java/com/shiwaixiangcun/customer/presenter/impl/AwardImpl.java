@@ -1,7 +1,6 @@
 package com.shiwaixiangcun.customer.presenter.impl;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -42,11 +41,9 @@ public class AwardImpl implements IAwardPresenter {
         hashMap.put("page.pn", pagepn);
         hashMap.put("page.size", 5);
 
-        Log.e("dddddd", hashMap.toString() + "-----------" + Common.article);
         HttpRequest.get(Common.article, hashMap, new HttpCallBack() {
             @Override
             public void onSuccess(String responseJson) {
-                Log.e("oooooo---onSuccess---", responseJson);
                 AwardBean awardBean = new Gson().fromJson(responseJson, AwardBean.class);
                 if (awardBean.getResponseCode() == 1001){
                     iAwardView.setBgaAdpaterAndClickResult(awardBean);
@@ -58,7 +55,6 @@ public class AwardImpl implements IAwardPresenter {
 
             @Override
             public void onFailed(Exception e) {
-                Log.e("oooooo---onFailed---", e.toString());
                 Toast.makeText(context,"网络异常，请稍后再试...",Toast.LENGTH_LONG).show();
 
             }

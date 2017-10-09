@@ -47,14 +47,11 @@ public class BannerDetailsActivity extends BaseActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_banner_details);
         Resources res = getResources();
-        Bitmap bmp= BitmapFactory.decodeResource(res, R.drawable.start_page);
+        Bitmap bmp = BitmapFactory.decodeResource(res, R.drawable.start_page);
         shareimage = SdCordUtil.saveMyBitmap("shareimage", bmp);
 
         Intent intent = getIntent();
         bannerlink = intent.getStringExtra("bannerlink");
-        Log.i("sssssaaafa",bannerlink+"");
-
-
         //        百度统计
         StatService.setLogSenderDelayed(10);
         StatService.setSendLogStrategy(this, SendStrategyEnum.APP_START, 1, false);
@@ -63,8 +60,6 @@ public class BannerDetailsActivity extends BaseActivity implements View.OnClickL
 
         layoutView();
         initData();
-
-
 
 
         webview = (ObservableWebView) findViewById(R.id.webview);
@@ -83,12 +78,12 @@ public class BannerDetailsActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onScroll(int dx, int dy) {
                 int scrollY = webview.getScrollY();
-                if (scrollY > 300){
+                if (scrollY > 300) {
 
                     tv_top.setVisibility(View.VISIBLE);
 
 
-                }else {
+                } else {
                     tv_page_name.setText("");
                     tv_top.setVisibility(View.GONE);
                 }
@@ -121,8 +116,8 @@ public class BannerDetailsActivity extends BaseActivity implements View.OnClickL
     }
 
     private void initData() {
-        bannerLink_detail = "http://"+bannerlink;
-        Log.i("hhoop",bannerLink_detail);
+        bannerLink_detail = bannerlink;
+        Log.i("hhoop", bannerLink_detail);
         iv_share_right.setVisibility(View.VISIBLE);
         back_left.setOnClickListener(this);
         iv_share_right.setOnClickListener(this);
@@ -131,7 +126,7 @@ public class BannerDetailsActivity extends BaseActivity implements View.OnClickL
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        switch (id){
+        switch (id) {
             case R.id.back_left:
                 finish();
                 break;
@@ -172,21 +167,17 @@ public class BannerDetailsActivity extends BaseActivity implements View.OnClickL
         oks.setCallback(new PlatformActionListener() {
             @Override
             public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-                Log.i("rrrrrrrrr","onComplete");
-                Toast.makeText(BannerDetailsActivity.this,"分享成功",Toast.LENGTH_LONG).show();
+                Toast.makeText(BannerDetailsActivity.this, "分享成功", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onError(Platform platform, int i, Throwable throwable) {
-                Log.i("rrrrrrrrr","onError");
-                Log.i("rrrrrrrrr",throwable.toString());
-                Toast.makeText(BannerDetailsActivity.this,"分享失败",Toast.LENGTH_LONG).show();
+                Toast.makeText(BannerDetailsActivity.this, "分享失败", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onCancel(Platform platform, int i) {
-                Log.i("rrrrrrrrr","onCancel");
-                Toast.makeText(BannerDetailsActivity.this,"取消",Toast.LENGTH_LONG).show();
+                Toast.makeText(BannerDetailsActivity.this, "取消", Toast.LENGTH_LONG).show();
             }
         });
 

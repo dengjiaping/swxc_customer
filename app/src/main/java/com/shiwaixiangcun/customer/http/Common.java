@@ -23,7 +23,7 @@ public class Common implements Serializable {
 //    public static String domains = "http://pm.hxteb.com/";
 //
 //    public static String domainhm = "http://hm.hxteb.com/";
-    public static String domains = "http://pm.shiwaixiangcun.cn/";
+    public static String domains = "http://ot.shiwaixiangcun.cn/";
     public static String domainhm = "http://hm.shiwaixiangcun.cn";
     /**
      * 登录

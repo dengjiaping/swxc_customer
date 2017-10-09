@@ -38,10 +38,36 @@ public class HomePresenterImpl implements IHomePresenter {
     }
 
 
-    @Override
-    public void setBgaAdpaterAndClick(Context context) {
-        sendListpageHttp();
+    /**
+     * 请求位置2的Banner
+     */
+    private void requestBannerSecond() {
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("position", "SWSH_HOME_02");
+        hashMap.put("siteId", Common.siteID);
+        HttpRequest.get(Common.listpage, hashMap, new HttpCallBack() {
+            @Override
+            public void onSuccess(String responseJson) {
+                iHomeView.setBannerSecond(responseJson);
+            }
 
+            @Override
+            public void onFailed(Exception e) {
+            }
+        });
+
+
+    }
+
+    @Override
+    public void setBannerFirst(Context context) {
+        requestBannerFirst();
+
+    }
+
+    @Override
+    public void setBannerSecond(Context context) {
+        requestBannerSecond();
 
     }
 
@@ -62,27 +88,22 @@ public class HomePresenterImpl implements IHomePresenter {
     }
 
     @Override
-    public void setWeatherHomeClick(Context context,String cityCode) {
-        sendWeatherHttp(context,cityCode);
+    public void setWeatherHomeClick(Context context, String cityCode) {
+        sendWeatherHttp(context, cityCode);
     }
 
-
-    //banner列表 vewpager public
-    private void sendListpageHttp() {
+    /**
+     * 请求位置1的banner
+     */
+    private void requestBannerFirst() {
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("position", "OWNER_APP");
-        hashMap.put("fields", "imagePath,link");
+        hashMap.put("position", "SWSH_HOME_01");
+        hashMap.put("siteId", Common.siteID);
 
         HttpRequest.get(Common.listpage, hashMap, new HttpCallBack() {
             @Override
             public void onSuccess(String responseJson) {
-                iHomeView.setBgaAdpaterAndClickResult(responseJson);
-//                Type type = new TypeToken<ResponseEntity<List<BannerBean>>>() {
-//                }.getType();
-//                responseEntity = JsonUtil.fromJson(responseJson, type);
-//                String imagePath = responseEntity.getData().get(0).getImagePath();
-
-
+                iHomeView.setBannerFirst(responseJson);
             }
 
             @Override
@@ -90,7 +111,6 @@ public class HomePresenterImpl implements IHomePresenter {
             }
         });
     }
-
 
 
     // 公告 public
@@ -173,10 +193,10 @@ public class HomePresenterImpl implements IHomePresenter {
 
 
     //天气数据
-    private void sendWeatherHttp(final Context context,String cityCode) {
+    private void sendWeatherHttp(final Context context, String cityCode) {
         HashMap<String, Object> hashMap = new HashMap<>();
 
-        HttpRequest.get("http://tqapi.mobile.360.cn/v4/"+cityCode+".json", hashMap, new HttpCallBack() {
+        HttpRequest.get("http://tqapi.mobile.360.cn/v4/" + cityCode + ".json", hashMap, new HttpCallBack() {
             @Override
             public void onSuccess(String responseJson) {
 //                 JSON.parse(responseJson);
@@ -188,7 +208,7 @@ public class HomePresenterImpl implements IHomePresenter {
 
             @Override
             public void onFailed(Exception e) {
-                Toast.makeText(context,"网络异常，请稍后再试...",Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "网络异常，请稍后再试...", Toast.LENGTH_LONG).show();
 
             }
         });

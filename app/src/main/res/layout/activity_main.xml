@@ -8,20 +8,7 @@
 
     <include
         android:id="@+id/include"
-        layout="@layout/top_bar_blue" />
-    <!--<ListView-->
-
-    <!--android:layout_below="@+id/include"-->
-    <!--android:background="@color/ui_white"-->
-    <!--android:id="@+id/lv_details"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:divider="#F9F9F9"-->
-    <!--android:dividerHeight="1dp"-->
-    <!--android:scrollbars="none">-->
-
-    <!--</ListView>-->
-
+        layout="@layout/home_top"/>
     <com.shiwaixiangcun.customer.widget.pullableview.PullToRefreshLayout
         android:id="@+id/refresh_view"
         android:layout_width="match_parent"

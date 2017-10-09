@@ -134,6 +134,9 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private DialogPay mDialogPay;
     private double goodPrice;
 
+    private String mOrderNumber;
+    private int mOrderId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -243,7 +246,6 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 bundle.putBoolean("clickable", true);
                 readyGoForResult(ManageAddressActivity.class, CHOOSE_ADDRESS, bundle);
                 break;
-
             case R.id.btn_commit:
                 putData();
                 break;
@@ -254,12 +256,11 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
      * 提交订单到服务器
      */
     private void putData() {
-
+        Log.e(BUG_TAG, "收货地址Id" + addressId);
         if (addressId == 0) {
             Toast.makeText(mContext, "请添加地址", Toast.LENGTH_SHORT).show();
             return;
         }
-
         final String loginInfo = SharePreference.getStringSpParams(mContext, Common.IS_SAVE_LOGIN, Common.SISAVELOGIN);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
@@ -278,20 +279,19 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         params.put("siteId", Common.siteID);
         OkGo.<String>post(GlobalConfig.putOrder)
                 .params(params)
-                .isSpliceUrl(true)
                 .execute(new StringDialogCallBack(this) {
                     @Override
                     public void onSuccess(Response<String> response) {
+                        Log.e(BUG_TAG, response.getRawCall().request().toString());
+                        Log.e(BUG_TAG, response.body());
                         String jsonString = response.body();
                         CurrentOrder currentOrder = JsonUtil.fromJson(jsonString, CurrentOrder.class);
-                        if (currentOrder == null) {
-                            return;
-                        }
                         Log.e(BUG_TAG, currentOrder.getResponseCode() + "");
                         switch (currentOrder.getResponseCode()) {
                             case 1001:
                                 Toast.makeText(mContext, "提交订单成功", Toast.LENGTH_SHORT).show();
-                                final String orderNumber = currentOrder.getData().getNumber();
+                                mOrderNumber = currentOrder.getData().getNumber();
+                                mOrderId = currentOrder.getData().getId();
                                 mDialogPay.setPrice("¥" + ArithmeticUtils.format(currentOrder.getData().getShouldPay()));
                                 mDialogPay.show();
                                 mDialogPay.setListener(new DialogPay.onCallBackListener() {
@@ -306,10 +306,10 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                                         switch (defaultPay) {
                                             case 1:
                                                 Toast.makeText(mContext, "正在进行微信支付", Toast.LENGTH_SHORT).show();
-                                                PayUtil.payWeixin(orderNumber, tokenString, ConfirmOrderActivity.this);
+                                                PayUtil.payWeixin(mOrderNumber, tokenString, ConfirmOrderActivity.this);
                                                 break;
                                             case 2:
-                                                PayUtil.payAli(orderNumber, tokenString, ConfirmOrderActivity.this);
+                                                PayUtil.payAli(mOrderNumber, tokenString, ConfirmOrderActivity.this);
                                                 break;
                                             case 0:
                                                 Toast.makeText(mContext, "请选择一种支付方式", Toast.LENGTH_SHORT).show();
@@ -350,8 +350,13 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 Log.e(BUG_TAG, "支付成功");
                 mDialogPay.dismiss();
                 Toast.makeText(mContext, "支付成功", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent();
+                intent.putExtra("orderId", mOrderId);
+                intent.setClass(mContext, OrderDetailActivity.class);
+                startActivity(intent);
+                finish();
                 break;
-            case SimpleEvent.PAY_DEFAULT:
+            case SimpleEvent.PAY_FAIL:
                 mDialogPay.dismiss();
                 Toast.makeText(mContext, "支付失败", Toast.LENGTH_SHORT).show();
                 break;

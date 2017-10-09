@@ -3,6 +3,7 @@ package com.shiwaixiangcun.customer.ui.activity.mall;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -24,6 +25,7 @@ import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterGoodList;
 import com.shiwaixiangcun.customer.event.EventCenter;
 import com.shiwaixiangcun.customer.event.SimpleEvent;
+import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.model.ElementBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
@@ -49,9 +51,16 @@ public class GoodListActivity extends BaseActivity implements View.OnClickListen
     AdapterGoodList mAdapterGoodList;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
+    //用于标志当前页面类型
     private int flag = 0;
     private String type;
     private List<ElementBean.ElementsBean> mGoodList = new ArrayList<>();
+
+    //当前页码
+    private int mCurrentPage = 1;
+
+    //每页显示数目
+    private int mPageSize = 15;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,17 +106,13 @@ public class GoodListActivity extends BaseActivity implements View.OnClickListen
                 readyGo(GoodDetailActivity.class, bundle);
             }
         });
-        mRefreshLayout.setEnableHeaderTranslationContent(false);
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(final RefreshLayout refreshlayout) {
                 refreshlayout.getLayout().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        // TODO: 2017/9/23 下拉刷新
-
-                        refreshlayout.finishRefresh();
-                        refreshlayout.setLoadmoreFinished(false);
+                        requestData(type, flag, mCurrentPage, mPageSize, false);
                     }
                 }, 2000);
             }
@@ -115,12 +120,8 @@ public class GoodListActivity extends BaseActivity implements View.OnClickListen
         mRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                // TODO: 2017/9/23 上拉加载更多
-
-                refreshlayout.finishLoadmore();
-                refreshlayout.setLoadmoreFinished(true);
-
-
+                requestData(type, flag, mCurrentPage, mPageSize, true);
+                Log.e(BUG_TAG, "当前页码" + mCurrentPage);
             }
         });
         RecyclerViewDivider divider = new RecyclerViewDivider.Builder(this)
@@ -140,7 +141,7 @@ public class GoodListActivity extends BaseActivity implements View.OnClickListen
         Bundle bundle = getIntent().getExtras();
         type = bundle.getString("type");
         flag = bundle.getInt("flag");
-        requestData(type, flag, 1, 10);
+        requestData(type, flag, mCurrentPage, mPageSize, false);
 
     }
 
@@ -150,19 +151,20 @@ public class GoodListActivity extends BaseActivity implements View.OnClickListen
      * @param type 请求的类型
      * @param flag 更新界面的标志
      */
-    public void requestData(String type, final int flag, int start, int size) {
+    public void requestData(String type, final int flag, int start, int size, final boolean isLoadMore) {
 
         HttpParams params = new HttpParams();
         params.put("goodsSubjectValue", type);
         params.put("page.pn", start);
         params.put("page.size", size);
-        params.put("siteId", "1");
+        params.put("siteId", Common.siteID);
         OkGo.<String>get(GlobalConfig.getGuessLike)
                 .params(params)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
                         String jsonString = response.body();
+                        Log.e(BUG_TAG, response.getRawCall().request().toString());
                         Type type = new TypeToken<ResponseEntity<ElementBean>>() {
                         }.getType();
                         Gson gson = new Gson();
@@ -170,11 +172,18 @@ public class GoodListActivity extends BaseActivity implements View.OnClickListen
                         if (data == null) {
                             return;
                         }
+
                         switch (data.getResponseCode()) {
                             case 1001:
+                                mRefreshLayout.finishRefresh();
+                                mRefreshLayout.finishLoadmore();
+
                                 if (data.getData().getElements().size() == 0) {
                                     return;
                                 }
+                                if (isLoadMore) {
+                                    mCurrentPage += 1;
+                                } else mCurrentPage = 1;
                                 EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_GOOD_LIST, flag, data.getData()));
                                 break;
                         }

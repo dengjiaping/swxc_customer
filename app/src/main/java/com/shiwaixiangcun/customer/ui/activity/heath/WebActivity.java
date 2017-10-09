@@ -164,6 +164,7 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
                 .append("&partner=").append(data.getPartner())
                 .append("&sign=").append(data.getSign())
                 .append("&user_id=").append(data.getUser_id());
+        Log.e(BUG_TAG, urlBuilder.toString());
         mWebView.loadUrl(urlBuilder.toString());
 
     }

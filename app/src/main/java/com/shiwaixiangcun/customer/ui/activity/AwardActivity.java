@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -59,17 +58,9 @@ public class AwardActivity extends AppCompatActivity implements View.OnClickList
 
     private void initData() {
         award = new AwardImpl(this);
-//        award.setBgaAdapterAndClick(this,1);
         tv_page_name.setText("活动");
-
-        for (int i = 0; i < 10; i++) {
-            list_award.add("hahhaha" + i);
-        }
-
         awardAdapter = new AwardAdapter(list_award_image, this);
         lv_award.setAdapter(awardAdapter);
-
-
         back_left.setOnClickListener(this);
         lv_award.setOnItemClickListener(this);
         listen();
@@ -108,11 +99,8 @@ public class AwardActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Log.e("nnnnnnnnnnna", i + "");
         Intent intent = new Intent(this, SurroundDetailsActivity.class);
         intent.putExtra("articleId", list_award_image.get(i).getId() + "");
-//        intent.putExtra("detailtitle", elements_headline.get(i - 1).getTitle() + "");
-//        intent.putExtra("detailcontent", elements_headline.get(i - 1).getSummary());
         startActivity(intent);
 
     }
@@ -132,13 +120,11 @@ public class AwardActivity extends AppCompatActivity implements View.OnClickList
                 super.handleMessage(msg);
                 if (msg.what == 0x123) {
                     i = 1;
-                    Log.e("vvvvvvvvvvvvvcc", "刷新");
                     is_not_click = 0;
                     award.setBgaAdpaterAndClick(AwardActivity.this, 1);
                     refreshable_layout.finishRefreshing();
                 } else if (msg.what == 0x124) {
                     refreshable_layout.finishRefreshing();
-                    Log.e("vvvvvvvvvvvvvcc", "加载---" + i);
                     if (i < (Math.round(totalAmount / 10) + 1) * 2) {
                         i++;
                         is_not_click = 1;

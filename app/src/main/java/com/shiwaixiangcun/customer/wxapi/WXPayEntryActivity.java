@@ -1,11 +1,8 @@
 package com.shiwaixiangcun.customer.wxapi;
 
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.event.EventCenter;
@@ -58,40 +55,42 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
                 finish();
                 break;
             case -1:
-                EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.PAY_DEFAULT, 0));
+                EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.PAY_FAIL, 0));
+                finish();
                 break;
             case -2:
+                finish();
                 break;
         }
-        if (errCode == 0) {
-            Log.d("test", "支付成功的回调方法--onResp--");
-            new AlertDialog.Builder(this).setMessage("支付成功").setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                    finish();
-                }
-            }).setTitle("提示").create().show();
-            EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.PAY_SUCCESS, 0));
-            finish();
-
-
-        } else if (errCode == -1) {
-            //-1 错误 可能的原因：签名错误、未注册APPID、项目设置APPID不正确、注册的APPID与设置的不匹配、其他异常等。
-            EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.PAY_DEFAULT, 0));
-            LogUtil.d("fail", "-1 错误 可能的原因：签名错误、未注册APPID、项目设置APPID不正确、注册的APPID与设置的不匹配、其他异常等。");
-            new AlertDialog.Builder(this).setMessage("支付出错").setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                    finish();
-                }
-            }).setTitle("提示").create().show();
-            finish();
-        } else if (errCode == -2) {
-            //-2 用户取消 无需处理。发生场景：用户不支付了，点击取消，返回APP。
-            finish();
-        }
+//        if (errCode == 0) {
+//            Log.d("test", "支付成功的回调方法--onResp--");
+//            new AlertDialog.Builder(this).setMessage("支付成功").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    dialog.dismiss();
+//                    finish();
+//                }
+//            }).setTitle("提示").create().show();
+//            EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.PAY_SUCCESS, 0));
+//            finish();
+//
+//
+//        } else if (errCode == -1) {
+//            //-1 错误 可能的原因：签名错误、未注册APPID、项目设置APPID不正确、注册的APPID与设置的不匹配、其他异常等。
+//            EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.PAY_FAIL, 0));
+//            LogUtil.d("fail", "-1 错误 可能的原因：签名错误、未注册APPID、项目设置APPID不正确、注册的APPID与设置的不匹配、其他异常等。");
+//            new AlertDialog.Builder(this).setMessage("支付出错").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    dialog.dismiss();
+//                    finish();
+//                }
+//            }).setTitle("提示").create().show();
+//            finish();
+//        } else if (errCode == -2) {
+//            //-2 用户取消 无需处理。发生场景：用户不支付了，点击取消，返回APP。
+//            finish();
+//        }
     }
 
 }

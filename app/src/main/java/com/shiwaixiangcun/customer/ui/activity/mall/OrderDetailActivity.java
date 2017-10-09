@@ -105,7 +105,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     FrameLayout mRootView;
     @BindView(R.id.ll_info_price)
     LinearLayout mLlInfoPrice;
-    DialogPay mDialogPay;
+
     OrderDetailBean.OrderInfoBean orderInfo;
     @BindView(R.id.llayout_good_info)
     LinearLayout mLlayoutGoodInfo;
@@ -122,16 +122,17 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     @BindView(R.id.top_bar_write)
     RelativeLayout mTopBarWrite;
     int goodsId = 0;
-    DialogInfo dialogDelete;
-    DialogInfo dialogCancel;
+    DialogInfo mDialogDelete;
+    DialogInfo mDialogCancel;
+    DialogPay mDialogPay;
     private int orderId = 0;
     private String tokenString;
-//    DialogPay dialog
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         orderId = getIntent().getIntExtra("orderId", 0);
+        Log.e(BUG_TAG, orderId + "");
         setContentView(R.layout.layout_order_detail);
         EventCenter.getInstance().register(this);
         ButterKnife.bind(this);
@@ -183,11 +184,15 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
 
     private void initView() {
         mDialogPay = new DialogPay(mContext);
+        mDialogCancel = new DialogInfo(this);
+        mDialogDelete = new DialogInfo(this);
         mLlayoutGoodInfo.setOnClickListener(this);
         mBackLeft.setOnClickListener(this);
         mTvPageName.setText("订单详情");
         mBtnCommit.setOnClickListener(this);
+        mTvCancel.setClickable(true);
         mTvCancel.setOnClickListener(this);
+
 
     }
 
@@ -231,8 +236,10 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                 mTvOrderStatus.setText("等待卖家发货");
                 mTvCancel.setVisibility(View.GONE);
                 mTvCue.setText("实际付款");
-                mBtnCommit.setVisibility(View.VISIBLE);
-//                mBtnCommit.setText("确认收货");
+                mBtnCommit.setVisibility(View.GONE);
+                RelativeLayout.LayoutParams layoutParam = (RelativeLayout.LayoutParams) mLlInfoPrice.getLayoutParams();
+                layoutParam.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                mLlInfoPrice.setLayoutParams(layoutParam);
                 break;
             case "Delivered":
                 mTvOrderStatus.setText("已发货");
@@ -241,11 +248,13 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                 mTvCancel.setVisibility(View.GONE);
                 mBtnCommit.setVisibility(View.VISIBLE);
                 mBtnCommit.setText("确认收货");
+                mBtnCommit.setOnClickListener(this);
                 break;
             case "Closed":
                 mTvOrderStatus.setText("已关闭");
                 mBtnCommit.setVisibility(View.VISIBLE);
                 mBtnCommit.setText("删除订单");
+                mBtnCommit.setOnClickListener(this);
                 break;
 
 
@@ -338,10 +347,10 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                         break;
                     case "删除订单":
                         Log.e(BUG_TAG, "删除订单");
-                        dialogDelete = new DialogInfo(mContext);
-                        dialogDelete.setDialogTitle("删除订单");
-                        dialogDelete.setDialogInfo("您确定要删除订单吗？");
-                        dialogDelete.setListener(new DialogInfo.onCallBackListener() {
+                        mDialogDelete = new DialogInfo(mContext);
+                        mDialogDelete.setDialogTitle("删除订单");
+                        mDialogDelete.setDialogInfo("您确定要删除订单吗？");
+                        mDialogDelete.setListener(new DialogInfo.onCallBackListener() {
                             @Override
                             public void closeBtn(DialogInfo dialog) {
                                 dialog.dismiss();
@@ -353,15 +362,16 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                                 dialog.dismiss();
                             }
                         });
+                        mDialogDelete.show();
                         break;
                 }
 
                 break;
             case R.id.tv_cancel:
-                dialogCancel = new DialogInfo(mContext);
-                dialogCancel.setDialogTitle("取消订单");
-                dialogCancel.setDialogInfo("您确定要取消订单吗？取消订单后，订单将变为关闭状态。");
-                dialogCancel.setListener(new DialogInfo.onCallBackListener() {
+                Log.e(BUG_TAG, "点击取消");
+                mDialogCancel.setDialogTitle("取消订单");
+                mDialogCancel.setDialogInfo("您确定要取消订单吗？取消订单后，订单将变为关闭状态。");
+                mDialogCancel.setListener(new DialogInfo.onCallBackListener() {
                     @Override
                     public void closeBtn(DialogInfo dialog) {
                         dialog.dismiss();
@@ -373,12 +383,11 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                         dialog.dismiss();
                     }
                 });
-
+                mDialogCancel.show();
                 break;
 
             case R.id.llayout_good_info:
                 Bundle bundle = new Bundle();
-                //// TODO: 2017/9/29  
                 bundle.putInt("goodId", goodsId);
                 readyGo(GoodDetailActivity.class, bundle);
                 break;
@@ -390,8 +399,6 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
      *
      */
     private void payOrder() {
-        // TODO: 2017/9/19 支付
-
         mDialogPay.setPrice("¥" + ArithmeticUtils.format(orderInfo.getShouldPay()));
         mDialogPay.show();
         mDialogPay.setListener(new DialogPay.onCallBackListener() {
@@ -405,7 +412,6 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                 int defaultPay = dialog.getDefaultPay();
                 switch (defaultPay) {
                     case 1:
-                        Toast.makeText(mContext, "正在进行微信支付", Toast.LENGTH_SHORT).show();
                         PayUtil.payWeixin(orderInfo.getOrderNumber(), tokenString, OrderDetailActivity.this);
                         break;
                     case 2:

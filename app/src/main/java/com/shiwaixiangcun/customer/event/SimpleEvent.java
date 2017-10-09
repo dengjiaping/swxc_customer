@@ -19,7 +19,7 @@ public class SimpleEvent {
     public static final int UPDATE_GOOD_LIST = 5;
     public static final int UPDATE_GOOD_DETAIL = 7;
     public static final int PAY_SUCCESS = 8;
-    public static final int PAY_DEFAULT = 9;
+    public static final int PAY_FAIL = 9;
     public static final int UPDATE_BLOOD_PRESSURE = 10;
     public static final int UPDATE_HEART_RATE = 11;
     public static final int UPDATE_BLOOD_SUGAR = 12;

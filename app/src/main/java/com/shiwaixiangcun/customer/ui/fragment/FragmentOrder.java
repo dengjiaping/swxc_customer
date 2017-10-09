@@ -27,6 +27,9 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterOrder;
@@ -36,17 +39,14 @@ import com.shiwaixiangcun.customer.http.StringDialogCallBack;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.OrderBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
-import com.shiwaixiangcun.customer.pay.AliInfo;
-import com.shiwaixiangcun.customer.pay.AliPay;
-import com.shiwaixiangcun.customer.pay.WeiXinInfo;
+import com.shiwaixiangcun.customer.pay.PayUtil;
 import com.shiwaixiangcun.customer.ui.activity.mall.OrderDetailActivity;
 import com.shiwaixiangcun.customer.ui.dialog.DialogInfo;
+import com.shiwaixiangcun.customer.ui.dialog.DialogPay;
+import com.shiwaixiangcun.customer.utils.ArithmeticUtils;
 import com.shiwaixiangcun.customer.utils.DisplayUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
-import com.tencent.mm.opensdk.modelpay.PayReq;
-import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -73,6 +73,8 @@ public class FragmentOrder extends LazyFragment {
     LinearLayout mLlayoutNodata;
     @BindView(R.id.root_view)
     FrameLayout mRootView;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout mRefreshLayout;
     private String BUG_TAG = this.getClass().getSimpleName();
     private AdapterOrder mAdapterOrder;
     private String mTitle;
@@ -82,7 +84,10 @@ public class FragmentOrder extends LazyFragment {
     private String stature;
     private String mStringPrompt;
     private String tokenString;
-
+    private DialogInfo mDialogCancel;
+    private DialogInfo mDialogDelete;
+    private DialogPay mDialogPay;
+    private DialogInfo mDialogConfirm;
 
     public static Fragment getInstance(String title) {
         FragmentOrder fragment = new FragmentOrder();
@@ -104,7 +109,7 @@ public class FragmentOrder extends LazyFragment {
 
     @Override
     protected void initViewsAndEvents(View view) {
-        initData();
+        initView();
 
     }
 
@@ -134,7 +139,11 @@ public class FragmentOrder extends LazyFragment {
     /**
      * 初始化数据
      */
-    private void initData() {
+    private void initView() {
+        mDialogCancel = new DialogInfo(mContext);
+        mDialogDelete = new DialogInfo(mContext);
+        mDialogConfirm = new DialogInfo(mContext);
+        mDialogPay = new DialogPay(mContext);
         mOrderList = new ArrayList<>();
         mAdapterOrder = new AdapterOrder(mOrderList);
         mTvPrompt.setText("没有" + mStringPrompt + "订单");
@@ -144,6 +153,20 @@ public class FragmentOrder extends LazyFragment {
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
                 outRect.set(0, 0, 0, DisplayUtil.dip2px(mContext, 16));
+            }
+        });
+
+        mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+
+                refreshlayout.getLayout().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // TODO: 2017/9/23 下拉刷新
+                        requestData();
+                    }
+                }, 2000);
             }
         });
         mAdapterOrder.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -165,11 +188,9 @@ public class FragmentOrder extends LazyFragment {
                         payOrder(elementsBean);
                         break;
                     case "删除订单":
-                        DialogInfo deleteDialog = new DialogInfo(mContext);
-                        deleteDialog.setDialogTitle("删除订单");
-                        deleteDialog.setDialogInfo("确认删除此订单？");
-                        deleteDialog.show();
-                        deleteDialog.setListener(new DialogInfo.onCallBackListener() {
+                        mDialogDelete.setDialogTitle("删除订单");
+                        mDialogDelete.setDialogInfo("确认删除此订单？");
+                        mDialogDelete.setListener(new DialogInfo.onCallBackListener() {
                             @Override
                             public void closeBtn(DialogInfo dialog) {
                                 dialog.dismiss();
@@ -181,16 +202,43 @@ public class FragmentOrder extends LazyFragment {
                                 dialog.dismiss();
                             }
                         });
-
+                        mDialogDelete.show();
                         break;
                     case "取消订单":
-                        cancelOrder(elementsBean);
+                        mDialogCancel.setDialogTitle("取消订单");
+                        mDialogCancel.setDialogInfo("您确定要取消订单吗？取消订单后，订单将变为关闭状态。");
+                        mDialogCancel.setListener(new DialogInfo.onCallBackListener() {
+                            @Override
+                            public void closeBtn(DialogInfo dialog) {
+                                dialog.dismiss();
+                            }
+
+                            @Override
+                            public void confirmBtn(DialogInfo dialog) {
+                                cancelOrder(elementsBean);
+                                dialog.dismiss();
+                            }
+                        });
+                        mDialogCancel.show();
+
                         break;
                     case "确认收货":
-//                        DialogInfo dialogInfo = new DialogInfo(mContext);
-//                        dialogInfo.setDialogTitle();
-//                        dialogInfo.show();
-                        configOrder(elementsBean);
+                        mDialogConfirm.setDialogTitle("确认收货");
+                        mDialogConfirm.setDialogInfo("在您确认收货前，请检查商品是否完好，确定无误无损后再确认收货，确认收货后，订单将变为完成状态");
+                        mDialogConfirm.show();
+                        mDialogConfirm.setListener(new DialogInfo.onCallBackListener() {
+                            @Override
+                            public void closeBtn(DialogInfo dialog) {
+                                dialog.dismiss();
+                            }
+
+                            @Override
+                            public void confirmBtn(DialogInfo dialog) {
+                                configOrder(elementsBean);
+                                dialog.dismiss();
+                            }
+                        });
+
                         break;
                 }
             }
@@ -204,7 +252,6 @@ public class FragmentOrder extends LazyFragment {
      */
     private void requestData() {
         Log.e(BUG_TAG, "请求数据");
-
         Log.e(BUG_TAG, tokenString);
         HttpParams httpParams = new HttpParams();
         httpParams.put("page.pn", 1);
@@ -228,8 +275,9 @@ public class FragmentOrder extends LazyFragment {
                         if (order == null) {
                             return;
                         }
+                        mRefreshLayout.finishRefresh();
+                        mRefreshLayout.finishLoadmore();
                         mOrder = order.getData();
-
                         if (mOrder.getTotalAmount() == 0) {
                             mLlayoutNodata.setVisibility(View.VISIBLE);
                         }
@@ -239,12 +287,9 @@ public class FragmentOrder extends LazyFragment {
                             mOrderList.addAll(mOrder.getElements());
                             mAdapterOrder.notifyDataSetChanged();
                         }
-
                     }
                 });
-
     }
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -270,6 +315,9 @@ public class FragmentOrder extends LazyFragment {
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(loginInfo, type);
+        if (responseEntity == null) {
+            return;
+        }
         tokenString = responseEntity.getData().getAccess_token();
         EventBus.getDefault().register(this);
 
@@ -281,7 +329,6 @@ public class FragmentOrder extends LazyFragment {
         intent.putExtra("orderId", orderId);
         intent.setClass(mContext, OrderDetailActivity.class);
         startActivity(intent);
-
     }
 
     private void cancelOrder(OrderBean.ElementsBean elementsBean) {
@@ -294,49 +341,32 @@ public class FragmentOrder extends LazyFragment {
      *
      * @param elementsBean 订单数据
      */
-    private void payOrder(OrderBean.ElementsBean elementsBean) {
+    private void payOrder(final OrderBean.ElementsBean elementsBean) {
+        mDialogPay.setPrice("¥" + ArithmeticUtils.format(elementsBean.getRealyPay()));
+        mDialogPay.show();
+        mDialogPay.setListener(new DialogPay.onCallBackListener() {
+            @Override
+            public void closeBtn(DialogPay dialog) {
+                dialog.dismiss();
+            }
 
+            @Override
+            public void confirmBtn(DialogPay dialog) {
+                int defaultPay = dialog.getDefaultPay();
+                switch (defaultPay) {
+                    case 1:
+                        PayUtil.payWeixin(elementsBean.getOrderNumber(), tokenString, mContext);
+                        break;
+                    case 2:
+                        PayUtil.payAli(elementsBean.getOrderNumber(), tokenString, mContext);
+                        break;
+                    case 0:
+                        Toast.makeText(mContext, "请选择一种支付方式", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        });
 
-        String orderNumber = elementsBean.getOrderNumber();
-        Log.e(BUG_TAG, orderNumber);
-        OkGo.<String>post(GlobalConfig.payWeiXin)
-                .params("access_token", tokenString)
-                .params("orderNumber", orderNumber)
-                .execute(new StringCallback() {
-                    @Override
-                    public void onError(Response<String> response) {
-                        super.onError(response);
-                    }
-
-                    @Override
-                    public void onSuccess(Response<String> response) {
-                        Log.e(BUG_TAG, response.body());
-                        Type type = new TypeToken<ResponseEntity<WeiXinInfo>>() {
-                        }.getType();
-                        ResponseEntity<WeiXinInfo> entity = JsonUtil.fromJson(response.body(), type);
-                        if (entity == null) {
-                            return;
-                        }
-                        WeiXinInfo.WeiXinResponseBean weiXinResponse = entity.getData().getWeiXinResponse();
-                        String APP_ID = weiXinResponse.getAppid();
-                        IWXAPI wxapi = WXAPIFactory.createWXAPI(mContext, APP_ID, false);
-                        wxapi.registerApp(APP_ID);
-
-                        if (isWxAppInstalled()) {
-                            PayReq req = new PayReq();
-                            req.appId = APP_ID;
-                            req.partnerId = weiXinResponse.getPartnerid();
-                            req.prepayId = weiXinResponse.getPrepayid();
-                            req.nonceStr = weiXinResponse.getNoncestr();
-                            req.timeStamp = weiXinResponse.getTimestamp();
-                            req.sign = weiXinResponse.getSign();
-                            Toast.makeText(mContext, "正常调起支付", Toast.LENGTH_SHORT).show();
-                            wxapi.sendReq(req);
-                        }
-
-
-                    }
-                });
     }
 
     /**
@@ -359,28 +389,6 @@ public class FragmentOrder extends LazyFragment {
         Toast.makeText(mContext, "请安装微信", Toast.LENGTH_SHORT).show();
         return false;
 
-
-    }
-
-    private void pay(String orderNumber) {
-        OkGo.<String>post(GlobalConfig.payZhiFuBao)
-                .params("access_token", tokenString)
-                .params("orderNumber", orderNumber)
-                .execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(Response<String> response) {
-                        Log.e(BUG_TAG, response.body());
-                        Type type = new TypeToken<ResponseEntity<AliInfo>>() {
-                        }.getType();
-                        ResponseEntity<AliInfo> entity = JsonUtil.fromJson(response.body(), type);
-                        if (entity == null) {
-                            return;
-                        }
-                        String zhiFuBaoResponse = entity.getData().getZhiFuBaoResponse();
-                        AliPay.getInstance().pay(zhiFuBaoResponse, mContext);
-
-                    }
-                });
 
     }
 
@@ -480,14 +488,16 @@ public class FragmentOrder extends LazyFragment {
         }
         switch (simpleEvent.mEventType) {
             case SimpleEvent.PAY_SUCCESS:
-                Log.e(BUG_TAG, "支付成功");
                 Toast.makeText(mContext, "支付成功", Toast.LENGTH_SHORT).show();
+//                readyGo(OrderDetailActivity.class);
                 requestData();
                 break;
-            case SimpleEvent.PAY_DEFAULT:
+            case SimpleEvent.PAY_FAIL:
                 Log.e(BUG_TAG, "支付失败");
                 Toast.makeText(mContext, "支付失败", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
+
+
 }

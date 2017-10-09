@@ -137,6 +137,9 @@ public class DialogSku extends Dialog implements DialogInterface.OnCancelListene
         super.show();
     }
 
+    /**
+     * 根据商品 获取商品信息
+     */
     private void loadData() {
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("id", mGoodId);
@@ -165,8 +168,8 @@ public class DialogSku extends Dialog implements DialogInterface.OnCancelListene
     }
 
     private void fillData(GoodDetail.DataBean data) {
-        mTvStockSku.setText("价格：");
-        mTvStockSku.setText("库存： ");
+        mTvPriceSku.setText("价格：" + data.getMinPrice());
+        mTvStockSku.setText("库存： " + data.getStock());
         mTvResultSku.setText("请选择： ");
         ImageDisplayUtil.showImageView(mContext, data.getImages().get(0).getThumbImageURL(), mIvCoverSku);
         List<GoodDetail.DataBean.SpecificationsBean> specifications = data.getSpecifications();
@@ -258,9 +261,7 @@ public class DialogSku extends Dialog implements DialogInterface.OnCancelListene
                                 mChooseGoodPrice = data.getMinPrice();
                                 mTvPriceSku.setText("价格: " + "¥ " + ArithmeticUtils.format(data.getMinPrice()));
                                 mTvStockSku.setText("库存: " + data.getStock() + "");
-                                if (data.getStock() == 0) {
-                                    noStock = true;
-                                }
+                                noStock = data.getStock() == 0;
                                 mTvResultSku.setText("已选择：  " + chooseName);
                                 break;
                         }
@@ -275,23 +276,25 @@ public class DialogSku extends Dialog implements DialogInterface.OnCancelListene
                 dismiss();
                 break;
             case R.id.btn_confirm:
-
-
-                if (!checkCanGo()) {
-                    Toast.makeText(mContext, "你还有未选择的属性", Toast.LENGTH_SHORT).show();
-
+                if (noStock) {
+                    Toast.makeText(mContext, "当前选择的商品库存为0", Toast.LENGTH_SHORT).show();
                 } else {
-                    Intent intent = new Intent();
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("goodId", mGoodId);
-                    bundle.putString("value", chooseAttrDesc);
-                    bundle.putString("id", chooseId);
-                    bundle.putDouble("goodPrice", mChooseGoodPrice);
-                    bundle.putParcelable("goodInfo", goodDetail.getData());
-                    intent.putExtras(bundle);
-                    intent.setClass(mContext, ConfirmOrderActivity.class);
-                    mContext.startActivity(intent);
-                    dismiss();
+                    if (!checkCanGo()) {
+                        Toast.makeText(mContext, "请选择商品类型", Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        Intent intent = new Intent();
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("goodId", mGoodId);
+                        bundle.putString("value", chooseAttrDesc);
+                        bundle.putString("id", chooseId);
+                        bundle.putDouble("goodPrice", mChooseGoodPrice);
+                        bundle.putParcelable("goodInfo", goodDetail.getData());
+                        intent.putExtras(bundle);
+                        intent.setClass(mContext, ConfirmOrderActivity.class);
+                        mContext.startActivity(intent);
+                        dismiss();
+                    }
                 }
                 break;
         }

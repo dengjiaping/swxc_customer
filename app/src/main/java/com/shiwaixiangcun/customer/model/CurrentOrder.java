@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 public class CurrentOrder {
 
     /**
-     * data : {"auditStatus":"WaitAudit","companyId":1070,"createTime":1506045423623,"createdBy":364,"customerAddressId":61,"customerDeleted":false,"customerId":"1657","deleted":false,"deliveryWay":"由helin旗舰店发货，并提供售后服务。","discountPrice":null,"id":452,"imagePath":null,"lastModifiedBy":null,"lastModifiedDate":null,"leavingMessage":"","new":false,"number":"1000000285","orgPath":null,"payDate":null,"payWay":"None","realPay":38.88,"remark":null,"sellerId":1070,"shouldPay":38.88,"status":"WaitPay","totalPrice":38.88,"transportMoney":0,"version":0}
+     * data : {"auditStatus":"WaitAudit","companyId":1070,"createTime":1507514734119,"createdBy":364,"customerAddressId":105,"customerDeleted":false,"customerId":1657,"deleted":false,"deliveryWay":"由helin旗舰店发货，并提供售后服务。","discountPrice":null,"id":645,"imagePath":null,"lastModifiedBy":null,"lastModifiedDate":null,"leavingMessage":"","new":false,"number":"1000000461","orgPath":null,"payDate":null,"payWay":"None","realPay":0.02,"remark":null,"sellerId":1070,"shouldPay":0.02,"siteId":1,"status":"WaitPay","totalPrice":0.02,"transportMoney":0.01,"version":0}
      * message : 操作成功
      * responseCode : 1001
      * success : true
@@ -56,32 +56,32 @@ public class CurrentOrder {
         /**
          * auditStatus : WaitAudit
          * companyId : 1070
-         * createTime : 1506045423623
+         * createTime : 1507514734119
          * createdBy : 364
-         * customerAddressId : 61
+         * customerAddressId : 105
          * customerDeleted : false
          * customerId : 1657
          * deleted : false
          * deliveryWay : 由helin旗舰店发货，并提供售后服务。
          * discountPrice : null
-         * id : 452
+         * id : 645
          * imagePath : null
          * lastModifiedBy : null
          * lastModifiedDate : null
-         * <p>
          * leavingMessage :
          * new : false
-         * number : 1000000285
+         * number : 1000000461
          * orgPath : null
          * payDate : null
          * payWay : None
-         * realPay : 38.88
+         * realPay : 0.02
          * remark : null
          * sellerId : 1070
-         * shouldPay : 38.88
+         * shouldPay : 0.02
+         * siteId : 1
          * status : WaitPay
-         * totalPrice : 38.88
-         * transportMoney : 0
+         * totalPrice : 0.02
+         * transportMoney : 0.01
          * version : 0
          */
 
@@ -91,10 +91,10 @@ public class CurrentOrder {
         private int createdBy;
         private int customerAddressId;
         private boolean customerDeleted;
-        private String customerId;
+        private int customerId;
         private boolean deleted;
         private String deliveryWay;
-        private double discountPrice;
+        private String discountPrice;
         private int id;
         private String imagePath;
         private String lastModifiedBy;
@@ -110,9 +110,10 @@ public class CurrentOrder {
         private String remark;
         private int sellerId;
         private double shouldPay;
+        private int siteId;
         private String status;
         private double totalPrice;
-        private int transportMoney;
+        private double transportMoney;
         private int version;
 
         public String getAuditStatus() {
@@ -163,11 +164,11 @@ public class CurrentOrder {
             this.customerDeleted = customerDeleted;
         }
 
-        public String getCustomerId() {
+        public int getCustomerId() {
             return customerId;
         }
 
-        public void setCustomerId(String customerId) {
+        public void setCustomerId(int customerId) {
             this.customerId = customerId;
         }
 
@@ -187,11 +188,11 @@ public class CurrentOrder {
             this.deliveryWay = deliveryWay;
         }
 
-        public double getDiscountPrice() {
+        public String getDiscountPrice() {
             return discountPrice;
         }
 
-        public void setDiscountPrice(double discountPrice) {
+        public void setDiscountPrice(String discountPrice) {
             this.discountPrice = discountPrice;
         }
 
@@ -307,6 +308,14 @@ public class CurrentOrder {
             this.shouldPay = shouldPay;
         }
 
+        public int getSiteId() {
+            return siteId;
+        }
+
+        public void setSiteId(int siteId) {
+            this.siteId = siteId;
+        }
+
         public String getStatus() {
             return status;
         }
@@ -323,11 +332,11 @@ public class CurrentOrder {
             this.totalPrice = totalPrice;
         }
 
-        public int getTransportMoney() {
+        public double getTransportMoney() {
             return transportMoney;
         }
 
-        public void setTransportMoney(int transportMoney) {
+        public void setTransportMoney(double transportMoney) {
             this.transportMoney = transportMoney;
         }
 
@@ -338,7 +347,5 @@ public class CurrentOrder {
         public void setVersion(int version) {
             this.version = version;
         }
-
-
     }
 }

@@ -9,7 +9,10 @@ import android.content.Context;
 public interface IHomePresenter {
 
 
-    void setBgaAdpaterAndClick(Context context);
+    void setBannerFirst(Context context);
+
+    void setBannerSecond(Context context);
+//    void setBgaAdapterAndClick(Context context);
 
     void setAnnouncement(Context context);
 

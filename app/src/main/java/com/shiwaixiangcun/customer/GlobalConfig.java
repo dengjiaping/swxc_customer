@@ -49,4 +49,8 @@ public class GlobalConfig {
     public static String payZhiFuBao = DOMAIN + "/mc/pay/ZhiFuBao.json";
     public static String payWeiXin = DOMAIN + "/mc/pay/WeiXin.json";
     public static String searchCategory = DOMAIN + "/mi/goods/category/listpage.json";
+    //分享相关
+    public static String shareGoods = DOMAIN + "/mi/goods/share/";
+
+    public static String appLogo = DOMAIN + "http://resource.hxteb.com/group1/M00/00/26/rBKx5Vl4TMCAUPgUAAB6YxNdWvs030.png";
 }

@@ -254,7 +254,8 @@
         android:layout_height="60dp"
         android:layout_gravity="bottom"
         android:background="#f0ffffff"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <View
             android:layout_width="match_parent"
