@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.widget.Toast;
 
 import com.shiwaixiangcun.customer.ui.fragment.CubeFragmentActivity;
 
@@ -69,6 +70,16 @@ public class BaseActivity extends CubeFragmentActivity {
         startActivityForResult(intent, requestCode);
     }
 
+
+    protected void showToastShort(CharSequence charSequence) {
+
+        Toast.makeText(mContext, charSequence, Toast.LENGTH_SHORT).show();
+    }
+
+    protected void showToastLong(CharSequence charSequence) {
+
+        Toast.makeText(mContext, charSequence, Toast.LENGTH_LONG).show();
+    }
 
     @Override
     protected String getCloseWarning() {

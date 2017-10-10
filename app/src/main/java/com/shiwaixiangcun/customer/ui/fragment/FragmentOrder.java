@@ -30,6 +30,7 @@ import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterOrder;
@@ -43,6 +44,7 @@ import com.shiwaixiangcun.customer.pay.PayUtil;
 import com.shiwaixiangcun.customer.ui.activity.mall.OrderDetailActivity;
 import com.shiwaixiangcun.customer.ui.dialog.DialogInfo;
 import com.shiwaixiangcun.customer.ui.dialog.DialogPay;
+import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.ArithmeticUtils;
 import com.shiwaixiangcun.customer.utils.DisplayUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
@@ -258,7 +260,7 @@ public class FragmentOrder extends LazyFragment {
         httpParams.put("page.size", 10);
         httpParams.put("orderStatus", stature);
         httpParams.put("access_token", tokenString);
-        OkGo.<String>get(GlobalConfig.getAllOrders)
+        OkGo.<String>get(GlobalAPI.getAllOrders)
                 .params(httpParams)
                 .execute(new StringDialogCallBack(mContext) {
                     @Override
@@ -318,7 +320,7 @@ public class FragmentOrder extends LazyFragment {
         if (responseEntity == null) {
             return;
         }
-        tokenString = responseEntity.getData().getAccess_token();
+        tokenString = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
         EventBus.getDefault().register(this);
 
 
@@ -332,7 +334,7 @@ public class FragmentOrder extends LazyFragment {
     }
 
     private void cancelOrder(OrderBean.ElementsBean elementsBean) {
-        commonRequest(elementsBean, GlobalConfig.cancelOrder, "取消订单");
+        commonRequest(elementsBean, GlobalAPI.cancelOrder, "取消订单");
 
     }
 
@@ -398,7 +400,7 @@ public class FragmentOrder extends LazyFragment {
      * @param elementsBean 订单数据
      */
     private void configOrder(OrderBean.ElementsBean elementsBean) {
-        commonRequest(elementsBean, GlobalConfig.confirmOrder, "确认收货");
+        commonRequest(elementsBean, GlobalAPI.confirmOrder, "确认收货");
     }
 
     /**
@@ -407,7 +409,7 @@ public class FragmentOrder extends LazyFragment {
      * @param elementsBean 订单数据
      */
     private void deleteOrder(final OrderBean.ElementsBean elementsBean) {
-        OkGo.<String>put(GlobalConfig.deleteOrder)
+        OkGo.<String>put(GlobalAPI.deleteOrder)
                 .params("access_token", tokenString)
                 .params("id", elementsBean.getOrderId())
                 .isSpliceUrl(true)

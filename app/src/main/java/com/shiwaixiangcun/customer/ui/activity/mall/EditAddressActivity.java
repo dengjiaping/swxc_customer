@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 import com.shiwaixiangcun.customer.BaseActivity;
+import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.http.Common;
@@ -23,6 +24,7 @@ import com.shiwaixiangcun.customer.http.HttpRequest;
 import com.shiwaixiangcun.customer.model.AddressBean;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
+import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.utils.StringUtil;
@@ -145,15 +147,17 @@ public class EditAddressActivity extends BaseActivity implements View.OnClickLis
             Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
             }.getType();
             final ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(login_detail, type);
+
+            String tokenString = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
             HashMap<String, Object> params = new HashMap<>();
-            params.put("access_token", responseEntity.getData().getAccess_token());
+            params.put("access_token", tokenString);
             params.put("name", userName);
             params.put("phone", userPhone);
             params.put("id", modifyAddress.getId());
             params.put("address", userAddress);
             params.put("default", isDefault);
             Log.e(BUG_TAG, responseEntity.getData().getAccess_token());
-            HttpRequest.put(GlobalConfig.modifyDefaultAddress, params, new HttpCallBack() {
+            HttpRequest.put(GlobalAPI.modifyDefaultAddress, params, new HttpCallBack() {
                 @Override
                 public void onSuccess(String responseJson) {
                     super.onSuccess(responseJson);

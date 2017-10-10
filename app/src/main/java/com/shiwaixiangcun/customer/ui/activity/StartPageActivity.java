@@ -1,14 +1,30 @@
 package com.shiwaixiangcun.customer.ui.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.animation.AlphaAnimation;
 import android.widget.TextView;
 
 import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
+import com.google.gson.reflect.TypeToken;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 import com.shiwaixiangcun.customer.BaseActivity;
+import com.shiwaixiangcun.customer.GlobalAPI;
+import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
+import com.shiwaixiangcun.customer.model.LoginResultBean;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
+import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
+import com.shiwaixiangcun.customer.utils.JsonUtil;
+import com.shiwaixiangcun.customer.utils.StringUtil;
+
+import java.lang.reflect.Type;
 
 public class StartPageActivity extends BaseActivity {
 
@@ -35,15 +51,54 @@ public class StartPageActivity extends BaseActivity {
         alpha.setDuration(500);
         alpha.setFillAfter(true);
         tv_center_word.setAnimation(alpha);
+        refreshToken = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.Refresh_token, "");
 
     }
 
+    /**
+     * 刷新Token
+     *
+     * @param refresh_token 需要刷新的值
+     */
+    public void refreshToken(final Context context, String refresh_token) {
+        OkGo.<String>post(GlobalAPI.refreshToken)
+                .params("client_id", GlobalConfig.clientId)
+                .params("client_secret", GlobalConfig.clientSecret)
+                .params("grant_type", "refresh_token")
+                .params("refresh_token", refresh_token)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        Log.e(BUG_TAG, "onSuccess");
+                        Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
+                        }.getType();
+                        ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(response.body(), type);
+                        switch (responseEntity.getResponseCode()) {
+                            case 1003:
+                                Log.e(BUG_TAG, "刷新成功");
+                                LoginResultBean data = responseEntity.getData();
+                                AppSharePreferenceMgr.put(context, GlobalConfig.TOKEN, data.getAccess_token());
+                                AppSharePreferenceMgr.put(context, GlobalConfig.Refresh_token, data.getRefresh_token());
+                                Log.e(BUG_TAG, "刷新以后的token:" + data.getAccess_token());
+                                Log.e(BUG_TAG, "刷新以后的Refresh_token:" + data.getRefresh_token());
+                                cdt.start();
+                                break;
+                            default:
+                                Log.e(BUG_TAG, "刷新失败");
+                                Intent intent = new Intent();
+                                intent.putExtra("mineLogin", "Login");
+                                intent.setClass(mContext, LoginActivity.class);
+                                startActivity(intent);
+                                break;
+                        }
+                    }
+                });
+    }
 
     private void initData() {
         cdt = new CountDownTimer(1500, 100) {
             @Override
             public void onTick(long millisUntilFinished) {
-//                tv_hello.setText(millisUntilFinished + "");
             }
 
             @Override
@@ -52,48 +107,16 @@ public class StartPageActivity extends BaseActivity {
 
             }
         };
-        cdt.start();
-//        token = (String) AppSharePreferenceMgr.get(mContext, Common.TOKEN, "token");
-//        refreshToken = (String) AppSharePreferenceMgr.get(mContext, Common.REFRESH_TOKEN, "refresh_token");
-//
-//        TokenUtils.checkToken(token);
+        if (StringUtil.isEmpty(refreshToken)) {
+            readyGo(LoginActivity.class);
+            finish();
+        }
+        refreshToken(mContext, refreshToken);
 
 
     }
 
-//    @Subscribe(threadMode = ThreadMode.MAIN)
-//    public void updateUI(SimpleEvent simpleEvent) {
-//        if (simpleEvent == null) {
-//            return;
-//        }
-//        if (simpleEvent.mEventType == SimpleEvent.CHECK_TOKEN) {
-//            switch (simpleEvent.mEventValue) {
-//                case 1:
-//                    Log.e(BUG_TAG, "检查有效");
-//                    cdt.start();
-//                    break;
-//                case 2:
-//                    Log.e(BUG_TAG, "检查无效");
-//                    TokenUtils.refreshToken(mContext,refreshToken);
-//                    break;
-//            }
-//        }
-//        if (simpleEvent.mEventType == SimpleEvent.REFRESH_TOKEN) {
-//            switch (simpleEvent.mEventValue) {
-//                case 1:
-//                    Log.e(BUG_TAG, "刷新成功");
-//                    cdt.start();
-//                    break;
-//                case 2:
-//                    Log.e(BUG_TAG, "刷新失败");
-//                    readyGoThenKill(LoginActivity.class);
-//                    break;
-//            }
-//        }
-
-
-//    }
-
+    //
     @Override
     protected void onResume() {
         super.onResume();

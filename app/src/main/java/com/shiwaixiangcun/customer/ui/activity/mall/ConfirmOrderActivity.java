@@ -19,6 +19,7 @@ import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.shiwaixiangcun.customer.BaseActivity;
+import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.event.EventCenter;
@@ -34,6 +35,7 @@ import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.pay.PayUtil;
 import com.shiwaixiangcun.customer.ui.dialog.DialogPay;
+import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.ArithmeticUtils;
 import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
@@ -265,7 +267,8 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(loginInfo, type);
-        tokenString = responseEntity.getData().getAccess_token();
+
+        tokenString = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
         mStrMessage = mEdtMessage.getText().toString();
         HttpParams params = new HttpParams();
         params.put("addressId", addressId);
@@ -276,8 +279,8 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         params.put("leavingMessage", mStrMessage);
         params.put("sellerId", data.getSellerId());
         params.put("access_token", tokenString);
-        params.put("siteId", Common.siteID);
-        OkGo.<String>post(GlobalConfig.putOrder)
+        params.put("siteId", GlobalConfig.siteID);
+        OkGo.<String>post(GlobalAPI.putOrder)
                 .params(params)
                 .execute(new StringDialogCallBack(this) {
                     @Override
@@ -425,7 +428,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         HashMap<String, Object> params = new HashMap<>();
         params.put("access_token", tokenString);
         params.put("fields", "");
-        HttpRequest.get(GlobalConfig.getAddress, params, new HttpCallBack() {
+        HttpRequest.get(GlobalAPI.getAddress, params, new HttpCallBack() {
             @Override
             public void onSuccess(String responseJson) {
                 super.onSuccess(responseJson);

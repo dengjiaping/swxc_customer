@@ -101,7 +101,6 @@
         Id="4"
         SortId="4"/>
 
-    <!--1e980a780934978e953ffe443e75c343-->
 	<WechatMoments
         AppId="wx4811bcb64cb3e434"
         AppSecret="17ee0c30ba256153d9990bfbe53188e5"
@@ -119,8 +118,8 @@
 
 	<!-- ShareByAppClient标识是否使用微博客户端分享，默认是false -->
 	<QQ
-        AppId="1106146668"
-        AppKey="oHeMyLBVpoHF77z5"
+        AppId="1106243436"
+        AppKey="gwspO5ZcrfEMjrL5"
         Enable="true"
         Id="7"
         ShareByAppClient="true"

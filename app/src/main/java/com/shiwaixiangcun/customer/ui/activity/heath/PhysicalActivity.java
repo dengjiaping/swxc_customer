@@ -17,15 +17,14 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.shiwaixiangcun.customer.BaseActivity;
+import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterFamily;
-import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.model.HealthUserBean;
-import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
+import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
-import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
 import java.lang.reflect.Type;
@@ -69,13 +68,13 @@ public class PhysicalActivity extends BaseActivity implements View.OnClickListen
      * 请求数据
      */
     private void initData() {
-        final String loginInfo = SharePreference.getStringSpParams(mContext, Common.IS_SAVE_LOGIN, Common.SISAVELOGIN);
-        Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
-        }.getType();
-        ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(loginInfo, type);
-        tokenString = responseEntity.getData().getAccess_token();
+//        final String loginInfo = SharePreference.getStringSpParams(mContext, Common.IS_SAVE_LOGIN, Common.SISAVELOGIN);
+//        Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
+//        }.getType();
+//        ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(loginInfo, type);
+        tokenString = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
         Log.e(BUG_TAG, tokenString);
-        OkGo.<String>get(GlobalConfig.getPhysical)
+        OkGo.<String>get(GlobalAPI.getPhysical)
                 .params("access_token", tokenString)
                 .execute(new StringCallback() {
                     @Override
@@ -95,6 +94,7 @@ public class PhysicalActivity extends BaseActivity implements View.OnClickListen
                                     mRvFamily.setVisibility(View.GONE);
                                     visible = true;
                                 }
+                                mUserBeanList.clear();
                                 mUserBeanList.addAll(responseEntity.getData());
                                 mAdapterFamily.addData(mUserBeanList);
                                 Bundle bundle = new Bundle();
@@ -150,4 +150,6 @@ public class PhysicalActivity extends BaseActivity implements View.OnClickListen
                 break;
         }
     }
+
+
 }

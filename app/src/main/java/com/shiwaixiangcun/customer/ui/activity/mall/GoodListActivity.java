@@ -20,12 +20,12 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shiwaixiangcun.customer.BaseActivity;
+import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterGoodList;
 import com.shiwaixiangcun.customer.event.EventCenter;
 import com.shiwaixiangcun.customer.event.SimpleEvent;
-import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.model.ElementBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
@@ -157,8 +157,8 @@ public class GoodListActivity extends BaseActivity implements View.OnClickListen
         params.put("goodsSubjectValue", type);
         params.put("page.pn", start);
         params.put("page.size", size);
-        params.put("siteId", Common.siteID);
-        OkGo.<String>get(GlobalConfig.getGuessLike)
+        params.put("siteId", GlobalConfig.siteID);
+        OkGo.<String>get(GlobalAPI.getGuessLike)
                 .params(params)
                 .execute(new StringCallback() {
                     @Override

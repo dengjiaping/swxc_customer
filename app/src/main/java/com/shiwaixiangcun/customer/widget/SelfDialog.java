@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
+import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.SelfdialogListAdapter;
 import com.shiwaixiangcun.customer.http.Common;
@@ -20,6 +21,7 @@ import com.shiwaixiangcun.customer.http.HttpRequest;
 import com.shiwaixiangcun.customer.model.HouseSelectListBean;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
+import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.LoginOutUtil;
 import com.shiwaixiangcun.customer.utils.RefreshTockenUtil;
@@ -240,8 +242,9 @@ public class SelfDialog extends Dialog {
         }.getType();
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(login_detail, type);
         final String refresh_token = responseEntity.getData().getRefresh_token();
+        String tokenString = (String) AppSharePreferenceMgr.get(context, GlobalConfig.TOKEN, "");
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("access_token", responseEntity.getData().getAccess_token());
+        hashMap.put("access_token", tokenString);
         hashMap.put("fields", "id,numberDesc");
 
 

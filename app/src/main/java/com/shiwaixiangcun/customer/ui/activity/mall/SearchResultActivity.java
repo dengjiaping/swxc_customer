@@ -19,6 +19,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 import com.shiwaixiangcun.customer.BaseActivity;
+import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterSearchResult;
@@ -107,8 +108,8 @@ public class SearchResultActivity extends BaseActivity implements View.OnClickLi
         httpParams.put("search", keyword);
         httpParams.put("page.pn", page);
         httpParams.put("page.size", size);
-        httpParams.put("siteId", 1);
-        OkGo.<String>get(GlobalConfig.searchGood)
+        httpParams.put("siteId", GlobalConfig.siteID);
+        OkGo.<String>get(GlobalAPI.searchGood)
                 .params(httpParams)
                 .execute(new StringDialogCallBack(this) {
                     @Override

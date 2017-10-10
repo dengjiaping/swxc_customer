@@ -8,7 +8,7 @@ import com.google.gson.reflect.TypeToken;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
-import com.shiwaixiangcun.customer.GlobalConfig;
+import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.event.EventCenter;
 import com.shiwaixiangcun.customer.event.SimpleEvent;
 import com.shiwaixiangcun.customer.http.Common;
@@ -40,9 +40,10 @@ public class TokenUtils {
      *
      * @param string
      */
-    public static void checkToken(String string) {
+    public static int checkToken(String string) {
         Log.e(BUG_TAG, string);
-        OkGo.<String>get(GlobalConfig.checkToken)
+        final int[] code = {0};
+        OkGo.<String>get(GlobalAPI.checkToken)
                 .params("access_token", string)
                 .execute(new StringCallback() {
                     @Override
@@ -52,6 +53,9 @@ public class TokenUtils {
                         if (responseEntity == null) {
                             return;
                         }
+
+                        int responseCode = responseEntity.getResponseCode();
+                        code[0] = responseCode;
                         if (responseEntity.getResponseCode() == 1001) {
                         }
                         switch (responseEntity.getResponseCode()) {
@@ -75,6 +79,7 @@ public class TokenUtils {
                 });
 
 
+        return code[0];
     }
 
 
@@ -84,7 +89,7 @@ public class TokenUtils {
      * @param refresh_token 需要刷新的值
      */
     public static void refreshToken(final Context context, String refresh_token) {
-        OkGo.<String>post(GlobalConfig.refreshToken)
+        OkGo.<String>post(GlobalAPI.refreshToken)
                 .params("client_id", client_id)
                 .params("client_secret", client_secret)
                 .params("grant_type", "refresh_token")

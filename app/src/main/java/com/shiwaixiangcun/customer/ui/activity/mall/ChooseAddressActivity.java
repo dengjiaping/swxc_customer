@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.google.gson.reflect.TypeToken;
 import com.jaeger.recyclerviewdivider.RecyclerViewDivider;
 import com.shiwaixiangcun.customer.BaseActivity;
+import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterAddress;
 import com.shiwaixiangcun.customer.http.Common;
@@ -19,6 +20,7 @@ import com.shiwaixiangcun.customer.http.HttpRequest;
 import com.shiwaixiangcun.customer.model.AddressBean;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
+import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
@@ -69,9 +71,11 @@ public class ChooseAddressActivity extends BaseActivity implements View.OnClickL
         }.getType();
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(login_detail, type);
         final String refresh_token = responseEntity.getData().getRefresh_token();
+
+        String tokenString = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
         HashMap<String, Object> params = new HashMap<>();
-        Log.e(BUG_TAG,responseEntity.getData().getAccess_token());
-        params.put("access_token", responseEntity.getData().getAccess_token());
+        Log.e(BUG_TAG, responseEntity.getData().getAccess_token());
+        params.put("access_token", tokenString);
         params.put("fields", "");
         HttpRequest.get("http://mk.shiwaixiangcun.cn/mc/delivery/address/listdata.json", params, new HttpCallBack() {
             @Override
@@ -134,9 +138,9 @@ public class ChooseAddressActivity extends BaseActivity implements View.OnClickL
                 finish();
                 break;
             case R.id.tv_top_right:
-                Bundle bundle=new Bundle();
-                bundle.putBoolean("clickable",false);
-                readyGo(ManageAddressActivity.class,bundle);
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("clickable", false);
+                readyGo(ManageAddressActivity.class, bundle);
                 break;
         }
 

@@ -13,18 +13,20 @@ public class Common implements Serializable {
     public static final String DEFAULT_ADDRESS = "defaultAddress";
     public static final String TOKEN = "token";
     public static final String REFRESH_TOKEN = "refresh";
-    public static final String USER_IS_LOGIN = "isLogin";
-    //测试服务器
-    public static String domain = "http://shiwaixiangcun.cn/";
+    public static final String isLogin = "isLogin";
+
 
     //正式服务器
-//    public static String domain = "http://hxteb.com/";
-//
-//    public static String domains = "http://pm.hxteb.com/";
-//
-//    public static String domainhm = "http://hm.hxteb.com/";
-    public static String domains = "http://ot.shiwaixiangcun.cn/";
-    public static String domainhm = "http://hm.shiwaixiangcun.cn";
+    public static String domain = "http://hxteb.com/";
+    public static String domainPM = "http://pm.hxteb.com/";
+    public static String domainHM = "http://hm.hxteb.com/";
+    public static String domainOT = "http://ot.hxteb.com/";
+
+    //测试服务器
+//    public static String domain = "http://shiwaixiangcun.cn/";
+//    public static String domainPM = "http://pm.shiwaixiangcun.cn/";
+//    public static String domainHM = "http://hm.shiwaixiangcun.cn";
+//    public static String domainOT = "http://ot.shiwaixiangcun.cn/";
     /**
      * 登录
      */
@@ -32,7 +34,7 @@ public class Common implements Serializable {
     /**
      * 登出
      */
-    public static String logout = domains + "logout.htm";
+    public static String logout = domainPM + "logout.htm";
     /**
      * 获取验证码
      */
@@ -41,153 +43,153 @@ public class Common implements Serializable {
     /**
      * viewpager banner列表 public
      */
-    public static String listpage = domains + "mi/banner/listpage.json";
+    public static String listpage = domainOT + "mi/banner/listdata.json";
     /**
      * 文章分页查询  public
      */
-    public static String articleListpage = domains + "mi/article/listpage.json";
+    public static String articleListpage = domainPM + "mi/article/listpage.json";
     /**
      * 在线报修  public
      */
-    public static String OnlineRepair = domains + "mc/online/repair/add.json ";
+    public static String OnlineRepair = domainPM + "mc/online/repair/add.json ";
     /**
      * 多文件上传 post
      */
-    public static String filesSend = domains + "upload/images.json";
+    public static String filesSend = domainPM + "upload/images.json";
     /**
      * 我要出租 提交 post
      */
-    public static String toRent = domains + "mc/house/mobile/lease.json";
+    public static String toRent = domainPM + "mc/house/mobile/lease.json";
     /**
      * 管理的房屋列表 post
      */
-    public static String associatedHouses = domains + "mc/current/houses.json";
+    public static String associatedHouses = domainPM + "mc/current/houses.json";
     /**
      * 我要售房 post
      */
-    public static String toSeller = domains + "mc/house/mobile/sell.json";
+    public static String toSeller = domainPM + "mc/house/mobile/sell.json";
     /**
      * 我要租房 post
      */
-    public static String getRent = domains + "mc/house/mobile/rental.json";
+    public static String getRent = domainPM + "mc/house/mobile/rental.json";
     /**
      * 我要买房 post
      */
-    public static String getBuy = domains + "mc/house/mobile/buy.json";
+    public static String getBuy = domainPM + "mc/house/mobile/buy.json";
     /**
      * 提交记录，报修记录 get
      */
-    public static String records = domains + "mc/online/repair/listpage.json";
+    public static String records = domainPM + "mc/online/repair/listpage.json";
     /**
      * 装修列表 get
      */
-    public static String decorateList = domains + "mi/decorate/company/listpage.json";
+    public static String decorateList = domainPM + "mi/decorate/company/listpage.json";
     /**
      * 装修详情 get
      */
-    public static String companyDetail = domains + "mi/decorate/company/detail.json";
+    public static String companyDetail = domainPM + "mi/decorate/company/detail.json";
     /**
      * 多文件上传 post
      */
-    public static String fileSend = domains + "upload/images.json";
+    public static String fileSend = domainPM + "upload/images.json";
     /**
      * 个人信息 get
      */
-    public static String information = domains + "mc/current.json";
+    public static String information = domainPM + "mc/current.json";
     /**
      * 区域树形 get
      */
-    public static String areaTree = domains + "mc/region/tree.json";
+    public static String areaTree = domainPM + "mc/region/tree.json";
     /**
      * 客户资料修改 put
      */
-    public static String modify = domains + "mc/modify.json";
+    public static String modify = domainPM + "mc/modify.json";
     /**
      * 某单元下得房屋 get
      */
-    public static String houseUnit = domains + "mc/house/unit.json";
+    public static String houseUnit = domainPM + "mc/house/unit.json";
 
 //    /**
 //     * 血压 get
 //     */
-//    public static String pressureBlood = domainhm + "mc/pressure/blood.json";
+//    public static String pressureBlood = domainHM + "mc/pressure/blood.json";
     /**
      * 关联电话 get
      */
-    public static String housePhone = domains + "mc/house/phone.json";
+    public static String housePhone = domainPM + "mc/house/phone.json";
     /**
      * 绑定房屋 get
      */
-    public static String bindPhone = domains + "mc/bind/phone.json";
+    public static String bindPhone = domainPM + "mc/bind/phone.json";
     /**
      * 血压 get
      */
-    public static String pressureBlood = domainhm + "/mc/pressure/history/record.json";
+    public static String pressureBlood = domainHM + "/mc/pressure/history/record.json";
     /**
      * 心率 get
      */
-    public static String pressureHeartrate = domainhm + "mc/pressure/heartrate.json";
+    public static String pressureHeartrate = domainHM + "mc/pressure/heartrate.json";
     /**
      * 血糖页面和列表 get
      */
-    public static String sugarList = domainhm + "mc/sugar/list.json";
+    public static String sugarList = domainHM + "mc/sugar/list.json";
     /**
      * 体重比 get
      */
-    public static String bmiList = domainhm + "mc/bmi/list.json";
+    public static String bmiList = domainHM + "mc/bmi/list.json";
     /**
      * 用户健康状况 get
      */
-    public static String customerDetail = domainhm + "mc/customer/detail.json";
+    public static String customerDetail = domainHM + "mc/customer/detail.json";
     /**
      * 血压历史数据 get
      */
-    public static String pressureRecord = domainhm + "mc/pressure/history/record.json";
+    public static String pressureRecord = domainHM + "mc/pressure/history/record.json";
     /**
      * 血脂 和 列表 get
      */
-    public static String bloodFat = domainhm + "mc/blood/fat.json";
+    public static String bloodFat = domainHM + "mc/blood/fat.json";
     /**
      * 意见反馈 post
      */
-    public static String feedBack = domains + "mi/feedback/add.json";
+    public static String feedBack = domainPM + "mi/feedback/add.json";
     /**
      * 文章详情 get
      */
-    public static String articleDetailView = domains + "mi/article/detailView.htm";
+    public static String articleDetailView = domainPM + "mi/article/detailView.htm";
     /**
      * app更新 get
      */
-    public static String appUpdate = domains + "app/versionUpdate.json";
+    public static String appUpdate = domainPM + "app/versionUpdate.json";
     /**
      * 商户类型列表 get
      */
-//    public static String merchantType = domains + "mi/merchant/type/listdata.json?fields=all,detailId";
-    public static String merchantType = domains + "mi/merchant/type/listdata.json";
+//    public static String merchantType = domainPM + "mi/merchant/type/listdata.json?fields=all,detailId";
+    public static String merchantType = domainPM + "mi/merchant/type/listdata.json";
     /**
      * 商户列表 get
      */
-    public static String merchant = domains + "mi/merchant/listpage.json";
+    public static String merchant = domainPM + "mi/merchant/listpage.json";
 
 //    /**
 //     *  查询城市 get
 //     */
-//    public static String findCityCode = domains + "mi/cityCode/findCityCode.json";
+//    public static String findCityCode = domainPM + "mi/cityCode/findCityCode.json";
     /**
      * 活动get
      */
-    public static String article = domains + "mi/article/active/listpage.json";
+    public static String article = domainPM + "mi/article/active/listpage.json";
 
 
     ///mc/customer/avatar 单文件上传已经改成了这个接口
     /**
      * 查询默认城市列表 get
      */
-    public static String findCityList = domains + "mi/cityCode/find.json";
+    public static String findCityList = domainPM + "mi/cityCode/find.json";
     /**
      * 商户详情 get
      */
-    public static String merchantDetail = domains + "mi/merchant/detail.json";
+    public static String merchantDetail = domainPM + "mi/merchant/detail.json";
     //    是否登录share
     public static String ISORNOLOGIN = "isornologin";
     public static String SIORNOLOGIN = "siornologin";
@@ -225,5 +227,5 @@ public class Common implements Serializable {
     public static String SIRESIDENT = "siresident";
 
     //站点id
-    public static int siteID = 1;
+    public static int siteID = 20;
 }

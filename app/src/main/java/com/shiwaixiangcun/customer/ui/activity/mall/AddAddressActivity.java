@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 import com.shiwaixiangcun.customer.BaseActivity;
+import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.http.Common;
@@ -22,6 +23,7 @@ import com.shiwaixiangcun.customer.http.HttpRequest;
 import com.shiwaixiangcun.customer.model.AddAddressBean;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
+import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.utils.StringUtil;
@@ -129,14 +131,16 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
             }.getType();
             final ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(login_detail, type);
             final String refresh_token = responseEntity.getData().getRefresh_token();
+
+            String tokenString = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
             HashMap<String, Object> params = new HashMap<>();
-            params.put("access_token", responseEntity.getData().getAccess_token());
+            params.put("access_token", tokenString);
             params.put("name", userName);
             params.put("phone", userPhone);
             params.put("address", userAddress);
             params.put("default", isDefault);
             Log.e(BUG_TAG, responseEntity.getData().getAccess_token());
-            HttpRequest.post(GlobalConfig.addAddress, params, new HttpCallBack() {
+            HttpRequest.post(GlobalAPI.addAddress, params, new HttpCallBack() {
                 @Override
                 public void onSuccess(String responseJson) {
                     super.onSuccess(responseJson);
@@ -149,7 +153,7 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
                             Toast.makeText(mContext, "保存成功", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent();
                             Bundle bundle = new Bundle();
-                            bundle.putInt("addressID",response.getData().getId());
+                            bundle.putInt("addressID", response.getData().getId());
                             bundle.putString("userName", userName);
                             bundle.putString("userPhone", userPhone);
                             bundle.putString("userAddress", userAddress);

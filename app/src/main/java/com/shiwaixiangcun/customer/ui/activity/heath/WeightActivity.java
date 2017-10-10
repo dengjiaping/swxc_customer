@@ -17,6 +17,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.shiwaixiangcun.customer.BaseActivity;
+import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.event.EventCenter;
@@ -26,6 +27,7 @@ import com.shiwaixiangcun.customer.http.StringDialogCallBack;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.model.WeightBean;
+import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.DateUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.LoginOutUtil;
@@ -137,8 +139,9 @@ public class WeightActivity extends BaseActivity implements View.OnClickListener
         }.getType();
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(login_detail, type);
         final String refresh_token = responseEntity.getData().getRefresh_token();
-        OkGo.<String>get(GlobalConfig.getWeight)
-                .params("access_token", responseEntity.getData().getAccess_token())
+        String tokenString = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
+        OkGo.<String>get(GlobalAPI.getWeight)
+                .params("access_token", tokenString)
                 .params("customerId", customId)
                 .params("page.pn", 1)
                 .params("page.size", 7)

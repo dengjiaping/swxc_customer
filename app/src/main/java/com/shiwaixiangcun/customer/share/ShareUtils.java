@@ -32,7 +32,7 @@ public class ShareUtils {
     public static void Share(Context mContext, PlatformActionListener paListener,
                              String platform_name, String title, String summary, String imageurl, String imagepath) {
         Share(mContext, paListener, platform_name, title, summary, imageurl, imagepath,
-                Common.domains + "mi/article/detailView.htm", Platform.SHARE_WEBPAGE);
+                Common.domainPM + "mi/article/detailView.htm", Platform.SHARE_WEBPAGE);
     }
 
     public static void Share(Context mContext, PlatformActionListener paListener,

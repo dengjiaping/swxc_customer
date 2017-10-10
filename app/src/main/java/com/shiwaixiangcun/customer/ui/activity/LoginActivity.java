@@ -17,13 +17,14 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.shiwaixiangcun.customer.BaseActivity;
+import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
-import com.shiwaixiangcun.customer.model.InformationaBean;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
+import com.shiwaixiangcun.customer.model.UserInfoBean;
 import com.shiwaixiangcun.customer.ui.dialog.DialogLoading;
 import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
@@ -91,8 +92,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.btn_login:
                 if (!Utils.isNotEmpty(et_username.getText().toString().trim())) {
+                    showToastShort("请输入用户账号");
                     return;
                 } else if (!Utils.isNotEmpty(et_get_psw.getText().toString().trim())) {
+                    showToastShort("请输入验证码");
                     return;
                 }
                 sendLoginHttp();
@@ -103,7 +106,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
     }
 
-    //获取验证码
+    /**
+     * 获取验证码
+     */
     private void sendGetVerificationHttp() {
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("mobile", et_username.getText().toString().trim());
@@ -119,12 +124,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         });
     }
 
-    //登录
+    /**
+     * 登录
+     */
     private void sendLoginHttp() {
 
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("client_id", "97d7c8d7418b49de8da45cac01615f3e");
-        hashMap.put("client_secret", "fd225cc01f034b2d8c76f97190750664");
+        hashMap.put("client_id", GlobalConfig.clientId);
+        hashMap.put("client_secret", GlobalConfig.clientSecret);
         hashMap.put("grant_type", "dynamic_password");
         hashMap.put("scope", "property_customer_app");
         hashMap.put("username", et_username.getText().toString().trim());
@@ -146,8 +153,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         String access_token = responseEntity.getData().getAccess_token();
                         String refresh_token = responseEntity.getData().getRefresh_token();
                         //保存用户的Token值
-                        AppSharePreferenceMgr.put(mContext, Common.TOKEN, access_token);
-                        AppSharePreferenceMgr.put(mContext, Common.REFRESH_TOKEN, refresh_token);
+                        AppSharePreferenceMgr.put(mContext, GlobalConfig.TOKEN, access_token);
+                        Log.e(BUG_TAG, "登录的Token：" + access_token);
+                        AppSharePreferenceMgr.put(mContext, GlobalConfig.Refresh_token, refresh_token);
                         //保存用户登录的账号
                         AppSharePreferenceMgr.put(mContext, Common.IS_SAVE_ACCOUNT, et_username.getText().toString().trim());
                         //保存用户的登录信息
@@ -186,13 +194,17 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     @Override
                     public void onSuccess(Response<String> response) {
                         Log.e(BUG_TAG, String.valueOf(response.getRawCall().request().url()));
-                        InformationaBean user = JsonUtil.fromJson(response.body(), InformationaBean.class);
+                        UserInfoBean user = JsonUtil.fromJson(response.body(), UserInfoBean.class);
                         if (user == null) {
                             return;
                         }
                         switch (user.getResponseCode()) {
                             case 1001:
-                                AppSharePreferenceMgr.put(mContext, Common.USER_IS_LOGIN, "islogin");
+                                //将用户信息写入SharePreference
+                                UserInfoBean.DataBean userInfo = user.getData();
+                                String info = JsonUtil.toJson(userInfo);
+                                AppSharePreferenceMgr.put(mContext, GlobalConfig.userInfo, info);
+                                AppSharePreferenceMgr.put(mContext, GlobalConfig.isLogin, "islogin");
                                 SharePreference.saveStringToSpParams(LoginActivity.this, Common.ISORNOLOGIN, Common.SIORNOLOGIN, "isLogin");
                                 if (Utils.isNotEmpty(user.getData().getAvatar())) {
                                     if (Utils.isNotEmpty(user.getData().getAvatar().getAccessUrl())) {
@@ -203,7 +215,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                 } else {
                                     SharePreference.saveStringToSpParams(mContext, Common.ISIMAGEHEAD, Common.SIIMAGEHEAD, "");
                                 }
-
                                 SharePreference.saveStringToSpParams(mContext, Common.ISUSERNAME, Common.SIUSERNAME, user.getData().getName());
                                 SharePreference.saveStringToSpParams(mContext, Common.ISUSERSEX, Common.SIUSERSEX, user.getData().getSex());
                                 SharePreference.saveStringToSpParams(mContext, Common.ISUSEROLD, Common.SIUSEROLD, TimerToTimerUtil.stampToInspectionDate(user.getData().getBirthday() + ""));
@@ -213,6 +224,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                     if (mineLogin.equals("mineLogin")) {
                                         Intent intent = new Intent();
                                         setResult(RESULT_OK, intent);
+                                    } else {
+                                        readyGo(MainActivity.class);
                                     }
                                 }
                                 finish();

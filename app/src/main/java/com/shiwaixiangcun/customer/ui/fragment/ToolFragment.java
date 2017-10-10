@@ -12,9 +12,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterTool;
-import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.model.ToolBean;
 import com.shiwaixiangcun.customer.ui.activity.AwardActivity;
 import com.shiwaixiangcun.customer.ui.activity.HouseRentingActivity;
@@ -74,14 +74,14 @@ public class ToolFragment extends LazyFragment {
 
     @Override
     protected void onFirstUserVisible() {
-        String isLogin = (String) AppSharePreferenceMgr.get(this.getActivity(), Common.USER_IS_LOGIN, "notLogin");
+        String isLogin = (String) AppSharePreferenceMgr.get(this.getActivity(), GlobalConfig.isLogin, "notLogin");
         hasLogin = isLogin.equals("islogin");
 
     }
 
     @Override
     protected void onUserVisible() {
-        String isLogin = (String) AppSharePreferenceMgr.get(this.getActivity(), Common.USER_IS_LOGIN, "notLogin");
+        String isLogin = (String) AppSharePreferenceMgr.get(this.getActivity(), GlobalConfig.isLogin, "notLogin");
         Log.e(BUG_TAG, "是否登录" + isLogin);
         if (isLogin == null) {
             hasLogin = false;
@@ -157,16 +157,11 @@ public class ToolFragment extends LazyFragment {
                     case 3:
                         //健康方案
                         bundle.putInt("type", 3);
-
                         readyGo(WebActivity.class, bundle);
-
-
                         break;
                     case 4:
-
+                        bundle.putInt("type", 4);
                         readyGo(WebActivity.class, bundle);
-
-
                         break;
                     case 5:
                         //预约挂号

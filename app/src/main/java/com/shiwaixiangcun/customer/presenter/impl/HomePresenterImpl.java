@@ -1,10 +1,15 @@
 package com.shiwaixiangcun.customer.presenter.impl;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
+import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
@@ -29,8 +34,8 @@ import java.util.HashMap;
  */
 public class HomePresenterImpl implements IHomePresenter {
 
+    private final String BUG_TAG = this.getClass().getSimpleName();
     private IHomeView iHomeView;
-
 
     public HomePresenterImpl(IHomeView iHomeView) {
         this.iHomeView = iHomeView;
@@ -42,19 +47,16 @@ public class HomePresenterImpl implements IHomePresenter {
      * 请求位置2的Banner
      */
     private void requestBannerSecond() {
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("position", "SWSH_HOME_02");
-        hashMap.put("siteId", Common.siteID);
-        HttpRequest.get(Common.listpage, hashMap, new HttpCallBack() {
-            @Override
-            public void onSuccess(String responseJson) {
-                iHomeView.setBannerSecond(responseJson);
-            }
-
-            @Override
-            public void onFailed(Exception e) {
-            }
-        });
+        OkGo.<String>get(Common.listpage)
+                .params("position", GlobalConfig.home_02)
+                .params("siteId", GlobalConfig.siteID)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        Log.e(BUG_TAG, response.getRawCall().request().toString());
+                        iHomeView.setBannerSecond(response.body());
+                    }
+                });
 
 
     }
@@ -96,20 +98,16 @@ public class HomePresenterImpl implements IHomePresenter {
      * 请求位置1的banner
      */
     private void requestBannerFirst() {
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("position", "SWSH_HOME_01");
-        hashMap.put("siteId", Common.siteID);
-
-        HttpRequest.get(Common.listpage, hashMap, new HttpCallBack() {
-            @Override
-            public void onSuccess(String responseJson) {
-                iHomeView.setBannerFirst(responseJson);
-            }
-
-            @Override
-            public void onFailed(Exception e) {
-            }
-        });
+        OkGo.<String>get(Common.listpage)
+                .params("position", GlobalConfig.home_01)
+                .params("siteId", GlobalConfig.siteID)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        Log.e(BUG_TAG, response.getRawCall().request().toString());
+                        iHomeView.setBannerFirst(response.body());
+                    }
+                });
     }
 
 
@@ -141,7 +139,7 @@ public class HomePresenterImpl implements IHomePresenter {
     private void sendHeadlinesListpageHttp() {
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("page.pn", 1);
-        hashMap.put("page.size", 1000);
+        hashMap.put("page.size", 15);
         hashMap.put("position", "COMMUNITY_HEADLINES");
 
         HttpRequest.get(Common.articleListpage, hashMap, new HttpCallBack() {

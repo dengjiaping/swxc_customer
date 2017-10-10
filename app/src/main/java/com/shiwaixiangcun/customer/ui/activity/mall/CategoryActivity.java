@@ -23,12 +23,12 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shiwaixiangcun.customer.BaseActivity;
+import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterSearchResult;
 import com.shiwaixiangcun.customer.event.EventCenter;
 import com.shiwaixiangcun.customer.event.SimpleEvent;
-import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.model.ElementBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
@@ -112,8 +112,8 @@ public class CategoryActivity extends BaseActivity implements View.OnClickListen
         httpParams.put("categoryId", categoryId);
         httpParams.put("page.pn", pg);
         httpParams.put("page.size", size);
-        httpParams.put("siteId", Common.siteID);
-        OkGo.<String>get(GlobalConfig.searchCategory)
+        httpParams.put("siteId", GlobalConfig.siteID);
+        OkGo.<String>get(GlobalAPI.searchCategory)
                 .params(httpParams)
                 .execute(new StringCallback() {
                     @Override

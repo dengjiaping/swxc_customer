@@ -20,6 +20,7 @@ import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.shiwaixiangcun.customer.BaseActivity;
+import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.event.EventCenter;
@@ -32,6 +33,7 @@ import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.pay.PayUtil;
 import com.shiwaixiangcun.customer.ui.dialog.DialogInfo;
 import com.shiwaixiangcun.customer.ui.dialog.DialogPay;
+import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.ArithmeticUtils;
 import com.shiwaixiangcun.customer.utils.DateUtil;
 import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
@@ -151,10 +153,10 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(loginInfo, type);
-        tokenString = responseEntity.getData().getAccess_token();
+        tokenString = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
         Log.e(BUG_TAG, tokenString);
         Log.e(BUG_TAG, String.valueOf(orderId));
-        OkGo.<String>get(GlobalConfig.getOrderDetail)
+        OkGo.<String>get(GlobalAPI.getOrderDetail)
                 .params("access_token", tokenString)
                 .params("id", orderId)
                 .execute(new StringDialogCallBack(this) {
@@ -432,7 +434,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
 
     private void confirmOrder() {
 
-        commonRequest(orderId, GlobalConfig.cancelOrder, "确认收货");
+        commonRequest(orderId, GlobalAPI.confirmOrder, "确认收货");
     }
 
     /**
@@ -440,7 +442,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
      */
     private void cancelOrder() {
 
-        commonRequest(orderId, GlobalConfig.cancelOrder, "取消订单");
+        commonRequest(orderId, GlobalAPI.cancelOrder, "取消订单");
 
     }
 
@@ -449,7 +451,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
      */
     private void deleteOrder() {
 
-        commonRequest(orderId, GlobalConfig.deleteOrder, "删除订单");
+        commonRequest(orderId, GlobalAPI.deleteOrder, "删除订单");
     }
 
     private void commonRequest(int orderId, String url, final String prompt) {
@@ -460,6 +462,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
+
                         Log.e(BUG_TAG, response.getRawCall().request().toString());
                         String body = response.body();
                         if (body == null) {

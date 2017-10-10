@@ -16,7 +16,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.shiwaixiangcun.customer.BaseActivity;
-import com.shiwaixiangcun.customer.GlobalConfig;
+import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterCategory;
 import com.shiwaixiangcun.customer.interfaces.CheckListener;
@@ -68,7 +68,7 @@ public class MallCategoryActivity extends BaseActivity implements View.OnClickLi
      * 获取数据
      */
     private void requestData() { //获取asset目录下的资源文件
-        OkGo.<String>get(GlobalConfig.getCategory)
+        OkGo.<String>get(GlobalAPI.getCategory)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {

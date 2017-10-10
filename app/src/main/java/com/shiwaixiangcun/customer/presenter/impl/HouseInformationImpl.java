@@ -8,11 +8,11 @@ import com.google.gson.reflect.TypeToken;
 import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
-import com.shiwaixiangcun.customer.model.InformationaBean;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.LogoutBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.model.User;
+import com.shiwaixiangcun.customer.model.UserInfoBean;
 import com.shiwaixiangcun.customer.presenter.IInformationPresenter;
 import com.shiwaixiangcun.customer.ui.IHouseInformationView;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
@@ -79,7 +79,7 @@ public class HouseInformationImpl implements IInformationPresenter {
             @Override
             public void onSuccess(String responseJson) {
                 Log.i("oooooo---onSuccess---", responseJson);
-                InformationaBean informationaBean = new Gson().fromJson(responseJson, InformationaBean.class);
+                UserInfoBean informationaBean = new Gson().fromJson(responseJson, UserInfoBean.class);
                 if (informationaBean.getResponseCode() == 1001) {
                     iHouseInformationView.setBgaAdpaterAndClickResult(informationaBean);
                 } else if (informationaBean.getResponseCode() == 1018) {

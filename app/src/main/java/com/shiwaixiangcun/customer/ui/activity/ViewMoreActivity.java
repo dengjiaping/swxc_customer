@@ -38,7 +38,7 @@ public class ViewMoreActivity extends AppCompatActivity implements View.OnClickL
     private ImageView iv_share_right;
     private ObservableWebView webview;
     private String articleId;
-    private String str_web = Common.domains+"mi/merchant/detail/view.htm";
+    private String str_web = Common.domainPM + "mi/merchant/detail/view.htm";
     private String detailtitle;
     private TextView tv_page_name;
     private TextView tv_top;

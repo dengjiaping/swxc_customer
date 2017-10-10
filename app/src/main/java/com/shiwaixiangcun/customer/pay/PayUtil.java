@@ -7,7 +7,7 @@ import com.google.gson.reflect.TypeToken;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
-import com.shiwaixiangcun.customer.GlobalConfig;
+import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 
@@ -33,7 +33,7 @@ public class PayUtil {
         Log.e(BUG_TAG, "支付宝支付");
         Log.e(BUG_TAG, "支付宝支付    " + tokenString);
         Log.e(BUG_TAG, "支付宝支付    " + orderNumber);
-        OkGo.<String>post(GlobalConfig.payZhiFuBao)
+        OkGo.<String>post(GlobalAPI.payZhiFuBao)
                 .params("access_token", tokenString)
                 .params("orderNumber", orderNumber)
                 .execute(new StringCallback() {
@@ -71,7 +71,7 @@ public class PayUtil {
      */
     public static void payWeixin(String orderNumber, String tokenString, final Activity context) {
 
-        OkGo.<String>post(GlobalConfig.payWeiXin)
+        OkGo.<String>post(GlobalAPI.payWeiXin)
                 .params("access_token", tokenString)
                 .params("orderNumber", orderNumber)
                 .execute(new StringCallback() {

@@ -24,7 +24,7 @@ import com.google.gson.reflect.TypeToken;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
-import com.shiwaixiangcun.customer.GlobalConfig;
+import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterSpecification;
 import com.shiwaixiangcun.customer.http.StringDialogCallBack;
@@ -143,7 +143,7 @@ public class DialogSku extends Dialog implements DialogInterface.OnCancelListene
     private void loadData() {
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("id", mGoodId);
-        OkGo.<String>get(GlobalConfig.getGoodDetail)
+        OkGo.<String>get(GlobalAPI.getGoodDetail)
                 .params("id", mGoodId)
                 .execute(new StringCallback() {
                     @Override
@@ -239,7 +239,7 @@ public class DialogSku extends Dialog implements DialogInterface.OnCancelListene
      * @param s
      */
     private void requestStock(String s) {
-        OkGo.<String>get(GlobalConfig.getStock + mGoodId + ".json")
+        OkGo.<String>get(GlobalAPI.getStock + mGoodId + ".json")
                 .params("attributeIds", s)
                 .execute(new StringDialogCallBack(mContext) {
                     @Override

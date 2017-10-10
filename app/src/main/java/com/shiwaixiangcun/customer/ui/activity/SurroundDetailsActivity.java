@@ -105,8 +105,8 @@ public class SurroundDetailsActivity extends BaseActivity implements View.OnClic
     }
 
     private void initData() {
-        urlWeb.append(Common.domains).append("/mi/article/detailView.htm").append("?articleId=").append(articleId).append("&app=true");
-        urlShare.append(Common.domains).append("/mi/article/detailView.htm").append("?articleId=").append(articleId);
+        urlWeb.append(Common.domainPM).append("/mi/article/detailView.htm").append("?articleId=").append(articleId).append("&app=true");
+        urlShare.append(Common.domainPM).append("/mi/article/detailView.htm").append("?articleId=").append(articleId);
         iv_share_right.setVisibility(View.VISIBLE);
         back_left.setOnClickListener(this);
         iv_share_right.setOnClickListener(this);

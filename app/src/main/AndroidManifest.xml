@@ -436,6 +436,14 @@
         </activity>
         <activity android:name=".ui.activity.mall.CategoryActivity">
         </activity>
+        <activity android:name=".ui.activity.FamilyActivity">
+        </activity>
+        <activity android:name=".ui.activity.AddFamilyActivity">
+        </activity>
+        <activity android:name=".ui.activity.FamilyDetailActivity">
+        </activity>
+        <activity android:name=".ui.activity.AddFamilySecondActivity">
+        </activity>
     </application>
 
 </manifest>

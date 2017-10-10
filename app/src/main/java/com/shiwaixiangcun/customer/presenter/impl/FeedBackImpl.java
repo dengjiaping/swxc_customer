@@ -5,6 +5,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
+import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
@@ -13,6 +14,7 @@ import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.presenter.IFeedBackPresenter;
 import com.shiwaixiangcun.customer.ui.IFeedBackView;
+import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.LoginOutUtil;
 import com.shiwaixiangcun.customer.utils.RefreshTockenUtil;
@@ -53,8 +55,10 @@ public class FeedBackImpl implements IFeedBackPresenter {
         }.getType();
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(login_detail, type);
         final String refresh_token = responseEntity.getData().getRefresh_token();
+
+        String tokenString = (String) AppSharePreferenceMgr.get(context, GlobalConfig.TOKEN, "");
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("access_token", responseEntity.getData().getAccess_token());
+        hashMap.put("access_token", tokenString);
         hashMap.put("content", str_content);
         hashMap.put("dataSource", "PROPERTY_CUSTOMER_APP");
 

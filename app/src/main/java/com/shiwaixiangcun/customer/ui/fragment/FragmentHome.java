@@ -53,6 +53,7 @@ import com.shiwaixiangcun.customer.ui.activity.OnlineServiceActivity;
 import com.shiwaixiangcun.customer.ui.activity.ResidentCertificationActivity;
 import com.shiwaixiangcun.customer.ui.activity.SurroundLifeActivity;
 import com.shiwaixiangcun.customer.ui.activity.WeatherActivity;
+import com.shiwaixiangcun.customer.ui.activity.mall.GoodDetailActivity;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.NoFastClickUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
@@ -140,11 +141,8 @@ public class FragmentHome extends BaseFragment implements IHomeView, View.OnClic
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
         StatService.setLogSenderDelayed(10);
-
         StatService.setSendLogStrategy(mContext, SendStrategyEnum.APP_START, 1, false);
         StatService.setSessionTimeOut(30);
-
-
         String jiangkang = "健康服务";
         String wuye = "物业服务";
         String youxuan = "优选服务";
@@ -157,12 +155,12 @@ public class FragmentHome extends BaseFragment implements IHomeView, View.OnClic
         ihomePresenter.setAnnouncement(mContext);
         ihomePresenter.setHeadline(mContext);
         ihomePresenter.setWeatherHomeClick(mContext, "101260209");
-
         layoutView(view);
         // 广播注册
         RegisterBrodUtils.registerReceiver(mContext, rl_net_not);
         initData();
     }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -204,7 +202,6 @@ public class FragmentHome extends BaseFragment implements IHomeView, View.OnClic
      */
     private void initHeader(View view) {
         home_head_view = LayoutInflater.from(mContext).inflate(R.layout.home_head_view, null);
-
         tv_online_service = (TextView) home_head_view.findViewById(R.id.tv_online_service);
         tv_house_renting = (TextView) home_head_view.findViewById(R.id.tv_house_renting);
         tv_look_decorating = (TextView) home_head_view.findViewById(R.id.tv_look_decorating);
@@ -365,8 +362,7 @@ public class FragmentHome extends BaseFragment implements IHomeView, View.OnClic
             String imageUrl = bannerBean.getImagePath();
             secondImageList.add(imageUrl);
         }
-        mBannerFirst
-                .setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
+        mBannerFirst.setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
                 .setImages(secondImageList)
                 .setImageLoader(new com.shiwaixiangcun.customer.utils.GlideImageLoader())
                 .setDelayTime(3000)
@@ -374,14 +370,46 @@ public class FragmentHome extends BaseFragment implements IHomeView, View.OnClic
         mBannerFirst.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
-                Intent intent = new Intent(mContext, BannerDetailsActivity.class);
-                Log.e("fragmentMall", "banner连接：" + mBannerListFirst.get(position).getLink() + "");
-                intent.putExtra("bannerlink", mBannerListFirst.get(position).getLink() + "");
-                startActivity(intent);
-
+                BannerBean bannerBean = mBannerListFirst.get(position);
+                String linkUrl = bannerBean.getLink();
+                judgeUrl(linkUrl);
             }
         });
 
+    }
+
+    /**
+     * 判断连接是否是商品链接
+     *
+     * @param linkUrl
+     */
+
+    public void judgeUrl(String linkUrl) {
+        if (null == linkUrl) {
+            return;
+        }
+        String mallUrl = "http://mk.shiwaixiangcun.cn/mi/goods/share/";
+        if (linkUrl.contains(mallUrl)) {
+            Log.e(BUG_TAG, "是商品");
+            //将路径通过"/"分割出来
+            String[] arr1 = linkUrl.split("[/]");
+            int length = arr1.length;
+            //取最后一个字段
+            String url = arr1[length - 1];
+            String goodId = url.substring(0, url.length() - 4);
+            Bundle bundle = new Bundle();
+            bundle.putInt("goodId", Integer.parseInt(goodId));
+            Intent intent = new Intent(mContext, GoodDetailActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+
+        } else {
+            Log.e(BUG_TAG, "不是商品");
+            Intent intent = new Intent(mContext, BannerDetailsActivity.class);
+            Log.e("fragmentMall", "banner连接：" + linkUrl);
+            intent.putExtra("bannerlink", linkUrl);
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -397,8 +425,7 @@ public class FragmentHome extends BaseFragment implements IHomeView, View.OnClic
             String imageUrl = bannerBean.getImagePath();
             secondImageList.add(imageUrl);
         }
-        mBannerSecond
-                .setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
+        mBannerSecond.setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
                 .setImages(secondImageList)
                 .setImageLoader(new com.shiwaixiangcun.customer.utils.GlideImageLoader())
                 .setDelayTime(4000)
@@ -406,11 +433,9 @@ public class FragmentHome extends BaseFragment implements IHomeView, View.OnClic
         mBannerSecond.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
-                Intent intent = new Intent(mContext, BannerDetailsActivity.class);
-
-                Log.e("fragmentMall", "banner连接：" + mBannerListSecond.get(position).getLink() + "");
-                intent.putExtra("bannerlink", mBannerListSecond.get(position).getLink() + "");
-                startActivity(intent);
+                BannerBean bannerBean = mBannerListSecond.get(position);
+                String linkUrl = bannerBean.getLink();
+                judgeUrl(linkUrl);
 
             }
         });
@@ -437,9 +462,10 @@ public class FragmentHome extends BaseFragment implements IHomeView, View.OnClic
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(mContext, DetailsActivity.class);
+
                     intent.putExtra("articleId", elements_ann.get(finalI1).getId() + "");
-                    intent.putExtra("detailtitle", elements_ann.get(finalI1).getTitle());
-                    intent.putExtra("detailcontent", elements_ann.get(finalI1).getSummary());
+                    intent.putExtra("detailTitle", elements_ann.get(finalI1).getTitle());
+                    intent.putExtra("detailContent", elements_ann.get(finalI1).getSummary());
                     startActivity(intent);
                 }
             });
@@ -496,13 +522,14 @@ public class FragmentHome extends BaseFragment implements IHomeView, View.OnClic
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
         intent = new Intent(mContext, DetailsActivity.class);
+        Log.e(BUG_TAG, elements_headline.get(i - 1).getTitle());
+        Log.e(BUG_TAG, elements_headline.get(i - 1).getSummary());
         intent.putExtra("articleId", elements_headline.get(i - 1).getId() + "");
-        intent.putExtra("detailtitle", elements_headline.get(i - 1).getTitle() + "");
-        intent.putExtra("detailcontent", elements_headline.get(i - 1).getSummary());
+        intent.putExtra("detailTitle", elements_headline.get(i - 1).getTitle() + "");
+        intent.putExtra("detailContent", elements_headline.get(i - 1).getSummary());
         startActivity(intent);
 
     }
-
 
 
     private class ToolsPagerAdapter extends FragmentPagerAdapter {

@@ -20,6 +20,7 @@ import com.google.gson.reflect.TypeToken;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.shiwaixiangcun.customer.BaseActivity;
+import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterManageAddress;
@@ -33,6 +34,7 @@ import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.ui.dialog.DialogInfo;
 import com.shiwaixiangcun.customer.ui.dialog.DialogLoading;
+import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.DisplayUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
@@ -92,7 +94,8 @@ public class ManageAddressActivity extends BaseActivity implements View.OnClickL
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(login_info, type);
-        token = responseEntity.getData().getAccess_token();
+
+        token = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
         Log.e(BUG_TAG, responseEntity.getData().getAccess_token());
     }
 
@@ -104,7 +107,7 @@ public class ManageAddressActivity extends BaseActivity implements View.OnClickL
         HashMap<String, Object> params = new HashMap<>();
         params.put("access_token", token);
         params.put("fields", "");
-        HttpRequest.get(GlobalConfig.getAddress, params, new HttpCallBack() {
+        HttpRequest.get(GlobalAPI.getAddress, params, new HttpCallBack() {
             @Override
             public void onSuccess(String responseJson) {
                 super.onSuccess(responseJson);
@@ -256,7 +259,7 @@ public class ManageAddressActivity extends BaseActivity implements View.OnClickL
         params.put("phone", addressBean.getDeliveryPhone());
         params.put("id", addressBean.getId());
         params.put("default", true);
-        HttpRequest.put(GlobalConfig.modifyDefaultAddress, params, new HttpCallBack() {
+        HttpRequest.put(GlobalAPI.modifyDefaultAddress, params, new HttpCallBack() {
             @Override
             public void onSuccess(String s) {
                 super.onSuccess(s);
@@ -299,7 +302,7 @@ public class ManageAddressActivity extends BaseActivity implements View.OnClickL
         stringHashMap.put("id", addressBean.getId() + "");
         Log.e(BUG_TAG, "delete  " + token);
         Log.e(BUG_TAG, "delete  " + addressBean.getId());
-        OkGo.<String>delete(GlobalConfig.deleteAddress)
+        OkGo.<String>delete(GlobalAPI.deleteAddress)
                 .params(stringHashMap, false)
                 .isSpliceUrl(true)
                 .execute(new StringDialogCallBack(this) {

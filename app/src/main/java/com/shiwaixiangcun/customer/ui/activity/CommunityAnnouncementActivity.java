@@ -2,7 +2,6 @@ package com.shiwaixiangcun.customer.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,6 +10,7 @@ import android.widget.TextView;
 
 import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
+import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.ComListAdapter;
 import com.shiwaixiangcun.customer.model.AnnouncementBean;
@@ -23,7 +23,7 @@ import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommunityAnnouncementActivity extends AppCompatActivity implements View.OnClickListener,CommunityView,ListView.OnItemClickListener{
+public class CommunityAnnouncementActivity extends BaseActivity implements View.OnClickListener, CommunityView, ListView.OnItemClickListener {
 
     private ChangeLightImageView back_left;
     private TextView tv_page_name;
@@ -70,7 +70,7 @@ public class CommunityAnnouncementActivity extends AppCompatActivity implements 
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        switch (id){
+        switch (id) {
             case R.id.back_left:
                 finish();
                 break;
@@ -80,7 +80,7 @@ public class CommunityAnnouncementActivity extends AppCompatActivity implements 
 
     @Override
     public void setBgaAdpaterAndClickResult(ResponseEntity<PageBean<AnnouncementBean>> result) {
-        if (result != null){
+        if (result != null) {
             elements_anno = result.getData().getElements();
 
             ComListAdapter comListAdapter = new ComListAdapter(this, elements_anno);
@@ -91,11 +91,11 @@ public class CommunityAnnouncementActivity extends AppCompatActivity implements 
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Log.i("fffffffaaa",i+"---------"+l);
-        Intent intent = new Intent(this,DetailsActivity.class);
-        intent.putExtra("articleId",elements_anno.get(i).getId()+"");
-        intent.putExtra("detailtitle",elements_anno.get(i).getTitle());
-        intent.putExtra("detailcontent",elements_anno.get(i).getSummary());
+        Log.i("fffffffaaa", i + "---------" + l);
+        Intent intent = new Intent(this, DetailsActivity.class);
+        intent.putExtra("articleId", elements_anno.get(i).getId() + "");
+        intent.putExtra("detailTitle", elements_anno.get(i).getTitle());
+        intent.putExtra("detailContent", elements_anno.get(i).getSummary());
         startActivity(intent);
     }
 

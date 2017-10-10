@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
@@ -13,6 +14,7 @@ import com.shiwaixiangcun.customer.model.ResidentBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.presenter.IResidentCertificationPresenter;
 import com.shiwaixiangcun.customer.ui.IResifdentView;
+import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.LoginOutUtil;
 import com.shiwaixiangcun.customer.utils.RefreshTockenUtil;
@@ -40,8 +42,6 @@ public class ResidentCertificationImpl implements IResidentCertificationPresente
     }
 
 
-
-
     //房产认证
     private void sendResidentHttp(final Context context) {
         String login_detail = SharePreference.getStringSpParams(context, Common.IS_SAVE_LOGIN, Common.SISAVELOGIN);
@@ -50,8 +50,9 @@ public class ResidentCertificationImpl implements IResidentCertificationPresente
         }.getType();
         final ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(login_detail, type);
         final String refresh_token = responseEntity.getData().getRefresh_token();
+        String tokenString = (String) AppSharePreferenceMgr.get(context, GlobalConfig.TOKEN, "");
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("access_token", responseEntity.getData().getAccess_token());
+        hashMap.put("access_token", tokenString);
         hashMap.put("fields", "id,name");
 
 

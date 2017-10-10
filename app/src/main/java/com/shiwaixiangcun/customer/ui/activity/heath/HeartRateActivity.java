@@ -17,7 +17,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.shiwaixiangcun.customer.BaseActivity;
-import com.shiwaixiangcun.customer.GlobalConfig;
+import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterHeartRate;
 import com.shiwaixiangcun.customer.event.EventCenter;
@@ -106,7 +106,7 @@ public class HeartRateActivity extends BaseActivity implements View.OnClickListe
         }.getType();
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(login_detail, type);
         final String refresh_token = responseEntity.getData().getRefresh_token();
-        OkGo.<String>get(GlobalConfig.getHeartRate)
+        OkGo.<String>get(GlobalAPI.getHeartRate)
                 .params("access_token", responseEntity.getData().getAccess_token())
                 .params("customerId", customId)
                 .params("page.pn", 1)

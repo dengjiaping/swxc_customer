@@ -18,6 +18,7 @@ import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
@@ -37,6 +38,7 @@ import com.shiwaixiangcun.customer.ui.activity.heath.BloodPressureActivity;
 import com.shiwaixiangcun.customer.ui.activity.heath.BloodSugarActivity;
 import com.shiwaixiangcun.customer.ui.activity.heath.HeartRateActivity;
 import com.shiwaixiangcun.customer.ui.activity.heath.WeightActivity;
+import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.LoginOutUtil;
 import com.shiwaixiangcun.customer.utils.RefreshTockenUtil;
@@ -386,8 +388,10 @@ public class HealthOkActivity extends AppCompatActivity implements View.OnClickL
         }.getType();
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(login_detail, type);
         final String refresh_token = responseEntity.getData().getRefresh_token();
+
+        String tokenString = (String) AppSharePreferenceMgr.get(context, GlobalConfig.TOKEN, "");
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("access_token", responseEntity.getData().getAccess_token());
+        hashMap.put("access_token", tokenString);
         hashMap.put("page.pn", 1);
         hashMap.put("page.size", 7);
 

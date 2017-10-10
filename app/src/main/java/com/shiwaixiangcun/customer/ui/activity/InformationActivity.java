@@ -26,11 +26,11 @@ import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
 import com.shiwaixiangcun.customer.model.ImageReturnbean;
-import com.shiwaixiangcun.customer.model.InformationaBean;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.LogoutBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.model.User;
+import com.shiwaixiangcun.customer.model.UserInfoBean;
 import com.shiwaixiangcun.customer.presenter.impl.HouseInformationImpl;
 import com.shiwaixiangcun.customer.ui.IHouseInformationView;
 import com.shiwaixiangcun.customer.utils.CompressionImageUtil;
@@ -208,7 +208,7 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
     }
 
     @Override
-    public void setBgaAdpaterAndClickResult(InformationaBean result) {
+    public void setBgaAdpaterAndClickResult(UserInfoBean result) {
 
         if (Utils.isNotEmpty(result.getData().getAvatar().getAccessUrl())) {
             Picasso.with(this).load(result.getData().getAvatar().getAccessUrl()).into(iv_head_image);

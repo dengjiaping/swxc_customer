@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
@@ -17,7 +18,6 @@ import android.widget.Toast;
 import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
 import com.shiwaixiangcun.customer.BaseActivity;
-import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
@@ -66,6 +66,8 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
         articleId = intent.getStringExtra("articleId");
         detailTitle = intent.getStringExtra("detailTitle");
         detailContent = intent.getStringExtra("detailContent");
+        Log.e(BUG_TAG, detailTitle);
+        Log.e(BUG_TAG, detailContent);
         layoutView();
         initData();
 
@@ -77,7 +79,6 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
         webView.loadUrl(webUrl.toString());
         //设置Web视图
         webView.setWebViewClient(new HelloWebViewClient());
-
         webView.setOnScrollChangedCallback(new ObservableWebView.OnScrollChangedCallback() {
             @Override
             public void onScroll(int dx, int dy) {
@@ -111,8 +112,8 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
     private void initData() {
 
 
-        webUrl.append(Common.domains).append("mi/article/detailView.htm").append("?articleId=").append(articleId).append("&app=true");
-        shareUrl.append(Common.domains).append("mi/article/detailView.htm").append("?articleId=").append(articleId);
+        webUrl.append(Common.domainPM).append("mi/article/detailView.htm").append("?articleId=").append(articleId).append("&app=true");
+        shareUrl.append(Common.domainPM).append("mi/article/detailView.htm").append("?articleId=").append(articleId);
         Log.e(BUG_TAG, webUrl.toString());
         iv_share_right.setVisibility(View.VISIBLE);
         back_left.setOnClickListener(this);
@@ -143,21 +144,22 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
         oks.disableSSOWhenAuthorize();
         // title标题，印象笔记、邮箱、信息、微信、人人网、QQ和QQ空间使用
         oks.setTitle(detailTitle);
+        Log.e(BUG_TAG, "标题" + detailTitle);
+//        oks.setTitle(detailTitle);
         // titleUrl是标题的网络链接，仅在Linked-in,QQ和QQ空间使用
         oks.setTitleUrl(shareUrl.toString());
         // text是分享文本，所有平台都需要这个字段
+//        oks.setText(detailContent);
+        Log.e(BUG_TAG, "内容" + detailContent);
         oks.setText(detailContent);
         //分享网络图片，新浪微博分享网络图片需要通过审核后申请高级写入接口，否则请注释掉测试新浪微博
-        oks.setImageUrl(GlobalConfig.appLogo);
-        // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
-//        oks.setImagePath(shareImage);//确保SDcard下面存在此张图片
-
+        oks.setImageUrl("http://resource.hxteb.com/group1/M00/00/26/rBKx5Vl4TMCAUPgUAAB6YxNdWvs030.png");
         // url仅在微信（包括好友和朋友圈）中使用
         oks.setUrl(shareUrl.toString());
         // comment是我对这条分享的评论，仅在人人网和QQ空间使用
-        oks.setComment(detailContent);
+//        oks.setComment(detailContent);
         // site是分享此内容的网站名称，仅在QQ空间使用
-        oks.setSite("ShareSDK");
+        oks.setSite(getResources().getResourceName(R.string.app_name));
         // siteUrl是分享此内容的网站地址，仅在QQ空间使用
         oks.setSiteUrl(shareUrl.toString());
         oks.setCallback(new PlatformActionListener() {
@@ -176,12 +178,25 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
             @Override
             public void onCancel(Platform platform, int i) {
 
-                Toast.makeText(DetailsActivity.this, "取消", Toast.LENGTH_LONG).show();
+                Toast.makeText(DetailsActivity.this, "取消分享", Toast.LENGTH_LONG).show();
             }
         });
 
 // 启动分享GUI
         oks.show(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (webView != null) {
+            webView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
+            webView.clearHistory();
+
+            ((ViewGroup) webView.getParent()).removeView(webView);
+            webView.destroy();
+            webView = null;
+        }
+        super.onDestroy();
     }
 
     @Override

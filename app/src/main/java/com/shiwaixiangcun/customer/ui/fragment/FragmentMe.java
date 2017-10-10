@@ -30,6 +30,7 @@ import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.model.UpdateAppBean;
 import com.shiwaixiangcun.customer.presenter.impl.MyMineImpl;
 import com.shiwaixiangcun.customer.ui.IMyMineView;
+import com.shiwaixiangcun.customer.ui.activity.FamilyActivity;
 import com.shiwaixiangcun.customer.ui.activity.FeedBackActivity;
 import com.shiwaixiangcun.customer.ui.activity.ForLifeActivity;
 import com.shiwaixiangcun.customer.ui.activity.InformationActivity;
@@ -85,9 +86,10 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, IM
     private TextView tv_wy_phone;
     private RelativeLayout rl_wy_lay;
     private RelativeLayout rl_for_life;
-    private RelativeLayout rl_app_updata;
+    private RelativeLayout rl_app_update;
     private RelativeLayout rl_app_address;
     private RelativeLayout rl_app_order;
+    private RelativeLayout rl_app_family;
     private Handler m_mainHandler;
     private ProgressDialog m_progressDlg;
     private Activity mContext;
@@ -136,13 +138,14 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, IM
         tv_wy_phone = (TextView) view.findViewById(R.id.tv_wy_phone);
         rl_wy_lay = (RelativeLayout) view.findViewById(R.id.rl_wy_lay);
         rl_for_life = (RelativeLayout) view.findViewById(R.id.rl_for_life);
-        rl_app_updata = (RelativeLayout) view.findViewById(R.id.rl_app_updata);
+        rl_app_update = (RelativeLayout) view.findViewById(R.id.rl_app_updata);
         rl_app_address = (RelativeLayout) view.findViewById(R.id.rl_app_address);
         rl_app_order = (RelativeLayout) view.findViewById(R.id.rl_app_order);
+        rl_app_family = (RelativeLayout) view.findViewById(R.id.rl_app_family);
 
         //初始化相关变量
         initVariable();
-        rl_app_updata.setOnClickListener(btnClickListener);
+        rl_app_update.setOnClickListener(btnClickListener);
     }
 
     private void initData() {
@@ -154,6 +157,7 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, IM
         rl_for_life.setOnClickListener(this);
         rl_app_order.setOnClickListener(this);
         rl_app_address.setOnClickListener(this);
+        rl_app_family.setOnClickListener(this);
 
 
     }
@@ -211,6 +215,12 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, IM
                     intent = new Intent(mContext, LoginActivity.class);
                     startActivity(intent);
                 }
+                break;
+            case R.id.rl_app_family:
+
+                // TODO: 2017/10/10  跳转至家人页面
+                readyGo(FamilyActivity.class);
+                break;
 
         }
     }

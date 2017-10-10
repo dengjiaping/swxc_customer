@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shiwaixiangcun.customer.BaseActivity;
-import com.shiwaixiangcun.customer.GlobalConfig;
+import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.model.ToolBean;
 import com.shiwaixiangcun.customer.share.OnekeyShare;
@@ -122,7 +122,7 @@ public class CommonActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void initView() {
-        url.append(GlobalConfig.getEvaluating).append("?assessmentType=").append(type);
+        url.append(GlobalAPI.getEvaluating).append("?assessmentType=").append(type);
         mTvPageName.setText(mToolBean.name);
         mIvShareRight.setVisibility(View.VISIBLE);
         mBackLeft.setOnClickListener(this);
@@ -174,7 +174,8 @@ public class CommonActivity extends BaseActivity implements View.OnClickListener
         // text是分享文本，所有平台都需要这个字段
         oks.setText(url.toString());
         //分享网络图片，新浪微博分享网络图片需要通过审核后申请高级写入接口，否则请注释掉测试新浪微博
-        oks.setImageUrl(GlobalConfig.appLogo);
+
+        oks.setImageUrl("http://resource.hxteb.com/group1/M00/00/26/rBKx5Vl4TMCAUPgUAAB6YxNdWvs030.png");
         // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
 
         // url仅在微信（包括好友和朋友圈）中使用
@@ -186,7 +187,6 @@ public class CommonActivity extends BaseActivity implements View.OnClickListener
         oks.setSite(getResources().getResourceName(R.string.app_name));
         // siteUrl是分享此内容的网站地址，仅在QQ空间使用
         oks.setSiteUrl(url.toString());
-        Log.e(BUG_TAG, url.toString());
         oks.setCallback(new PlatformActionListener() {
             @Override
             public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {

@@ -22,7 +22,7 @@ import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 import com.shiwaixiangcun.customer.BaseActivity;
-import com.shiwaixiangcun.customer.GlobalConfig;
+import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterJingxuan;
 import com.shiwaixiangcun.customer.adapter.AdapterMall;
@@ -110,7 +110,7 @@ public class MallActivity extends BaseActivity implements View.OnClickListener {
      * 请求关键词
      */
     private void requestKeyword() {
-        OkGo.<String>get(GlobalConfig.getKeyword)
+        OkGo.<String>get(GlobalAPI.getKeyword)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -148,7 +148,7 @@ public class MallActivity extends BaseActivity implements View.OnClickListener {
         params.put("page.pn", start);
         params.put("page.size", size);
         params.put("siteId", "1");
-        OkGo.<String>get(GlobalConfig.getGuessLike)
+        OkGo.<String>get(GlobalAPI.getGuessLike)
                 .params(params)
                 .execute(new StringCallback() {
                     @Override
@@ -182,7 +182,7 @@ public class MallActivity extends BaseActivity implements View.OnClickListener {
         HttpParams params = new HttpParams();
         params.put("position", "SWSH_MARKET_01");
         params.put("siteId", "1");
-        OkGo.<String>get(GlobalConfig.getBanner)
+        OkGo.<String>get(GlobalAPI.getBanner)
                 .params(params)
                 .execute(new StringCallback() {
                     @Override
@@ -257,7 +257,7 @@ public class MallActivity extends BaseActivity implements View.OnClickListener {
      * 请求商城首页数据
      */
     private void requestData() {
-        OkGo.<String>get(GlobalConfig.getMallHome)
+        OkGo.<String>get(GlobalAPI.getMallHome)
                 .tag(BUG_TAG)
                 .cacheKey("mall")            // 设置当前请求的缓存key,建议每个不同功能的请求设置一个
                 .cacheMode(CacheMode.DEFAULT)    // 缓存模式，详细请看缓存介绍

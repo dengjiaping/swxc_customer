@@ -29,13 +29,13 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterJingxuan;
 import com.shiwaixiangcun.customer.adapter.AdapterMall;
 import com.shiwaixiangcun.customer.event.EventCenter;
 import com.shiwaixiangcun.customer.event.SimpleEvent;
-import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.model.BannerBean;
 import com.shiwaixiangcun.customer.model.ElementBean;
 import com.shiwaixiangcun.customer.model.Keyword;
@@ -150,7 +150,7 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
      * 请求关键词
      */
     private void requestKeyword() {
-        OkGo.<String>get(GlobalConfig.getKeyword)
+        OkGo.<String>get(GlobalAPI.getKeyword)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -188,8 +188,8 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
         params.put("goodsSubjectValue", type);
         params.put("page.pn", start);
         params.put("page.size", size);
-        params.put("siteId", "1");
-        OkGo.<String>get(GlobalConfig.getGuessLike)
+        params.put("siteId", GlobalConfig.siteID);
+        OkGo.<String>get(GlobalAPI.getGuessLike)
                 .params(params)
                 .execute(new StringCallback() {
                     @Override
@@ -229,9 +229,9 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
      */
     private void requestBanner() {
         HttpParams params = new HttpParams();
-        params.put("position", "SWSH_MARKET_01");
-        params.put("siteId", Common.siteID);
-        OkGo.<String>get(GlobalConfig.getBanner)
+        params.put("position", GlobalConfig.market_01);
+        params.put("siteId", GlobalConfig.siteID);
+        OkGo.<String>get(GlobalAPI.getBanner)
                 .params(params)
                 .execute(new StringCallback() {
                     @Override
@@ -308,7 +308,7 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
      */
     private void requestData() {
         Log.e(TAG, "请求数据");
-        OkGo.<String>get(GlobalConfig.getMallHome)
+        OkGo.<String>get(GlobalAPI.getMallHome)
                 .cacheKey("mall")            // 设置当前请求的缓存key,建议每个不同功能的请求设置一个
                 .cacheMode(CacheMode.DEFAULT)    // 缓存模式，详细请看缓存介绍
                 .execute(new StringCallback() {
@@ -435,11 +435,11 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
                 mBannerMall.setOnBannerListener(new OnBannerListener() {
                     @Override
                     public void OnBannerClick(int position) {
-                        Intent intent = new Intent(mContext, BannerDetailsActivity.class);
 
-                        Log.e("fragmentMall", "banner连接：" + dataList.get(position).getLink() + "");
-                        intent.putExtra("bannerlink", dataList.get(position).getLink() + "");
-                        startActivity(intent);
+                        BannerBean bannerBean = dataList.get(position);
+                        String link = bannerBean.getLink();
+                        judgeUrl(link);
+
 
                     }
                 });
@@ -483,6 +483,40 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
                 break;
 
         }
+    }
+
+    /**
+     * 判断连接路径
+     *
+     * @param linkUrl
+     */
+    public void judgeUrl(String linkUrl) {
+        if (null == linkUrl) {
+            return;
+        }
+        String mallUrl = "http://mk.shiwaixiangcun.cn/mi/goods/share/";
+        if (linkUrl.contains(mallUrl)) {
+            Log.e(BUG_TAG, "是商品");
+            //将路径通过"/"分割出来
+            String[] arr1 = linkUrl.split("[/]");
+            int length = arr1.length;
+            //取最后一个字段
+            String url = arr1[length - 1];
+            String goodId = url.substring(0, url.length() - 4);
+            Bundle bundle = new Bundle();
+            bundle.putInt("goodId", Integer.parseInt(goodId));
+            Intent intent = new Intent(mContext, GoodDetailActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+
+        } else {
+            Log.e(BUG_TAG, "不是商品");
+            Intent intent = new Intent(mContext, BannerDetailsActivity.class);
+            Log.e("fragmentMall", "banner连接：" + linkUrl);
+            intent.putExtra("bannerlink", linkUrl);
+            startActivity(intent);
+        }
+
     }
 
     @Override

@@ -21,34 +21,34 @@ public class HealthUserBean implements Parcelable {
         }
     };
     /**
-     * avatar : http://resource.shiwaixiangcun.cn/group1/M00/00/5D/rBKx51nAxkCAMihmAAP95b6Zb0o73.jpeg
-     * bloodCreateTime : 1505697513000
-     * bloodStatus : NORMAL
-     * bloodSugar : 5.6
-     * bmi : 20.8
-     * bmiCreateTime : 1505697412000
+     * avatar : http://resource.shiwaixiangcun.cn/group1/M00/00/0C/rBKx51kZZJCAEIHpAAAcGHPVROQ635.png
+     * bloodCreateTime : 1506667893000
+     * bloodStatus : WARNING
+     * bloodSugar : 10.2
+     * bmi : 23.9
+     * bmiCreateTime : 1506667767000
      * bmiStatus : NORMAL
-     * customerId : 259
-     * heartRate : 50
+     * customerId : 263
+     * heartRate : 200
      * heartRateStatus : DANGER
-     * heartRateTime : 1506243359000
+     * heartRateTime : 1506667806000
      * height : 170
-     * lowLipo : 3
-     * name : 西门吹雪
-     * pressureCreateTime : 1505697417000
+     * lowLipo : 7
+     * name :
+     * pressureCreateTime : 1506651795000
      * pressureStatus : NORMAL
-     * relationship : 配偶
+     * relationship : 我
      * relaxationBlood : 90
-     * shrinkBlood : 100
-     * sugarCreateTime : 1505697429000
-     * sugarStatus : NORMAL
+     * shrinkBlood : 120
+     * sugarCreateTime : 1506667851000
+     * sugarStatus : DANGER
      * suggestion : 健康数据严重异常，请咨询医生
      * testStatus : KF
-     * topLipo : 3
-     * totalCholesterol : 4
+     * topLipo : 7
+     * totalCholesterol : 7
      * totalStatus : DANGER
-     * triglyceride : 1
-     * weight : 60
+     * triglyceride : 7
+     * weight : 69
      */
 
     private String avatar;
@@ -63,7 +63,7 @@ public class HealthUserBean implements Parcelable {
     private String heartRateStatus;
     private long heartRateTime;
     private int height;
-    private int lowLipo;
+    private double lowLipo;
     private String name;
     private long pressureCreateTime;
     private String pressureStatus;
@@ -74,11 +74,11 @@ public class HealthUserBean implements Parcelable {
     private String sugarStatus;
     private String suggestion;
     private String testStatus;
-    private int topLipo;
-    private int totalCholesterol;
+    private double topLipo;
+    private double totalCholesterol;
     private String totalStatus;
-    private int triglyceride;
-    private int weight;
+    private double triglyceride;
+    private double weight;
 
     public HealthUserBean() {
     }
@@ -210,7 +210,7 @@ public class HealthUserBean implements Parcelable {
         this.height = height;
     }
 
-    public int getLowLipo() {
+    public double getLowLipo() {
         return lowLipo;
     }
 
@@ -298,7 +298,7 @@ public class HealthUserBean implements Parcelable {
         this.testStatus = testStatus;
     }
 
-    public int getTopLipo() {
+    public double getTopLipo() {
         return topLipo;
     }
 
@@ -306,11 +306,11 @@ public class HealthUserBean implements Parcelable {
         this.topLipo = topLipo;
     }
 
-    public int getTotalCholesterol() {
+    public double getTotalCholesterol() {
         return totalCholesterol;
     }
 
-    public void setTotalCholesterol(int totalCholesterol) {
+    public void setTotalCholesterol(double totalCholesterol) {
         this.totalCholesterol = totalCholesterol;
     }
 
@@ -322,7 +322,7 @@ public class HealthUserBean implements Parcelable {
         this.totalStatus = totalStatus;
     }
 
-    public int getTriglyceride() {
+    public double getTriglyceride() {
         return triglyceride;
     }
 
@@ -330,7 +330,7 @@ public class HealthUserBean implements Parcelable {
         this.triglyceride = triglyceride;
     }
 
-    public int getWeight() {
+    public double getWeight() {
         return weight;
     }
 
@@ -357,7 +357,7 @@ public class HealthUserBean implements Parcelable {
         dest.writeString(this.heartRateStatus);
         dest.writeLong(this.heartRateTime);
         dest.writeInt(this.height);
-        dest.writeInt(this.lowLipo);
+        dest.writeDouble(this.lowLipo);
         dest.writeString(this.name);
         dest.writeLong(this.pressureCreateTime);
         dest.writeString(this.pressureStatus);
@@ -368,10 +368,10 @@ public class HealthUserBean implements Parcelable {
         dest.writeString(this.sugarStatus);
         dest.writeString(this.suggestion);
         dest.writeString(this.testStatus);
-        dest.writeInt(this.topLipo);
-        dest.writeInt(this.totalCholesterol);
+        dest.writeDouble(this.topLipo);
+        dest.writeDouble(this.totalCholesterol);
         dest.writeString(this.totalStatus);
-        dest.writeInt(this.triglyceride);
-        dest.writeInt(this.weight);
+        dest.writeDouble(this.triglyceride);
+        dest.writeDouble(this.weight);
     }
 }

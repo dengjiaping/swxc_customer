@@ -19,7 +19,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.shiwaixiangcun.customer.BaseActivity;
-import com.shiwaixiangcun.customer.GlobalConfig;
+import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.event.EventCenter;
 import com.shiwaixiangcun.customer.event.SimpleEvent;
@@ -225,7 +225,7 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
 
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("id", mGoodId);
-        OkGo.<String>get(GlobalConfig.getGoodDetail)
+        OkGo.<String>get(GlobalAPI.getGoodDetail)
                 .params("id", mGoodId)
                 .execute(new StringCallback() {
                     @Override
@@ -249,7 +249,7 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
      * 获取图文详情页面
      */
     private void requestContent() {
-        OkGo.<String>get(GlobalConfig.getOrderContent)
+        OkGo.<String>get(GlobalAPI.getOrderContent)
                 .params("id", mGoodId)
                 .execute(new StringCallback() {
                     @Override
@@ -363,22 +363,19 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
     }
 
     private void showShare() {
-
-        shareUrl.append(GlobalConfig.shareGoods).append(mGoodId).append(".htm");
+        shareUrl.append(GlobalAPI.shareGoods).append(mGoodId).append(".htm");
         OnekeyShare oks = new OnekeyShare();
         //关闭sso授权
         oks.disableSSOWhenAuthorize();
         // title标题，印象笔记、邮箱、信息、微信、人人网、QQ和QQ空间使用
         oks.setTitle(goodBean.getShopName());
         // titleUrl是标题的网络链接，仅在Linked-in,QQ和QQ空间使用
-
         oks.setTitleUrl(shareUrl.toString());
         // text是分享文本，所有平台都需要这个字段
         oks.setText(goodBean.getGoodsName());
         //分享网络图片，新浪微博分享网络图片需要通过审核后申请高级写入接口，否则请注释掉测试新浪微博
         oks.setImageUrl(goodBean.getImages().get(0).getThumbImageURL());
         // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
-
         // url仅在微信（包括好友和朋友圈）中使用
         oks.setUrl(shareUrl.toString());
         // comment是我对这条分享的评论，仅在人人网和QQ空间使用
@@ -391,23 +388,19 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
         oks.setCallback(new PlatformActionListener() {
             @Override
             public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-
                 Toast.makeText(mContext, "分享成功", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onError(Platform platform, int i, Throwable throwable) {
-
                 Toast.makeText(mContext, "分享失败", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onCancel(Platform platform, int i) {
-
-                Toast.makeText(mContext, "取消", Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, "取消分享", Toast.LENGTH_LONG).show();
             }
         });
-
         // 启动分享GUI
         oks.show(this);
     }
