@@ -27,7 +27,6 @@ import com.lzy.okgo.model.Response;
 import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterSpecification;
-import com.shiwaixiangcun.customer.http.StringDialogCallBack;
 import com.shiwaixiangcun.customer.interfaces.TagClick;
 import com.shiwaixiangcun.customer.model.GoodDetail;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
@@ -241,7 +240,7 @@ public class DialogSku extends Dialog implements DialogInterface.OnCancelListene
     private void requestStock(String s) {
         OkGo.<String>get(GlobalAPI.getStock + mGoodId + ".json")
                 .params("attributeIds", s)
-                .execute(new StringDialogCallBack(mContext) {
+                .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
                         Log.e(BUG_TAG, response.getRawCall().request().toString());

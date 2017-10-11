@@ -14,7 +14,7 @@ public interface IHousePhoneView {
      * 设置过后的回调
      * @param result
      */
-    void setBgaAdpaterAndClickResult(ResponseEntity<List<HousePhoneBean>>  result);
+    void setPhoneInfo(ResponseEntity<List<HousePhoneBean>> result);
 
     void setPhoneResult(ResponseEntity  result);
 

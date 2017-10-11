@@ -21,8 +21,8 @@ import android.widget.TextView;
 
 import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
+import com.shiwaixiangcun.customer.Common;
 import com.shiwaixiangcun.customer.R;
-import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.model.UpdateAppBean;
 import com.shiwaixiangcun.customer.presenter.impl.MyMineImpl;
 import com.shiwaixiangcun.customer.ui.IMyMineView;

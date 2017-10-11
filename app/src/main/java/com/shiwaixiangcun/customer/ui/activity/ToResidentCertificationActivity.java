@@ -3,7 +3,6 @@ package com.shiwaixiangcun.customer.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,8 +13,8 @@ import android.widget.Toast;
 
 import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
+import com.shiwaixiangcun.customer.Common;
 import com.shiwaixiangcun.customer.R;
-import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.model.HousePhoneBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.presenter.impl.HousePhoneImpl;
@@ -27,7 +26,7 @@ import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
 import java.util.List;
 
-public class ToResidentCertificationActivity extends AppCompatActivity implements View.OnClickListener,IHousePhoneView {
+public class ToResidentCertificationActivity extends AppCompatActivity implements View.OnClickListener, IHousePhoneView {
 
     private ChangeLightImageView back_left;
     private String houseId;
@@ -42,6 +41,7 @@ public class ToResidentCertificationActivity extends AppCompatActivity implement
     private TextView tv_submit_succsse;
     private TextView tv_content;
     private int next_i = 0;
+    private String houseName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,8 @@ public class ToResidentCertificationActivity extends AppCompatActivity implement
 
         AppManager.getAppManager().addActivity(this);
         Intent intent = getIntent();
-        houseId = intent.getStringExtra("houseId");
+        houseId = String.valueOf(intent.getIntExtra("houseId", 0));
+        houseName = intent.getStringExtra("slectHouse");
 
 
         layoutView();
@@ -75,9 +76,9 @@ public class ToResidentCertificationActivity extends AppCompatActivity implement
     }
 
     private void initData() {
-        if (Utils.isNotEmpty(houseId)){
-            HousePhoneImpl housePhone = new HousePhoneImpl(this,houseId,"");
-            housePhone.setBgaAdpaterAndClick(this);
+        if (Utils.isNotEmpty(houseId)) {
+            HousePhoneImpl housePhone = new HousePhoneImpl(this, houseId, "");
+            housePhone.getHouseNumber(this);
         }
         back_left.setOnClickListener(this);
         tv_next_phone.setOnClickListener(this);
@@ -88,44 +89,44 @@ public class ToResidentCertificationActivity extends AppCompatActivity implement
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        switch (id){
+        switch (id) {
             case R.id.back_left:
                 finish();
                 break;
             case R.id.tv_next_phone:
                 next_i++;
-                if (next_i >= data.size()){
+                if (next_i >= data.size()) {
                     next_i = 0;
                 }
-                if (data != null && data.size() != 0){
+                if (data != null && data.size() != 0) {
                     tv_little_phone.setText(data.get(next_i).getPhone());
                 }
                 break;
             case R.id.btn_submit_open:
                 String s_phone = tv_little_phone.getText().toString().trim() + et_little_phone.getText().toString().trim();
-                if (!Utils.isNotEmpty(et_little_phone.getText().toString().trim())){
-                    Toast.makeText(this,"请补全电话号码后四位",Toast.LENGTH_LONG).show();
+                if (!Utils.isNotEmpty(et_little_phone.getText().toString().trim())) {
+                    Toast.makeText(this, "请补全电话号码后四位", Toast.LENGTH_LONG).show();
                     return;
                 }
-                if (Utils.isNotEmpty(houseId)){
-                    HousePhoneImpl housePhone = new HousePhoneImpl(this,houseId,s_phone);
-                    housePhone.setBindPhoneClick(this);
-                }else {
-                    Toast.makeText(this,"房产信息错误",Toast.LENGTH_LONG).show();
+                if (Utils.isNotEmpty(houseId)) {
+                    HousePhoneImpl housePhone = new HousePhoneImpl(this, houseId, s_phone);
+                    housePhone.validateNumber(this);
+                } else {
+                    Toast.makeText(this, "房产信息错误", Toast.LENGTH_LONG).show();
                 }
                 break;
             case R.id.btn_ok:
                 AppManager.getAppManager().finishAllActivity();
                 String resident = SharePreference.getStringSpParams(this, Common.ISRESIDENT, Common.SIRESIDENT);
-                if (resident.equals("torent")){
+                if (resident.equals("torent")) {
 //                    Intent intent = new Intent(this,ItoRentActivity.class);
 //                    startActivity(intent);
                     finish();
-                }else if (resident.equals("tosell")){
+                } else if (resident.equals("tosell")) {
 //                    Intent intent = new Intent(this,ItoSellerActivity.class);
 //                    startActivity(intent);
                     finish();
-                }else if (resident.equals("online")){
+                } else if (resident.equals("online")) {
 //                    Intent intent = new Intent(this,HomeActivity.class);
 //                    startActivity(intent);
                     finish();
@@ -137,24 +138,23 @@ public class ToResidentCertificationActivity extends AppCompatActivity implement
     }
 
     @Override
-    public void setBgaAdpaterAndClickResult(ResponseEntity<List<HousePhoneBean>>  result) {
+    public void setPhoneInfo(ResponseEntity<List<HousePhoneBean>> result) {
         data = result.getData();
-        if (data != null && data.size() != 0){
+        if (data != null && data.size() != 0) {
             tv_little_phone.setText(data.get(0).getPhone());
         }
     }
 
     @Override
     public void setPhoneResult(ResponseEntity result) {
-        Log.i("sssssssssssssssvv",result.toString());
-        if (null != result){
-            if (result.getResponseCode() == 1001){
+        if (null != result) {
+            if (result.getResponseCode() == 1001) {
                 tv_content.setText("恭喜您认证成功");
                 iv_submit_expression.setImageResource(R.mipmap.submit_success);
                 tv_submit_succsse.setText("认证成功");
                 rl_success_submit.setVisibility(View.VISIBLE);
                 btn_submit_open.setVisibility(View.GONE);
-            }else {
+            } else {
                 iv_submit_expression.setImageResource(R.mipmap.submit_default);
                 tv_submit_succsse.setText("认证失败");
                 rl_success_submit.setVisibility(View.VISIBLE);

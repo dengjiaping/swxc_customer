@@ -123,8 +123,9 @@
                 <LinearLayout
                     android:id="@+id/llayout_good_info"
                     android:layout_width="match_parent"
-                    android:layout_height="130dp"
+                    android:layout_height="wrap_content"
                     android:background="@color/white"
+                    android:minHeight="135dp"
                     android:paddingTop="8dp">
 
                     <ImageView
@@ -153,7 +154,7 @@
                             android:maxLines="2"
                             android:textColor="#FF2D3230"
                             android:textSize="16sp"
-                            tools:text="欧姆龙（OMRON）电子血压计..."
+                            tools:text="欧姆龙（OMRON）电子血压计..红色，2017年新款红色，2017年新款红色，2017年新款."
                             />
 
                         <TextView
@@ -166,14 +167,14 @@
                             android:maxLines="2"
                             android:textColor="@color/gray"
                             android:textSize="14sp"
-                            tools:text="红色，2017年新款"
+                            tools:text="红色，2017年新款红色，2017年新款红色，2017年新款"
                             />
 
 
                         <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp">
+                            android:layout_marginTop="4dp">
 
                             <TextView
 
@@ -182,7 +183,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentLeft="true"
                                 android:layout_centerVertical="true"
-                                android:layout_marginTop="8dp"
+                                android:layout_marginTop="4dp"
                                 android:gravity="center_vertical"
                                 android:textColor="#FFFF1717"
                                 android:textSize="18sp"

@@ -7,12 +7,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.shiwaixiangcun.customer.GlobalConfig;
+import com.shiwaixiangcun.customer.Common;
+import com.shiwaixiangcun.customer.ContextSession;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterTool;
 import com.shiwaixiangcun.customer.model.ToolBean;
@@ -21,11 +21,13 @@ import com.shiwaixiangcun.customer.ui.activity.HouseRentingActivity;
 import com.shiwaixiangcun.customer.ui.activity.LoginActivity;
 import com.shiwaixiangcun.customer.ui.activity.LookDecoratingActivity;
 import com.shiwaixiangcun.customer.ui.activity.OnlineServiceActivity;
+import com.shiwaixiangcun.customer.ui.activity.ResidentCertificationActivity;
 import com.shiwaixiangcun.customer.ui.activity.SurroundLifeActivity;
 import com.shiwaixiangcun.customer.ui.activity.heath.HealthEvaluationActivity;
 import com.shiwaixiangcun.customer.ui.activity.heath.PhysicalActivity;
 import com.shiwaixiangcun.customer.ui.activity.heath.WebActivity;
-import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
+import com.shiwaixiangcun.customer.utils.SharePreference;
+import com.shiwaixiangcun.customer.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +51,7 @@ public class ToolFragment extends LazyFragment {
     private List<ToolBean> mSelectiveList;
     private String mTitle;
     private Activity mActivity;
-    private boolean hasLogin = true;
+
 
     public static Fragment getInstance(String title) {
 
@@ -74,24 +76,12 @@ public class ToolFragment extends LazyFragment {
 
     @Override
     protected void onFirstUserVisible() {
-        String isLogin = (String) AppSharePreferenceMgr.get(this.getActivity(), GlobalConfig.isLogin, "notLogin");
-        hasLogin = isLogin.equals("islogin");
 
     }
 
     @Override
     protected void onUserVisible() {
-        String isLogin = (String) AppSharePreferenceMgr.get(this.getActivity(), GlobalConfig.isLogin, "notLogin");
-        Log.e(BUG_TAG, "是否登录" + isLogin);
-        if (isLogin == null) {
-            hasLogin = false;
-        }
-        if (isLogin.equals("notLogin")) {
-            hasLogin = false;
-        }
-        if (isLogin.equals("islogin")) {
-            hasLogin = true;
-        }
+
 
     }
 
@@ -143,25 +133,49 @@ public class ToolFragment extends LazyFragment {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 ToolBean toolBean = mToolList.get(position);
                 Bundle bundle = new Bundle();
+
+                String isOrNotLogin = SharePreference.getStringSpParams(mContext, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
                 switch (toolBean.id) {
                     case 1:
                         //体征数据
 
-                        readyGo(PhysicalActivity.class);
+                        if (Utils.isNotEmpty(isOrNotLogin)) {
+                            readyGo(PhysicalActivity.class);
+                        } else {
+                            readyGo(LoginActivity.class);
+                        }
+
 
                         break;
                     case 2:
                         //健康评测
-                        readyGo(HealthEvaluationActivity.class);
+                        if (Utils.isNotEmpty(isOrNotLogin)) {
+                            readyGo(HealthEvaluationActivity.class);
+                        } else {
+                            readyGo(LoginActivity.class);
+                        }
+
                         break;
                     case 3:
                         //健康方案
-                        bundle.putInt("type", 3);
-                        readyGo(WebActivity.class, bundle);
+                        if (Utils.isNotEmpty(isOrNotLogin)) {
+                            bundle.putInt("type", 3);
+                            readyGo(WebActivity.class, bundle);
+                        } else {
+                            readyGo(LoginActivity.class);
+                        }
+
+
                         break;
                     case 4:
-                        bundle.putInt("type", 4);
-                        readyGo(WebActivity.class, bundle);
+
+                        if (Utils.isNotEmpty(isOrNotLogin)) {
+                            bundle.putInt("type", 4);
+                            readyGo(WebActivity.class, bundle);
+                        } else {
+                            readyGo(LoginActivity.class);
+                        }
+
                         break;
                     case 5:
                         //预约挂号
@@ -180,7 +194,15 @@ public class ToolFragment extends LazyFragment {
                         break;
                     case 8:
                         //在线报修
-                        readyGo(OnlineServiceActivity.class);
+                        if (Utils.isNotEmpty(isOrNotLogin)) {
+                            if (!ContextSession.isPropertyAuth()) {
+                                readyGo(ResidentCertificationActivity.class);
+                            } else {
+                                readyGo(OnlineServiceActivity.class);
+                            }
+                        } else {
+                            readyGo(LoginActivity.class);
+                        }
                         break;
                     case 9:
                         //找装修
@@ -188,20 +210,24 @@ public class ToolFragment extends LazyFragment {
                         break;
                     case 10:
                         //房屋租售
-                        if (hasLogin) {
+
+                        if (Utils.isNotEmpty(isOrNotLogin)) {
                             readyGo(HouseRentingActivity.class);
                         } else {
                             readyGo(LoginActivity.class);
                         }
 
+
                         break;
                     case 11:
                         //在线缴费
-                        if (hasLogin) {
+
+                        if (Utils.isNotEmpty(isOrNotLogin)) {
                             Toast.makeText(mActivity, "暂未开通此功能", Toast.LENGTH_SHORT).show();
                         } else {
                             readyGo(LoginActivity.class);
                         }
+
 
                         break;
                     case 12:

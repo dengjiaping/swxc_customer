@@ -14,10 +14,10 @@ import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 import com.shiwaixiangcun.customer.BaseActivity;
+import com.shiwaixiangcun.customer.Common;
 import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
-import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
 import com.shiwaixiangcun.customer.model.AddAddressBean;

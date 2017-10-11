@@ -60,7 +60,7 @@ public class residentLastBean implements Serializable{
          */
 
         private int id;
-        private String number;
+        private String numberDesc;
 
         public int getId() {
             return id;
@@ -70,12 +70,12 @@ public class residentLastBean implements Serializable{
             this.id = id;
         }
 
-        public String getNumber() {
-            return number;
+        public String getNumberDesc() {
+            return numberDesc;
         }
 
-        public void setNumber(String number) {
-            this.number = number;
+        public void setNumberDesc(String number) {
+            this.numberDesc = number;
         }
     }
 }

@@ -66,8 +66,11 @@
 
             <TextView
                 android:id="@+id/tv_title"
-                android:layout_width="245dp"
-                android:layout_height="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:minHeight="20dp"
                 android:textColor="#FF2D3230"
                 android:textSize="16sp"
                 tools:text="欧姆龙（OMRON）电子血压计...">
@@ -76,13 +79,15 @@
 
             <TextView
                 android:id="@+id/tv_desc"
-                android:layout_width="245dp"
-                android:layout_height="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:ellipsize="end"
                 android:maxLines="2"
+                android:minHeight="20dp"
                 android:textColor="#992d3230"
                 android:textSize="14sp"
-                tools:text="红色，2017年新款"
+                tools:text="红色红色，2017年新款红色，2017年新款，2017年新款红色，2017年新款红色，2017年新款红色，2017年新款"
                 />
 
             <RelativeLayout

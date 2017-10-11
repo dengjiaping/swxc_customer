@@ -12,6 +12,7 @@ public class HousePhoneBean implements Serializable {
      * phone : 1391234
      */
 
+
     private String phone;
 
     public String getPhone() {

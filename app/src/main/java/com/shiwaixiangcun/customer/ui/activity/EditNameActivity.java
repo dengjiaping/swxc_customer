@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
+import com.shiwaixiangcun.customer.Common;
 import com.shiwaixiangcun.customer.R;
-import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.presenter.impl.EditNameImpl;
 import com.shiwaixiangcun.customer.ui.IEditNameView;

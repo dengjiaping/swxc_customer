@@ -9,8 +9,8 @@ import com.google.gson.reflect.TypeToken;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+import com.shiwaixiangcun.customer.Common;
 import com.shiwaixiangcun.customer.GlobalConfig;
-import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
 import com.shiwaixiangcun.customer.model.AnnouncementBean;
@@ -23,7 +23,7 @@ import com.shiwaixiangcun.customer.presenter.IHomePresenter;
 import com.shiwaixiangcun.customer.ui.IHomeView;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.LoginOutUtil;
-import com.shiwaixiangcun.customer.utils.RefreshTockenUtil;
+import com.shiwaixiangcun.customer.utils.RefreshTokenUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
 
 import java.lang.reflect.Type;
@@ -177,7 +177,7 @@ public class HomePresenterImpl implements IHomePresenter {
                 if (user.getResponseCode() == 1001) {
                     iHomeView.setInformationResult(user);
                 } else if (user.getResponseCode() == 1018) {
-                    RefreshTockenUtil.sendIntDataInvatation(context, refresh_token);
+                    RefreshTokenUtil.sendIntDataInvatation(context, refresh_token);
                 } else if (user.getResponseCode() == 1019) {
                     LoginOutUtil.sendLoginOutUtil(context);
                 }

@@ -4,8 +4,8 @@ import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 
+import com.shiwaixiangcun.customer.Common;
 import com.shiwaixiangcun.customer.R;
-import com.shiwaixiangcun.customer.http.Common;
 
 import java.io.File;
 import java.io.FileOutputStream;

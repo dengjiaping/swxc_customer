@@ -17,12 +17,12 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.shiwaixiangcun.customer.BaseActivity;
+import com.shiwaixiangcun.customer.Common;
 import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.event.EventCenter;
 import com.shiwaixiangcun.customer.event.SimpleEvent;
-import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.http.StringDialogCallBack;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
@@ -31,7 +31,7 @@ import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.DateUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.LoginOutUtil;
-import com.shiwaixiangcun.customer.utils.RefreshTockenUtil;
+import com.shiwaixiangcun.customer.utils.RefreshTokenUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
@@ -166,7 +166,7 @@ public class WeightActivity extends BaseActivity implements View.OnClickListener
                                 initChart(mWeightList);
                                 break;
                             case 1018:
-                                RefreshTockenUtil.sendIntDataInvatation(mContext, refresh_token);
+                                RefreshTokenUtil.sendIntDataInvatation(mContext, refresh_token);
                                 break;
                             case 1019:
                                 LoginOutUtil.sendLoginOutUtil(mContext);
@@ -185,8 +185,9 @@ public class WeightActivity extends BaseActivity implements View.OnClickListener
         if (weightList.size() < 2) {
             mLlayoutChart.setVisibility(View.GONE);
         }
-        for (int i = 0; i < weightList.size(); i++) {
-            mWightList.add(new PointValue(i, weightList.get(i).getWeight()));
+        int size = weightList.size();
+        for (int i = 0; i < size; i++) {
+            mWightList.add(new PointValue(size - 1 - i, (float) weightList.get(i).getWeight()));
             mAxisXValues.add(new AxisValue(i).setLabel(i + ""));
         }
 

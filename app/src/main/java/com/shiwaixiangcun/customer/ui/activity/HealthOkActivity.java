@@ -18,9 +18,9 @@ import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.shiwaixiangcun.customer.Common;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
-import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
 import com.shiwaixiangcun.customer.model.BloodPressureBean;
@@ -41,7 +41,7 @@ import com.shiwaixiangcun.customer.ui.activity.heath.WeightActivity;
 import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.LoginOutUtil;
-import com.shiwaixiangcun.customer.utils.RefreshTockenUtil;
+import com.shiwaixiangcun.customer.utils.RefreshTokenUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.utils.TimeToTime;
 import com.shiwaixiangcun.customer.utils.Utils;
@@ -406,7 +406,7 @@ public class HealthOkActivity extends AppCompatActivity implements View.OnClickL
                 if (responseEntity.getResponseCode() == 1001) {
                     elements_weight = responseEntity.getData().getElements();
                 } else if (responseEntity.getResponseCode() == 1018) {
-                    RefreshTockenUtil.sendIntDataInvatation(context, refresh_token);
+                    RefreshTokenUtil.sendIntDataInvatation(context, refresh_token);
                 } else if (responseEntity.getResponseCode() == 1019) {
                     LoginOutUtil.sendLoginOutUtil(context);
                 }
@@ -444,7 +444,7 @@ public class HealthOkActivity extends AppCompatActivity implements View.OnClickL
                 if (responseEntity.getResponseCode() == 1001) {
                     data_pressure = responseEntity.getData();
                 } else if (responseEntity.getResponseCode() == 1018) {
-                    RefreshTockenUtil.sendIntDataInvatation(context, refresh_token);
+                    RefreshTokenUtil.sendIntDataInvatation(context, refresh_token);
                 } else if (responseEntity.getResponseCode() == 1019) {
                     LoginOutUtil.sendLoginOutUtil(context);
                 }
@@ -483,7 +483,7 @@ public class HealthOkActivity extends AppCompatActivity implements View.OnClickL
 //                if (bloodSugarBean.getResponseCode() == 1001) {
 //                    elements_sugar = bloodSugarBean.getData().getElements();
 //                } else if (bloodSugarBean.getResponseCode() == 1018) {
-//                    RefreshTockenUtil.sendIntDataInvatation(context, refresh_token);
+//                    RefreshTokenUtil.sendIntDataInvatation(context, refresh_token);
 //                } else if (bloodSugarBean.getResponseCode() == 1019) {
 //                    LoginOutUtil.sendLoginOutUtil(context);
 //                }
@@ -523,7 +523,7 @@ public class HealthOkActivity extends AppCompatActivity implements View.OnClickL
 //                if (pressureFatBean.getResponseCode() == 1001) {
 //                    elements_fat = pressureFatBean.getData().getElements();
 //                } else if (pressureFatBean.getResponseCode() == 1018) {
-//                    RefreshTockenUtil.sendIntDataInvatation(context, refresh_token);
+//                    RefreshTokenUtil.sendIntDataInvatation(context, refresh_token);
 //                } else if (pressureFatBean.getResponseCode() == 1019) {
 //                    LoginOutUtil.sendLoginOutUtil(context);
 //                }

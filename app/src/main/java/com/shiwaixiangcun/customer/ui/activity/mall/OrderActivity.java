@@ -55,10 +55,11 @@ public class OrderActivity extends BaseActivity implements View.OnClickListener 
 
     private void initView() {
         mTvPageName.setText("我的订单");
-        for (String title:mTitles){
+        for (String title : mTitles) {
             mFragments.add(FragmentOrder.getInstance(title));
         }
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());
+        mVp.setOffscreenPageLimit(4);
         mVp.setAdapter(mAdapter);
         mTablayout.setViewPager(mVp);
     }

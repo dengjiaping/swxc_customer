@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
 
     android:layout_width="match_parent"
-    android:layout_height="140dp"
-    android:background="@color/white">
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:minHeight="140dp">
 
     <ImageView
         android:id="@+id/iv_good_cover"
         android:layout_width="100dp"
         android:layout_height="100dp"
+
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="16dp"
         android:scaleType="centerCrop"
@@ -48,12 +50,15 @@
         <TextView
             android:id="@+id/tv_result_sku"
             android:layout_width="wrap_content"
-            android:layout_height="26dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:ellipsize="end"
             android:gravity="center_vertical"
+            android:maxLines="2"
+            android:minHeight="26dp"
             android:textColor="@color/gray"
             android:textSize="16sp"
-            tools:text="请选择  颜色  款式"
+            tools:text="请选择  选择  颜色  款式选择  颜色  款式选择  颜色  款式颜色  款式"
             />
 
     </LinearLayout>

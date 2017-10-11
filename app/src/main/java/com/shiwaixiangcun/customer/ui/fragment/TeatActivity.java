@@ -5,8 +5,8 @@ import android.util.Log;
 import android.view.View;
 
 import com.shiwaixiangcun.customer.BaseActivity;
+import com.shiwaixiangcun.customer.Common;
 import com.shiwaixiangcun.customer.R;
-import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.TokenUtils;
 

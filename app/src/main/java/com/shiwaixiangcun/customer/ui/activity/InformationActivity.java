@@ -21,8 +21,9 @@ import com.baidu.mobstat.StatService;
 import com.example.liangmutian.mypicker.DatePickerDialog;
 import com.example.liangmutian.mypicker.DateUtil;
 import com.google.gson.reflect.TypeToken;
+import com.shiwaixiangcun.customer.Common;
+import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
-import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
 import com.shiwaixiangcun.customer.model.ImageReturnbean;
@@ -33,10 +34,11 @@ import com.shiwaixiangcun.customer.model.User;
 import com.shiwaixiangcun.customer.model.UserInfoBean;
 import com.shiwaixiangcun.customer.presenter.impl.HouseInformationImpl;
 import com.shiwaixiangcun.customer.ui.IHouseInformationView;
+import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.CompressionImageUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.LoginOutUtil;
-import com.shiwaixiangcun.customer.utils.RefreshTockenUtil;
+import com.shiwaixiangcun.customer.utils.RefreshTokenUtil;
 import com.shiwaixiangcun.customer.utils.ResUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.utils.TimerToTimerUtil;
@@ -415,8 +417,9 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
         }.getType();
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(login_detail, type);
         final String refresh_token = responseEntity.getData().getRefresh_token();
+        String token = (String) AppSharePreferenceMgr.get(this, GlobalConfig.TOKEN, "");
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("access_token", responseEntity.getData().getAccess_token());
+        hashMap.put("access_token", token);
         hashMap.put("images", file);
 
 
@@ -438,7 +441,7 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
                     }
 
                 } else if (responseEntity.getResponseCode() == 1018) {
-                    RefreshTockenUtil.sendIntDataInvatation(InformationActivity.this, refresh_token);
+                    RefreshTokenUtil.sendIntDataInvatation(InformationActivity.this, refresh_token);
                 } else if (responseEntity.getResponseCode() == 1019) {
                     LoginOutUtil.sendLoginOutUtil(InformationActivity.this);
                 }

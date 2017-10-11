@@ -17,6 +17,7 @@ import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.model.MyFamilyBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
+import com.shiwaixiangcun.customer.ui.dialog.DialogInfo;
 import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
@@ -93,7 +94,23 @@ public class FamilyDetailActivity extends BaseActivity implements View.OnClickLi
                 finish();
                 break;
             case R.id.btn_delete_family:
-                deleteFamily();
+                DialogInfo dialogInfo = new DialogInfo(mContext);
+                dialogInfo.setDialogTitle("删除家人");
+                dialogInfo.setDialogInfo("你确定要删除当前关联的家人?");
+                dialogInfo.show();
+                dialogInfo.setListener(new DialogInfo.onCallBackListener() {
+                    @Override
+                    public void closeBtn(DialogInfo dialog) {
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void confirmBtn(DialogInfo dialog) {
+                        deleteFamily();
+                        dialog.dismiss();
+                    }
+                });
+
                 break;
         }
     }

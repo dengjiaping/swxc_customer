@@ -5,7 +5,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.shiwaixiangcun.customer.http.Common;
+import com.shiwaixiangcun.customer.Common;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
 import com.shiwaixiangcun.customer.model.HealthAllActivity;
@@ -15,7 +15,7 @@ import com.shiwaixiangcun.customer.presenter.IHealthOkPresenter;
 import com.shiwaixiangcun.customer.ui.IHealthOkView;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.LoginOutUtil;
-import com.shiwaixiangcun.customer.utils.RefreshTockenUtil;
+import com.shiwaixiangcun.customer.utils.RefreshTokenUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
 
 import java.lang.reflect.Type;
@@ -62,7 +62,7 @@ public class HealthOkImpl implements IHealthOkPresenter {
                 if (healthAllActivity.getResponseCode() == 1001) {
                     iHealthOkView.setBgaAdpaterAndClickResult(healthAllActivity);
                 } else if (healthAllActivity.getResponseCode() == 1018) {
-                    RefreshTockenUtil.sendIntDataInvatation(context, refresh_token);
+                    RefreshTokenUtil.sendIntDataInvatation(context, refresh_token);
                 } else if (healthAllActivity.getResponseCode() == 1019) {
                     LoginOutUtil.sendLoginOutUtil(context);
                 }

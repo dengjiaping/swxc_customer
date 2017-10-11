@@ -199,7 +199,7 @@ public class WheelPriorityDialogFragment extends DialogFragment implements Wheel
     private void initView() {
         tvLeft = (TextView) view.findViewById(R.id.tv_wheel_dialog_left);
         tvRight = (TextView) view.findViewById(R.id.tv_wheel_dialog_right);
-        wheelView = (WheelView) view.findViewById(R.id.WheelView_dialog);
+        wheelView = (WheelView) view.findViewById(R.id.WheelView_first);
         ll_sex = (LinearLayout) view.findViewById(R.id.ll_sex);
     }
 
@@ -219,6 +219,15 @@ public class WheelPriorityDialogFragment extends DialogFragment implements Wheel
         if (content != null && onWheelDialogListener != null) {
             onWheelDialogListener.onValueChanged(content[newVal - wheelView.getMinValue()]);
         }
+    }
+
+    /**
+     * 对外开放的方法
+     *
+     * @param onWheelDialogListener
+     */
+    public void setWheelDialogListener(OnWheelDialogListener onWheelDialogListener) {
+        this.onWheelDialogListener = onWheelDialogListener;
     }
 
     public interface OnWheelDialogListener {
@@ -245,14 +254,5 @@ public class WheelPriorityDialogFragment extends DialogFragment implements Wheel
          * @param value
          */
         void onValueChanged(String value);
-    }
-
-    /**
-     * 对外开放的方法
-     *
-     * @param onWheelDialogListener
-     */
-    public void setWheelDialogListener(OnWheelDialogListener onWheelDialogListener) {
-        this.onWheelDialogListener = onWheelDialogListener;
     }
 }

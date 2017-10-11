@@ -10,8 +10,8 @@ import android.widget.Toast;
 
 import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
+import com.shiwaixiangcun.customer.Common;
 import com.shiwaixiangcun.customer.R;
-import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.model.InformationBean;
 import com.shiwaixiangcun.customer.presenter.impl.HousetoImpl;
 import com.shiwaixiangcun.customer.ui.IHouseToView;

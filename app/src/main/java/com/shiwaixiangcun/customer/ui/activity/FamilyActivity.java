@@ -24,7 +24,6 @@ import com.shiwaixiangcun.customer.model.MyFamilyBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
-import com.shiwaixiangcun.customer.utils.TokenUtils;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
 import java.lang.reflect.Type;
@@ -71,9 +70,9 @@ public class FamilyActivity extends BaseActivity implements View.OnClickListener
     private void initData() {
         String strToken = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
 
-        // TODO: 2017/10/10  检验token是否有效
-        int code = TokenUtils.checkToken(strToken);
-        Log.e(BUG_TAG, code + "");
+//        // TODO: 2017/10/10  检验token是否有效
+//        int code = TokenUtils.checkToken(strToken);
+//        Log.e(BUG_TAG, code + "");
         OkGo.<String>get(GlobalAPI.getFamily)
                 .params("access_token", strToken)
                 .params("isTrue", false)

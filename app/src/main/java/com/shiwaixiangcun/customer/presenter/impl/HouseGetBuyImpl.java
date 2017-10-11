@@ -5,7 +5,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
-import com.shiwaixiangcun.customer.http.Common;
+import com.shiwaixiangcun.customer.Common;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
@@ -15,7 +15,7 @@ import com.shiwaixiangcun.customer.ui.IHouseGetBuyView;
 import com.shiwaixiangcun.customer.ui.dialog.DialogLoading;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.LoginOutUtil;
-import com.shiwaixiangcun.customer.utils.RefreshTockenUtil;
+import com.shiwaixiangcun.customer.utils.RefreshTokenUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
 
 import java.lang.reflect.Type;
@@ -69,7 +69,7 @@ public class HouseGetBuyImpl implements IGetBuyHousePresenter {
                     iHouseGetBuyView.setBgaAdpaterAndClickResult(responseEntity);
                     mDialogLoading.close();
                 } else if (responseEntity.getResponseCode() == 1018) {
-                    RefreshTockenUtil.sendIntDataInvatation(context, refresh_token);
+                    RefreshTokenUtil.sendIntDataInvatation(context, refresh_token);
                 } else if (responseEntity.getResponseCode() == 1019) {
                     LoginOutUtil.sendLoginOutUtil(context);
                 }else if (responseEntity.getResponseCode() == 1002){

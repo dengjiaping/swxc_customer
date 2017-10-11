@@ -3,7 +3,6 @@ package com.shiwaixiangcun.customer.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,14 +23,6 @@ public class BloodFatBean implements Parcelable {
             return new BloodFatBean[size];
         }
     };
-    /**
-     * elements : [{"createTime":1505697513000,"healthStatus":"NORMAL","id":255,"lowLipo":3,"lowLipoStatus":"NORMAL","source":"BackgroundSystem","statusEnum":"Zhengchang","suggestion":"请保持当前的健康生活方式,适当做一些有氧运动，如慢跑、骑自行车、跳绳、健身操等","topLipo":3,"topLipo1Status":"NORMAL","totalCholesterol":4,"totalCholesterolStatus":"NORMAL","triglyceride":1,"triglycerideStatus":"NORMAL"},{"createTime":1505697448000,"healthStatus":"WARNING","id":254,"lowLipo":3,"lowLipoStatus":"NORMAL","source":"BackgroundSystem","statusEnum":"Yichang","suggestion":"请调整饮食结构，减少肉食、蛋、乳制品等脂肪酸、胆固醇含量多的食物，戒烟戒酒，同时多参加锻炼，慢跑、骑自行车、健身操等有氧运动有助于您的血脂改善，如有身体不适，请您及时就诊","topLipo":3,"topLipo1Status":"NORMAL","totalCholesterol":4,"totalCholesterolStatus":"NORMAL","triglyceride":2,"triglycerideStatus":"NORMAL"}]
-     * page : 1
-     * size : 10
-     * totalAmount : 2
-     * totalPages : 1
-     */
-
     private int page;
     private int size;
     private int totalAmount;
@@ -46,8 +37,7 @@ public class BloodFatBean implements Parcelable {
         this.size = in.readInt();
         this.totalAmount = in.readInt();
         this.totalPages = in.readInt();
-        this.elements = new ArrayList<ElementsBean>();
-        in.readList(this.elements, ElementsBean.class.getClassLoader());
+        this.elements = in.createTypedArrayList(ElementsBean.CREATOR);
     }
 
     public int getPage() {
@@ -101,12 +91,13 @@ public class BloodFatBean implements Parcelable {
         dest.writeInt(this.size);
         dest.writeInt(this.totalAmount);
         dest.writeInt(this.totalPages);
-        dest.writeList(this.elements);
+        dest.writeTypedList(this.elements);
     }
 
     public static class ElementsBean implements Parcelable {
 
-        public static final Creator<ElementsBean> CREATOR = new Creator<ElementsBean>() {
+
+        public static final Parcelable.Creator<ElementsBean> CREATOR = new Parcelable.Creator<ElementsBean>() {
             @Override
             public ElementsBean createFromParcel(Parcel source) {
                 return new ElementsBean(source);
@@ -137,16 +128,16 @@ public class BloodFatBean implements Parcelable {
         private long createTime;
         private String healthStatus;
         private int id;
-        private int lowLipo;
+        private double lowLipo;
         private String lowLipoStatus;
         private String source;
         private String statusEnum;
         private String suggestion;
-        private int topLipo;
+        private double topLipo;
         private String topLipo1Status;
-        private int totalCholesterol;
+        private double totalCholesterol;
         private String totalCholesterolStatus;
-        private int triglyceride;
+        private double triglyceride;
         private String triglycerideStatus;
 
         public ElementsBean() {
@@ -156,16 +147,16 @@ public class BloodFatBean implements Parcelable {
             this.createTime = in.readLong();
             this.healthStatus = in.readString();
             this.id = in.readInt();
-            this.lowLipo = in.readInt();
+            this.lowLipo = in.readDouble();
             this.lowLipoStatus = in.readString();
             this.source = in.readString();
             this.statusEnum = in.readString();
             this.suggestion = in.readString();
-            this.topLipo = in.readInt();
+            this.topLipo = in.readDouble();
             this.topLipo1Status = in.readString();
-            this.totalCholesterol = in.readInt();
+            this.totalCholesterol = in.readDouble();
             this.totalCholesterolStatus = in.readString();
-            this.triglyceride = in.readInt();
+            this.triglyceride = in.readDouble();
             this.triglycerideStatus = in.readString();
         }
 
@@ -193,11 +184,11 @@ public class BloodFatBean implements Parcelable {
             this.id = id;
         }
 
-        public int getLowLipo() {
+        public double getLowLipo() {
             return lowLipo;
         }
 
-        public void setLowLipo(int lowLipo) {
+        public void setLowLipo(double lowLipo) {
             this.lowLipo = lowLipo;
         }
 
@@ -233,11 +224,11 @@ public class BloodFatBean implements Parcelable {
             this.suggestion = suggestion;
         }
 
-        public int getTopLipo() {
+        public double getTopLipo() {
             return topLipo;
         }
 
-        public void setTopLipo(int topLipo) {
+        public void setTopLipo(double topLipo) {
             this.topLipo = topLipo;
         }
 
@@ -249,11 +240,11 @@ public class BloodFatBean implements Parcelable {
             this.topLipo1Status = topLipo1Status;
         }
 
-        public int getTotalCholesterol() {
+        public double getTotalCholesterol() {
             return totalCholesterol;
         }
 
-        public void setTotalCholesterol(int totalCholesterol) {
+        public void setTotalCholesterol(double totalCholesterol) {
             this.totalCholesterol = totalCholesterol;
         }
 
@@ -265,11 +256,11 @@ public class BloodFatBean implements Parcelable {
             this.totalCholesterolStatus = totalCholesterolStatus;
         }
 
-        public int getTriglyceride() {
+        public double getTriglyceride() {
             return triglyceride;
         }
 
-        public void setTriglyceride(int triglyceride) {
+        public void setTriglyceride(double triglyceride) {
             this.triglyceride = triglyceride;
         }
 
@@ -291,16 +282,16 @@ public class BloodFatBean implements Parcelable {
             dest.writeLong(this.createTime);
             dest.writeString(this.healthStatus);
             dest.writeInt(this.id);
-            dest.writeInt(this.lowLipo);
+            dest.writeDouble(this.lowLipo);
             dest.writeString(this.lowLipoStatus);
             dest.writeString(this.source);
             dest.writeString(this.statusEnum);
             dest.writeString(this.suggestion);
-            dest.writeInt(this.topLipo);
+            dest.writeDouble(this.topLipo);
             dest.writeString(this.topLipo1Status);
-            dest.writeInt(this.totalCholesterol);
+            dest.writeDouble(this.totalCholesterol);
             dest.writeString(this.totalCholesterolStatus);
-            dest.writeInt(this.triglyceride);
+            dest.writeDouble(this.triglyceride);
             dest.writeString(this.triglycerideStatus);
         }
     }

@@ -17,9 +17,9 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.shiwaixiangcun.customer.BaseActivity;
+import com.shiwaixiangcun.customer.Common;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
-import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
@@ -29,7 +29,7 @@ import com.shiwaixiangcun.customer.ui.dialog.DialogLoading;
 import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.LoginOutUtil;
-import com.shiwaixiangcun.customer.utils.RefreshTockenUtil;
+import com.shiwaixiangcun.customer.utils.RefreshTokenUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.utils.TimeCount;
 import com.shiwaixiangcun.customer.utils.TimerToTimerUtil;
@@ -62,6 +62,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         initView();
         initData();
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 
     private void initView() {
@@ -152,6 +157,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         mDialogLoading.show();
                         String access_token = responseEntity.getData().getAccess_token();
                         String refresh_token = responseEntity.getData().getRefresh_token();
+                        AppSharePreferenceMgr.put(mContext, GlobalConfig.FIRST_USE, false);
                         //保存用户的Token值
                         AppSharePreferenceMgr.put(mContext, GlobalConfig.TOKEN, access_token);
                         Log.e(BUG_TAG, "登录的Token：" + access_token);
@@ -205,6 +211,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                 String info = JsonUtil.toJson(userInfo);
                                 AppSharePreferenceMgr.put(mContext, GlobalConfig.userInfo, info);
                                 AppSharePreferenceMgr.put(mContext, GlobalConfig.isLogin, "islogin");
+                                AppSharePreferenceMgr.put(mContext, GlobalConfig.propertyAuth, userInfo.isPropertyAuth());
                                 SharePreference.saveStringToSpParams(LoginActivity.this, Common.ISORNOLOGIN, Common.SIORNOLOGIN, "isLogin");
                                 if (Utils.isNotEmpty(user.getData().getAvatar())) {
                                     if (Utils.isNotEmpty(user.getData().getAvatar().getAccessUrl())) {
@@ -231,7 +238,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                 finish();
                                 break;
                             case 1018:
-                                RefreshTockenUtil.sendIntDataInvatation(mContext, refresh_token);
+                                RefreshTokenUtil.sendIntDataInvatation(mContext, refresh_token);
                                 break;
                             case 1019:
                                 LoginOutUtil.sendLoginOutUtil(mContext);

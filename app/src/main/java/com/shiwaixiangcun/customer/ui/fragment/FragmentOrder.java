@@ -35,9 +35,6 @@ import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterOrder;
 import com.shiwaixiangcun.customer.event.SimpleEvent;
-import com.shiwaixiangcun.customer.http.Common;
-import com.shiwaixiangcun.customer.http.StringDialogCallBack;
-import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.OrderBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.pay.PayUtil;
@@ -48,7 +45,6 @@ import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.ArithmeticUtils;
 import com.shiwaixiangcun.customer.utils.DisplayUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
-import com.shiwaixiangcun.customer.utils.SharePreference;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -94,6 +90,7 @@ public class FragmentOrder extends LazyFragment {
     public static Fragment getInstance(String title) {
         FragmentOrder fragment = new FragmentOrder();
         fragment.mTitle = title;
+
         return fragment;
     }
 
@@ -117,6 +114,7 @@ public class FragmentOrder extends LazyFragment {
 
     @Override
     protected void onFirstUserVisible() {
+
         requestData();
 
     }
@@ -254,7 +252,6 @@ public class FragmentOrder extends LazyFragment {
      */
     private void requestData() {
         Log.e(BUG_TAG, "请求数据");
-        Log.e(BUG_TAG, tokenString);
         HttpParams httpParams = new HttpParams();
         httpParams.put("page.pn", 1);
         httpParams.put("page.size", 10);
@@ -262,7 +259,7 @@ public class FragmentOrder extends LazyFragment {
         httpParams.put("access_token", tokenString);
         OkGo.<String>get(GlobalAPI.getAllOrders)
                 .params(httpParams)
-                .execute(new StringDialogCallBack(mContext) {
+                .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
                         Log.e(BUG_TAG, response.getRawCall().request().toString());
@@ -297,7 +294,10 @@ public class FragmentOrder extends LazyFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this.getActivity();
+        EventBus.getDefault().register(this);
         mStringPrompt = mTitle;
+        tokenString = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
+
         switch (mTitle) {
             case "全部":
                 stature = "";
@@ -311,17 +311,19 @@ public class FragmentOrder extends LazyFragment {
             case "已完成":
                 stature = "Finished";
                 break;
+            default:
+                stature = "";
+                break;
         }
 
-        String loginInfo = SharePreference.getStringSpParams(mContext, Common.IS_SAVE_LOGIN, Common.SISAVELOGIN);
-        Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
-        }.getType();
-        ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(loginInfo, type);
-        if (responseEntity == null) {
-            return;
-        }
-        tokenString = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
-        EventBus.getDefault().register(this);
+//        String loginInfo = SharePreference.getStringSpParams(mContext, Common.IS_SAVE_LOGIN, Common.SISAVELOGIN);
+//        Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
+//        }.getType();
+//        ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(loginInfo, type);
+//        if (responseEntity == null) {
+//            return;
+//        }
+
 
 
     }

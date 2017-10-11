@@ -39,7 +39,7 @@ public class AddFamilyActivity extends BaseActivity implements View.OnClickListe
     RelativeLayout mTopBarWrite;
     @BindView(R.id.include)
     LinearLayout mInclude;
-    @BindView(R.id.WheelView_dialog)
+    @BindView(R.id.WheelView_first)
     WheelView mWheelViewDialog;
     @BindView(R.id.btn_to_other)
     Button mBtnToOther;
@@ -89,7 +89,7 @@ public class AddFamilyActivity extends BaseActivity implements View.OnClickListe
     @Override
     public void onValueChange(WheelView picker, int oldVal, int newVal) {
         switch (picker.getId()) {
-            case R.id.WheelView_dialog:
+            case R.id.WheelView_first:
                 relation = strRelationShip[newVal];
                 break;
 

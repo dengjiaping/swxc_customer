@@ -17,19 +17,21 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.shiwaixiangcun.customer.BaseActivity;
+import com.shiwaixiangcun.customer.Common;
 import com.shiwaixiangcun.customer.GlobalAPI;
+import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.event.EventCenter;
 import com.shiwaixiangcun.customer.event.SimpleEvent;
-import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.http.StringDialogCallBack;
 import com.shiwaixiangcun.customer.model.BloodSugarBean;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
+import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.DateUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.LoginOutUtil;
-import com.shiwaixiangcun.customer.utils.RefreshTockenUtil;
+import com.shiwaixiangcun.customer.utils.RefreshTokenUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
@@ -129,8 +131,9 @@ public class BloodSugarActivity extends BaseActivity implements View.OnClickList
         }.getType();
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(login_detail, type);
         final String refresh_token = responseEntity.getData().getRefresh_token();
+        String tokenString = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
         OkGo.<String>get(GlobalAPI.getBloodSugar)
-                .params("access_token", responseEntity.getData().getAccess_token())
+                .params("access_token", tokenString)
                 .params("customerId", customId)
                 .params("page.pn", 1)
                 .params("page.size", 7)
@@ -155,7 +158,7 @@ public class BloodSugarActivity extends BaseActivity implements View.OnClickList
 
                                 break;
                             case 1018:
-                                RefreshTockenUtil.sendIntDataInvatation(mContext, refresh_token);
+                                RefreshTokenUtil.sendIntDataInvatation(mContext, refresh_token);
                                 break;
                             case 1019:
                                 LoginOutUtil.sendLoginOutUtil(mContext);
@@ -180,10 +183,10 @@ public class BloodSugarActivity extends BaseActivity implements View.OnClickList
             // TODO: 2017/9/29 绘制一个点
             mLlayoutChart.setVisibility(View.GONE);
         }
-        Log.e(BUG_TAG, "" + bloodSugarList.size());
-        for (int i = 0; i < bloodSugarList.size(); i++) {
+        int size = bloodSugarList.size();
+        for (int i = 0; i < size; i++) {
             BloodSugarBean.ElementsBean elementsBean = bloodSugarList.get(i);
-            mSugarList.add(new PointValue(i, (float) elementsBean.getBloodSugar()));
+            mSugarList.add(new PointValue(size - 1 - i, (float) elementsBean.getBloodSugar()));
             mAxisXList.add(new AxisValue(i).setLabel(i + ""));
         }
 

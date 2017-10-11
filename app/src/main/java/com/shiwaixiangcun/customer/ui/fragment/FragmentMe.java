@@ -25,8 +25,8 @@ import android.widget.TextView;
 
 import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
+import com.shiwaixiangcun.customer.Common;
 import com.shiwaixiangcun.customer.R;
-import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.model.UpdateAppBean;
 import com.shiwaixiangcun.customer.presenter.impl.MyMineImpl;
 import com.shiwaixiangcun.customer.ui.IMyMineView;
@@ -165,7 +165,7 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, IM
     @Override
     public void onClick(View view) {
         Intent intent;
-        String isOrnotLogin_renting = SharePreference.getStringSpParams(mContext, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
+        String isOrNotLogin = SharePreference.getStringSpParams(mContext, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
         int id = view.getId();
         switch (id) {
             case R.id.back_left:
@@ -194,8 +194,7 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, IM
                 startActivity(intent_version);
                 break;
             case R.id.rl_app_address:
-                if (Utils.isNotEmpty(isOrnotLogin_renting)) {
-
+                if (Utils.isNotEmpty(isOrNotLogin)) {
                     intent = new Intent(mContext, ManageAddressActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putBoolean("clickable", false);
@@ -208,7 +207,7 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, IM
 
                 break;
             case R.id.rl_app_order:
-                if (Utils.isNotEmpty(isOrnotLogin_renting)) {
+                if (Utils.isNotEmpty(isOrNotLogin)) {
                     Intent intent_order = new Intent(mContext, OrderActivity.class);
                     startActivity(intent_order);
                 } else {
@@ -218,8 +217,13 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, IM
                 break;
             case R.id.rl_app_family:
 
-                // TODO: 2017/10/10  跳转至家人页面
-                readyGo(FamilyActivity.class);
+                if (Utils.isNotEmpty(isOrNotLogin)) {
+                    readyGo(FamilyActivity.class);
+                } else {
+                    intent = new Intent(mContext, LoginActivity.class);
+                    startActivity(intent);
+
+                }
                 break;
 
         }

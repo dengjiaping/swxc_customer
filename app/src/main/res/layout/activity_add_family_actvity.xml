@@ -103,7 +103,7 @@
             android:orientation="horizontal">
 
             <com.shiwaixiangcun.customer.widget.WheelView
-                android:id="@+id/WheelView_dialog"
+                android:id="@+id/WheelView_first"
                 android:layout_width="0dp"
                 android:layout_height="217dp"
                 android:layout_centerHorizontal="true"

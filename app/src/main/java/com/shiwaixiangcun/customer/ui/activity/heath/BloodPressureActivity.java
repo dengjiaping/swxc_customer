@@ -15,11 +15,11 @@ import com.baidu.mobstat.StatService;
 import com.google.gson.reflect.TypeToken;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.shiwaixiangcun.customer.BaseActivity;
+import com.shiwaixiangcun.customer.Common;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.event.EventCenter;
 import com.shiwaixiangcun.customer.event.SimpleEvent;
-import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
 import com.shiwaixiangcun.customer.model.BloodPressureBean;
@@ -29,7 +29,7 @@ import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.DateUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.LoginOutUtil;
-import com.shiwaixiangcun.customer.utils.RefreshTockenUtil;
+import com.shiwaixiangcun.customer.utils.RefreshTokenUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
@@ -170,7 +170,7 @@ public class BloodPressureActivity extends BaseActivity implements View.OnClickL
                         configuration(responseEntity.getData().getElements());
                         break;
                     case 1018:
-                        RefreshTockenUtil.sendIntDataInvatation(mContext, refresh_token);
+                        RefreshTokenUtil.sendIntDataInvatation(mContext, refresh_token);
                         break;
                     case 1019:
                         LoginOutUtil.sendLoginOutUtil(mContext);
@@ -199,10 +199,11 @@ public class BloodPressureActivity extends BaseActivity implements View.OnClickL
             mLlayoutChart.setVisibility(View.GONE);
         }
         //初始化表格的数据
-        for (int i = 0; i < elements.size(); i++) {
+        int size = elements.size();
+        for (int i = 0; i < size; i++) {
             BloodPressureBean.ElementsBean elementsBean = elements.get(i);
             mAxisValueList.add(new AxisValue(i).setLabel(i + ""));
-            mShrinkList.add(new PointValue(i, elementsBean.getShrinkBlood()));
+            mShrinkList.add(new PointValue(size - 1 - i, elementsBean.getShrinkBlood()));
             mRelaxationList.add(new PointValue(i, elementsBean.getRelaxationBlood()));
         }
         //绘制收缩压曲线

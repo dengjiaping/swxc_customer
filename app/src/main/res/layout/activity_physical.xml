@@ -11,6 +11,7 @@
     <include layout="@layout/top_bar_white"/>
 
     <RelativeLayout
+        android:id="@+id/Rlayout_family"
         android:layout_width="match_parent"
         android:layout_height="90dp">
 

@@ -18,12 +18,12 @@ import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.shiwaixiangcun.customer.BaseActivity;
+import com.shiwaixiangcun.customer.Common;
 import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.event.EventCenter;
 import com.shiwaixiangcun.customer.event.SimpleEvent;
-import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.model.BloodFatBean;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
@@ -31,7 +31,7 @@ import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.DateUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.LoginOutUtil;
-import com.shiwaixiangcun.customer.utils.RefreshTockenUtil;
+import com.shiwaixiangcun.customer.utils.RefreshTokenUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
@@ -177,12 +177,13 @@ public class BloodFatActivity extends BaseActivity implements View.OnClickListen
 
         List<AxisValue> mAxisXValues = new ArrayList<AxisValue>();
 
-        for (int i = 0; i < bloodFatList.size(); i++) {
+        int size = mBloodFatList.size();
+        for (int i = 0; i < size; i++) {
             BloodFatBean.ElementsBean elementsBean = bloodFatList.get(i);
-            mPointT.add(new PointValue(i, elementsBean.getTotalCholesterol()));
-            mPointA.add(new PointValue(i, elementsBean.getTriglyceride()));
-            mPointB.add(new PointValue(i, elementsBean.getTopLipo()));
-            mPointC.add(new PointValue(i, elementsBean.getLowLipo()));
+            mPointT.add(new PointValue(size - i - 1, (float) elementsBean.getTotalCholesterol()));
+            mPointA.add(new PointValue(size - i - 1, (float) elementsBean.getTriglyceride()));
+            mPointB.add(new PointValue(size - i - 1, (float) elementsBean.getTopLipo()));
+            mPointC.add(new PointValue(size - i - 1, (float) elementsBean.getLowLipo()));
             mAxisXValues.add(new AxisValue(i).setLabel(i + ""));
         }
         //坐标轴
@@ -371,7 +372,7 @@ public class BloodFatActivity extends BaseActivity implements View.OnClickListen
 
                                 break;
                             case 1018:
-                                RefreshTockenUtil.sendIntDataInvatation(mContext, refresh_token);
+                                RefreshTokenUtil.sendIntDataInvatation(mContext, refresh_token);
                                 break;
                             case 1019:
                                 LoginOutUtil.sendLoginOutUtil(mContext);

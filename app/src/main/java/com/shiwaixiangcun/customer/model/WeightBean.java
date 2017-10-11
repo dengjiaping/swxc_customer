@@ -11,7 +11,6 @@ import java.util.List;
  */
 
 public class WeightBean implements Parcelable {
-
     public static final Parcelable.Creator<WeightBean> CREATOR = new Parcelable.Creator<WeightBean>() {
         @Override
         public WeightBean createFromParcel(Parcel source) {
@@ -47,6 +46,10 @@ public class WeightBean implements Parcelable {
         this.totalPages = in.readInt();
         this.elements = new ArrayList<ElementsBean>();
         in.readList(this.elements, ElementsBean.class.getClassLoader());
+    }
+
+    public static Creator<WeightBean> getCREATOR() {
+        return CREATOR;
     }
 
     public int getPage() {
@@ -104,6 +107,7 @@ public class WeightBean implements Parcelable {
     }
 
     public static class ElementsBean implements Parcelable {
+
         public static final Creator<ElementsBean> CREATOR = new Creator<ElementsBean>() {
             @Override
             public ElementsBean createFromParcel(Parcel source) {
@@ -134,7 +138,7 @@ public class WeightBean implements Parcelable {
         private int id;
         private String statusEnum;
         private String suggestion;
-        private int weight;
+        private double weight;
         private String weightDream;
 
         public ElementsBean() {
@@ -148,8 +152,12 @@ public class WeightBean implements Parcelable {
             this.id = in.readInt();
             this.statusEnum = in.readString();
             this.suggestion = in.readString();
-            this.weight = in.readInt();
+            this.weight = in.readDouble();
             this.weightDream = in.readString();
+        }
+
+        public static Creator<ElementsBean> getCREATOR() {
+            return CREATOR;
         }
 
         public double getBmi() {
@@ -208,11 +216,11 @@ public class WeightBean implements Parcelable {
             this.suggestion = suggestion;
         }
 
-        public int getWeight() {
+        public double getWeight() {
             return weight;
         }
 
-        public void setWeight(int weight) {
+        public void setWeight(double weight) {
             this.weight = weight;
         }
 
@@ -238,7 +246,7 @@ public class WeightBean implements Parcelable {
             dest.writeInt(this.id);
             dest.writeString(this.statusEnum);
             dest.writeString(this.suggestion);
-            dest.writeInt(this.weight);
+            dest.writeDouble(this.weight);
             dest.writeString(this.weightDream);
         }
     }

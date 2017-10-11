@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -27,10 +28,12 @@ import android.widget.ViewAnimator;
 import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
 import com.google.gson.reflect.TypeToken;
+import com.shiwaixiangcun.customer.Common;
+import com.shiwaixiangcun.customer.GlobalAPI;
+import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.ComListAdapter;
 import com.shiwaixiangcun.customer.broadCast.RegisterBrodUtils;
-import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.model.AnnouncementBean;
 import com.shiwaixiangcun.customer.model.BannerBean;
 import com.shiwaixiangcun.customer.model.InformationBean;
@@ -51,9 +54,11 @@ import com.shiwaixiangcun.customer.ui.activity.LookDecoratingActivity;
 import com.shiwaixiangcun.customer.ui.activity.MoreMoreActivity;
 import com.shiwaixiangcun.customer.ui.activity.OnlineServiceActivity;
 import com.shiwaixiangcun.customer.ui.activity.ResidentCertificationActivity;
+import com.shiwaixiangcun.customer.ui.activity.SiteActivity;
 import com.shiwaixiangcun.customer.ui.activity.SurroundLifeActivity;
 import com.shiwaixiangcun.customer.ui.activity.WeatherActivity;
 import com.shiwaixiangcun.customer.ui.activity.mall.GoodDetailActivity;
+import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.NoFastClickUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
@@ -123,6 +128,9 @@ public class FragmentHome extends BaseFragment implements IHomeView, View.OnClic
     private List<BannerBean> mBannerListSecond;
     private Banner mBannerFirst;
     private Banner mBannerSecond;
+    private LinearLayout mLlayoutSite;
+
+    private String siteName;
 
     public static Fragment getInstance() {
         FragmentHome fragmentHome = new FragmentHome();
@@ -169,12 +177,15 @@ public class FragmentHome extends BaseFragment implements IHomeView, View.OnClic
     }
 
     private void layoutView(View view) {
+        mLlayoutSite = (LinearLayout) findViewById(R.id.llayout_site);
         lv_details = (PullableListView) view.findViewById(R.id.lv_details);
         rl_net_not = (RelativeLayout) view.findViewById(R.id.rl_net_not);
         mTvLocation = (TextView) view.findViewById(R.id.tv_location);
         mIvLocation = (ImageView) view.findViewById(R.id.back_left);
-        mIvLocation.setOnClickListener(this);
-        mTvLocation.setText("天鹅堡森林公园");
+        siteName = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.SITE_NAME, "天鹅堡森林公园");
+
+        mLlayoutSite.setOnClickListener(this);
+        mTvLocation.setText(siteName);
         mBannerListSecond = new ArrayList<>();
         MyListener myListener = new MyListener();
         PullToRefreshLayout refresh_view = (PullToRefreshLayout) view.findViewById(R.id.refresh_view);
@@ -233,6 +244,7 @@ public class FragmentHome extends BaseFragment implements IHomeView, View.OnClic
         list_home.add("1");
 
 
+        mLlayoutSite.setOnClickListener(this);
         tv_online_service.setOnClickListener(this);
         tv_house_renting.setOnClickListener(this);
         tv_look_decorating.setOnClickListener(this);
@@ -243,7 +255,6 @@ public class FragmentHome extends BaseFragment implements IHomeView, View.OnClic
         tv_surrounding_life.setOnClickListener(this);
         tv_awards.setOnClickListener(this);
         rl_weather.setOnClickListener(this);
-
         rl_net_not.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -260,11 +271,24 @@ public class FragmentHome extends BaseFragment implements IHomeView, View.OnClic
     }
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+        String site = data.getStringExtra("site");
+        mTvLocation.setText(site);
+    }
+
+
+    @Override
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
-            case R.id.back_left:
-                Toast.makeText(mContext, "切换站点", Toast.LENGTH_SHORT).show();
+            case R.id.llayout_site:
+                Intent intent = new Intent();
+                intent.setClass(mContext, SiteActivity.class);
+                startActivityForResult(intent, 0x113);
                 break;
             case R.id.tv_online_service:
                 String isOrnotLogin_service = SharePreference.getStringSpParams(mContext, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
@@ -349,7 +373,9 @@ public class FragmentHome extends BaseFragment implements IHomeView, View.OnClic
         }
     }
 
+
     @Override
+
     public void setBannerFirst(String result) {
         Log.e(BUG_TAG, result);
         Type type = new TypeToken<ResponseEntity<List<BannerBean>>>() {
@@ -388,7 +414,7 @@ public class FragmentHome extends BaseFragment implements IHomeView, View.OnClic
         if (null == linkUrl) {
             return;
         }
-        String mallUrl = "http://mk.shiwaixiangcun.cn/mi/goods/share/";
+        String mallUrl = GlobalAPI.getJudgeUrl;
         if (linkUrl.contains(mallUrl)) {
             Log.e(BUG_TAG, "是商品");
             //将路径通过"/"分割出来

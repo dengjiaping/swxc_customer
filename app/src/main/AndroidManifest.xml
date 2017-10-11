@@ -339,17 +339,39 @@
             android:name="JPUSH_APPKEY"
             android:value="7fb6ffb9a1ffb3edaa6d4ab8"/>
 
-        <activity android:name=".ui.activity.SurroundLifeActivity"/>
-        <activity android:name=".ui.activity.SurroundTopActivity"/>
-        <activity android:name=".ui.activity.SurroundDetailActivity"/>
-        <activity android:name=".ui.activity.AwardActivity"/>
-        <activity android:name=".ui.activity.WeatherActivity"/>
-        <activity android:name=".ui.activity.SwitchCityActivity"/>
-        <activity android:name=".ui.activity.BigIamgeMerchanActivity"/>
-        <activity android:name=".ui.activity.MerchantDetailToImagesActivity"/>
-        <activity android:name=".ui.activity.BigIamgeMerchatImageActivity"/>
-        <activity android:name=".ui.activity.SurroundDetailsActivity"/>
-        <activity android:name=".ui.activity.ViewMoreActivity"/>
+        <activity
+            android:name=".ui.activity.SurroundLifeActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.SurroundTopActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.SurroundDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.AwardActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.WeatherActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.SwitchCityActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.BigIamgeMerchanActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.MerchantDetailToImagesActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.BigIamgeMerchatImageActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.SurroundDetailsActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.ViewMoreActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.activity.mall.MallActivity"
             android:screenOrientation="portrait">
@@ -386,15 +408,25 @@
             android:name=".ui.activity.mall.ManageAddressActivity"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ui.activity.mall.OrderActivity">
+        <activity
+            android:name=".ui.activity.mall.OrderActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ui.activity.mall.OrderDetailActivity">
+        <activity
+            android:name=".ui.activity.mall.OrderDetailActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ui.activity.mall.GoodListActivity">
+        <activity
+            android:name=".ui.activity.mall.GoodListActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ui.activity.mall.SearchResultActivity">
+        <activity
+            android:name=".ui.activity.mall.SearchResultActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ui.activity.MainActivity">
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
@@ -424,25 +456,51 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".ui.activity.heath.PhysicalActivity">
+        <activity
+            android:name=".ui.activity.heath.PhysicalActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ui.activity.heath.HealthEvaluationActivity">
+        <activity
+            android:name=".ui.activity.heath.HealthEvaluationActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ui.activity.heath.HealthSchemeActivity"/>
-        <activity android:name=".ui.activity.heath.CommonActivity"/>
-        <activity android:name=".ui.activity.heath.WebActivity">
+        <activity
+            android:name=".ui.activity.heath.HealthSchemeActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ui.fragment.TeatActivity">
+        <activity
+            android:name=".ui.activity.heath.CommonActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ui.activity.mall.CategoryActivity">
+        <activity
+            android:name=".ui.activity.heath.WebActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ui.activity.FamilyActivity">
+        <activity
+            android:name=".ui.fragment.TeatActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ui.activity.AddFamilyActivity">
+        <activity
+            android:name=".ui.activity.mall.CategoryActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ui.activity.FamilyDetailActivity">
+        <activity
+            android:name=".ui.activity.FamilyActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ui.activity.AddFamilySecondActivity">
+        <activity
+            android:name=".ui.activity.AddFamilyActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".ui.activity.FamilyDetailActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".ui.activity.AddFamilySecondActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".ui.activity.SiteActivity">
         </activity>
     </application>
 

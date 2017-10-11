@@ -9,8 +9,8 @@ import android.content.Context;
 
 public interface IHousePhonePresenter {
 
-    void setBgaAdpaterAndClick(Context context);
+    void getHouseNumber(Context context);
 
-    void setBindPhoneClick(Context context);
+    void validateNumber(Context context);
 
 }

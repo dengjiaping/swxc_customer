@@ -6,7 +6,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/ui_base_color"
-                tools:context="com.shiwaixiangcun.customer.ui.activity.ResidentCertificationActivity">
+                tools:context="com.shiwaixiangcun.customer.view.activity.ResidentCertificationActivity">
 
     <include
         android:id="@+id/include"
@@ -35,7 +35,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
             android:gravity="center"
-            android:text="房屋租售目前仅限\n恒信天鹅堡住户通过认证才能使用"
+            android:text="在线报修目前仅限\n恒信天鹅堡住户通过认证才能使用"
             android:textColor="@color/word_grad"
             android:textSize="14sp" />
 
@@ -99,7 +99,7 @@
             android:orientation="horizontal">
 
             <com.shiwaixiangcun.customer.widget.WheelView
-                android:id="@+id/WheelView_dialog"
+                android:id="@+id/WheelView_first"
                 android:layout_width="0dp"
                 android:layout_height="217dp"
                 android:layout_centerHorizontal="true"
@@ -114,7 +114,7 @@
                 app:npv_TextSizeSelected="20sp"
                 app:npv_WrapSelectorWheel="true"/>
             <com.shiwaixiangcun.customer.widget.WheelView
-                android:id="@+id/WheelView_t"
+                android:id="@+id/WheelView_second"
                 android:layout_width="0dp"
                 android:layout_height="217dp"
                 android:layout_centerHorizontal="true"
@@ -129,7 +129,7 @@
                 app:npv_TextSizeSelected="20sp"
                 app:npv_WrapSelectorWheel="true"/>
             <com.shiwaixiangcun.customer.widget.WheelView
-                android:id="@+id/WheelView_h"
+                android:id="@+id/WheelView_third"
                 android:layout_width="0dp"
                 android:layout_height="217dp"
                 android:layout_centerHorizontal="true"
@@ -144,7 +144,7 @@
                 app:npv_TextSizeSelected="20sp"
                 app:npv_WrapSelectorWheel="true"/>
             <com.shiwaixiangcun.customer.widget.WheelView
-                android:id="@+id/WheelView_f"
+                android:id="@+id/WheelView_fourth"
                 android:layout_width="0dp"
                 android:layout_height="217dp"
                 android:layout_centerHorizontal="true"

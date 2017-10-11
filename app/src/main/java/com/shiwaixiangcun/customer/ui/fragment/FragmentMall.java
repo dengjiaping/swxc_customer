@@ -494,7 +494,7 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
         if (null == linkUrl) {
             return;
         }
-        String mallUrl = "http://mk.shiwaixiangcun.cn/mi/goods/share/";
+        String mallUrl = GlobalAPI.getJudgeUrl;
         if (linkUrl.contains(mallUrl)) {
             Log.e(BUG_TAG, "是商品");
             //将路径通过"/"分割出来

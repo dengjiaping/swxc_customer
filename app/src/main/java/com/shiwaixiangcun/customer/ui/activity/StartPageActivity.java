@@ -52,6 +52,7 @@ public class StartPageActivity extends BaseActivity {
         alpha.setFillAfter(true);
         tv_center_word.setAnimation(alpha);
         refreshToken = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.Refresh_token, "");
+//        isFirstUse = (boolean) AppSharePreferenceMgr.get(mContext, GlobalConfig.FIRST_USE, true);
 
     }
 
@@ -86,11 +87,18 @@ public class StartPageActivity extends BaseActivity {
                             default:
                                 Log.e(BUG_TAG, "刷新失败");
                                 Intent intent = new Intent();
-                                intent.putExtra("mineLogin", "Login");
-                                intent.setClass(mContext, LoginActivity.class);
-                                startActivity(intent);
+//                                intent.putExtra("mineLogin", "Login");
+//                                intent.setClass(mContext, LoginActivity.class);
+//                                startActivity(intent);
+                                readyGo(MainActivity.class);
                                 break;
                         }
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        readyGo(MainActivity.class);
                     }
                 });
     }
@@ -107,8 +115,9 @@ public class StartPageActivity extends BaseActivity {
 
             }
         };
+
         if (StringUtil.isEmpty(refreshToken)) {
-            readyGo(LoginActivity.class);
+            readyGo(MainActivity.class);
             finish();
         }
         refreshToken(mContext, refreshToken);

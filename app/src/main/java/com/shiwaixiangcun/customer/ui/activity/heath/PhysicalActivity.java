@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +52,8 @@ public class PhysicalActivity extends BaseActivity implements View.OnClickListen
     RecyclerView mRvFamily;
     FragmentManager fragmentManager;
     FragmentTransaction ft;
+    @BindView(R.id.Rlayout_family)
+    RelativeLayout mRlayoutFamily;
     private List<HealthUserBean> mUserBeanList;
     private FragmentHealth mFragmentHealth;
     private String tokenString;
@@ -90,13 +93,13 @@ public class PhysicalActivity extends BaseActivity implements View.OnClickListen
                         switch (responseEntity.getResponseCode()) {
                             case 1001:
                                 boolean visible = false;
-                                if (responseEntity.getData().size() == 1) {
-                                    mRvFamily.setVisibility(View.GONE);
-                                    visible = true;
-                                }
                                 mUserBeanList.clear();
                                 mUserBeanList.addAll(responseEntity.getData());
                                 mAdapterFamily.addData(mUserBeanList);
+                                if (responseEntity.getData().size() == 1) {
+                                    mRlayoutFamily.setVisibility(View.GONE);
+                                    visible = true;
+                                }
                                 Bundle bundle = new Bundle();
                                 bundle.putParcelable("health", mUserBeanList.get(0));
                                 bundle.putBoolean("visible", visible);
