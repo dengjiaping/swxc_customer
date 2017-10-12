@@ -14,10 +14,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shiwaixiangcun.customer.BaseActivity;
+import com.shiwaixiangcun.customer.Common;
 import com.shiwaixiangcun.customer.GlobalAPI;
+import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.model.ToolBean;
 import com.shiwaixiangcun.customer.share.OnekeyShare;
+import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
+import com.shiwaixiangcun.customer.utils.SharePreference;
+import com.shiwaixiangcun.customer.utils.Utils;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
 import java.util.HashMap;
@@ -123,6 +128,11 @@ public class CommonActivity extends BaseActivity implements View.OnClickListener
 
     private void initView() {
         url.append(GlobalAPI.getEvaluating).append("?assessmentType=").append(type);
+        String token = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
+        String isOrnotLogin_renting = SharePreference.getStringSpParams(mContext, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
+        if (Utils.isNotEmpty(isOrnotLogin_renting)) {
+            url.append("&access_token=").append(token);
+        }
         mTvPageName.setText(mToolBean.name);
         mIvShareRight.setVisibility(View.VISIBLE);
         mBackLeft.setOnClickListener(this);
@@ -153,7 +163,7 @@ public class CommonActivity extends BaseActivity implements View.OnClickListener
                 break;
             case R.id.iv_share_right:
                 Toast.makeText(mContext, "分享", Toast.LENGTH_SHORT).show();
-                // TODO: 2017/9/27 完成分享
+
 
                 showShare();
                 break;

@@ -14,12 +14,15 @@ import android.widget.Toast;
 import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
 import com.shiwaixiangcun.customer.Common;
+import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
+import com.shiwaixiangcun.customer.app.App;
 import com.shiwaixiangcun.customer.model.HousePhoneBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.presenter.impl.HousePhoneImpl;
 import com.shiwaixiangcun.customer.ui.IHousePhoneView;
 import com.shiwaixiangcun.customer.utils.AppManager;
+import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.utils.Utils;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
@@ -152,6 +155,7 @@ public class ToResidentCertificationActivity extends AppCompatActivity implement
                 tv_content.setText("恭喜您认证成功");
                 iv_submit_expression.setImageResource(R.mipmap.submit_success);
                 tv_submit_succsse.setText("认证成功");
+                AppSharePreferenceMgr.get(App.getContext(), GlobalConfig.propertyAuth, true);
                 rl_success_submit.setVisibility(View.VISIBLE);
                 btn_submit_open.setVisibility(View.GONE);
             } else {

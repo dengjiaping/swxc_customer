@@ -149,12 +149,7 @@ public class ToolFragment extends LazyFragment {
                         break;
                     case 2:
                         //健康评测
-                        if (Utils.isNotEmpty(isOrNotLogin)) {
-                            readyGo(HealthEvaluationActivity.class);
-                        } else {
-                            readyGo(LoginActivity.class);
-                        }
-
+                        readyGo(HealthEvaluationActivity.class);
                         break;
                     case 3:
                         //健康方案
@@ -185,7 +180,7 @@ public class ToolFragment extends LazyFragment {
                     case 6:
                         //健康食谱
                         Toast.makeText(mContext, "暂未开通此功能", Toast.LENGTH_SHORT).show();
-//                        readyGo(TeatActivity.class);
+//                        readyGo(RecipeActivity.class);
                         break;
                     case 7:
                         //在线问诊

@@ -22,7 +22,6 @@ import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
-import com.shiwaixiangcun.customer.utils.StringUtil;
 
 import java.lang.reflect.Type;
 
@@ -90,7 +89,8 @@ public class StartPageActivity extends BaseActivity {
 //                                intent.putExtra("mineLogin", "Login");
 //                                intent.setClass(mContext, LoginActivity.class);
 //                                startActivity(intent);
-                                readyGo(MainActivity.class);
+                                readyGoThenKill(MainActivity.class);
+                                finish();
                                 break;
                         }
                     }
@@ -98,7 +98,8 @@ public class StartPageActivity extends BaseActivity {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        readyGo(MainActivity.class);
+                        readyGoThenKill(MainActivity.class);
+                        finish();
                     }
                 });
     }
@@ -112,14 +113,15 @@ public class StartPageActivity extends BaseActivity {
             @Override
             public void onFinish() {
                 readyGoThenKill(MainActivity.class);
+                finish();
 
             }
         };
-
-        if (StringUtil.isEmpty(refreshToken)) {
-            readyGo(MainActivity.class);
-            finish();
-        }
+//
+//        if (StringUtil.isEmpty(refreshToken)) {
+//            readyGoThenKill(MainActivity.class);
+//            finish();
+//        }
         refreshToken(mContext, refreshToken);
 
 

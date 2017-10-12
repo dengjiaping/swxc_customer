@@ -477,7 +477,7 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".ui.fragment.TeatActivity"
+            android:name=".ui.fragment.RecipeActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity

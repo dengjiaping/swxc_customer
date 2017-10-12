@@ -15,7 +15,7 @@ public class GlobalConfig {
     public static String clientSecret = "fd225cc01f034b2d8c76f97190750664";
 
     //app的一些常量
-    public static int siteID = 20;
+    public static int siteID = 1;
     public static String market_01 = "SWSH_MARKET_01";
     public static String home_01 = "SWSH_HOME_01";
     public static String home_02 = "SWSH_HOME_02";

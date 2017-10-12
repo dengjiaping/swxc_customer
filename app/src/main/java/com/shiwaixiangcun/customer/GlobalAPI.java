@@ -8,14 +8,14 @@ package com.shiwaixiangcun.customer;
 public class GlobalAPI {
 
     //春雨医生测试服务器
-    public static String DC_DOMAIN = "https://test.chunyu.me";
-    public static String HM_DOMAIN = "http://hm.shiwaixiangcun.cn";
+//    public static String DC_DOMAIN = "https://test.chunyu.me";
+//    public static String HM_DOMAIN = "http://hm.shiwaixiangcun.cn";
+//    private static String NO_DOMAIN = "http://shiwaixiangcun.cn";
+//    private static String OT_DOMAIN = "http://ot.shiwaixiangcun.cn";
+//    private static String MK_DOMAIN = "http://mk.shiwaixiangcun.cn";
     //春雨医生正式服务器
-//    public static String DC_DOMAIN = "https://www.chunyuyisheng.com";
-//    public static String HM_DOMAIN = "http://hm.hxteb.com";
-//    private static String NO_DOMAIN = "http://hxteb.com";
-//    private static String OT_DOMAIN = "http://ot.hxteb.com";
-//    private static String MK_DOMAIN = "http://mk.hxteb.com";
+    public static String DC_DOMAIN = "https://www.chunyuyisheng.com";
+    public static String HM_DOMAIN = "http://hm.hxteb.com";
     public static String getEvaluating = HM_DOMAIN + "/mi/assessment/view.htm";
     //健康地址获取
     public static String getPhysical = HM_DOMAIN + "/mc/customer/detail.json";
@@ -33,12 +33,12 @@ public class GlobalAPI {
     public static String getPhone = HM_DOMAIN + "/mc/phone.json";
     public static String chunyuDoctor = DC_DOMAIN;
     public static String getTravel = "http://u.ctrip.com/union/CtripRedirect.aspx?TypeID=2&Allianceid=683754&sid=1217406&OUID=&jumpUrl=http%3A%2F%2Fwww.ctrip.com%2F%3FAllianceid%3D683754%26sid%3D1217406%26OUID%3D%26MultiUnionSupport%3Dtrue\"";
-    private static String NO_DOMAIN = "http://shiwaixiangcun.cn";
+    private static String NO_DOMAIN = "http://hxteb.com";
     public static String refreshToken = NO_DOMAIN + "/oauth2/token";
-    private static String OT_DOMAIN = "http://ot.shiwaixiangcun.cn";
+    private static String OT_DOMAIN = "http://ot.hxteb.com";
     //商城首页相关接口
     public static String getBanner = OT_DOMAIN + "/mi/banner/listdata.json";
-    private static String MK_DOMAIN = "http://mk.shiwaixiangcun.cn";
+    private static String MK_DOMAIN = "http://mk.hxteb.com";
     public static String getJudgeUrl = MK_DOMAIN + "/mi/goods/share/";
     private static String DOMAIN = MK_DOMAIN;
     public static String getCategory = DOMAIN + "/mi/goods/category/tree.json";

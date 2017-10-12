@@ -232,7 +232,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                         Intent intent = new Intent();
                                         setResult(RESULT_OK, intent);
                                     } else {
-                                        readyGo(MainActivity.class);
+                                        readyGoThenKill(MainActivity.class);
                                     }
                                 }
                                 finish();

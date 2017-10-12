@@ -19,13 +19,17 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.shiwaixiangcun.customer.BaseActivity;
+import com.shiwaixiangcun.customer.Common;
 import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.event.EventCenter;
 import com.shiwaixiangcun.customer.event.SimpleEvent;
+import com.shiwaixiangcun.customer.ui.activity.LoginActivity;
 import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
+import com.shiwaixiangcun.customer.utils.SharePreference;
+import com.shiwaixiangcun.customer.utils.Utils;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -205,7 +209,16 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
 //        Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
 //        }.getType();
 //        ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(loginInfo, type);
+
+        String isOrnotLogin_renting = SharePreference.getStringSpParams(mContext, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
+        if (!Utils.isNotEmpty(isOrnotLogin_renting)) {
+            readyGoThenKill(LoginActivity.class);
+        }
         tokenString = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
+//        if (StringUtil.isEmpty(tokenString)){
+//            // TODO: 2017/10/12
+//
+//        }
         Log.e(BUG_TAG, "页面获取的Token：" + tokenString);
 //        userId=responseEntity.getData().get
 

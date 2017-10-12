@@ -17,16 +17,16 @@ public class Common implements Serializable {
 
 
     //正式服务器
-//    public static String domain = "http://hxteb.com/";
-//    public static String domainPM = "http://pm.hxteb.com/";
-//    public static String domainHM = "http://hm.hxteb.com/";
-//    public static String domainOT = "http://ot.hxteb.com/";
+    public static String domain = "http://hxteb.com/";
+    public static String domainPM = "http://pm.hxteb.com/";
+    public static String domainHM = "http://hm.hxteb.com/";
+    public static String domainOT = "http://ot.hxteb.com/";
 
     //测试服务器
-    public static String domain = "http://shiwaixiangcun.cn/";
-    public static String domainPM = "http://pm.shiwaixiangcun.cn/";
-    public static String domainHM = "http://hm.shiwaixiangcun.cn";
-    public static String domainOT = "http://ot.shiwaixiangcun.cn/";
+//    public static String domain = "http://shiwaixiangcun.cn/";
+//    public static String domainPM = "http://pm.shiwaixiangcun.cn/";
+//    public static String domainHM = "http://hm.shiwaixiangcun.cn";
+//    public static String domainOT = "http://ot.shiwaixiangcun.cn/";
     /**
      * 登录
      */
