@@ -1,7 +1,6 @@
 package com.shiwaixiangcun.customer.adapter;
 
 import android.graphics.Color;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -36,7 +35,6 @@ public class AdapterFamily extends BaseQuickAdapter<HealthUserBean, BaseViewHold
         } else {
             circleImageView.setBorderWidth(0);
         }
-        Log.e("adapter", item.getName().trim());
         if (StringUtil.isEmpty(item.getName().trim())) {
             helper.setText(R.id.tv_family_name, "");
         } else {
