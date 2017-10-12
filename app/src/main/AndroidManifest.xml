@@ -477,7 +477,7 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".ui.fragment.RecipeActivity"
+            android:name=".ui.activity.RecipeActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
@@ -500,7 +500,19 @@
             android:name=".ui.activity.AddFamilySecondActivity"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ui.activity.SiteActivity">
+        <activity
+            android:name=".ui.activity.SiteActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".ui.activity.RecipeArticleActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".ui.activity.MessageActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".MessageDetailActivity">
         </activity>
     </application>
 

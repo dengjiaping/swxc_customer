@@ -59,12 +59,11 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
     RelativeLayout mTopBarWrite;
     @BindView(R.id.webview)
     WebView mWebView;
-
+    String isOrnotLogin_renting;
     private boolean isApperenceToken = false;
     private int type;
     private StringBuilder urlBuilder = new StringBuilder();
     private String tokenString;
-
     private int userId;
 
     /**
@@ -117,11 +116,19 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
         mBackLeft.setOnClickListener(this);
         switch (type) {
             case 3:
+
+                if (!Utils.isNotEmpty(isOrnotLogin_renting)) {
+                    readyGoThenKill(LoginActivity.class);
+                }
                 mTvPageName.setText("健康方案");
                 urlBuilder.append(GlobalAPI.HM_DOMAIN).append("/mc/scheme/view.htm");
                 isApperenceToken = true;
                 break;
             case 4:
+
+                if (!Utils.isNotEmpty(isOrnotLogin_renting)) {
+                    readyGoThenKill(LoginActivity.class);
+                }
                 urlBuilder.append(GlobalAPI.HM_DOMAIN).append("/mc/serviceList/view.htm");
                 mTvPageName.setText("健康动态");
                 isApperenceToken = true;
@@ -204,24 +211,11 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
     private void initData() {
         Bundle bundle = getIntent().getExtras();
         type = bundle.getInt("type", -1);
-//
-//        String loginInfo = SharePreference.getStringSpParams(mContext, Common.IS_SAVE_LOGIN, Common.SISAVELOGIN);
-//        Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
-//        }.getType();
-//        ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(loginInfo, type);
 
-        String isOrnotLogin_renting = SharePreference.getStringSpParams(mContext, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
-        if (!Utils.isNotEmpty(isOrnotLogin_renting)) {
-            readyGoThenKill(LoginActivity.class);
-        }
+        isOrnotLogin_renting = SharePreference.getStringSpParams(mContext, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
+
         tokenString = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
-//        if (StringUtil.isEmpty(tokenString)){
-//            // TODO: 2017/10/12
-//
-//        }
         Log.e(BUG_TAG, "页面获取的Token：" + tokenString);
-//        userId=responseEntity.getData().get
-
 
     }
 

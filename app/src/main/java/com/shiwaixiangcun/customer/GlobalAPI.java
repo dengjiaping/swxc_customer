@@ -40,6 +40,9 @@ public class GlobalAPI {
     //商城首页相关接口
     public static String getBanner = OT_DOMAIN + "/mi/banner/listdata.json";
     public static String getJudgeUrl = MK_DOMAIN + "/mi/goods/share/";
+    public static String getRecipeType = HM_DOMAIN + "/mi/health/dietType.json";
+    public static String getRecipeList = HM_DOMAIN + "/mi/health/dietList.json";
+    public static String getMessage = HM_DOMAIN + "/mc/message/core/list.json";
     private static String DOMAIN = MK_DOMAIN;
     public static String getCategory = DOMAIN + "/mi/goods/category/tree.json";
     //地址相关接口
@@ -68,5 +71,4 @@ public class GlobalAPI {
     //分享相关
     public static String shareGoods = DOMAIN + "/mi/goods/share/";
     public static String appLogo = DOMAIN + "http://resource.hxteb.com/group1/M00/00/26/rBKx5Vl4TMCAUPgUAAB6YxNdWvs030.png";
-
 }

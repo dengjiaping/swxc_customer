@@ -35,7 +35,7 @@ import cn.sharesdk.framework.PlatformActionListener;
 
 public class DetailsActivity extends BaseActivity implements View.OnClickListener, IDetailView {
 
-    // TODO: 2017/9/29 商品详情分享
+
     private ChangeLightImageView back_left;
     private ImageView iv_share_right;
     private ObservableWebView webView;

@@ -25,6 +25,7 @@ import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
+import com.shiwaixiangcun.customer.utils.RefreshTokenUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.utils.StringUtil;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
@@ -132,6 +133,7 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
             final ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(login_detail, type);
             final String refresh_token = responseEntity.getData().getRefresh_token();
 
+
             String tokenString = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
             HashMap<String, Object> params = new HashMap<>();
             params.put("access_token", tokenString);
@@ -164,6 +166,8 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
                         case 1002:
                             Toast.makeText(mContext, response.getMessage(), Toast.LENGTH_SHORT).show();
                             break;
+                        case 1018:
+                            RefreshTokenUtil.sendIntDataInvatation(mContext, refresh_token);
                         default:
                             Toast.makeText(mContext, "保存失败", Toast.LENGTH_SHORT).show();
                             break;

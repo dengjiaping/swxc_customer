@@ -48,6 +48,7 @@ public class LoginOutUtil implements Serializable {
                 LogoutBean user = new Gson().fromJson(responseJson, LogoutBean.class);
                 if (user.getResponseCode() == 1001) {
                     SharePreference.saveStringToSpParams(context, Common.ISORNOLOGIN, Common.SIORNOLOGIN, "");
+                    AppSharePreferenceMgr.put(context, GlobalConfig.isLogin, "");
                     Intent intent = new Intent(context, LoginActivity.class);
                     context.startActivity(intent);
                 }

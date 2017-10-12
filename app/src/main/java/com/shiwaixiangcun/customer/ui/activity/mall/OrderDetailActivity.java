@@ -38,6 +38,7 @@ import com.shiwaixiangcun.customer.utils.ArithmeticUtils;
 import com.shiwaixiangcun.customer.utils.DateUtil;
 import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
+import com.shiwaixiangcun.customer.utils.RefreshTokenUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.utils.StringUtil;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
@@ -129,6 +130,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     DialogPay mDialogPay;
     private int orderId = 0;
     private String tokenString;
+    private String refresh_token;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -153,6 +155,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(loginInfo, type);
+        refresh_token = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.Refresh_token, "");
         tokenString = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
         Log.e(BUG_TAG, tokenString);
         Log.e(BUG_TAG, String.valueOf(orderId));
@@ -177,6 +180,9 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                             case 1001:
                                 OrderDetailBean orderDetail = responseEntity.getData();
                                 EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_ORDER_DETAIL, 1, orderDetail));
+                                break;
+                            case 1018:
+                                RefreshTokenUtil.sendIntDataInvatation(mContext, refresh_token);
                                 break;
 
                         }

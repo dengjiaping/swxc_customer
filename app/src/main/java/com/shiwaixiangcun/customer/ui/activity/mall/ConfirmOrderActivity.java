@@ -39,6 +39,7 @@ import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.ArithmeticUtils;
 import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
+import com.shiwaixiangcun.customer.utils.RefreshTokenUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
@@ -268,6 +269,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         }.getType();
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(loginInfo, type);
 
+        final String refresh_token = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.Refresh_token, "");
         tokenString = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
         mStrMessage = mEdtMessage.getText().toString();
         HttpParams params = new HttpParams();
@@ -320,6 +322,10 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                                         }
                                     }
                                 });
+                                break;
+
+                            case 1018:
+                                RefreshTokenUtil.sendIntDataInvatation(mContext, refresh_token);
                                 break;
                             default:
                                 Toast.makeText(mContext, currentOrder.getMessage(), Toast.LENGTH_SHORT).show();

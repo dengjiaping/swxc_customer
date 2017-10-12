@@ -37,6 +37,7 @@ import com.shiwaixiangcun.customer.ui.dialog.DialogLoading;
 import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.DisplayUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
+import com.shiwaixiangcun.customer.utils.RefreshTokenUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
@@ -72,6 +73,7 @@ public class ManageAddressActivity extends BaseActivity implements View.OnClickL
     private DialogLoading mDialogLoading;
 
     private boolean clickable = false;
+    private String refresh_token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +98,7 @@ public class ManageAddressActivity extends BaseActivity implements View.OnClickL
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(login_info, type);
 
         token = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
+        refresh_token = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.Refresh_token, "");
         Log.e(BUG_TAG, responseEntity.getData().getAccess_token());
     }
 
@@ -128,6 +131,10 @@ public class ManageAddressActivity extends BaseActivity implements View.OnClickL
                         mAddressBeanList.clear();
                         mAddressBeanList.addAll(response.getData());
                         mManageAdapter.notifyDataSetChanged();
+                        break;
+
+                    case 1018:
+                        RefreshTokenUtil.sendIntDataInvatation(mContext, refresh_token);
                         break;
                     default:
                         Toast.makeText(mContext, "验证错误", Toast.LENGTH_SHORT).show();

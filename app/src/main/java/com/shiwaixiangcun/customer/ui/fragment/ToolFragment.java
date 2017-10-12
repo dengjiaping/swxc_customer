@@ -21,6 +21,7 @@ import com.shiwaixiangcun.customer.ui.activity.HouseRentingActivity;
 import com.shiwaixiangcun.customer.ui.activity.LoginActivity;
 import com.shiwaixiangcun.customer.ui.activity.LookDecoratingActivity;
 import com.shiwaixiangcun.customer.ui.activity.OnlineServiceActivity;
+import com.shiwaixiangcun.customer.ui.activity.RecipeActivity;
 import com.shiwaixiangcun.customer.ui.activity.ResidentCertificationActivity;
 import com.shiwaixiangcun.customer.ui.activity.SurroundLifeActivity;
 import com.shiwaixiangcun.customer.ui.activity.heath.HealthEvaluationActivity;
@@ -179,8 +180,8 @@ public class ToolFragment extends LazyFragment {
                         break;
                     case 6:
                         //健康食谱
-                        Toast.makeText(mContext, "暂未开通此功能", Toast.LENGTH_SHORT).show();
-//                        readyGo(RecipeActivity.class);
+//                        Toast.makeText(mContext, "暂未开通此功能", Toast.LENGTH_SHORT).show();
+                        readyGo(RecipeActivity.class);
                         break;
                     case 7:
                         //在线问诊

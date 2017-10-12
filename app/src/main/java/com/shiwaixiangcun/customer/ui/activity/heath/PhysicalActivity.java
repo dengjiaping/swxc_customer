@@ -26,6 +26,7 @@ import com.shiwaixiangcun.customer.model.HealthUserBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
+import com.shiwaixiangcun.customer.utils.RefreshTokenUtil;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
 import java.lang.reflect.Type;
@@ -57,6 +58,7 @@ public class PhysicalActivity extends BaseActivity implements View.OnClickListen
     private List<HealthUserBean> mUserBeanList;
     private FragmentHealth mFragmentHealth;
     private String tokenString;
+    private String refresh_token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +77,7 @@ public class PhysicalActivity extends BaseActivity implements View.OnClickListen
 //        Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
 //        }.getType();
 //        ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(loginInfo, type);
+        refresh_token = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.Refresh_token, "");
         tokenString = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
         Log.e(BUG_TAG, tokenString);
         OkGo.<String>get(GlobalAPI.getPhysical)
@@ -106,6 +109,10 @@ public class PhysicalActivity extends BaseActivity implements View.OnClickListen
                                 mFragmentHealth.setArguments(bundle);
                                 ft = fragmentManager.beginTransaction();
                                 ft.add(R.id.fLayout_content, mFragmentHealth).commit();
+                                break;
+
+                            case 1018:
+                                RefreshTokenUtil.sendIntDataInvatation(mContext, refresh_token);
                                 break;
                             default:
                                 Toast.makeText(mContext, "获取数据出错", Toast.LENGTH_SHORT).show();

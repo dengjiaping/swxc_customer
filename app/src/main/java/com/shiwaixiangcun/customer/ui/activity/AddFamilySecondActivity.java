@@ -19,6 +19,7 @@ import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
+import com.shiwaixiangcun.customer.utils.RefreshTokenUtil;
 import com.shiwaixiangcun.customer.utils.TimeCount;
 import com.shiwaixiangcun.customer.utils.Utils;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
@@ -50,6 +51,7 @@ public class AddFamilySecondActivity extends BaseActivity implements View.OnClic
     @BindView(R.id.activity_resident_certification)
     RelativeLayout mActivityResidentCertification;
     String token;
+    String refresh_token;
     private TimeCount time;
 
     @Override
@@ -64,6 +66,7 @@ public class AddFamilySecondActivity extends BaseActivity implements View.OnClic
 
     private void initViewAndEvent() {
         token = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
+        refresh_token = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.Refresh_token, "");
         time = new TimeCount(60000, 1000, mTvGetVerification);
         mBackLeft.setOnClickListener(this);
         mBtnSubmitOpen.setOnClickListener(this);
@@ -119,6 +122,9 @@ public class AddFamilySecondActivity extends BaseActivity implements View.OnClic
                         switch (entity.getResponseCode()) {
                             case 1001:
                                 showToastShort("获取成功");
+                                break;
+                            case 1018:
+                                RefreshTokenUtil.sendIntDataInvatation(mContext, refresh_token);
                                 break;
                             default:
                                 showToastShort("获取验证码失败");

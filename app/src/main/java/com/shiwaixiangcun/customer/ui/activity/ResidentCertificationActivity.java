@@ -23,6 +23,7 @@ import com.shiwaixiangcun.customer.presenter.impl.ResidentCertificationImpl;
 import com.shiwaixiangcun.customer.ui.IResifdentView;
 import com.shiwaixiangcun.customer.utils.AppManager;
 import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
+import com.shiwaixiangcun.customer.utils.RefreshTokenUtil;
 import com.shiwaixiangcun.customer.utils.ResUtil;
 import com.shiwaixiangcun.customer.utils.Utils;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
@@ -409,6 +410,7 @@ public class ResidentCertificationActivity extends BaseActivity implements View.
      * 获取房屋信息
      */
     private void requestHouseInfo(int regionId) {
+        final String refresh_token = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.Refresh_token, "");
         String tokenString = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
         OkGo.<String>get(Common.houseUnit)
                 .params("access_token", tokenString)
@@ -426,6 +428,10 @@ public class ResidentCertificationActivity extends BaseActivity implements View.
                         switch (residentLastBean.getResponseCode()) {
                             case 1001:
                                 setWheelDataFourth(mHouseDataList);
+                                break;
+
+                            case 1018:
+                                RefreshTokenUtil.sendIntDataInvatation(mContext, refresh_token);
                                 break;
                             default:
                                 showToastShort("获取房屋失败");

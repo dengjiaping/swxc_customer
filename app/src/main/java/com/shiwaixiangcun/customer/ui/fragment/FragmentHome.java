@@ -51,6 +51,7 @@ import com.shiwaixiangcun.customer.ui.activity.HealthOkActivity;
 import com.shiwaixiangcun.customer.ui.activity.HouseRentingActivity;
 import com.shiwaixiangcun.customer.ui.activity.LoginActivity;
 import com.shiwaixiangcun.customer.ui.activity.LookDecoratingActivity;
+import com.shiwaixiangcun.customer.ui.activity.MessageActivity;
 import com.shiwaixiangcun.customer.ui.activity.MoreMoreActivity;
 import com.shiwaixiangcun.customer.ui.activity.OnlineServiceActivity;
 import com.shiwaixiangcun.customer.ui.activity.ResidentCertificationActivity;
@@ -130,6 +131,7 @@ public class FragmentHome extends BaseFragment implements IHomeView, View.OnClic
     private Banner mBannerSecond;
     private LinearLayout mLlayoutSite;
 
+    private ImageView ivMessage;
     private String siteName;
 
     public static Fragment getInstance() {
@@ -182,8 +184,10 @@ public class FragmentHome extends BaseFragment implements IHomeView, View.OnClic
         rl_net_not = (RelativeLayout) view.findViewById(R.id.rl_net_not);
         mTvLocation = (TextView) view.findViewById(R.id.tv_location);
         mIvLocation = (ImageView) view.findViewById(R.id.back_left);
+        ivMessage = (ImageView) findViewById(R.id.iv_message);
         siteName = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.SITE_NAME, "天鹅堡森林公园");
 
+        ivMessage.setOnClickListener(this);
         mLlayoutSite.setOnClickListener(this);
         mTvLocation.setText(siteName);
         mBannerListSecond = new ArrayList<>();
@@ -285,26 +289,35 @@ public class FragmentHome extends BaseFragment implements IHomeView, View.OnClic
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
+
+            case R.id.iv_message:
+                String isOrNotLogin = SharePreference.getStringSpParams(mContext, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
+                if (Utils.isNotEmpty(isOrNotLogin)) {
+                    readyGo(MessageActivity.class);
+
+                } else {
+                    intent = new Intent(mContext, LoginActivity.class);
+                    startActivity(intent);
+                }
+                break;
             case R.id.llayout_site:
                 Intent intent = new Intent();
                 intent.setClass(mContext, SiteActivity.class);
                 startActivityForResult(intent, 0x113);
                 break;
             case R.id.tv_online_service:
-                String isOrnotLogin_service = SharePreference.getStringSpParams(mContext, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
+                String isOrnotLogin = SharePreference.getStringSpParams(mContext, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
 
                 if (NoFastClickUtil.isFastClick()) {
                     //快速点击后的逻辑，可以提示用户点击太快，休息一会
                     Toast.makeText(mContext, "点击太快，休息一会", Toast.LENGTH_SHORT).show();
                 } else {
-                    if (Utils.isNotEmpty(isOrnotLogin_service)) {
+                    if (Utils.isNotEmpty(isOrnotLogin)) {
                         ihomePresenter.setInformation(mContext);
 
                     } else {
                         intent = new Intent(mContext, LoginActivity.class);
                         startActivity(intent);
-
-
                     }
                 }
                 break;

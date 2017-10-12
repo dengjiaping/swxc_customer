@@ -45,6 +45,7 @@ import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.ArithmeticUtils;
 import com.shiwaixiangcun.customer.utils.DisplayUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
+import com.shiwaixiangcun.customer.utils.RefreshTokenUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -82,6 +83,7 @@ public class FragmentOrder extends LazyFragment {
     private String stature;
     private String mStringPrompt;
     private String tokenString;
+    private String refresh_token;
     private DialogInfo mDialogCancel;
     private DialogInfo mDialogDelete;
     private DialogPay mDialogPay;
@@ -297,7 +299,7 @@ public class FragmentOrder extends LazyFragment {
         EventBus.getDefault().register(this);
         mStringPrompt = mTitle;
         tokenString = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
-
+        refresh_token = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.Refresh_token, "");
         switch (mTitle) {
             case "全部":
                 stature = "";
@@ -323,7 +325,6 @@ public class FragmentOrder extends LazyFragment {
 //        if (responseEntity == null) {
 //            return;
 //        }
-
 
 
     }
@@ -427,6 +428,10 @@ public class FragmentOrder extends LazyFragment {
                             case 1001:
                                 Snackbar.make(mRootView, "删除成功", Snackbar.LENGTH_SHORT).show();
                                 requestData();
+                                break;
+
+                            case 1018:
+                                RefreshTokenUtil.sendIntDataInvatation(mContext, refresh_token);
                                 break;
                             default:
                                 Snackbar.make(mRootView, "删除失败", Snackbar.LENGTH_LONG)

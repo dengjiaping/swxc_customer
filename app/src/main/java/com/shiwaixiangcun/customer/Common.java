@@ -228,4 +228,5 @@ public class Common implements Serializable {
 
     //站点id
     public static int siteID = 20;
+    public static String getArticle = domainPM + "mi/article/detailView.htm";
 }
