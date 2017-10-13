@@ -514,6 +514,14 @@
         </activity>
         <activity android:name=".MessageDetailActivity">
         </activity>
+        <activity android:name=".ui.activity.AfterServiceActivity">
+        </activity>
+        <activity android:name=".ui.activity.AfterDetailActivity">
+        </activity>
+        <activity android:name=".ui.activity.ProtectRightActivity">
+        </activity>
+        <activity android:name=".ui.activity.RightsRecordActivity">
+        </activity>
     </application>
 
 </manifest>

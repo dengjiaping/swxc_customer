@@ -2,4 +2,5 @@
 <resources>
     <string name="main_home">首页</string>
     <string name="my_family">我的家人</string>
+    <string name="after_service_detail">售后详情</string>
 </resources>

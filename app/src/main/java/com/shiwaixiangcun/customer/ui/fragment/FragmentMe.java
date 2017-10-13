@@ -30,6 +30,7 @@ import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.model.UpdateAppBean;
 import com.shiwaixiangcun.customer.presenter.impl.MyMineImpl;
 import com.shiwaixiangcun.customer.ui.IMyMineView;
+import com.shiwaixiangcun.customer.ui.activity.AfterServiceActivity;
 import com.shiwaixiangcun.customer.ui.activity.FamilyActivity;
 import com.shiwaixiangcun.customer.ui.activity.FeedBackActivity;
 import com.shiwaixiangcun.customer.ui.activity.ForLifeActivity;
@@ -88,6 +89,7 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, IM
     private RelativeLayout rl_for_life;
     private RelativeLayout rl_app_update;
     private RelativeLayout rl_app_address;
+    private RelativeLayout rl_app_service;
     private RelativeLayout rl_app_order;
     private RelativeLayout rl_app_family;
     private Handler m_mainHandler;
@@ -140,6 +142,7 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, IM
         rl_for_life = (RelativeLayout) view.findViewById(R.id.rl_for_life);
         rl_app_update = (RelativeLayout) view.findViewById(R.id.rl_app_updata);
         rl_app_address = (RelativeLayout) view.findViewById(R.id.rl_app_address);
+        rl_app_service = (RelativeLayout) view.findViewById(R.id.rl_app_after_service);
         rl_app_order = (RelativeLayout) view.findViewById(R.id.rl_app_order);
         rl_app_family = (RelativeLayout) view.findViewById(R.id.rl_app_family);
 
@@ -157,6 +160,7 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, IM
         rl_for_life.setOnClickListener(this);
         rl_app_order.setOnClickListener(this);
         rl_app_address.setOnClickListener(this);
+        rl_app_service.setOnClickListener(this);
         rl_app_family.setOnClickListener(this);
 
 
@@ -181,6 +185,16 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, IM
                     intent.putExtra("mineLogin", "mineLogin");
                     startActivityForResult(intent, 1020);
                 }
+                break;
+            case R.id.rl_app_after_service:
+                if (Utils.isNotEmpty(isOrNotLogin)) {
+                    Intent intent_order = new Intent(mContext, AfterServiceActivity.class);
+                    startActivity(intent_order);
+                } else {
+                    intent = new Intent(mContext, LoginActivity.class);
+                    startActivity(intent);
+                }
+
                 break;
             case R.id.rl_feed_back:
                 Intent intent_feed = new Intent(mContext, FeedBackActivity.class);

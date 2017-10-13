@@ -21,6 +21,7 @@ import com.shiwaixiangcun.customer.ui.activity.HouseRentingActivity;
 import com.shiwaixiangcun.customer.ui.activity.LoginActivity;
 import com.shiwaixiangcun.customer.ui.activity.LookDecoratingActivity;
 import com.shiwaixiangcun.customer.ui.activity.OnlineServiceActivity;
+import com.shiwaixiangcun.customer.ui.activity.ProtectRightActivity;
 import com.shiwaixiangcun.customer.ui.activity.RecipeActivity;
 import com.shiwaixiangcun.customer.ui.activity.ResidentCertificationActivity;
 import com.shiwaixiangcun.customer.ui.activity.SurroundLifeActivity;
@@ -246,6 +247,14 @@ public class ToolFragment extends LazyFragment {
                         readyGo(WebActivity.class, bundle);
                         break;
 
+                    case 16:
+                        if (Utils.isNotEmpty(isOrNotLogin)) {
+//                            bundle.putInt("type", 4);
+                            readyGo(ProtectRightActivity.class);
+                        } else {
+                            readyGo(LoginActivity.class);
+                        }
+
                 }
             }
         });
@@ -286,11 +295,13 @@ public class ToolFragment extends LazyFragment {
         ToolBean fangwuzushou = new ToolBean(10, "房屋租售", R.drawable.home_rent);
         ToolBean zaixianjiaofei = new ToolBean(11, "在线缴费", R.drawable.home_payment);
         ToolBean zhoubianshenghuo = new ToolBean(12, "周边生活", R.drawable.home_surround);
+        ToolBean protectRight = new ToolBean(16, "消费维权", R.drawable.protect_right);
         mPropetyList.add(zaixianbaoxiu);
         mPropetyList.add(zhaozhuangxiu);
         mPropetyList.add(fangwuzushou);
         mPropetyList.add(zaixianjiaofei);
         mPropetyList.add(zhoubianshenghuo);
+        mPropetyList.add(protectRight);
         //添加优选服务
         ToolBean huodong = new ToolBean(13, "活动", R.drawable.home_activity);
         ToolBean jiankangbaoxian = new ToolBean(14, "健康保险", R.drawable.home_insurance);

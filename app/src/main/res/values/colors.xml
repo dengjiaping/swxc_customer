@@ -28,7 +28,7 @@
     <color name="word_black">#2D3230</color>
     <color name="word_grad">#662D3230</color>
     <color name="word_little_grad">#332D3230</color>
-    <color name="word_green">#1CCC8C</color>
+    <color name="word_green">#FF1CCC8C</color>
     <color name="word_white">#FFFFFF</color>
     <color name="word_little_white">#99FFFFFF</color>
     <color name="word_grad_sub">#CC2D3230</color>

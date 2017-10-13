@@ -91,7 +91,7 @@ public class HomePresenterImpl implements IHomePresenter {
 
     @Override
     public void setWeatherHomeClick(Context context, String cityCode) {
-        sendWeatherHttp(context, cityCode);
+//        sendWeatherHttp(context, cityCode);
     }
 
     /**
