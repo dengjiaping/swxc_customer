@@ -1,4 +1,4 @@
-package com.shiwaixiangcun.customer.ui.activity;
+package com.shiwaixiangcun.customer.adapter;
 
 import android.support.annotation.Nullable;
 

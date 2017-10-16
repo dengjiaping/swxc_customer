@@ -24,6 +24,7 @@ import com.shiwaixiangcun.customer.model.MyFamilyBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
+import com.shiwaixiangcun.customer.utils.RefreshTokenUtil;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
 import java.lang.reflect.Type;
@@ -69,10 +70,7 @@ public class FamilyActivity extends BaseActivity implements View.OnClickListener
      */
     private void initData() {
         String strToken = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
-
-//        // TODO: 2017/10/10  检验token是否有效
-//        int code = TokenUtils.checkToken(strToken);
-//        Log.e(BUG_TAG, code + "");
+        final String refreshToken = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.Refresh_token, "");
         OkGo.<String>get(GlobalAPI.getFamily)
                 .params("access_token", strToken)
                 .params("isTrue", false)
@@ -91,6 +89,9 @@ public class FamilyActivity extends BaseActivity implements View.OnClickListener
                                 mMyFamilyList.clear();
                                 mMyFamilyList.addAll(responseEntity.getData());
                                 mMyFamilyAdapter.notifyDataSetChanged();
+                                break;
+                            case 1018:
+                                RefreshTokenUtil.sendIntDataInvatation(mContext, refreshToken);
                                 break;
                             default:
                                 showToastShort("获取数据失败");
