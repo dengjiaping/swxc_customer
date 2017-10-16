@@ -512,8 +512,10 @@
             android:name=".ui.activity.MessageActivity"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".MessageDetailActivity">
-        </activity>
+        <activity
+            android:name=".MessageDetailActivity"
+            android:screenOrientation="portrait"/>
+
     </application>
 
 </manifest>
