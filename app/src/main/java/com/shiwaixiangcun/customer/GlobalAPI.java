@@ -13,12 +13,14 @@ public class GlobalAPI {
     public static String NO_DOMAIN = "http://shiwaixiangcun.cn";
     public static String OT_DOMAIN = "http://ot.shiwaixiangcun.cn";
     public static String MK_DOMAIN = "http://mk.shiwaixiangcun.cn";
+    public static String PM_DOMAIN = "http://pm.shiwaixiangcun.cn";
     //春雨医生正式服务器
 //    public static String DC_DOMAIN = "https://www.chunyuyisheng.com";
 //    public static String HM_DOMAIN = "http://hm.hxteb.com";
 //    public static String MK_DOMAIN = "http://mk.hxteb.com";
 //    public static String OT_DOMAIN = "http://ot.hxteb.com";
 //    public static String NO_DOMAIN = "http://hxteb.com";
+//    public static  String PM_DOMAIN = "http://pm.hxteb.com";
     public static String getEvaluating = HM_DOMAIN + "/mi/assessment/view.htm";
     //健康地址获取
     public static String getPhysical = HM_DOMAIN + "/mc/customer/detail.json";
@@ -43,6 +45,11 @@ public class GlobalAPI {
     public static String getRecipeType = HM_DOMAIN + "/mi/health/dietType.json";
     public static String getRecipeList = HM_DOMAIN + "/mi/health/dietList.json";
     public static String getMessage = HM_DOMAIN + "/mc/message/core/list.json";
+    public static String afterService = MK_DOMAIN + "/mc/after/sale/listPage.json";
+    public static String afterServiceDetail = MK_DOMAIN + "/mc/after/sale/detail.json";
+    public static String cancelAfterService = MK_DOMAIN + "/mc/after/sale/cancel.json";
+    public static String right = MK_DOMAIN + "/mc/online/rights/add.json";
+    public static String rightRecord = PM_DOMAIN + "/mc/online/rights/listpage.json";
     private static String DOMAIN = MK_DOMAIN;
     public static String getCategory = DOMAIN + "/mi/goods/category/tree.json";
     //地址相关接口
@@ -71,7 +78,4 @@ public class GlobalAPI {
     //分享相关
     public static String shareGoods = DOMAIN + "/mi/goods/share/";
     public static String appLogo = DOMAIN + "http://resource.hxteb.com/group1/M00/00/26/rBKx5Vl4TMCAUPgUAAB6YxNdWvs030.png";
-    public static String afterService = MK_DOMAIN + "/mc/after/sale/listPage.json";
-    public static String afterServiceDetail = MK_DOMAIN + "/mc/after/sale/detail.json";
-    public static String cancelAfterService = MK_DOMAIN + "/mc/after/sale/cancel.json";
 }

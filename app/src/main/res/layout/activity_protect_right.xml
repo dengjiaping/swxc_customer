@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,10 +17,10 @@
     </LinearLayout>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:layout_marginTop="@dimen/toobar_height"
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/toobar_height">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -36,6 +35,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/bg_white"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:orientation="vertical">
 
                     <TextView
@@ -56,6 +57,7 @@
                     </TextView>
 
                     <EditText
+                        android:id="@+id/edt_content"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:layout_marginBottom="16dp"
@@ -78,11 +80,20 @@
                     android:background="@color/bg_white">
 
                     <ImageView
+                        android:id="@+id/iv_choose_image"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="20dp"
                         android:src="@drawable/phone_lpw"/>
+
+                    <HorizontalScrollView
+                        android:id="@+id/hsv_images"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone">
+
+                    </HorizontalScrollView>
 
                 </LinearLayout>
             </LinearLayout>

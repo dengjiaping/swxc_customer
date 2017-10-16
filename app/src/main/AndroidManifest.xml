@@ -522,6 +522,8 @@
         </activity>
         <activity android:name=".ui.activity.RightsRecordActivity">
         </activity>
+        <activity android:name=".ui.activity.RightDetailActivity">
+        </activity>
     </application>
 
 </manifest>
