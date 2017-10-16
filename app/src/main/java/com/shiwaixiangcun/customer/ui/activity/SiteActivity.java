@@ -12,6 +12,7 @@ import com.jaeger.recyclerviewdivider.RecyclerViewDivider;
 import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
+import com.shiwaixiangcun.customer.adapter.AdapterSite;
 import com.shiwaixiangcun.customer.model.Site;
 import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
