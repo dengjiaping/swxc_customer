@@ -1,4 +1,4 @@
-package com.shiwaixiangcun.customer.ui.activity;
+package com.shiwaixiangcun.customer.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -21,26 +21,15 @@ import butterknife.ButterKnife;
  * Created by Administrator on 2017/10/13.
  */
 
-class AdapterRecord extends RecyclerView.Adapter<AdapterRecord.RecordViewHolder> {
+public class AdapterRecord extends RecyclerView.Adapter<AdapterRecord.RecordViewHolder> {
 
     private List<AfterServiceDetail.DataBean.RecordsBean> mRecordsList;
 
     private Context mContext;
 
-    AdapterRecord(Context context, List<AfterServiceDetail.DataBean.RecordsBean> recordsList) {
+    public AdapterRecord(Context context, List<AfterServiceDetail.DataBean.RecordsBean> recordsList) {
         this.mContext = context;
         this.mRecordsList = recordsList;
-    }
-
-    public class ItemType {
-        public final static int NORMAL = 0;
-
-        public final static int HEADER = 1;
-        public final static int FOOTER = 2;
-
-        public final static int START = 4;
-        public final static int END = 8;
-        public final static int ATOM = 16;
     }
 
     @Override
@@ -77,6 +66,17 @@ class AdapterRecord extends RecyclerView.Adapter<AdapterRecord.RecordViewHolder>
     public void addData(List<AfterServiceDetail.DataBean.RecordsBean> recordsList) {
         mRecordsList.addAll(recordsList);
         notifyDataSetChanged();
+    }
+
+    public class ItemType {
+        public final static int NORMAL = 0;
+
+        public final static int HEADER = 1;
+        public final static int FOOTER = 2;
+
+        public final static int START = 4;
+        public final static int END = 8;
+        public final static int ATOM = 16;
     }
 
     public class RecordViewHolder extends RecyclerView.ViewHolder {

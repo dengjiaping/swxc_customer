@@ -44,31 +44,15 @@ public class ResidentCertificationActivity extends BaseActivity implements View.
     private ResidentBean.DataBean.ChildrenBeanXXX secondData;
     private ResidentBean.DataBean.ChildrenBeanXXX.ChildrenBeanXX thirdData;
     private residentLastBean.DataBean fourthData;
-    private int position_t = 0;
-    private int position_o = 0;
-    private int position_h = 0;
-    private String name_o;
-    private String name_t;
-    private String name_h;
-    private String name_t_o;
-    private String name_t_t;
-    private String name_t_h;
-    private String name_h_h;
-    private String name_h_o;
-    private String name_h_t;
-    private String totle_h;
-    private String totle_t;
-    private String total_o;
-    private String name_f_t;
-    private String name_f_h;
-    private String name_f_o;
-    private String[] str_all_not = {""};
     private List<residentLastBean.DataBean> mHouseDataList;
-    private int id_new;
-    private String totle;
+
     private List<residentLastBean.DataBean> mFourDataList;
     private String houseName;
     private int houseID;
+
+    public ResidentCertificationActivity(List<residentLastBean.DataBean> fourDataList) {
+        mFourDataList = fourDataList;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -224,17 +208,6 @@ public class ResidentCertificationActivity extends BaseActivity implements View.
             }
         }
 
-        if (dataFirst.get(0).getChildren().size() == 0) {
-            totle = dataFirst.get(0).getName();
-            id_new = dataFirst.get(0).getId();
-        } else {
-            if (dataFirst.get(0).getChildren().get(0).getChildren().size() == 0) {
-                totle = dataFirst.get(0).getName() + dataFirst.get(0).getChildren().get(0).getName();
-                id_new = dataFirst.get(0).getChildren().get(0).getId();
-            } else {
-                totle = dataFirst.get(0).getName() + dataFirst.get(0).getChildren().get(0).getName() + dataFirst.get(0).getChildren().get(0).getChildren().get(0).getName();
-            }
-        }
 
         firstData = data.get(0);
         if (firstData.getChildren().size() == 0) {

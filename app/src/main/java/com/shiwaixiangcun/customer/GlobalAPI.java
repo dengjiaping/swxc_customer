@@ -50,6 +50,7 @@ public class GlobalAPI {
     public static String cancelAfterService = MK_DOMAIN + "/mc/after/sale/cancel.json";
     public static String right = MK_DOMAIN + "/mc/online/rights/add.json";
     public static String rightRecord = PM_DOMAIN + "/mc/online/rights/listpage.json";
+    public static String rightDetail = PM_DOMAIN + "/mc/online/rights/detail.json";
     private static String DOMAIN = MK_DOMAIN;
     public static String getCategory = DOMAIN + "/mi/goods/category/tree.json";
     //地址相关接口

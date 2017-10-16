@@ -18,6 +18,7 @@ import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.http.StringDialogCallBack;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
+import com.shiwaixiangcun.customer.ui.dialog.DialogStatus;
 import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.RefreshTokenUtil;
@@ -95,6 +96,8 @@ public class ProtectRightActivity extends BaseActivity implements View.OnClickLi
                 }
                 break;
             case R.id.iv_choose_image:
+                showToastShort("点击选择图片");
+                // TODO: 2017/10/16  
                 break;
         }
     }
@@ -115,8 +118,20 @@ public class ProtectRightActivity extends BaseActivity implements View.OnClickLi
                         }
                         switch (responseEntity.getResponseCode()) {
                             case 1001:
-                                showToastShort("提交成功");
-                                finish();
+                                DialogStatus dialogStatus = new DialogStatus(mContext);
+                                dialogStatus.setListener(new DialogStatus.onCallBackListener() {
+                                    @Override
+                                    public void closeBtn(DialogStatus dialog) {
+                                        dialog.dismiss();
+                                    }
+
+                                    @Override
+                                    public void confirmBtn(DialogStatus dialog) {
+                                        dialog.dismiss();
+
+                                    }
+                                });
+                                dialogStatus.show();
                                 break;
                             case 1018:
                                 RefreshTokenUtil.sendIntDataInvatation(mContext, strRefreshToken);

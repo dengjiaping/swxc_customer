@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -43,6 +44,8 @@ public class RightsRecordActivity extends BaseActivity {
     RecyclerView mRvRightRecord;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
+    @BindView(R.id.rlayout_no_data)
+    RelativeLayout mRlayoutNoData;
 
     private List<RightsRecordBean.ElementsBean> mList;
     private AdapterRight mAdapterRight;
@@ -81,9 +84,14 @@ public class RightsRecordActivity extends BaseActivity {
                         }
                         switch (responseEntity.getResponseCode()) {
                             case 1001:
-                                mList.clear();
-                                mList.addAll(responseEntity.getData().getElements());
-                                mAdapterRight.notifyDataSetChanged();
+
+                                if (responseEntity.getData().getElements().size() == 0 || responseEntity.getData().getElements() == null) {
+                                    mRlayoutNoData.setVisibility(View.VISIBLE);
+                                } else {
+                                    mList.clear();
+                                    mList.addAll(responseEntity.getData().getElements());
+                                    mAdapterRight.notifyDataSetChanged();
+                                }
                                 break;
                             case 1018:
                                 RefreshTokenUtil.sendIntDataInvatation(mContext, refreshToken);

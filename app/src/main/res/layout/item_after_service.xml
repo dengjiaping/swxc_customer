@@ -167,7 +167,7 @@
             <!--android:id="@+id/btn_white"-->
             <!--android:layout_width="90dp"-->
             <!--android:layout_height="36dp"-->
-            <!--android:background="@drawable/selector_button_white"-->
+    <!--android:background="@drawable/selector_button_gray"-->
             <!--android:text="删除订单"-->
             <!--android:textColor="#FF2D3230"/>-->
 

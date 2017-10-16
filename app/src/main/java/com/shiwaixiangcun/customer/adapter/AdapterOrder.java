@@ -76,6 +76,11 @@ public class AdapterOrder extends BaseQuickAdapter<OrderBean.ElementsBean, BaseV
             case "Finished":
                 helper.setText(R.id.tv_order_stature, "已完成");
                 llayoutStature.setVisibility(View.GONE);
+                llayoutStature.setVisibility(View.VISIBLE);
+                mBtnWhite.setVisibility(View.VISIBLE);
+                mBtnRed.setVisibility(View.GONE);
+                mBtnWhite.setText("评价");
+
         }
 
     }

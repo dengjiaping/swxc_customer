@@ -524,6 +524,10 @@
         </activity>
         <activity android:name=".ui.activity.RightDetailActivity">
         </activity>
+        <activity android:name=".ui.activity.mall.EvaluateActivity">
+        </activity>
+        <activity android:name=".ui.activity.mall.RefundActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -125,5 +125,7 @@
             android:textColor="@color/bg_white"
             android:textSize="16sp"/>
     </RelativeLayout>
+
+
 </FrameLayout>
 

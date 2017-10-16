@@ -108,8 +108,6 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     FrameLayout mRootView;
     @BindView(R.id.ll_info_price)
     LinearLayout mLlInfoPrice;
-
-    OrderDetailBean.OrderInfoBean orderInfo;
     @BindView(R.id.llayout_good_info)
     LinearLayout mLlayoutGoodInfo;
     @BindView(R.id.refreshLayout)
@@ -124,13 +122,17 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     LinearLayout mLlImageRight;
     @BindView(R.id.top_bar_write)
     RelativeLayout mTopBarWrite;
-    int goodsId = 0;
-    DialogInfo mDialogDelete;
-    DialogInfo mDialogCancel;
-    DialogPay mDialogPay;
+    @BindView(R.id.btn_refund)
+    Button mBtnRefund;
+    private int goodsId = 0;
+    private DialogInfo mDialogDelete;
+    private DialogInfo mDialogCancel;
+    private DialogPay mDialogPay;
     private int orderId = 0;
     private String tokenString;
     private String refresh_token;
+
+    private OrderDetailBean.OrderInfoBean orderInfo;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -191,15 +193,17 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void initView() {
+
+        mTvPageName.setText("订单详情");
         mDialogPay = new DialogPay(mContext);
         mDialogCancel = new DialogInfo(this);
         mDialogDelete = new DialogInfo(this);
         mLlayoutGoodInfo.setOnClickListener(this);
         mBackLeft.setOnClickListener(this);
-        mTvPageName.setText("订单详情");
         mBtnCommit.setOnClickListener(this);
         mTvCancel.setClickable(true);
         mTvCancel.setOnClickListener(this);
+        mBtnRefund.setOnClickListener(this);
 
 
     }
@@ -248,14 +252,16 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                 RelativeLayout.LayoutParams layoutParam = (RelativeLayout.LayoutParams) mLlInfoPrice.getLayoutParams();
                 layoutParam.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
                 mLlInfoPrice.setLayoutParams(layoutParam);
+                mBtnRefund.setVisibility(View.VISIBLE);
                 break;
             case "Delivered":
                 mTvOrderStatus.setText("已发货");
+
+                mBtnRefund.setVisibility(View.VISIBLE);
                 mTvCue.setText("实际付款");
                 mBtnCommit.setText("确认收货");
                 mTvCancel.setVisibility(View.GONE);
                 mBtnCommit.setVisibility(View.VISIBLE);
-                mBtnCommit.setText("确认收货");
                 mBtnCommit.setOnClickListener(this);
                 break;
             case "Closed":
@@ -399,7 +405,18 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                 bundle.putInt("goodId", goodsId);
                 readyGo(GoodDetailActivity.class, bundle);
                 break;
+
+            case R.id.btn_refund:
+                Bundle refundBundle = new Bundle();
+                refundBundle.putInt("goodId", goodsId);
+                readyGo(RefundActivity.class, refundBundle);
+                refundOrder();
+                break;
         }
+    }
+
+    private void refundOrder() {
+
     }
 
 

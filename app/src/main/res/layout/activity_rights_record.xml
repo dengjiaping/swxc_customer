@@ -26,27 +26,59 @@
         android:layout_height="0.1dp"
         android:background="@color/color_divider_0.5"/>
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/refreshLayout"
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/refreshLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srlAccentColor="@color/black_text_100"/>
+            android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_right_record"
+            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srlAccentColor="@color/black_text_100"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_right_record"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/bg_gray"/>
+
+            <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srlClassicsSpinnerStyle="Translate"/>
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rlayout_no_data"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/bg_gray"/>
+            android:background="@color/bg_white"
+            android:visibility="gone">
 
-        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srlClassicsSpinnerStyle="Translate"/>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+            <ImageView
+                android:id="@+id/iv_nodata"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/no_order"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_nodata"
+                android:layout_centerInParent="true"
+                android:text="没有维权记录"
+                android:textColor="@color/black_text_40"
+                android:textSize="16sp"/>
+        </RelativeLayout>
+
+    </FrameLayout>
 
 </LinearLayout>
 

@@ -38,6 +38,7 @@ import com.shiwaixiangcun.customer.event.SimpleEvent;
 import com.shiwaixiangcun.customer.model.OrderBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.pay.PayUtil;
+import com.shiwaixiangcun.customer.ui.activity.mall.EvaluateActivity;
 import com.shiwaixiangcun.customer.ui.activity.mall.OrderDetailActivity;
 import com.shiwaixiangcun.customer.ui.dialog.DialogInfo;
 import com.shiwaixiangcun.customer.ui.dialog.DialogPay;
@@ -182,12 +183,18 @@ public class FragmentOrder extends LazyFragment {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
 
-                final OrderBean.ElementsBean elementsBean = mOrderList.get(position);
+                final OrderBean.ElementsBean elementsBean = (OrderBean.ElementsBean) adapter.getData().get(position);
                 Button button = (Button) view;
                 String string = button.getText().toString();
                 switch (string) {
                     case "付款":
                         payOrder(elementsBean);
+                        break;
+
+                    case "评价":
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelable("order", elementsBean);
+                        readyGo(EvaluateActivity.class, bundle);
                         break;
                     case "删除订单":
                         mDialogDelete.setDialogTitle("删除订单");
