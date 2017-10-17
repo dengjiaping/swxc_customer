@@ -29,9 +29,9 @@ import com.shiwaixiangcun.customer.Common;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.ComListAdapter;
 import com.shiwaixiangcun.customer.broadCast.RegisterBrodUtils;
-import com.shiwaixiangcun.customer.model.AnnouncementBean;
 import com.shiwaixiangcun.customer.model.BannerBean;
 import com.shiwaixiangcun.customer.model.InformationBean;
+import com.shiwaixiangcun.customer.model.NoticeBean;
 import com.shiwaixiangcun.customer.model.PageBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.model.WeatherDataBean;
@@ -100,7 +100,7 @@ public class HomeActivity extends BaseActivity implements IHomeView, ViewPager.O
             handler.sendMessageDelayed(new Message(), TIME_INTERVAL);
         }
     };
-    private List<AnnouncementBean> elements_headline;
+    private List<NoticeBean> elements_headline;
     private ChangeLightImageView back_left;
     private List<BannerBean> list_banner;
     private RelativeLayout rl_net_not;
@@ -381,8 +381,8 @@ public class HomeActivity extends BaseActivity implements IHomeView, ViewPager.O
     }
 
     @Override
-    public void setAnnouncementResult(ResponseEntity<PageBean<AnnouncementBean>> result) {
-        final List<AnnouncementBean> elements_ann = result.getData().getElements();
+    public void setAnnouncementResult(ResponseEntity<PageBean<NoticeBean>> result) {
+        final List<NoticeBean> elements_ann = result.getData().getElements();
         for (int i = 0; i < elements_ann.size(); i++) {
             TextView textView = new TextView(this);
             textView.setText(elements_ann.get(i).getTitle());
@@ -414,7 +414,7 @@ public class HomeActivity extends BaseActivity implements IHomeView, ViewPager.O
     }
 
     @Override
-    public void setHeadlineResult(ResponseEntity<PageBean<AnnouncementBean>> result) {
+    public void setHeadlineResult(ResponseEntity<PageBean<NoticeBean>> result) {
         elements_headline = result.getData().getElements();
         ComListAdapter comListAdapter = new ComListAdapter(this, elements_headline);
         lv_details.setAdapter(comListAdapter);

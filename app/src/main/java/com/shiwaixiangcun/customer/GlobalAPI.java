@@ -43,6 +43,7 @@ public class GlobalAPI {
     public static String getRecipeType = HM_DOMAIN + "/mi/health/dietType.json";
     public static String getRecipeList = HM_DOMAIN + "/mi/health/dietList.json";
     public static String getMessage = HM_DOMAIN + "/mc/message/core/list.json";
+    public static String getToolCategory = OT_DOMAIN + "/mi/app/category/tree.json";
     private static String DOMAIN = MK_DOMAIN;
     public static String getCategory = DOMAIN + "/mi/goods/category/tree.json";
     //地址相关接口

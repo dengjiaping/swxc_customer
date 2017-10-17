@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shiwaixiangcun.customer.R;
-import com.shiwaixiangcun.customer.model.AnnouncementBean;
+import com.shiwaixiangcun.customer.model.NoticeBean;
 import com.shiwaixiangcun.customer.utils.TimerToTimerUtil;
 import com.squareup.picasso.Picasso;
 
@@ -22,10 +22,10 @@ public class ComListAdapter extends BaseAdapter {
     public static final int TYPE_COMPANY = 1;
     public static final int TYPE_DOWN = 2;
     private Context context;
-    private List<AnnouncementBean> list;
+    private List<NoticeBean> list;
+    private int index = -1;
 
-
-    public ComListAdapter(Context context, List<AnnouncementBean> list_type_adapter) {
+    public ComListAdapter(Context context, List<NoticeBean> list_type_adapter) {
         super();
         this.context = context;
         this.list = list_type_adapter;
@@ -58,8 +58,6 @@ public class ComListAdapter extends BaseAdapter {
         }
         return 8;
     }
-
-    private int index = -1;
 
     @Override
     public int getViewTypeCount() {
@@ -144,7 +142,7 @@ public class ComListAdapter extends BaseAdapter {
                     downHolder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
                     downHolder.tv_summary = (TextView) convertView.findViewById(R.id.tv_summary);
                     downHolder.tv_publishTime = (TextView) convertView.findViewById(R.id.tv_publishTime);
-                    downHolder.tv_come_from = (TextView) convertView.findViewById(R.id.tv_come_from);
+                    downHolder.tv_come_from = (TextView) convertView.findViewById(R.id.tv_source);
                     convertView.setTag(downHolder);
                 } else {
                     downHolder = (DownHolder) convertView.getTag();

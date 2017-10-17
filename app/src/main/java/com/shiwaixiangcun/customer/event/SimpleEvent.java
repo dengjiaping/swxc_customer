@@ -30,6 +30,7 @@ public class SimpleEvent {
     public static final int UPDATE_DOCTOR = 17;
     public static final int UPDATE_CATEGORY = 18;
     public static final int GET_RECIPE_TYPE = 19;
+    public static final int UPDATE_MAIN = 20;
     /**
      * 操作类型
      */

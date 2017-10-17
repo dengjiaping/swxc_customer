@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bg_gray"
+    android:orientation="vertical">
+
+    <com.youth.banner.Banner
+        android:id="@+id/banner_second"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/white"
+        android:padding="16dp"
+        app:indicator_drawable_selected="@drawable/selector_indicator_selected"
+        app:indicator_drawable_unselected="@drawable/selector_indicator_unselected"
+        app:indicator_height="@dimen/indicator_height"
+        app:indicator_margin="@dimen/indicator_margin"
+        app:indicator_width="@dimen/indicator_width">
+    </com.youth.banner.Banner>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/ui_white">
+
+        <TextView
+            android:layout_width="4dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:background="@color/ui_green"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:text="热点资讯"
+            android:textColor="@color/word_black"
+            android:textSize="16sp"/>
+    </RelativeLayout>
+</LinearLayout>

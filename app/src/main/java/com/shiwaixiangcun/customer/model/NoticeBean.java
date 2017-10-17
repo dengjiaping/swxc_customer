@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by Administrator on 2017/5/25.
  */
 
-public class AnnouncementBean implements Serializable {
+public class NoticeBean implements Serializable {
 
 
     /**

@@ -13,9 +13,9 @@ import com.shiwaixiangcun.customer.Common;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
-import com.shiwaixiangcun.customer.model.AnnouncementBean;
 import com.shiwaixiangcun.customer.model.InformationBean;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
+import com.shiwaixiangcun.customer.model.NoticeBean;
 import com.shiwaixiangcun.customer.model.PageBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.model.WeatherDataBean;
@@ -122,9 +122,9 @@ public class HomePresenterImpl implements IHomePresenter {
             @Override
             public void onSuccess(String responseJson) {
                 // 分页列表
-                Type type = new TypeToken<ResponseEntity<PageBean<AnnouncementBean>>>() {
+                Type type = new TypeToken<ResponseEntity<PageBean<NoticeBean>>>() {
                 }.getType();
-                ResponseEntity<PageBean<AnnouncementBean>> responseEntity_ann = JsonUtil.fromJson(responseJson, type);
+                ResponseEntity<PageBean<NoticeBean>> responseEntity_ann = JsonUtil.fromJson(responseJson, type);
                 iHomeView.setAnnouncementResult(responseEntity_ann);
 
             }
@@ -146,9 +146,9 @@ public class HomePresenterImpl implements IHomePresenter {
             @Override
             public void onSuccess(String responseJson) {
                 // 分页列表
-                Type type = new TypeToken<ResponseEntity<PageBean<AnnouncementBean>>>() {
+                Type type = new TypeToken<ResponseEntity<PageBean<NoticeBean>>>() {
                 }.getType();
-                ResponseEntity<PageBean<AnnouncementBean>> responseEntity_ann = JsonUtil.fromJson(responseJson, type);
+                ResponseEntity<PageBean<NoticeBean>> responseEntity_ann = JsonUtil.fromJson(responseJson, type);
                 iHomeView.setHeadlineResult(responseEntity_ann);
 
             }

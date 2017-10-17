@@ -515,7 +515,8 @@
         <activity
             android:name=".MessageDetailActivity"
             android:screenOrientation="portrait"/>
-
+        <activity android:name=".ui.activity.MoreToolsActivity">
+        </activity>
     </application>
 
 </manifest>
