@@ -1,5 +1,6 @@
 package com.shiwaixiangcun.customer.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,12 +25,17 @@ import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.RefreshTokenUtil;
 import com.shiwaixiangcun.customer.utils.StringUtil;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
+import com.zhihu.matisse.Matisse;
+import com.zhihu.matisse.MimeType;
+import com.zhihu.matisse.engine.impl.PicassoEngine;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ProtectRightActivity extends BaseActivity implements View.OnClickListener {
 
+
+    private static final int REQUEST_CODE_CHOOSE = 23;
     String strToken;
     String strContent;
     String strRefreshToken;
@@ -97,8 +103,26 @@ public class ProtectRightActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.iv_choose_image:
                 showToastShort("点击选择图片");
-                // TODO: 2017/10/16  
+
+                Matisse.from(this)
+                        .choose(MimeType.allOf())
+                        .theme(R.style.Matisse_Zhihu)
+                        .countable(true)
+                        .maxSelectable(9)
+                        .imageEngine(new PicassoEngine())
+                        .forResult(REQUEST_CODE_CHOOSE);
+                // TODO: 2017/10/16
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK) {
+
+
+//            List<Uri> mSelected = Matisse.obtainResult(data);
         }
     }
 

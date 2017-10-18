@@ -10,7 +10,6 @@
     </style>
 
 
-
     <!--对话框弹出window背景变暗-->
     <style name="dialog" parent="Base.Animation.AppCompat.Dialog">
         <item name="android:backgroundDimEnabled">true</item>

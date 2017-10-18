@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <FrameLayout
 
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -29,18 +30,18 @@
         android:layout_height="match_parent"
         android:layout_marginTop="57dp"
         app:srlEnableLoadmore="true"
-        app:srlEnablePureScrollMode="true"
-        >
+        app:srlEnablePureScrollMode="true">
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/bg_gray"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="60dp">
 
                 <LinearLayout
                     android:id="@+id/llayout_good_info"
@@ -120,8 +121,8 @@
                             android:layout_marginStart="8dp"
                             android:layout_marginTop="4dp"
                             android:gravity="center_vertical"
-                            android:textColor="#FFFF1717"
-                            android:textSize="18sp"
+                            android:textColor="@color/black_text_100"
+                            android:textSize="16sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/tv_good_desc"
@@ -149,18 +150,121 @@
 
                 </LinearLayout>
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/bg_white"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="center"
+                        android:text="货物状态"
+                        android:textColor="#FF2D3231"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:id="@+id/tv_stature"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="16dp"
+                        android:layout_toLeftOf="@+id/iv_arrow"
+                        android:text="请选择"
+                        android:textColor="#FF2D3230"
+                        android:textSize="16sp"/>
+
+                    <ImageView
+
+                        android:id="@+id/iv_arrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/to_right"/>
+                </RelativeLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:background="@color/bg_white"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:orientation="vertical">
 
-                    <View
+                    <android.support.constraint.ConstraintLayout
+                        android:id="@+id/constraintLayout"
                         android:layout_width="match_parent"
-                        android:layout_height="90dp"/>
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/textView9"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="20dp"
+                            android:text="退款金额"
+                            android:textColor="#FF2D3231"
+                            android:textSize="16sp"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <EditText
+                            android:id="@+id/textView10"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="0dp"
+                            android:layout_marginTop="20dp"
+                            android:background="@null"
+                            android:gravity="center_vertical"
+                            android:inputType="number"
+                            android:text="300.00"
+                            android:textColor="#FFFF1717"
+                            android:textSize="16sp"
+                            app:layout_constraintLeft_toRightOf="@+id/textView11"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/textView11"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="20dp"
+                            android:background="@null"
+                            android:gravity="center_vertical"
+                            android:text="￥"
+                            android:textColor="#FFFF1717"
+                            android:textSize="16sp"
+                            app:layout_constraintLeft_toRightOf="@+id/textView9"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/textView12"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginTop="16dp"
+                            android:background="@null"
+
+                            android:gravity="center_vertical"
+                            android:text="最多￥409.00，包含发货邮费￥10.00"
+                            android:textColor="@color/black_text_60"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView9"/>
+                    </android.support.constraint.ConstraintLayout>
 
                     <View
                         android:layout_width="match_parent"
@@ -187,21 +291,23 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="110dp"
-                    android:background="@color/bg_white">
+                    android:layout_height="wrap_content"
+                    android:background="@color/bg_white"
+
+                    android:paddingBottom="16dp">
 
                     <ImageView
                         android:id="@+id/iv_choose_image"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:layout_gravity="center_vertical"
+
                         android:layout_marginLeft="20dp"
                         android:src="@drawable/phone_lpw"/>
 
                     <HorizontalScrollView
                         android:id="@+id/hsv_images"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="80dp"
                         android:visibility="gone">
 
                     </HorizontalScrollView>

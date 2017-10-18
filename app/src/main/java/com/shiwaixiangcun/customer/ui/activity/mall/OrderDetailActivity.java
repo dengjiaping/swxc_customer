@@ -131,7 +131,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     private int orderId = 0;
     private String tokenString;
     private String refresh_token;
-
+    private OrderDetailBean mOrderDetail;
     private OrderDetailBean.OrderInfoBean orderInfo;
 
     @Override
@@ -276,6 +276,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
 
         // TODO: 2017/9/23 设置配送信息
 
+        mOrderDetail = orderDetail;
         //更新收货人信息
         OrderDetailBean.BuyersInfoBean buyersInfo = orderDetail.getBuyersInfo();
         mTvUserName.setText(buyersInfo.getDeliveryName());
@@ -408,7 +409,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
 
             case R.id.btn_refund:
                 Bundle refundBundle = new Bundle();
-                refundBundle.putInt("goodId", goodsId);
+                refundBundle.putParcelable("orderDetail", mOrderDetail);
                 readyGo(RefundActivity.class, refundBundle);
                 refundOrder();
                 break;

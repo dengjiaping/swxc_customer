@@ -113,4 +113,6 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.5.0'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
+
+    compile 'com.zhihu.android:matisse:0.4.3'
 }

@@ -78,7 +78,7 @@ public class FragmentOrder extends LazyFragment {
     private String BUG_TAG = this.getClass().getSimpleName();
     private AdapterOrder mAdapterOrder;
     private String mTitle;
-    private List<OrderBean.ElementsBean> mOrderList;
+    private List<OrderBean.ElementsBean> mOrderList = new ArrayList<>();
     private OrderBean mOrder;
     private Activity mContext;
     private String stature;
@@ -286,10 +286,11 @@ public class FragmentOrder extends LazyFragment {
                         mRefreshLayout.finishRefresh();
                         mRefreshLayout.finishLoadmore();
                         mOrder = order.getData();
-                        if (mOrder.getTotalAmount() == 0) {
+
+                        if (mOrder.getSize() == 0) {
                             mLlayoutNodata.setVisibility(View.VISIBLE);
                         }
-                        if (mOrder.getTotalAmount() > 0) {
+                        if (mOrder.getSize() > 0) {
                             mLlayoutNodata.setVisibility(View.GONE);
                             mOrderList.clear();
                             mOrderList.addAll(mOrder.getElements());
