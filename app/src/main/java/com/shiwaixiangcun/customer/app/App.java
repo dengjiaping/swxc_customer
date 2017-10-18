@@ -1,12 +1,17 @@
 package com.shiwaixiangcun.customer.app;
 
-import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 
 import com.baidu.mobstat.StatService;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheEntity;
 import com.lzy.okgo.cache.CacheMode;
+import com.lzy.okgo.cookie.CookieJarImpl;
+import com.lzy.okgo.cookie.store.DBCookieStore;
+import com.lzy.okgo.https.HttpsUtils;
+import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
 import com.lzy.okgo.model.HttpHeaders;
 import com.lzy.okgo.model.HttpParams;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -20,13 +25,18 @@ import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.shiwaixiangcun.customer.R;
 
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+
 import cn.jpush.android.api.JPushInterface;
 import cn.sharesdk.framework.ShareSDK;
 import okhttp3.OkHttpClient;
 
-public class App extends Application {
+public class App extends MultiDexApplication {
+
     private static Context mContext;
     private static App instance;
+
     //下拉刷新框架 防止泄漏
     static {
         //设置全局的Header构建器
@@ -61,6 +71,12 @@ public class App extends Application {
     }
 
     @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
+
+    @Override
     public void onCreate() {
         super.onCreate();
         JPushInterface.setDebugMode(true);
@@ -84,17 +100,17 @@ public class App extends Application {
         headers.put("User-Agent", "android");
         HttpParams params = new HttpParams();
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
-//        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor("OkGo");
-//        loggingInterceptor.setPrintLevel(HttpLoggingInterceptor.Level.BODY);        //log打印级别，决定了log显示的详细程度
-//        loggingInterceptor.setColorLevel(Level.INFO);
-//        builder.addInterceptor(loggingInterceptor);
-//        builder.addInterceptor(loggingInterceptor);                                 //添加OkGo默认debug日志
-//        builder.readTimeout(OkGo.DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS);      //全局的读取超时时间
-//        builder.writeTimeout(OkGo.DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS);     //全局的写入超时时间
-//        builder.connectTimeout(OkGo.DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS);   //全局的连接超时时间
-//        builder.cookieJar(new CookieJarImpl(new DBCookieStore(this)));              //使用数据库保持cookie，如果cookie不过期，则一直有效
-//        HttpsUtils.SSLParams sslParams1 = HttpsUtils.getSslSocketFactory();
-//        builder.sslSocketFactory(sslParams1.sSLSocketFactory, sslParams1.trustManager);
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor("OkGo");
+        loggingInterceptor.setPrintLevel(HttpLoggingInterceptor.Level.BODY);        //log打印级别，决定了log显示的详细程度
+        loggingInterceptor.setColorLevel(Level.INFO);
+        builder.addInterceptor(loggingInterceptor);
+        builder.addInterceptor(loggingInterceptor);                                 //添加OkGo默认debug日志
+        builder.readTimeout(OkGo.DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS);      //全局的读取超时时间
+        builder.writeTimeout(OkGo.DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS);     //全局的写入超时时间
+        builder.connectTimeout(OkGo.DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS);   //全局的连接超时时间
+        builder.cookieJar(new CookieJarImpl(new DBCookieStore(this)));              //使用数据库保持cookie，如果cookie不过期，则一直有效
+        HttpsUtils.SSLParams sslParams1 = HttpsUtils.getSslSocketFactory();
+        builder.sslSocketFactory(sslParams1.sSLSocketFactory, sslParams1.trustManager);
         OkGo.getInstance().init(this)
                 //必须调用初始化
                 .setOkHttpClient(builder.build())               //建议设置OkHttpClient，不设置会使用默认的
