@@ -336,9 +336,10 @@
         android:layout_height="150dp"
         android:background="@color/white"
         android:padding="16dp"
-
         app:indicator_drawable_selected="@drawable/selector_indicator_selected"
         app:indicator_drawable_unselected="@drawable/selector_indicator_unselected"
+
+
         app:indicator_height="@dimen/indicator_height"
         app:indicator_margin="@dimen/indicator_margin"
         app:indicator_width="@dimen/indicator_width">

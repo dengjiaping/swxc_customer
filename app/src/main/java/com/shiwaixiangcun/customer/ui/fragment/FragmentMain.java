@@ -50,6 +50,7 @@ import com.shiwaixiangcun.customer.ui.activity.CommunityAnnouncementActivity;
 import com.shiwaixiangcun.customer.ui.activity.DetailsActivity;
 import com.shiwaixiangcun.customer.ui.activity.LoginActivity;
 import com.shiwaixiangcun.customer.ui.activity.MessageActivity;
+import com.shiwaixiangcun.customer.ui.activity.MoreToolsActivity;
 import com.shiwaixiangcun.customer.ui.activity.SiteActivity;
 import com.shiwaixiangcun.customer.ui.activity.mall.GoodDetailActivity;
 import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
@@ -166,7 +167,10 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
+                refreshlayout.finishLoadmore();
+                currentPage = 1;
                 initData();
+
             }
         });
         mRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
@@ -175,7 +179,9 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
                 if (currentPage == 1) {
                     currentPage++;
                 }
+                refreshlayout.finishRefresh();
                 initHeadLineData(currentPage, pageSize, true);
+
             }
         });
 
@@ -189,6 +195,7 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
         viewBanner = LayoutInflater.from(mContext).inflate(R.layout.layout_home_banner, null);
         mRvTools = (RecyclerView) viewTools.findViewById(R.id.rv_tools);
         mBanner = (Banner) viewBanner.findViewById(R.id.banner_second);
+
         tvMore = (TextView) viewAnnouncement.findViewById(R.id.tv_more);
         viewAnimator = (ViewAnimator) viewAnnouncement.findViewById(R.id.animator);
 
@@ -197,6 +204,12 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this.getActivity(), 4);
         mRvTools.setLayoutManager(gridLayoutManager);
         mRvTools.setAdapter(mAdapterTool);
+        mAdapterTool.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                readyGo(MoreToolsActivity.class);
+            }
+        });
         initToolsData();
 
 //        mAdapterTool.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -437,18 +450,23 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
                         switch (headLine.getResponseCode()) {
                             case 1001:
 
+
                                 if (loadMore) {
                                     currentPage++;
+                                    EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_MAIN, 5, headLine));
                                     mRefreshLayout.finishLoadmore();
                                 } else {
                                     currentPage = 1;
+                                    EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_MAIN, 1, headLine));
                                     mRefreshLayout.finishRefresh();
                                 }
 
-                                EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_MAIN, 1, headLine));
+
                                 break;
                             default:
                                 Toast.makeText(mContext, "获取数据出错", Toast.LENGTH_SHORT).show();
+                                mRefreshLayout.finishLoadmore();
+                                mRefreshLayout.finishRefresh();
                                 break;
                         }
 
@@ -471,8 +489,12 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
         switch (simpleEvent.mEventValue) {
             //头条新闻
             case 1:
-                setDataHeadLine(simpleEvent);
+                setDataHeadLine(simpleEvent, false);
 
+                break;
+
+            case 5:
+                setDataHeadLine(simpleEvent, true);
                 break;
             //社区公告
             case 2:
@@ -566,11 +588,15 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
     /**
      * 设置头条新闻
      *
-     * @param simpleEvent
+     * @param simpleEvent 下拉刷新
+     * @param loadMore    是否加载更多
      */
-    private void setDataHeadLine(SimpleEvent simpleEvent) {
+    private void setDataHeadLine(SimpleEvent simpleEvent, boolean loadMore) {
         ResponseEntity<PageBean<NoticeBean>> data = (ResponseEntity<PageBean<NoticeBean>>) simpleEvent.getData();
         List<NoticeBean> elements = data.getData().getElements();
+        if (!loadMore) {
+            mMainList.clear();
+        }
         for (NoticeBean bean : elements) {
             AdapterMain.MultipleItem multipleItem;
             switch (bean.getArticleShowType()) {
@@ -584,6 +610,7 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
                     multipleItem = new AdapterMain.MultipleItem(3, bean);
                     break;
             }
+
             mMainList.add(multipleItem);
         }
 
