@@ -7,7 +7,7 @@ import com.chad.library.adapter.base.BaseSectionQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.entity.SectionEntity;
 import com.shiwaixiangcun.customer.R;
-import com.shiwaixiangcun.customer.model.TreeBean;
+import com.shiwaixiangcun.customer.model.ToolCategoryBean;
 import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 
 import java.util.List;
@@ -49,8 +49,8 @@ public class AdapterService extends BaseSectionQuickAdapter<AdapterService.MySec
 
     }
 
-    public static class MySection extends SectionEntity<TreeBean> {
-        TreeBean mTreeBean;
+    public static class MySection extends SectionEntity<ToolCategoryBean.ChildrenBeanX.ChildrenBean> {
+        ToolCategoryBean.ChildrenBeanX.ChildrenBean mTreeBean;
         String strSection;
 
         public MySection(boolean isHeader, String header) {
@@ -58,16 +58,16 @@ public class AdapterService extends BaseSectionQuickAdapter<AdapterService.MySec
             this.strSection = header;
         }
 
-        public MySection(TreeBean treeBean) {
+        public MySection(ToolCategoryBean.ChildrenBeanX.ChildrenBean treeBean) {
             super(treeBean);
             this.mTreeBean = treeBean;
         }
 
-        public TreeBean getTreeBean() {
+        public ToolCategoryBean.ChildrenBeanX.ChildrenBean getTreeBean() {
             return mTreeBean;
         }
 
-        public void setTreeBean(TreeBean treeBean) {
+        public void setTreeBean(ToolCategoryBean.ChildrenBeanX.ChildrenBean treeBean) {
             mTreeBean = treeBean;
         }
 

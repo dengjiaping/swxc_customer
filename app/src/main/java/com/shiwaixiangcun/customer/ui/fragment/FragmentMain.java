@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -52,8 +53,10 @@ import com.shiwaixiangcun.customer.ui.activity.LoginActivity;
 import com.shiwaixiangcun.customer.ui.activity.MessageActivity;
 import com.shiwaixiangcun.customer.ui.activity.MoreToolsActivity;
 import com.shiwaixiangcun.customer.ui.activity.SiteActivity;
+import com.shiwaixiangcun.customer.ui.activity.ToolsDetailActivity;
 import com.shiwaixiangcun.customer.ui.activity.mall.GoodDetailActivity;
 import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
+import com.shiwaixiangcun.customer.utils.DisplayUtil;
 import com.shiwaixiangcun.customer.utils.GlideImageLoader;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
@@ -73,6 +76,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+
+import static com.chad.library.adapter.base.BaseQuickAdapter.ALPHAIN;
 
 /**
  * Created by Administrator on 2017/10/17.
@@ -150,6 +155,8 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
                 .setDrawableRes(R.drawable.divider)
                 .build();
         mRvMain.addItemDecoration(divider);
+        mAdapterMain.openLoadAnimation(ALPHAIN);
+        mAdapterMain.isFirstOnly(true);
         mAdapterMain.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -204,10 +211,20 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this.getActivity(), 4);
         mRvTools.setLayoutManager(gridLayoutManager);
         mRvTools.setAdapter(mAdapterTool);
+        mRvTools.addItemDecoration(new MarginDecoration(mContext));
         mAdapterTool.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                readyGo(MoreToolsActivity.class);
+                ToolCategoryBean.ChildrenBeanX item = (ToolCategoryBean.ChildrenBeanX) adapter.getData().get(position);
+                String jsonItem = JsonUtil.toJson(item);
+                if (position == adapter.getData().size() - 1) {
+                    readyGo(MoreToolsActivity.class);
+                } else if (item != null && item.getChildren().size() > 0) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("item", jsonItem);
+                    readyGo(ToolsDetailActivity.class, bundle);
+                }
+
             }
         });
         initToolsData();
@@ -517,6 +534,9 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
         ToolCategoryBean toolCategoryBean = (ToolCategoryBean) simpleEvent.getData();
         List<ToolCategoryBean.ChildrenBeanX> firstTool = toolCategoryBean.getChildren();
 
+        ToolCategoryBean.ChildrenBeanX allItem = new ToolCategoryBean.ChildrenBeanX();
+        allItem.setName("更多服务");
+        firstTool.add(allItem);
         mToolList.addAll(firstTool);
         mAdapterTool.addData(firstTool);
         mAdapterTool.notifyDataSetChanged();
@@ -718,6 +738,19 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = getActivity();
+    }
+
+    class MarginDecoration extends RecyclerView.ItemDecoration {
+        private int margin;
+
+        public MarginDecoration(Context context) {
+            margin = DisplayUtil.dip2px(context, 0);
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            outRect.set(margin, 0, margin, 0);
+        }
     }
 
 

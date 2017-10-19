@@ -21,7 +21,12 @@ public class AdapterTool extends BaseQuickAdapter<ToolCategoryBean.ChildrenBeanX
     @Override
     protected void convert(BaseViewHolder helper, ToolCategoryBean.ChildrenBeanX item) {
         helper.setText(R.id.tv_tool_name, item.getName());
-        Glide.with(mContext).load(item.getImageLink()).into((ImageView) helper.getView(R.id.iv_tool));
+        if (item.getImageLink() == null) {
+
+            Glide.with(mContext).load(R.drawable.tool_more).into((ImageView) helper.getView(R.id.iv_tool));
+        } else {
+            Glide.with(mContext).load(item.getImageLink()).into((ImageView) helper.getView(R.id.iv_tool));
+        }
 
     }
 

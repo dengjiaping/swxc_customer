@@ -1,5 +1,8 @@
 package com.shiwaixiangcun.customer.model;
 
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,7 +28,16 @@ public class ToolCategoryBean {
     private String link;
     private String name;
     private String sign;
+    private String remark;
     private List<ChildrenBeanX> children;
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 
     public String getAppCategoryStatus() {
         return appCategoryStatus;
@@ -83,7 +95,18 @@ public class ToolCategoryBean {
         this.children = children;
     }
 
-    public static class ChildrenBeanX {
+    public static class ChildrenBeanX implements Parcelable {
+        public static final Parcelable.Creator<ChildrenBeanX> CREATOR = new Parcelable.Creator<ChildrenBeanX>() {
+            @Override
+            public ChildrenBeanX createFromParcel(android.os.Parcel source) {
+                return new ChildrenBeanX(source);
+            }
+
+            @Override
+            public ChildrenBeanX[] newArray(int size) {
+                return new ChildrenBeanX[size];
+            }
+        };
         /**
          * appCategoryStatus : Native
          * authorization : false
@@ -94,6 +117,7 @@ public class ToolCategoryBean {
          * sign : null
          */
 
+        private String remark;
         private String appCategoryStatus;
         private boolean authorization;
         private String imageLink;
@@ -101,6 +125,28 @@ public class ToolCategoryBean {
         private String name;
         private String sign;
         private List<ChildrenBean> children;
+
+        public ChildrenBeanX() {
+        }
+
+        protected ChildrenBeanX(android.os.Parcel in) {
+            this.appCategoryStatus = in.readString();
+            this.authorization = in.readByte() != 0;
+            this.imageLink = in.readString();
+            this.link = in.readString();
+            this.name = in.readString();
+            this.sign = in.readString();
+            this.children = new ArrayList<ChildrenBean>();
+            in.readList(this.children, ChildrenBean.class.getClassLoader());
+        }
+
+        public String getRemark() {
+            return remark;
+        }
+
+        public void setRemark(String remark) {
+            this.remark = remark;
+        }
 
         public String getAppCategoryStatus() {
             return appCategoryStatus;
@@ -158,7 +204,34 @@ public class ToolCategoryBean {
             this.children = children;
         }
 
-        public static class ChildrenBean {
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(android.os.Parcel dest, int flags) {
+            dest.writeString(this.appCategoryStatus);
+            dest.writeByte(this.authorization ? (byte) 1 : (byte) 0);
+            dest.writeString(this.imageLink);
+            dest.writeString(this.link);
+            dest.writeString(this.name);
+            dest.writeString(this.sign);
+            dest.writeList(this.children);
+        }
+
+        public static class ChildrenBean implements Parcelable {
+            public static final Creator<ChildrenBean> CREATOR = new Creator<ChildrenBean>() {
+                @Override
+                public ChildrenBean createFromParcel(android.os.Parcel source) {
+                    return new ChildrenBean(source);
+                }
+
+                @Override
+                public ChildrenBean[] newArray(int size) {
+                    return new ChildrenBean[size];
+                }
+            };
             /**
              * appCategoryStatus : Native
              * authorization : true
@@ -175,7 +248,40 @@ public class ToolCategoryBean {
             private String link;
             private String name;
             private String sign;
+            private String remark;
             private List<?> children;
+
+            public ChildrenBean() {
+            }
+
+            public ChildrenBean(String appCategoryStatus, boolean authorization, String imageLink, String link, String name, String sign, List<?> children) {
+                this.appCategoryStatus = appCategoryStatus;
+                this.authorization = authorization;
+                this.imageLink = imageLink;
+                this.link = link;
+                this.name = name;
+                this.sign = sign;
+                this.children = children;
+            }
+
+            protected ChildrenBean(android.os.Parcel in) {
+                this.appCategoryStatus = in.readString();
+                this.authorization = in.readByte() != 0;
+                this.imageLink = in.readString();
+                this.link = in.readString();
+                this.name = in.readString();
+                this.sign = in.readString();
+//                this.children = new ArrayList<?>();
+//                in.readList(this.children, ?.class.getClassLoader());
+            }
+
+            public String getRemark() {
+                return remark;
+            }
+
+            public void setRemark(String remark) {
+                this.remark = remark;
+            }
 
             public String getAppCategoryStatus() {
                 return appCategoryStatus;
@@ -232,6 +338,24 @@ public class ToolCategoryBean {
             public void setChildren(List<?> children) {
                 this.children = children;
             }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(android.os.Parcel dest, int flags) {
+                dest.writeString(this.appCategoryStatus);
+                dest.writeByte(this.authorization ? (byte) 1 : (byte) 0);
+                dest.writeString(this.imageLink);
+                dest.writeString(this.link);
+                dest.writeString(this.name);
+                dest.writeString(this.sign);
+                dest.writeList(this.children);
+            }
         }
     }
+
+
 }

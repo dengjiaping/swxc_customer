@@ -18,7 +18,7 @@ import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterService;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.model.ToolCategoryBean;
-import com.shiwaixiangcun.customer.model.TreeBean;
+import com.shiwaixiangcun.customer.utils.GridUtils;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
@@ -75,7 +75,7 @@ public class MoreToolsActivity extends BaseActivity implements View.OnClickListe
                                     List<ToolCategoryBean.ChildrenBeanX.ChildrenBean> childrenList = headItem.getChildren();
                                     for (ToolCategoryBean.ChildrenBeanX.ChildrenBean childrenBean : childrenList) {
 
-                                        TreeBean treeBean = new TreeBean();
+                                        ToolCategoryBean.ChildrenBeanX.ChildrenBean treeBean = new ToolCategoryBean.ChildrenBeanX.ChildrenBean();
                                         treeBean.setName(childrenBean.getName());
                                         treeBean.setAppCategoryStatus(childrenBean.getAppCategoryStatus());
                                         treeBean.setLink(childrenBean.getLink());
@@ -88,7 +88,6 @@ public class MoreToolsActivity extends BaseActivity implements View.OnClickListe
 
 
                                 mAdapterService.notifyDataSetChanged();
-//                                EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_MAIN, 4, responseEntity.getData()));
                                 break;
 
                         }
@@ -107,6 +106,19 @@ public class MoreToolsActivity extends BaseActivity implements View.OnClickListe
         mRvCategory.setLayoutManager(new GridLayoutManager(this, 2));
         mRvCategory.setAdapter(mAdapterService);
         mAdapterService.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
+        mAdapterService.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                AdapterService.MySection bean = (AdapterService.MySection) adapter.getData().get(position);
+                showToastShort(position + "");
+                if (bean.getTreeBean() == null) {
+                    return;
+                } else {
+                    GridUtils.go(mContext, bean.getTreeBean());
+                }
+
+            }
+        });
 
 
     }
