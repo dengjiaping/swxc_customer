@@ -135,7 +135,7 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
     protected void initViewsAndEvents(View view) {
 
         initHeader(view);
-        siteName = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.SITE_NAME, "天鹅堡森林公园");
+        siteName = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.SITE_NAME, "世外生活");
         mIvMessage.setOnClickListener(this);
         mLlayoutSite.setOnClickListener(this);
         mTvLocation.setText(siteName);
@@ -673,9 +673,7 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
             startActivity(intent);
 
         } else {
-            Log.e(BUG_TAG, "不是商品");
             Intent intent = new Intent(mContext, BannerDetailsActivity.class);
-            Log.e("fragmentMall", "banner连接：" + linkUrl);
             intent.putExtra("bannerlink", linkUrl);
             startActivity(intent);
         }

@@ -49,6 +49,7 @@ public class GlobalAPI {
     public static String getMessage = HM_DOMAIN + "/mc/message/core/list.json";
     public static String getToolCategory = OT_DOMAIN + "/mi/app/category/tree.json";
     public static String getPrivacy = PM_DOMAIN + "/mi/privacyPolicy.htm";
+    public static String getSite = OT_DOMAIN + "/mi/site/listdata.json";
     private static String DOMAIN = MK_DOMAIN;
     public static String getCategory = DOMAIN + "/mi/goods/category/tree.json";
     //地址相关接口
