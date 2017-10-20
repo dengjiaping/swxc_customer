@@ -1,8 +1,7 @@
 package com.shiwaixiangcun.customer.ui.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ListView;
@@ -16,9 +15,9 @@ import com.shiwaixiangcun.customer.adapter.RecordAccessListAdapter;
 import com.shiwaixiangcun.customer.adapter.RecordfinishListAdapter;
 import com.shiwaixiangcun.customer.model.RecordBean;
 import com.shiwaixiangcun.customer.presenter.impl.HouseRecordImpl;
+import com.shiwaixiangcun.customer.ui.IRecordView;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 import com.shiwaixiangcun.customer.widget.MyListView;
-import com.shiwaixiangcun.customer.ui.IRecordView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +31,8 @@ public class RecordsActivity extends AppCompatActivity implements View.OnClickLi
     private MyListView lv_finish;
     private TextView tv_tv;
     private RelativeLayout rl_title;
+    private List<RecordBean.DataBean.ElementsBean> list_finish = new ArrayList<>();
+    private List<RecordBean.DataBean.ElementsBean> list_accept = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,11 +89,9 @@ public class RecordsActivity extends AppCompatActivity implements View.OnClickLi
                 break;
         }
     }
-    private List<RecordBean.DataBean.ElementsBean> list_finish = new ArrayList<>();
-    private List<RecordBean.DataBean.ElementsBean> list_accept = new ArrayList<>();
+
     @Override
     public void setBgaAdpaterAndClickResult(RecordBean result) {
-        Log.i("aaaaaaa",result.getData().getElements().size()+"");
 //        List<SubmitRecordsBean> elements = result.getData().getElements();
         List<RecordBean.DataBean.ElementsBean> elements = result.getData().getElements();
         for (int i = 0; i < elements.size(); i++) {
@@ -115,7 +114,6 @@ public class RecordsActivity extends AppCompatActivity implements View.OnClickLi
             rl_title.setVisibility(View.VISIBLE);
         }
 
-        Log.i("gggggoopa",list_finish.size()+"---------"+list_accept.size());
 
         RecordAccessListAdapter recordAccessListAdapter = new RecordAccessListAdapter(list_accept,this);
         lv_accept.setAdapter(recordAccessListAdapter);

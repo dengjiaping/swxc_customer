@@ -1,7 +1,6 @@
 package com.shiwaixiangcun.customer.presenter.impl;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -40,12 +39,9 @@ public class SurroundTopImpl implements ISurroundTopPresenter {
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("fields", "cover,id,name,feature");
         hashMap.put("typeId", merchantId);
-
-        Log.e("dddddd", hashMap.toString() + "-----------" + Common.getRent);
         HttpRequest.get(Common.merchant, hashMap, new HttpCallBack() {
             @Override
             public void onSuccess(String responseJson) {
-                Log.e("oooooo---onSuccess---merchant", responseJson);
                 MerchantListBean merchantListBean = new Gson().fromJson(responseJson, MerchantListBean.class);
                 if (merchantListBean.getResponseCode() == 1001){
                     iSurroundTopView.setBgaAdpaterAndClickResult(merchantListBean);
@@ -57,7 +53,6 @@ public class SurroundTopImpl implements ISurroundTopPresenter {
 
             @Override
             public void onFailed(Exception e) {
-                Log.e("oooooo---onFailed---", e.toString());
                 Toast.makeText(context,"网络异常，请稍后再试...",Toast.LENGTH_LONG).show();
 
             }

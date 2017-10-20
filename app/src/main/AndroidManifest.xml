@@ -169,7 +169,7 @@
             android:name=".ui.activity.heath.BloodFatHistoryActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.activity.ForLifeActivity"
+            android:name=".ui.activity.AboutActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name="com.mob.tools.MobUIShell"
@@ -518,6 +518,8 @@
         <activity android:name=".ui.activity.MoreToolsActivity">
         </activity>
         <activity android:name=".ui.activity.ToolsDetailActivity">
+        </activity>
+        <activity android:name=".ui.activity.PrivacyActivity">
         </activity>
     </application>
 

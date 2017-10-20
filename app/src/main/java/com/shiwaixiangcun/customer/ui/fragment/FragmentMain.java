@@ -53,6 +53,7 @@ import com.shiwaixiangcun.customer.ui.activity.LoginActivity;
 import com.shiwaixiangcun.customer.ui.activity.MessageActivity;
 import com.shiwaixiangcun.customer.ui.activity.MoreToolsActivity;
 import com.shiwaixiangcun.customer.ui.activity.SiteActivity;
+import com.shiwaixiangcun.customer.ui.activity.SurroundLifeActivity;
 import com.shiwaixiangcun.customer.ui.activity.ToolsDetailActivity;
 import com.shiwaixiangcun.customer.ui.activity.mall.GoodDetailActivity;
 import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
@@ -217,9 +218,17 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 ToolCategoryBean.ChildrenBeanX item = (ToolCategoryBean.ChildrenBeanX) adapter.getData().get(position);
                 String jsonItem = JsonUtil.toJson(item);
+
+
+                //如果点击全部服务
                 if (position == adapter.getData().size() - 1) {
                     readyGo(MoreToolsActivity.class);
-                } else if (item != null && item.getChildren().size() > 0) {
+                } else if (item.getSign().equals("VICINITY_LIFE")) {
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("item", jsonItem);
+                    readyGo(SurroundLifeActivity.class);
+                } else {
                     Bundle bundle = new Bundle();
                     bundle.putString("item", jsonItem);
                     readyGo(ToolsDetailActivity.class, bundle);
@@ -549,6 +558,7 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
      */
     private void setBannerData(SimpleEvent simpleEvent) {
         final List<BannerBean> dataList = (List<BannerBean>) simpleEvent.getData();
+        imageList.clear();
         for (BannerBean bean : dataList) {
             imageList.add(bean.getImagePath());
         }

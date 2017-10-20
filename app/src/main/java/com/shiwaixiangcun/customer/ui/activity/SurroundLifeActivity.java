@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -17,7 +16,7 @@ import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.HomeSurroundAdapter;
 import com.shiwaixiangcun.customer.adapter.MerchTypeAdapter;
 import com.shiwaixiangcun.customer.model.AllMerchBean;
-import com.shiwaixiangcun.customer.model.SurroundmerchantTypeBean;
+import com.shiwaixiangcun.customer.model.SurroundMerchantTypeBean;
 import com.shiwaixiangcun.customer.presenter.impl.HomeSurroundImpl;
 import com.shiwaixiangcun.customer.ui.IHomeSurroundView;
 import com.shiwaixiangcun.customer.utils.Utils;
@@ -39,11 +38,11 @@ public class SurroundLifeActivity extends AppCompatActivity implements View.OnCl
     private TextView tv_page_name;
     private PullableListView lv_surround;
     private List<String> list_surround = new ArrayList<>();
-    private MyGridView mgv_merch_type;
-    private List<SurroundmerchantTypeBean.DataBean> list_merch_type = new ArrayList<>();
+    private MyGridView mGvMerchType;
+    private List<SurroundMerchantTypeBean.DataBean> mListMerchType = new ArrayList<>();
     private MerchTypeAdapter merchTypeAdapter;
     private HomeSurroundImpl homeSurroundImpl;
-    private List<AllMerchBean.DataBean.ElementsBean> list_merch_all = new ArrayList<>();
+    private List<AllMerchBean.DataBean.ElementsBean> mListMerchAll = new ArrayList<>();
     private HomeSurroundAdapter homeSurroundAdapter;
     private String all_id = "";
     private TextView tv_first_name_merch;
@@ -85,7 +84,7 @@ public class SurroundLifeActivity extends AppCompatActivity implements View.OnCl
 
 
         View surround_view = LayoutInflater.from(this).inflate(R.layout.head_surround, null);
-        mgv_merch_type = (MyGridView) surround_view.findViewById(R.id.mgv_merch_type);
+        mGvMerchType = (MyGridView) surround_view.findViewById(R.id.mgv_merch_type);
         tv_first_name_merch = (TextView) surround_view.findViewById(R.id.tv_first_name_merch);
         tv_first_feature = (TextView) surround_view.findViewById(R.id.tv_first_feature);
         iv_first_merch = (ImageView) surround_view.findViewById(R.id.iv_first_merch);
@@ -103,14 +102,10 @@ public class SurroundLifeActivity extends AppCompatActivity implements View.OnCl
         int width = wm.getDefaultDisplay().getWidth();
         int height = wm.getDefaultDisplay().getHeight();
 
-
         LinearLayout.LayoutParams linearParams =(LinearLayout.LayoutParams) iv_first_merch.getLayoutParams(); //取控件textView当前的布局参数 linearParams.height = 20;// 控件的高强制设成20
-
         linearParams.width = width-100;
         linearParams.height = (width-100)/2;
-
         iv_first_merch.setLayoutParams(linearParams);
-
         homeSurroundImpl = new HomeSurroundImpl(this);
         homeSurroundImpl.setBgaAdpaterAndClick(this);
         tv_page_name.setText("周边生活");
@@ -118,41 +113,34 @@ public class SurroundLifeActivity extends AppCompatActivity implements View.OnCl
             list_surround.add("周边"+i);
         }
         //商铺类型
-        merchTypeAdapter = new MerchTypeAdapter(list_merch_type,this);
-        mgv_merch_type.setAdapter(merchTypeAdapter);
+        merchTypeAdapter = new MerchTypeAdapter(mListMerchType, this);
+        mGvMerchType.setAdapter(merchTypeAdapter);
 
 
-        homeSurroundAdapter = new HomeSurroundAdapter(list_merch_all,this);
+        homeSurroundAdapter = new HomeSurroundAdapter(mListMerchAll, this);
         lv_surround.setAdapter(homeSurroundAdapter);
-
-//        getlt(list_surround);
-
-
-
         back_left.setOnClickListener(this);
 
         lv_surround.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(SurroundLifeActivity.this,SurroundDetailActivity.class);
-                intent.putExtra("merchId",list_merch_all.get(i-1).getId()+"");
+                intent.putExtra("merchId", mListMerchAll.get(i - 1).getId() + "");
                 startActivity(intent);
             }
         });
-        mgv_merch_type.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mGvMerchType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                Log.e("nnnnnnnnnnnnnnnn",i+"");
-                String detailId = list_merch_type.get(i).getDetailId();
+                String detailId = mListMerchType.get(i).getDetailId();
                 if (Utils.isNotEmpty(detailId)){
                     Intent intent = new Intent(SurroundLifeActivity.this,SurroundDetailActivity.class);
                     intent.putExtra("merchId",detailId);
                     startActivity(intent);
                 }else {
                     Intent intent = new Intent(SurroundLifeActivity.this,SurroundTopActivity.class);
-                    intent.putExtra("merchant",list_merch_type.get(i).getId()+"");
-                    intent.putExtra("nameType",list_merch_type.get(i).getName());
+                    intent.putExtra("merchant", mListMerchType.get(i).getId() + "");
+                    intent.putExtra("nameType", mListMerchType.get(i).getName());
                     startActivity(intent);
                 }
 
@@ -170,7 +158,7 @@ public class SurroundLifeActivity extends AppCompatActivity implements View.OnCl
                 finish();
                 break;
             case R.id.ll_merch_wonderful:
-                if (list_merch_all.size() != 0){
+                if (mListMerchAll.size() != 0) {
                     Intent intent = new Intent(SurroundLifeActivity.this,SurroundDetailActivity.class);
                     intent.putExtra("merchId",all_march_list.get(0).getId()+"");
                     startActivity(intent);
@@ -180,20 +168,19 @@ public class SurroundLifeActivity extends AppCompatActivity implements View.OnCl
     }
 
     @Override
-    public void setBgaAdpaterAndClickResult(SurroundmerchantTypeBean result) {
-        list_merch_type.clear();
-        List<SurroundmerchantTypeBean.DataBean> data_merch_type = result.getData();
+    public void setBgaAdpaterAndClickResult(SurroundMerchantTypeBean result) {
+        mListMerchType.clear();
+        List<SurroundMerchantTypeBean.DataBean> data_merch_type = result.getData();
         if (data_merch_type.size() != 0){
 
             for (int i = 0; i < data_merch_type.size(); i++) {
                 if (data_merch_type.get(i).isAll()){
                     all_id = data_merch_type.get(i).getId()+"";
                 }else {
-                    list_merch_type.add(data_merch_type.get(i));
+                    mListMerchType.add(data_merch_type.get(i));
                 }
             }
 
-            Log.e("rrrrrrrrraaa",list_merch_all.size()+"");
             merchTypeAdapter.notifyDataSetChanged();
 
 
@@ -210,7 +197,7 @@ public class SurroundLifeActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void setAllMerchResult(AllMerchBean result) {
-        list_merch_all.clear();
+        mListMerchAll.clear();
         tv_find_wonderful.setText("发现精彩");
         iv_find_image_a.setImageResource(R.mipmap.surround_left);
         iv_find_image_b.setImageResource(R.mipmap.surround_right);
@@ -219,10 +206,9 @@ public class SurroundLifeActivity extends AppCompatActivity implements View.OnCl
         if (all_march_list.size() != 0){
             for (int i = 0; i < all_march_list.size(); i++) {
                 if (i > 0){
-                    list_merch_all.add(all_march_list.get(i));
+                    mListMerchAll.add(all_march_list.get(i));
                 }
             }
-//            list_merch_all.addAll(all_march_list);
             if (homeSurroundAdapter != null){
                 homeSurroundAdapter.notifyDataSetChanged();
             }
@@ -234,7 +220,7 @@ public class SurroundLifeActivity extends AppCompatActivity implements View.OnCl
             }
         }
 
-        if (list_merch_all.size() == 0){
+        if (mListMerchAll.size() == 0) {
             ll_merch_wonderful.setVisibility(View.GONE);
         }else {
             ll_merch_wonderful.setVisibility(View.VISIBLE);
@@ -244,31 +230,4 @@ public class SurroundLifeActivity extends AppCompatActivity implements View.OnCl
     }
 
 
-//    private void getlt(final List<SurroundmerchantTypeBean.DataBean> certificates) {
-//
-//
-//
-//        for (int i = 0; i < certificates.size(); i++) {
-//
-//            View view = LayoutInflater.from(this).inflate(R.layout.item_home_surround_image, id_gallery, false);
-//            ImageView iv_certificates = (ImageView) view.findViewById(R.id.iv_certificates);
-//            TextView tv_name_merch_type = (TextView) view.findViewById(R.id.tv_name_merch_type);
-////            if (Utils.isNotEmpty(certificates.get(i).getOrgPath())) {
-////                Picasso.with(this).load(certificates.get(i).get()).into(iv_certificates);
-////
-////            }
-//            tv_name_merch_type.setText(certificates.get(i).getName());
-//            iv_certificates.setImageResource(R.mipmap.image_black);
-//            final int finalI = i;
-//            view.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    Log.e("vvvviiia","----------aaa"+ finalI);
-//                    Intent intent = new Intent(SurroundLifeActivity.this,SurroundTopActivity.class);
-//                    startActivity(intent);
-//                }
-//            });
-//            id_gallery.addView(view);
-//        }
-//    }
 }

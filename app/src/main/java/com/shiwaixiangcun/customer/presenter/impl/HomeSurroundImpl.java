@@ -1,7 +1,6 @@
 package com.shiwaixiangcun.customer.presenter.impl;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -12,7 +11,7 @@ import com.shiwaixiangcun.customer.Common;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
 import com.shiwaixiangcun.customer.model.AllMerchBean;
-import com.shiwaixiangcun.customer.model.SurroundmerchantTypeBean;
+import com.shiwaixiangcun.customer.model.SurroundMerchantTypeBean;
 import com.shiwaixiangcun.customer.presenter.IHomeSurroundPresenter;
 import com.shiwaixiangcun.customer.ui.IHomeSurroundView;
 
@@ -46,19 +45,13 @@ public class HomeSurroundImpl implements IHomeSurroundPresenter {
     private void sendMerchantTypeHttp(final Context context) {
         HashMap<String, Object> hashMap = new HashMap<>();
 
-        Log.e("ddddddaaass", hashMap.toString() + "-----------" + Common.getRent);
         HttpRequest.get(Common.merchantType, hashMap, new HttpCallBack() {
             @Override
             public void onSuccess(String responseJson) {
-                Log.e("oooooo---onSuccess---merchantType", responseJson);
-                SurroundmerchantTypeBean surroundmerchantTypeBean = new Gson().fromJson(responseJson, SurroundmerchantTypeBean.class);
+                SurroundMerchantTypeBean surroundmerchantTypeBean = new Gson().fromJson(responseJson, SurroundMerchantTypeBean.class);
                 JSONObject jsonObject = JSON.parseObject(responseJson);
                 JSONArray data = jsonObject.getJSONArray("data");
                 Boolean all = data.getJSONObject(1).getBoolean("all");
-
-                Log.e("ggggghhaa",all+"");
-
-
                 if (surroundmerchantTypeBean.getResponseCode() == 1001){
                     iHomeSurroundView.setBgaAdpaterAndClickResult(surroundmerchantTypeBean);
                 }else {
@@ -70,7 +63,6 @@ public class HomeSurroundImpl implements IHomeSurroundPresenter {
 
             @Override
             public void onFailed(Exception e) {
-                Log.e("oooooo---onFailed---", e.toString());
                 Toast.makeText(context,"网络异常，请稍后再试...",Toast.LENGTH_LONG).show();
 
             }
@@ -83,11 +75,9 @@ public class HomeSurroundImpl implements IHomeSurroundPresenter {
         hashMap.put("fields","cover,id,name,feature");
         hashMap.put("typeId",all_id);
 
-        Log.e("dddddd", hashMap.toString() + "-----------" + Common.getRent);
         HttpRequest.get(Common.merchant, hashMap, new HttpCallBack() {
             @Override
             public void onSuccess(String responseJson) {
-                Log.e("oooooo---onSuccess---merchant", responseJson);
                 AllMerchBean allMerchBean = new Gson().fromJson(responseJson, AllMerchBean.class);
                 if (allMerchBean.getResponseCode() == 1001){
                     iHomeSurroundView.setAllMerchResult(allMerchBean);
@@ -100,7 +90,6 @@ public class HomeSurroundImpl implements IHomeSurroundPresenter {
 
             @Override
             public void onFailed(Exception e) {
-                Log.e("oooooo---onFailed---", e.toString());
                 Toast.makeText(context,"网络异常，请稍后再试...",Toast.LENGTH_LONG).show();
 
             }

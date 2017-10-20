@@ -7,7 +7,7 @@ import java.util.List;
  * Created by Administrator on 2017/7/22.
  */
 
-public class SurroundmerchantTypeBean implements Serializable{
+public class SurroundMerchantTypeBean implements Serializable {
 
 
     /**

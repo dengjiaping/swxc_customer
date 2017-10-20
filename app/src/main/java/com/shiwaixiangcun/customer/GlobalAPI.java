@@ -8,12 +8,16 @@ package com.shiwaixiangcun.customer;
 public class GlobalAPI {
 
     //春雨医生测试服务器
+    public static final String PM_DOMAIN = "http://pm.shiwaixiangcun.cn";
     public static String DC_DOMAIN = "https://test.chunyu.me";
     public static String HM_DOMAIN = "http://hm.shiwaixiangcun.cn";
     public static String NO_DOMAIN = "http://shiwaixiangcun.cn";
     public static String OT_DOMAIN = "http://ot.shiwaixiangcun.cn";
     public static String MK_DOMAIN = "http://mk.shiwaixiangcun.cn";
     //春雨医生正式服务器
+
+
+    //    public static final String PM_DOMAIN = "http://pm.hxteb.cn";
 //    public static String DC_DOMAIN = "https://www.chunyuyisheng.com";
 //    public static String HM_DOMAIN = "http://hm.hxteb.com";
 //    public static String MK_DOMAIN = "http://mk.hxteb.com";
@@ -44,6 +48,7 @@ public class GlobalAPI {
     public static String getRecipeList = HM_DOMAIN + "/mi/health/dietList.json";
     public static String getMessage = HM_DOMAIN + "/mc/message/core/list.json";
     public static String getToolCategory = OT_DOMAIN + "/mi/app/category/tree.json";
+    public static String getPrivacy = PM_DOMAIN + "/mi/privacyPolicy.htm";
     private static String DOMAIN = MK_DOMAIN;
     public static String getCategory = DOMAIN + "/mi/goods/category/tree.json";
     //地址相关接口

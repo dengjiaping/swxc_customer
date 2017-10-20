@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shiwaixiangcun.customer.R;
-import com.shiwaixiangcun.customer.model.SurroundmerchantTypeBean;
+import com.shiwaixiangcun.customer.model.SurroundMerchantTypeBean;
 import com.shiwaixiangcun.customer.utils.Utils;
 import com.squareup.picasso.Picasso;
 
@@ -20,10 +20,10 @@ import java.util.List;
  * Created by Administrator on 2016/7/13.
  */
 public class MerchTypeAdapter extends BaseAdapter {
-    private List<SurroundmerchantTypeBean.DataBean>  list;
+    private List<SurroundMerchantTypeBean.DataBean> list;
     private Context context;
 
-    public MerchTypeAdapter(List<SurroundmerchantTypeBean.DataBean> list, Context context) {
+    public MerchTypeAdapter(List<SurroundMerchantTypeBean.DataBean> list, Context context) {
         this.list = list;
         this.context = context;
     }

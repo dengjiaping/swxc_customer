@@ -30,9 +30,9 @@ import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.model.UpdateAppBean;
 import com.shiwaixiangcun.customer.presenter.impl.MyMineImpl;
 import com.shiwaixiangcun.customer.ui.IMyMineView;
+import com.shiwaixiangcun.customer.ui.activity.AboutActivity;
 import com.shiwaixiangcun.customer.ui.activity.FamilyActivity;
 import com.shiwaixiangcun.customer.ui.activity.FeedBackActivity;
-import com.shiwaixiangcun.customer.ui.activity.ForLifeActivity;
 import com.shiwaixiangcun.customer.ui.activity.InformationActivity;
 import com.shiwaixiangcun.customer.ui.activity.LoginActivity;
 import com.shiwaixiangcun.customer.ui.activity.mall.ManageAddressActivity;
@@ -190,7 +190,7 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, IM
                 showLoginoutDialog(tv_wy_phone.getText().toString().trim());
                 break;
             case R.id.rl_for_life:
-                Intent intent_version = new Intent(mContext, ForLifeActivity.class);
+                Intent intent_version = new Intent(mContext, AboutActivity.class);
                 startActivity(intent_version);
                 break;
             case R.id.rl_app_address:

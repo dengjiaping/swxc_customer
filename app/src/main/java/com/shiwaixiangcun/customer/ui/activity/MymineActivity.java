@@ -156,7 +156,7 @@ public class MymineActivity extends AppCompatActivity implements View.OnClickLis
                 showLoginoutDialog(tv_wy_phone.getText().toString().trim());
                 break;
             case R.id.rl_for_life:
-                Intent intent_version = new Intent(this, ForLifeActivity.class);
+                Intent intent_version = new Intent(this, AboutActivity.class);
                 startActivity(intent_version);
                 break;
             case R.id.rl_app_address:
