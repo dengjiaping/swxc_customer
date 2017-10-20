@@ -24,7 +24,7 @@ public class AdapterMerchant extends BaseQuickAdapter<MerchantListBean.DataBean.
     @Override
     protected void convert(BaseViewHolder helper, MerchantListBean.DataBean.ElementsBean item) {
         helper.setText(R.id.tv_merch_content, item.getFeature());
-        helper.setTag(R.id.tv_merch_name, item.getName());
+        helper.setText(R.id.tv_merch_name, item.getName());
         ImageView imageView = helper.getView(R.id.iv_merch);
         ImageDisplayUtil.showImageView(mContext, item.getCover(), imageView);
 

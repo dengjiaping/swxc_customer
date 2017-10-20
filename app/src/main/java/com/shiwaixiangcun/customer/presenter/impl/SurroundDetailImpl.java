@@ -39,12 +39,10 @@ public class SurroundDetailImpl implements ISurroundDetailPresenter {
     private void sendGetRentHttp(final Context context,String merchId) {
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("id", merchId);
-
-        Log.e("dddddd", hashMap.toString() + "-----------" + Common.merchantDetail);
         HttpRequest.get(Common.merchantDetail, hashMap, new HttpCallBack() {
             @Override
             public void onSuccess(String responseJson) {
-                Log.e("oooooo---onSuccess---merchantDetail", responseJson);
+
                 MerchDetailBean merchDetailBean = new Gson().fromJson(responseJson, MerchDetailBean.class);
                 if (merchDetailBean.getResponseCode() == 1001){
                     iSurroundDetailView.setBgaAdpaterAndClickResult(merchDetailBean);

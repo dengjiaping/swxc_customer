@@ -77,14 +77,6 @@ public class SiteActivity extends BaseActivity implements View.OnClickListener {
                         }
                     }
                 });
-//        Site site1 = new Site(1, "恒信天鹅堡森林公园");
-//        Site site2 = new Site(2, "恒信天然森林");
-//        Site site3 = new Site(3, "恒信三岔湖森林公园");
-//
-//        mSiteList.add(site1);
-//        mSiteList.add(site2);
-//        mSiteList.add(site3);
-//        mAdapterSite.notifyDataSetChanged();
     }
 
     private void initViewAndEvent() {

@@ -59,12 +59,14 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
     RelativeLayout mTopBarWrite;
     @BindView(R.id.webview)
     WebView mWebView;
-    String isOrnotLogin_renting;
+    String isLogin;
     private boolean isApperenceToken = false;
     private int type;
     private StringBuilder urlBuilder = new StringBuilder();
     private String tokenString;
     private int userId;
+    private String strLink;
+    private boolean authorization;
 
     /**
      * 清除Cookie
@@ -117,7 +119,7 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
         switch (type) {
             case 3:
 
-                if (!Utils.isNotEmpty(isOrnotLogin_renting)) {
+                if (!Utils.isNotEmpty(isLogin)) {
                     readyGoThenKill(LoginActivity.class);
                 }
                 mTvPageName.setText("健康方案");
@@ -126,7 +128,7 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case 4:
 
-                if (!Utils.isNotEmpty(isOrnotLogin_renting)) {
+                if (!Utils.isNotEmpty(isLogin)) {
                     readyGoThenKill(LoginActivity.class);
                 }
                 urlBuilder.append(GlobalAPI.HM_DOMAIN).append("/mc/serviceList/view.htm");
@@ -211,8 +213,10 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
     private void initData() {
         Bundle bundle = getIntent().getExtras();
         type = bundle.getInt("type", -1);
+        strLink = bundle.getString("link");
+        authorization = bundle.getBoolean("authorization");
 
-        isOrnotLogin_renting = SharePreference.getStringSpParams(mContext, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
+        isLogin = SharePreference.getStringSpParams(mContext, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
 
         tokenString = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
         Log.e(BUG_TAG, "页面获取的Token：" + tokenString);

@@ -33,7 +33,6 @@ public class MerchantActivity extends BaseActivity implements View.OnClickListen
 
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
-
     @BindView(R.id.back_left)
     ChangeLightImageView mBackLeft;
     @BindView(R.id.tv_page_name)

@@ -71,5 +71,9 @@ public class GlobalAPI {
     //分享相关
     public static String shareGoods = DOMAIN + "/mi/goods/share/";
     public static String appLogo = DOMAIN + "http://resource.hxteb.com/group1/M00/00/26/rBKx5Vl4TMCAUPgUAAB6YxNdWvs030.png";
-    public static String getMerchant=PM_DOMAIN+"/mi/merchant/listpage/type.json";
+    private static final String PM_DOMAIN = "http://pm.shiwaixiangcun.cn";
+    public static String getMerchant = PM_DOMAIN + "/mi/merchant/listpage/type.json";
+    public static String getToolCategory = OT_DOMAIN + "/mi/app/category/tree.json";
+    public static String getPrivacy = MK_DOMAIN + "/mi/privacyPolicy.htm";
+    public static String getSite=OT_DOMAIN+"/mi/site/listdata.json";
 }

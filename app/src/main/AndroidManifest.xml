@@ -523,6 +523,8 @@
         </activity>
         <activity android:name=".ui.activity.MerchantActivity">
         </activity>
+        <activity android:name=".ui.activity.NotOpenActivity">
+        </activity>
     </application>
 
 </manifest>

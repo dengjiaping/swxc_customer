@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.icu.text.BreakIterator;
 import android.os.Bundle;
+import android.util.EventLog;
 
 import com.shiwaixiangcun.customer.Common;
 import com.shiwaixiangcun.customer.ContextSession;
@@ -18,6 +19,7 @@ import com.shiwaixiangcun.customer.ui.activity.ResidentCertificationActivity;
 import com.shiwaixiangcun.customer.ui.activity.SurroundLifeActivity;
 import com.shiwaixiangcun.customer.ui.activity.heath.HealthEvaluationActivity;
 import com.shiwaixiangcun.customer.ui.activity.heath.PhysicalActivity;
+import com.shiwaixiangcun.customer.ui.activity.heath.WebActivity;
 
 /**
  * Created by Administrator on 2017/10/19.
@@ -56,6 +58,16 @@ public class GridUtils {
     public static void readyGo(Context context, ToolCategoryBean.ChildrenBeanX.ChildrenBean bean) {
         String isOrNotLogin = SharePreference.getStringSpParams(context, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
         Bundle bundle = new Bundle();
+
+        if (bean.getAppCategoryStatus().endsWith("H5")) {
+            bundle.putInt("type", 12);
+            bundle.putString("link", bean.getLink());
+            bundle.putBoolean("authorization", bean.isAuthorization());
+            readyGo(context, WebActivity.class, bundle);
+
+        } else {
+
+        }
         if (bean.getSign() == null) {
 
             switch (bean.getName()) {
@@ -112,23 +124,23 @@ public class GridUtils {
 
             //餐饮美食
             case "FOOD_AND_BEVERAGE":
-                bundle.putString("sign","FOOD_AND_BEVERAGE");
-                readyGo(context,MerchantActivity.class,bundle);
+                bundle.putString("sign", "FOOD_AND_BEVERAGE");
+                readyGo(context, MerchantActivity.class, bundle);
                 break;
             //酒店住宿
             case "HOTELS_AND_LODGING":
-                bundle.putString("sign","HOTELS_AND_LODGING");
-                readyGo(context,MerchantActivity.class,bundle);
+                bundle.putString("sign", "HOTELS_AND_LODGING");
+                readyGo(context, MerchantActivity.class, bundle);
                 break;
             //超市
             case "SUPERMARKET":
-                bundle.putString("sign","SUPERMARKET");
-                readyGo(context,MerchantActivity.class,bundle);
+                bundle.putString("sign", "SUPERMARKET");
+                readyGo(context, MerchantActivity.class, bundle);
                 break;
             //医院
             case "HOSPITAL":
-                bundle.putString("sign","HOSPITAL");
-                readyGo(context,MerchantActivity.class,bundle);
+                bundle.putString("sign", "HOSPITAL");
+                readyGo(context, MerchantActivity.class, bundle);
                 break;
             //找装修
             case "FIND_DECORATION":
