@@ -72,7 +72,7 @@ public class ToolsDetailActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 ToolCategoryBean.ChildrenBeanX.ChildrenBean bean = (ToolCategoryBean.ChildrenBeanX.ChildrenBean) adapter.getData().get(position);
-                GridUtils.go(mContext, bean);
+                GridUtils.readyGo(mContext, bean);
             }
         });
     }

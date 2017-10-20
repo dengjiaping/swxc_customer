@@ -110,11 +110,10 @@ public class MoreToolsActivity extends BaseActivity implements View.OnClickListe
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 AdapterService.MySection bean = (AdapterService.MySection) adapter.getData().get(position);
-                showToastShort(position + "");
                 if (bean.getTreeBean() == null) {
                     return;
                 } else {
-                    GridUtils.go(mContext, bean.getTreeBean());
+                    GridUtils.readyGo(mContext, bean.getTreeBean());
                 }
 
             }

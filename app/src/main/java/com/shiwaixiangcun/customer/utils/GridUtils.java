@@ -2,6 +2,7 @@ package com.shiwaixiangcun.customer.utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.icu.text.BreakIterator;
 import android.os.Bundle;
 
 import com.shiwaixiangcun.customer.Common;
@@ -10,8 +11,11 @@ import com.shiwaixiangcun.customer.model.ToolCategoryBean;
 import com.shiwaixiangcun.customer.ui.activity.HouseRentingActivity;
 import com.shiwaixiangcun.customer.ui.activity.LoginActivity;
 import com.shiwaixiangcun.customer.ui.activity.LookDecoratingActivity;
+import com.shiwaixiangcun.customer.ui.activity.MerchantActivity;
 import com.shiwaixiangcun.customer.ui.activity.OnlineServiceActivity;
+import com.shiwaixiangcun.customer.ui.activity.RecipeActivity;
 import com.shiwaixiangcun.customer.ui.activity.ResidentCertificationActivity;
+import com.shiwaixiangcun.customer.ui.activity.SurroundLifeActivity;
 import com.shiwaixiangcun.customer.ui.activity.heath.HealthEvaluationActivity;
 import com.shiwaixiangcun.customer.ui.activity.heath.PhysicalActivity;
 
@@ -49,9 +53,25 @@ public class GridUtils {
      * @param bean    数据
      */
 
-    public static void go(Context context, ToolCategoryBean.ChildrenBeanX.ChildrenBean bean) {
+    public static void readyGo(Context context, ToolCategoryBean.ChildrenBeanX.ChildrenBean bean) {
         String isOrNotLogin = SharePreference.getStringSpParams(context, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
+        Bundle bundle = new Bundle();
         if (bean.getSign() == null) {
+
+            switch (bean.getName()) {
+                case "高血脂食谱":
+                    bundle.putInt("current", 2);
+                    readyGo(context, RecipeActivity.class, bundle);
+                    break;
+                case "高血压食谱":
+                    bundle.putInt("current", 0);
+                    readyGo(context, RecipeActivity.class, bundle);
+                    break;
+                case "糖尿病食谱":
+                    bundle.putInt("current", 1);
+                    readyGo(context, RecipeActivity.class, bundle);
+                    break;
+            }
             return;
         }
         switch (bean.getSign()) {
@@ -92,15 +112,23 @@ public class GridUtils {
 
             //餐饮美食
             case "FOOD_AND_BEVERAGE":
+                bundle.putString("sign","FOOD_AND_BEVERAGE");
+                readyGo(context,MerchantActivity.class,bundle);
                 break;
             //酒店住宿
             case "HOTELS_AND_LODGING":
+                bundle.putString("sign","HOTELS_AND_LODGING");
+                readyGo(context,MerchantActivity.class,bundle);
                 break;
             //超市
             case "SUPERMARKET":
+                bundle.putString("sign","SUPERMARKET");
+                readyGo(context,MerchantActivity.class,bundle);
                 break;
             //医院
             case "HOSPITAL":
+                bundle.putString("sign","HOSPITAL");
+                readyGo(context,MerchantActivity.class,bundle);
                 break;
             //找装修
             case "FIND_DECORATION":
@@ -117,6 +145,8 @@ public class GridUtils {
                 break;
             //养生食谱
             case "HEALTH_RECIPES":
+                bundle.putInt("current", 0);
+                readyGo(context, RecipeActivity.class);
                 break;
             //应急救助
             case "EMERGENCY_RESCUE":
@@ -126,6 +156,7 @@ public class GridUtils {
                 break;
             //周边生活
             case "VICINITY_LIFE":
+
                 break;
             //文化生活
             case "CULTURAL_LIFE":

@@ -10,12 +10,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
+import com.idtk.smallchart.chart.CurveChart;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.R;
+import com.shiwaixiangcun.customer.model.CurrentOrder;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.ui.fragment.RecipeFragment;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
@@ -44,6 +46,7 @@ public class RecipeActivity extends BaseActivity implements View.OnClickListener
     private List<Integer> mIdList;
     private RecipeAdapter mAdapter;
     private ArrayList<Fragment> mFragments;
+    private int currentItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,16 +54,25 @@ public class RecipeActivity extends BaseActivity implements View.OnClickListener
         setContentView(R.layout.activity_recipe);
         ButterKnife.bind(this);
         initData();
+        initViewAndEvent();
+    }
+
+    private void initViewAndEvent() {
+        mTvPageName.setText(R.string.recipe);
+        mBackLeft.setOnClickListener(this);
+
     }
 
     private void initData() {
-        mTvPageName.setText(R.string.recipe);
-        mBackLeft.setOnClickListener(this);
+
+
+        currentItem = getIntent().getExtras().getInt("current", 0);
         mFragments = new ArrayList<>();
         mRecipeTitle = new ArrayList<>();
         mIdList = new ArrayList<>();
         mAdapter = new RecipeAdapter(getSupportFragmentManager(), mRecipeTitle, mFragments);
         mVpRecipeContent.setOffscreenPageLimit(3);
+        mVpRecipeContent.setCurrentItem(currentItem);
         mVpRecipeContent.setAdapter(mAdapter);
         mTablayoutTools.setViewPager(mVpRecipeContent);
         OkGo.<String>get(GlobalAPI.getRecipeType).execute(new StringCallback() {
@@ -85,6 +97,7 @@ public class RecipeActivity extends BaseActivity implements View.OnClickListener
                             public void run() {
                                 mTablayoutTools.notifyDataSetChanged();
                                 mAdapter.notifyDataSetChanged();
+                                mVpRecipeContent.setCurrentItem(currentItem);
                             }
                         });
                         break;

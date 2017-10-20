@@ -52,6 +52,7 @@ import com.shiwaixiangcun.customer.ui.activity.DetailsActivity;
 import com.shiwaixiangcun.customer.ui.activity.LoginActivity;
 import com.shiwaixiangcun.customer.ui.activity.MessageActivity;
 import com.shiwaixiangcun.customer.ui.activity.MoreToolsActivity;
+import com.shiwaixiangcun.customer.ui.activity.RecipeActivity;
 import com.shiwaixiangcun.customer.ui.activity.SiteActivity;
 import com.shiwaixiangcun.customer.ui.activity.SurroundLifeActivity;
 import com.shiwaixiangcun.customer.ui.activity.ToolsDetailActivity;
@@ -59,6 +60,7 @@ import com.shiwaixiangcun.customer.ui.activity.mall.GoodDetailActivity;
 import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.DisplayUtil;
 import com.shiwaixiangcun.customer.utils.GlideImageLoader;
+import com.shiwaixiangcun.customer.utils.GridUtils;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.utils.Utils;
@@ -117,8 +119,8 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
     private List<String> imageList = new ArrayList<>();
     private Intent intent;
     private ViewAnimator viewAnimator;
-    private int currentPage = 1;
-    private int pageSize = 20;
+    private int currentPage = GlobalConfig.first_page;
+    private int pageSize = GlobalConfig.page_size;
     private boolean autoPlayFlag = false;
     Handler handler = new Handler() {
         @Override
@@ -224,10 +226,11 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
                 if (position == adapter.getData().size() - 1) {
                     readyGo(MoreToolsActivity.class);
                 } else if (item.getSign().equals("VICINITY_LIFE")) {
-
-                    Bundle bundle = new Bundle();
-                    bundle.putString("item", jsonItem);
                     readyGo(SurroundLifeActivity.class);
+                } else if (item.getSign().equals("HEALTH_RECIPES")) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("current", 0);
+                    readyGo(RecipeActivity.class, bundle);
                 } else {
                     Bundle bundle = new Bundle();
                     bundle.putString("item", jsonItem);

@@ -19,6 +19,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.SurroundDetailAdapter;
 import com.shiwaixiangcun.customer.model.MerchDetailBean;
@@ -201,7 +202,7 @@ public class SurroundDetailActivity extends AppCompatActivity implements View.On
         list_merch.clear();
         basicInformation = result.getData().getBasicInformation();
         if (Utils.isNotEmpty(basicInformation.getCover())) {
-            Picasso.with(SurroundDetailActivity.this).load(basicInformation.getCover()).into(iv_merch_image);
+            Glide.with(SurroundDetailActivity.this).load(basicInformation.getCover()).into(iv_merch_image);
         }
 
         tv_merch_detail_title.setText(basicInformation.getName());
@@ -224,7 +225,7 @@ public class SurroundDetailActivity extends AppCompatActivity implements View.On
         tv_food_title.setText(basicInformation.getRecommendStr());
         tv_phone_top.setText(basicInformation.getCallButton());
         if (Utils.isNotEmpty(basicInformation.getRecommendIcon())){
-            Picasso.with(SurroundDetailActivity.this).load(basicInformation.getRecommendIcon()).into(iv_food_icon);
+            Glide.with(SurroundDetailActivity.this).load(basicInformation.getRecommendIcon()).into(iv_food_icon);
         }
 
 

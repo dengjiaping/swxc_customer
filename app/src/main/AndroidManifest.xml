@@ -521,6 +521,8 @@
         </activity>
         <activity android:name=".ui.activity.PrivacyActivity">
         </activity>
+        <activity android:name=".ui.activity.MerchantActivity">
+        </activity>
     </application>
 
 </manifest>
