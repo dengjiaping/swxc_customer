@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
@@ -32,11 +33,14 @@ public class ToolsDetailActivity extends BaseActivity implements View.OnClickLis
     TextView mTvPageName;
     @BindView(R.id.rv_tools_detail)
     RecyclerView mRvToolsDetail;
-
-
     AdapterToolDetail mAdapterToolDetail;
     ToolCategoryBean.ChildrenBeanX data;
     List<ToolCategoryBean.ChildrenBeanX.ChildrenBean> childrenList;
+    boolean isShowRight;
+    @BindView(R.id.tv_top_right)
+    TextView mTvTopRight;
+    View bottomView = null;
+    private TextView tvBottom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +56,20 @@ public class ToolsDetailActivity extends BaseActivity implements View.OnClickLis
         if (data == null) {
             return;
         }
+        if (isShowRight) {
+            mTvTopRight.setText("缴费记录");
+            mTvTopRight.setVisibility(View.VISIBLE);
+            mTvTopRight.setOnClickListener(this);
+
+        }
+        bottomView = LayoutInflater.from(mContext).inflate(R.layout.layout_footer_tools, null, false);
+        tvBottom = (TextView) bottomView.findViewById(R.id.tv_bottom);
+        tvBottom.setText(data.getRemark());
         mTvPageName.setText(data.getName());
         mBackLeft.setOnClickListener(this);
         mAdapterToolDetail = new AdapterToolDetail();
         mRvToolsDetail.setLayoutManager(new WrapContentLinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+
 
         mRvToolsDetail.setAdapter(mAdapterToolDetail);
         mRvToolsDetail.addItemDecoration(new RecyclerView.ItemDecoration() {
@@ -66,6 +80,8 @@ public class ToolsDetailActivity extends BaseActivity implements View.OnClickLis
         });
         mRvToolsDetail.removeAllViews();
         mAdapterToolDetail.addData(childrenList);
+
+        mAdapterToolDetail.addFooterView(bottomView);
         mAdapterToolDetail.notifyDataSetChanged();
 
         mAdapterToolDetail.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -80,6 +96,7 @@ public class ToolsDetailActivity extends BaseActivity implements View.OnClickLis
     private void initData() {
         Bundle extras = getIntent().getExtras();
         String json = extras.getString("item");
+        isShowRight = extras.getBoolean("show");
         data = JsonUtil.fromJson(json, ToolCategoryBean.ChildrenBeanX.class);
 
         if (data != null) {
@@ -93,6 +110,13 @@ public class ToolsDetailActivity extends BaseActivity implements View.OnClickLis
         switch (v.getId()) {
             case R.id.back_left:
                 finish();
+                break;
+            case R.id.tv_top_right:
+                Bundle bundle = new Bundle();
+                bundle.putString("name", "缴费记录");
+                bundle.putInt("image", R.drawable.data_empty);
+                bundle.putString("message", "缴费记录为空");
+                readyGo(NotOpenActivity.class, bundle);
                 break;
 
         }

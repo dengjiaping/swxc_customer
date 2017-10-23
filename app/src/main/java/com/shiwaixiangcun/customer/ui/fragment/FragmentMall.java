@@ -114,6 +114,8 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
 
     private int pinzhiGoodID = 0;
     private int mCurrentPg = 1;
+    private int currentPage = GlobalConfig.first_page;
+    private int pageSize = GlobalConfig.page_size;
 
 
     @Override
@@ -126,7 +128,7 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
         requestKeyword();
         requestBanner();
         requestData();
-        requestGood("GuessLike", 5, mCurrentPg, 20, false);
+        requestGood("GuessLike", 5, mCurrentPg, pageSize, false);
     }
 
 
@@ -209,15 +211,23 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
 
                             case 1001:
                                 if (data.getData().getElements().size() == 0) {
+                                    mRefreshLayout.finishLoadmore(true);
                                     return;
                                 }
-                                EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_MALL, flag, data.getData()));
+
                                 if (isPull) {
-                                    EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_MALL, 10, data.getData()));
+                                    currentPage++;
+                                    EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_MALL, flag, data.getData()));
+                                    mRefreshLayout.finishLoadmore(true);
+                                } else {
+                                    currentPage = 1;
+                                    EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_MALL, flag, data.getData()));
+                                    mRefreshLayout.finishRefresh(true);
                                 }
                                 break;
                             default:
                                 Toast.makeText(mContext, "获取数据失败", Toast.LENGTH_SHORT).show();
+                                mRefreshLayout.finishLoadmore(false);
                                 break;
                         }
                     }
@@ -359,25 +369,25 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
         });
         mBackLeft.setOnClickListener(this);
         mRlayoutSearch.setOnClickListener(this);
+
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh(final RefreshLayout refreshlayout) {
-                refreshlayout.getLayout().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        requestData();
-                    }
-                }, 2000);
+            public void onRefresh(RefreshLayout refreshlayout) {
+                refreshlayout.finishLoadmore();
+                currentPage = 1;
+                requestData();
+                requestGood("GuessLike", 5, currentPage, pageSize, false);
+
             }
         });
         mRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                requestGood("GuessLike", 5, mCurrentPg + 1, 20, true);
-                mCurrentPg++;
-                mRefreshLayout.finishLoadmore();
-                mRefreshLayout.setLoadmoreFinished(true);
-
+                if (currentPage == 1) {
+                    currentPage++;
+                }
+                refreshlayout.finishRefresh();
+                requestGood("GuessLike", 7, currentPage, pageSize, true);
 
             }
         });
@@ -448,10 +458,14 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
                 keyword = (Keyword) simpleEvent.getData();
                 mEdtSearch.setText(keyword.getGuide());
                 break;
+
+            //精选商品下拉刷新
             case 5:
                 ElementBean guessData = (ElementBean) simpleEvent.getData();
+                mGuessList.clear();
                 mGuessList.addAll(guessData.getElements());
                 mAdapterMall.notifyDataSetChanged();
+                mRefreshLayout.finishRefresh(true);
                 break;
             case 6:
                 MallBean.DataBean mallData = (MallBean.DataBean) simpleEvent.getData();
@@ -471,14 +485,13 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
                 //更新新品热卖
                 ImageDisplayUtil.showImageView(mContext, newDataBean.getImagePath(), mIvNewCover);
 
-                mRefreshLayout.finishRefresh();
-                mRefreshLayout.setLoadmoreFinished(false);
                 break;
-
-            case 10:
+            //精选商品上拉加载
+            case 7:
                 ElementBean guessDataMore = (ElementBean) simpleEvent.getData();
                 mGuessList.addAll(guessDataMore.getElements());
                 mAdapterMall.notifyDataSetChanged();
+                mRefreshLayout.finishLoadmore(true);
 
                 break;
 

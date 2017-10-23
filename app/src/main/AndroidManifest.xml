@@ -525,6 +525,12 @@
         </activity>
         <activity android:name=".ui.activity.NotOpenActivity">
         </activity>
+        <activity android:name=".ui.activity.TelephoneActivity">
+        </activity>
+        <activity android:name=".ui.activity.RescueWayActivity">
+        </activity>
+        <activity android:name=".ui.activity.ChunyuDoctorActivity">
+        </activity>
     </application>
 
 </manifest>

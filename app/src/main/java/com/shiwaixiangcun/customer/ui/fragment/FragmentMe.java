@@ -16,7 +16,6 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,13 +36,13 @@ import com.shiwaixiangcun.customer.ui.activity.InformationActivity;
 import com.shiwaixiangcun.customer.ui.activity.LoginActivity;
 import com.shiwaixiangcun.customer.ui.activity.mall.ManageAddressActivity;
 import com.shiwaixiangcun.customer.ui.activity.mall.OrderActivity;
+import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.utils.Utils;
 import com.shiwaixiangcun.customer.utils.VersionUpdateUtil;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 import com.shiwaixiangcun.customer.widget.CircleImageView;
 import com.shiwaixiangcun.customer.widget.SelfLoginoutDialog;
-import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -109,7 +108,7 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, IM
             String username = SharePreference.getStringSpParams(mContext, Common.ISUSERNAME, Common.SIUSERNAME);
             tv_user_name.setText(username);
             if (Utils.isNotEmpty(head_image_path)) {
-                Picasso.with(mContext).load(head_image_path).into(iv_head_my_image);
+                ImageDisplayUtil.showImageView(mContext, head_image_path, iv_head_my_image);
             } else {
                 iv_head_my_image.setImageResource(R.mipmap.defalt_image);
             }
@@ -347,7 +346,6 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, IM
                                 m_progressDlg.setTitle("正在下载");
                                 m_progressDlg.setMessage("请稍候...");
                                 downFile(str_url);  //开始下载
-                                Log.i("ggggggggggaaa", "qqqqqqqqqq" + str_url);
                             }
                         })
                 .setNegativeButton("暂不更新",
@@ -457,16 +455,7 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, IM
                 "application/vnd.android.package-archive");
         startActivity(intent);
     }
-//
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        switch (requestCode) {
-//            case 1020:
-//                finish();
-//                break;
-//        }
-//    }
+
 
     class checkNewestVersionAsyncTask extends AsyncTask<Void, Void, Boolean> {
 
@@ -483,8 +472,6 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, IM
         @Override
         protected void onPostExecute(Boolean result) {
             // TODO Auto-generated method stub
-            Log.i("aaaaaaaaabbvva", "请求版本更新接口");
-//            sendAppUpdateInvatation();
             myMine = new MyMineImpl(FragmentMe.this, "");
             myMine.setBgaAdpaterAndClick(mContext);
 

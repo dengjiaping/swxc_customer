@@ -60,7 +60,6 @@ import com.shiwaixiangcun.customer.ui.activity.mall.GoodDetailActivity;
 import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.DisplayUtil;
 import com.shiwaixiangcun.customer.utils.GlideImageLoader;
-import com.shiwaixiangcun.customer.utils.GridUtils;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.utils.Utils;
@@ -231,10 +230,17 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
                     Bundle bundle = new Bundle();
                     bundle.putInt("current", 0);
                     readyGo(RecipeActivity.class, bundle);
+                } else if (item.getSign().equals("ONLINE_PAYMENT")) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("item", jsonItem);
+                    bundle.putBoolean("show", true);
+                    readyGo(ToolsDetailActivity.class, bundle);
                 } else {
                     Bundle bundle = new Bundle();
                     bundle.putString("item", jsonItem);
+                    bundle.putBoolean("show", false);
                     readyGo(ToolsDetailActivity.class, bundle);
+
                 }
 
             }
@@ -375,35 +381,6 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
                     }
                 });
     }
-//        ToolBean tizheng = new ToolBean(1, "体征数据", R.drawable.home_sign);
-//        mToolList.add(tizheng);
-//        ToolBean jiankangceping = new ToolBean(2, "健康评测", R.drawable.home_appraisal);
-//        mToolList.add(jiankangceping);
-//        ToolBean jiankanfangan = new ToolBean(3, "健康方案", R.drawable.home_scheme);
-//        mToolList.add(jiankanfangan);
-//        ToolBean jiankangdongtai = new ToolBean(4, "健康动态", R.drawable.home_dynamic);
-//        mToolList.add(jiankangdongtai);
-//        ToolBean yuyueguahao = new ToolBean(5, "预约挂号", R.drawable.home_consultation);
-//        mToolList.add(yuyueguahao);
-//        ToolBean jiankangshipu = new ToolBean(6, "健康食谱", R.drawable.home_recipe);
-//        mToolList.add(jiankangshipu);
-//        ToolBean zaixianwenzhen = new ToolBean(7, "在线问诊", R.drawable.home_inquiry);
-//        mToolList.add(zaixianwenzhen);
-//
-//        //添加物业服务数据
-//        ToolBean zaixianbaoxiu = new ToolBean(8, "在线报修", R.drawable.home_repair);
-//        ToolBean zhaozhuangxiu = new ToolBean(9, "找装修", R.drawable.home_fitment);
-//        ToolBean fangwuzushou = new ToolBean(10, "房屋租售", R.drawable.home_rent);
-//        ToolBean zaixianjiaofei = new ToolBean(11, "在线缴费", R.drawable.home_payment);
-//        ToolBean zhoubianshenghuo = new ToolBean(12, "更多服务", R.drawable.tool_more);
-//        mToolList.add(zaixianbaoxiu);
-//        mToolList.add(zhaozhuangxiu);
-//        mToolList.add(fangwuzushou);
-//        mToolList.add(zaixianjiaofei);
-//        mToolList.add(zhoubianshenghuo);
-//
-//        mAdapterTool.addData(mToolList);
-//    }
 
     public void showNext() {
         viewAnimator.setOutAnimation(mContext, R.anim.slide_out_up);
@@ -483,19 +460,19 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
                                 if (loadMore) {
                                     currentPage++;
                                     EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_MAIN, 5, headLine));
-                                    mRefreshLayout.finishLoadmore();
+                                    mRefreshLayout.finishLoadmore(true);
                                 } else {
                                     currentPage = 1;
                                     EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_MAIN, 1, headLine));
-                                    mRefreshLayout.finishRefresh();
+                                    mRefreshLayout.finishRefresh(true);
                                 }
 
 
                                 break;
                             default:
                                 Toast.makeText(mContext, "获取数据出错", Toast.LENGTH_SHORT).show();
-                                mRefreshLayout.finishLoadmore();
-                                mRefreshLayout.finishRefresh();
+                                mRefreshLayout.finishLoadmore(false);
+                                mRefreshLayout.finishRefresh(false);
                                 break;
                         }
 

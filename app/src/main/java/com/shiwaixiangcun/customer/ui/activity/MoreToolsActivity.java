@@ -38,6 +38,8 @@ public class MoreToolsActivity extends BaseActivity implements View.OnClickListe
     TextView mTvPageName;
     @BindView(R.id.rv_category)
     RecyclerView mRvCategory;
+    @BindView(R.id.tv_top_right)
+    TextView mTvTopRight;
 
     private List<AdapterService.MySection> mList;
     private AdapterService mAdapterService;

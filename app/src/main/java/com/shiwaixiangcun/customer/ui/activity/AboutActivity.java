@@ -11,6 +11,9 @@ import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.utils.VersionUpdateUtil;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
+/**
+ * 关于页面
+ */
 public class AboutActivity extends BaseActivity implements View.OnClickListener {
 
     private ChangeLightImageView back_left;

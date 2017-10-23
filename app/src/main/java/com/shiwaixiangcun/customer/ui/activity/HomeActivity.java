@@ -38,6 +38,7 @@ import com.shiwaixiangcun.customer.model.WeatherDataBean;
 import com.shiwaixiangcun.customer.presenter.IHomePresenter;
 import com.shiwaixiangcun.customer.presenter.impl.HomePresenterImpl;
 import com.shiwaixiangcun.customer.ui.IHomeView;
+import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 import com.shiwaixiangcun.customer.utils.NoFastClickUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.utils.Utils;
@@ -45,7 +46,6 @@ import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 import com.shiwaixiangcun.customer.widget.pullableview.MyListener;
 import com.shiwaixiangcun.customer.widget.pullableview.PullToRefreshLayout;
 import com.shiwaixiangcun.customer.widget.pullableview.PullableListView;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -502,7 +502,7 @@ public class HomeActivity extends BaseActivity implements IHomeView, ViewPager.O
         for (int i = 0; i < mImageViews.length; i++) {
             ImageView imageView = new ImageView(this);
             mImageViews[i] = imageView;
-            Picasso.with(this).load(list_banner.get(i).getImagePath()).into(imageView);
+            ImageDisplayUtil.showImageView(this, list_banner.get(i).getImagePath(), imageView);
 //            imageView.setBackgroundResource(imgIdArray[i]);
         }
         if (mImageViews.length != 0) {

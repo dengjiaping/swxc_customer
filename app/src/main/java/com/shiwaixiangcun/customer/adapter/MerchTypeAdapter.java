@@ -8,10 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.model.SurroundMerchantTypeBean;
-import com.shiwaixiangcun.customer.utils.Utils;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -49,17 +48,19 @@ public class MerchTypeAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_home_surround_image, null);
             mViewHolder = new ViewHolder();
-            mViewHolder.tv_name_merch_type = (TextView)convertView.findViewById(R.id.tv_name_merch_type);
-            mViewHolder.iv_certificates = (ImageView)convertView.findViewById(R.id.iv_certificates);
+            mViewHolder.tv_name_merch_type = (TextView) convertView.findViewById(R.id.tv_name_merch_type);
+            mViewHolder.iv_certificates = (ImageView) convertView.findViewById(R.id.iv_certificates);
             convertView.setTag(mViewHolder);
         } else {
             mViewHolder = (ViewHolder) convertView.getTag();
         }
-        if (Utils.isNotEmpty(list.get(position).getImage().getAccessUrl())){
-            Picasso.with(context).load(list.get(position).getImage().getAccessUrl()).into(mViewHolder.iv_certificates);
+        SurroundMerchantTypeBean.DataBean dataBean = list.get(position);
+        mViewHolder.tv_name_merch_type.setText(dataBean.getName());
+        if (dataBean.getName().equals("找装修")) {
+            Glide.with(context).load(R.drawable.decorate).into(mViewHolder.iv_certificates);
+        } else {
+            Glide.with(context).load(dataBean.getImage().getAccessUrl()).into(mViewHolder.iv_certificates);
         }
-
-        mViewHolder.tv_name_merch_type.setText(list.get(position).getName());
         return convertView;
     }
 

@@ -1,11 +1,13 @@
 package com.shiwaixiangcun.customer.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jaeger.recyclerviewdivider.RecyclerViewDivider;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -77,8 +79,6 @@ public class MerchantActivity extends BaseActivity implements View.OnClickListen
                         }
                         switch (merchantListBean.getResponseCode()) {
                             case 1001:
-
-
                                 if (loadMore) {
                                     currentPage++;
                                     mDataList.addAll(merchantListBean.getData().getElements());
@@ -89,14 +89,12 @@ public class MerchantActivity extends BaseActivity implements View.OnClickListen
                                     mDataList.addAll(merchantListBean.getData().getElements());
                                     mRefreshLayout.finishRefresh();
                                 }
-
-
                                 mAdapterMerchant.notifyDataSetChanged();
                                 break;
                             default:
                                 showToastShort("获取失败");
-                                mRefreshLayout.finishLoadmore();
-                                mRefreshLayout.finishRefresh();
+                                mRefreshLayout.finishLoadmore(false);
+                                mRefreshLayout.finishRefresh(false);
                                 break;
                         }
                     }
@@ -108,6 +106,7 @@ public class MerchantActivity extends BaseActivity implements View.OnClickListen
                     }
                 });
     }
+
     private void initViewAndEvent() {
         sign = getIntent().getExtras().getString("sign");
 //        FOOD_AND_BEVERAGE("餐饮美食"), HOTELS_AND_LODGING("酒店住宿"), SUPERMARKET("超市"), HOSPITAL("医院"), FIND_DECORATION("找装修"),
@@ -160,6 +159,17 @@ public class MerchantActivity extends BaseActivity implements View.OnClickListen
                 }
                 refreshlayout.finishRefresh();
                 initData(currentPage, pageSize, true);
+
+            }
+        });
+
+        mAdapterMerchant.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                MerchantListBean.DataBean.ElementsBean dataBean = (MerchantListBean.DataBean.ElementsBean) adapter.getData().get(position);
+                Intent intent = new Intent(mContext, SurroundDetailActivity.class);
+                intent.putExtra("merchId", dataBean.getId() + "");
+                startActivity(intent);
 
             }
         });

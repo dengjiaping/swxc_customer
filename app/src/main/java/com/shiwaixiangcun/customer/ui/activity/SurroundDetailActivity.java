@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,12 +24,12 @@ import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.SurroundDetailAdapter;
 import com.shiwaixiangcun.customer.model.MerchDetailBean;
 import com.shiwaixiangcun.customer.presenter.impl.SurroundDetailImpl;
+import com.shiwaixiangcun.customer.ui.ISurroundDetailView;
+import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
+import com.shiwaixiangcun.customer.utils.Utils;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 import com.shiwaixiangcun.customer.widget.MyGridView;
 import com.shiwaixiangcun.customer.widget.SelfLoginoutDialog;
-import com.shiwaixiangcun.customer.utils.Utils;
-import com.shiwaixiangcun.customer.ui.ISurroundDetailView;
-import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -37,6 +37,7 @@ import java.util.List;
 
 public class SurroundDetailActivity extends AppCompatActivity implements View.OnClickListener, ISurroundDetailView, ScrollView.OnScrollChangeListener {
 
+    List<MerchDetailBean.DataBean.CertificateBean> list_certificate = new ArrayList<>();
     private ChangeLightImageView back_left;
     private MyGridView gv_surround_detail;
     private List<String> list_gv_surround_detail = new ArrayList<>();
@@ -56,7 +57,6 @@ public class SurroundDetailActivity extends AppCompatActivity implements View.On
     private TextView tv_merch_detail_introduce;
     private List<MerchDetailBean.DataBean.AtlasBean> list_merch = new ArrayList<>();
     private SurroundDetailAdapter surroundDetailAdapter;
-    List<MerchDetailBean.DataBean.CertificateBean> list_certificate = new ArrayList<>();
     private ImageView iv_location_image;
     private ImageView iv_phone_image;
     private TextView tv_food_title;
@@ -272,7 +272,8 @@ public class SurroundDetailActivity extends AppCompatActivity implements View.On
             View view = LayoutInflater.from(this).inflate(R.layout.item_surround_detail_image, id_gallery, false);
             ImageView iv_certificates = (ImageView) view.findViewById(R.id.iv_certificates);
             if (Utils.isNotEmpty(certificates.get(i).getThumbImageURL())) {
-                Picasso.with(this).load(certificates.get(i).getAccessUrl()).into(iv_certificates);
+
+                ImageDisplayUtil.showImageView(this, certificates.get(i).getAccessUrl(), iv_certificates);
             }
             iv_certificates.setBackgroundColor(Color.parseColor("#332D3230"));
             final int finalI = i;

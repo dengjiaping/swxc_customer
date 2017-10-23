@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
+import com.bumptech.glide.Glide;
 import com.example.liangmutian.mypicker.DatePickerDialog;
 import com.example.liangmutian.mypicker.DateUtil;
 import com.google.gson.reflect.TypeToken;
@@ -36,6 +37,7 @@ import com.shiwaixiangcun.customer.presenter.impl.HouseInformationImpl;
 import com.shiwaixiangcun.customer.ui.IHouseInformationView;
 import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.CompressionImageUtil;
+import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.LoginOutUtil;
 import com.shiwaixiangcun.customer.utils.RefreshTokenUtil;
@@ -45,10 +47,9 @@ import com.shiwaixiangcun.customer.utils.TimerToTimerUtil;
 import com.shiwaixiangcun.customer.utils.Utils;
 import com.shiwaixiangcun.customer.utils.WheelPriorityDialogFragment;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
-import com.shiwaixiangcun.customer.widget.ImageViewPlus;
+import com.shiwaixiangcun.customer.widget.CircleImageView;
 import com.shiwaixiangcun.customer.widget.PhotoAlbumDialog;
 import com.shiwaixiangcun.customer.widget.SelfLoginoutDialog;
-import com.squareup.picasso.Picasso;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -57,6 +58,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class InformationActivity extends AppCompatActivity implements View.OnClickListener, IHouseInformationView {
 
@@ -65,7 +67,7 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
     private final int SAVE_CODE = 1010;      //点击添加图片
     private ChangeLightImageView back_left;
     private TextView tv_page_name;
-    private ImageViewPlus iv_head_image;
+    private CircleImageView iv_head_image;
     private TextView tv_information_name;
     private TextView tv_information_nv;
     private TextView tv_information_old;
@@ -122,7 +124,7 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
     private void layoutView() {
         back_left = (ChangeLightImageView) findViewById(R.id.back_left);
         tv_page_name = (TextView) findViewById(R.id.tv_page_name);
-        iv_head_image = (ImageViewPlus) findViewById(R.id.iv_head_image);
+        iv_head_image = (CircleImageView) findViewById(R.id.iv_head_image);
         tv_information_name = (TextView) findViewById(R.id.tv_information_name);
         tv_information_nv = (TextView) findViewById(R.id.tv_information_nv);
         tv_information_old = (TextView) findViewById(R.id.tv_information_old);
@@ -135,8 +137,6 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void initData() {
-//        houseInformation = new HouseInformationImpl(this, "");
-//        houseInformation.setBgaAdapterAndClick(this);
         tv_page_name.setText("个人信息");
         String image_head = SharePreference.getStringSpParams(this, Common.ISIMAGEHEAD, Common.SIIMAGEHEAD);
         String name = SharePreference.getStringSpParams(this, Common.ISUSERNAME, Common.SIUSERNAME);
@@ -144,7 +144,7 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
         String old = SharePreference.getStringSpParams(this, Common.ISUSEROLD, Common.SIUSEROLD);
         String phone = SharePreference.getStringSpParams(this, Common.ISUSERPHONE, Common.SIUSERPHONE);
         if (Utils.isNotEmpty(image_head)) {
-            Picasso.with(this).load(image_head).into(iv_head_image);
+            ImageDisplayUtil.showImageView(this, image_head, (iv_head_image));
         }
         if (Utils.isNotEmpty(name)) {
             tv_information_name.setText(name);
@@ -213,7 +213,8 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
     public void setBgaAdpaterAndClickResult(UserInfoBean result) {
 
         if (Utils.isNotEmpty(result.getData().getAvatar().getAccessUrl())) {
-            Picasso.with(this).load(result.getData().getAvatar().getAccessUrl()).into(iv_head_image);
+
+            ImageDisplayUtil.showImageView(this, result.getData().getAvatar().getAccessUrl(), iv_head_image);
         }
         if (Utils.isNotEmpty(result.getData().getName())) {
             tv_information_name.setText(result.getData().getName());
@@ -329,7 +330,14 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
                         Bitmap bitmap = null;
                         try {
 
-                            bitmap = Picasso.with(InformationActivity.this).load(uri).get();
+
+                            bitmap = Glide
+                                    .with(InformationActivity.this)
+                                    .load(uri)
+                                    .asBitmap()
+                                    .centerCrop()
+                                    .into(500, 500)
+                                    .get();
                             bitmap1 = CompressionImageUtil.compressScale(bitmap);
 
                             File headImage = saveFile(bitmap1, "headImage");
@@ -338,6 +346,10 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
                             Message msg = mHandler.obtainMessage(MSG_CODE);
                             msg.sendToTarget();
                         } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } catch (ExecutionException e) {
                             e.printStackTrace();
                         }
                     }

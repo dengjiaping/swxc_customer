@@ -15,7 +15,11 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shiwaixiangcun.customer.GlobalAPI;
+import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterRecipe;
 import com.shiwaixiangcun.customer.model.RecipeBean;
@@ -47,8 +51,8 @@ public class RecipeFragment extends LazyFragment {
     private int mId;
     private List<RecipeBean.ElementsBean> mRecipeList;
     private AdapterRecipe mAdapterRecipe;
-    private int page = 1;
-    private int pageSize = 20;
+    private int currentPage = GlobalConfig.first_page;
+    private int pageSize = GlobalConfig.page_size;
 
     public static Fragment getInstance(String title, Integer id) {
         RecipeFragment fragment = new RecipeFragment();
@@ -89,15 +93,39 @@ public class RecipeFragment extends LazyFragment {
                 readyGo(RecipeArticleActivity.class, bundle);
             }
         });
+
+        mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                refreshlayout.finishLoadmore();
+                currentPage = 1;
+                requestData(mId, currentPage, pageSize, false);
+
+            }
+        });
+        mRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                if (currentPage == 1) {
+                    currentPage++;
+                }
+                refreshlayout.finishRefresh();
+                requestData(mId, currentPage, pageSize, true);
+
+            }
+        });
     }
 
 
     /**
      * 获取列表数据
      *
-     * @param id 当前分类的id
+     * @param id       当前列表id
+     * @param page     页码
+     * @param pageSize 每页显示数目
+     * @param loadMore 是否上拉加载
      */
-    public void requestData(int id) {
+    public void requestData(int id, int page, int pageSize, final boolean loadMore) {
         OkGo.<String>get(GlobalAPI.getRecipeList)
                 .params("dietTypeId", id)
                 .params("page.pn", page)
@@ -117,8 +145,22 @@ public class RecipeFragment extends LazyFragment {
                         }
                         switch (responseEntity.getResponseCode()) {
                             case 1001:
-                                mRecipeList.clear();
-                                mRecipeList.addAll(responseEntity.getData().getElements());
+
+                                if (loadMore) {
+
+                                    if (responseEntity.getData().getElements().size() == 0) {
+                                        mRefreshLayout.finishLoadmore(true);
+                                    } else {
+                                        currentPage++;
+                                        mRecipeList.addAll(responseEntity.getData().getElements());
+                                    }
+
+                                } else {
+                                    currentPage = 1;
+                                    mRecipeList.clear();
+                                    mRecipeList.addAll(responseEntity.getData().getElements());
+                                    mRefreshLayout.finishRefresh(true);
+                                }
                                 mAdapterRecipe.notifyDataSetChanged();
                                 break;
                             default:
@@ -140,14 +182,14 @@ public class RecipeFragment extends LazyFragment {
 
     @Override
     protected void onFirstUserVisible() {
-        requestData(mId);
+        requestData(mId, currentPage, pageSize, false);
 
 
     }
 
     @Override
     protected void onUserVisible() {
-        requestData(mId);
+        requestData(mId, currentPage, pageSize, false);
 
     }
 
@@ -158,7 +200,6 @@ public class RecipeFragment extends LazyFragment {
 
     @Override
     protected void DestroyViewAndThing() {
-//        EventBus.getDefault().unregister(this);
 
     }
 

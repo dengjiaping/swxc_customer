@@ -29,13 +29,13 @@ import com.shiwaixiangcun.customer.ui.IMyMineView;
 import com.shiwaixiangcun.customer.ui.activity.mall.MallActivity;
 import com.shiwaixiangcun.customer.ui.activity.mall.ManageAddressActivity;
 import com.shiwaixiangcun.customer.ui.activity.mall.OrderActivity;
+import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.utils.Utils;
 import com.shiwaixiangcun.customer.utils.VersionUpdateUtil;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
-import com.shiwaixiangcun.customer.widget.ImageViewPlus;
+import com.shiwaixiangcun.customer.widget.CircleImageView;
 import com.shiwaixiangcun.customer.widget.SelfLoginoutDialog;
-import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -72,7 +72,7 @@ public class MymineActivity extends AppCompatActivity implements View.OnClickLis
     private RelativeLayout rl_head_mine;
     private RelativeLayout rl_feed_back;
     private TextView tv_user_name;
-    private ImageViewPlus iv_head_my_image;
+    private CircleImageView iv_head_my_image;
     private MyMineImpl myMine;
     private TextView tv_wy_phone;
     private RelativeLayout rl_wy_lay;
@@ -102,7 +102,7 @@ public class MymineActivity extends AppCompatActivity implements View.OnClickLis
         rl_head_mine = (RelativeLayout) findViewById(R.id.rl_head_mine);
         rl_feed_back = (RelativeLayout) findViewById(R.id.rl_feed_back);
         tv_user_name = (TextView) findViewById(R.id.tv_user_name);
-        iv_head_my_image = (ImageViewPlus) findViewById(R.id.iv_head_my_image);
+        iv_head_my_image = (CircleImageView) findViewById(R.id.iv_head_my_image);
         tv_wy_phone = (TextView) findViewById(R.id.tv_wy_phone);
         rl_wy_lay = (RelativeLayout) findViewById(R.id.rl_wy_lay);
         rl_for_life = (RelativeLayout) findViewById(R.id.rl_for_life);
@@ -206,7 +206,7 @@ public class MymineActivity extends AppCompatActivity implements View.OnClickLis
 
             tv_user_name.setText(username);
             if (Utils.isNotEmpty(head_image_path)) {
-                Picasso.with(this).load(head_image_path).into(iv_head_my_image);
+                ImageDisplayUtil.showImageView(this, head_image_path, iv_head_my_image);
             } else {
                 iv_head_my_image.setImageResource(R.mipmap.defalt_image);
             }

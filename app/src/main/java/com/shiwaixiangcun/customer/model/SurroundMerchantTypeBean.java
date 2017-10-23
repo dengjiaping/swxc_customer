@@ -71,6 +71,15 @@ public class SurroundMerchantTypeBean implements Serializable {
         private String name;
         private String value;
 
+        public DataBean(boolean all, String detailId, int id, ImageBean image, String name, String value) {
+            this.all = all;
+            this.detailId = detailId;
+            this.id = id;
+            this.image = image;
+            this.name = name;
+            this.value = value;
+        }
+
         public boolean isAll() {
             return all;
         }
@@ -129,6 +138,12 @@ public class SurroundMerchantTypeBean implements Serializable {
             private String accessUrl;
             private String fileId;
             private String thumbImageURL;
+
+            public ImageBean(String accessUrl, String fileId, String thumbImageURL) {
+                this.accessUrl = accessUrl;
+                this.fileId = fileId;
+                this.thumbImageURL = thumbImageURL;
+            }
 
             public String getAccessUrl() {
                 return accessUrl;

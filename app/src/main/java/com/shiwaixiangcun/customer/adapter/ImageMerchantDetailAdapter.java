@@ -9,8 +9,8 @@ import android.widget.ImageView;
 
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.model.MerchDetailBean;
+import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 import com.shiwaixiangcun.customer.utils.Utils;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -54,7 +54,7 @@ public class ImageMerchantDetailAdapter extends BaseAdapter {
             mViewHolder = (ViewHolder) convertView.getTag();
         }
         if (Utils.isNotEmpty(list.get(position).getAccessUrl())){
-            Picasso.with(context).load(list.get(position).getAccessUrl()).into(mViewHolder.iv_detail);
+            ImageDisplayUtil.showImageView(context, list.get(position).getAccessUrl(), mViewHolder.iv_detail);
         }
 
 

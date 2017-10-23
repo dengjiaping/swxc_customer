@@ -24,11 +24,11 @@ import com.shiwaixiangcun.customer.adapter.CompanyDetilListAdapter;
 import com.shiwaixiangcun.customer.model.RecoratingDetailBean;
 import com.shiwaixiangcun.customer.presenter.impl.HouseRecoratingDetailImpl;
 import com.shiwaixiangcun.customer.ui.IHouseRecoratingDetailView;
+import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 import com.shiwaixiangcun.customer.utils.Utils;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 import com.shiwaixiangcun.customer.widget.MyListView;
 import com.shiwaixiangcun.customer.widget.SelfLoginoutDialog;
-import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -133,7 +133,7 @@ public class CompanyDetailActivity extends AppCompatActivity implements View.OnC
             View view = LayoutInflater.from(this).inflate(R.layout.item_image, mGallery, false);
             ImageView iv_certificates = (ImageView) view.findViewById(R.id.iv_certificates);
             if (Utils.isNotEmpty(certificates.get(i).getThumbImageURL())) {
-                Picasso.with(this).load(certificates.get(i).getThumbImageURL()).into(iv_certificates);
+                ImageDisplayUtil.showImageView(this, certificates.get(i).getThumbImageURL(), iv_certificates);
             }
             final int finalI = i;
             view.setOnClickListener(new View.OnClickListener() {
@@ -166,7 +166,7 @@ public class CompanyDetailActivity extends AppCompatActivity implements View.OnC
     public void setBgaAdpaterAndClickResult(RecoratingDetailBean result) {
         phone = result.getData().getPhone();
         if (Utils.isNotEmpty(result.getData().getLogo())) {
-            Picasso.with(this).load(result.getData().getLogo()).into(iv_logo_top);
+            ImageDisplayUtil.showImageView(this, result.getData().getLogo(), iv_logo_top);
         }
         tv_title_detail.setText(result.getData().getName());
         tv_detail.setText(result.getData().getIntroduce());

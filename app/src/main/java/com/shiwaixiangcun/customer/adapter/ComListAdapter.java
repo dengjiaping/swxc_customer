@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.model.NoticeBean;
+import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 import com.shiwaixiangcun.customer.utils.TimerToTimerUtil;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -89,8 +89,7 @@ public class ComListAdapter extends BaseAdapter {
                 titleHolder.tv_summary.setText(list.get(position).getSummary());
                 titleHolder.tv_source.setText(list.get(position).getSource());
                 titleHolder.iv_coverPath.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                Picasso.with(context).load(list.get(position).getCoverPath()).into(titleHolder.iv_coverPath);
-
+                ImageDisplayUtil.showImageView(context, list.get(position).getCoverPath(), titleHolder.iv_coverPath);
                 String s = TimerToTimerUtil.stampToDate(list.get(position).getPublishTime() + "");
                 titleHolder.tv_publishTime.setText(s);
 
@@ -119,8 +118,7 @@ public class ComListAdapter extends BaseAdapter {
                 comHolder.tv_title.setText(list.get(position).getTitle());
                 comHolder.tv_source.setText(list.get(position).getSource());
                 comHolder.iv_coverPath.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                Picasso.with(context).load(list.get(position).getCoverPath()).into(comHolder.iv_coverPath);
-
+                ImageDisplayUtil.showImageView(context, list.get(position).getCoverPath(), comHolder.iv_coverPath);
                 String s_a = TimerToTimerUtil.stampToDate(list.get(position).getPublishTime() + "");
                 comHolder.tv_publishTime.setText(s_a);
 

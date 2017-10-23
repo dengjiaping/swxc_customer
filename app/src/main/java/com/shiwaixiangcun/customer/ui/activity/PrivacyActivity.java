@@ -16,6 +16,9 @@ import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * 隐私政策页面
+ */
 public class PrivacyActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.back_left)

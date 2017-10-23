@@ -9,7 +9,7 @@ import android.widget.ImageView;
 
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.model.RecoratingDetailBean;
-import com.squareup.picasso.Picasso;
+import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 
 import java.util.List;
 
@@ -52,8 +52,7 @@ public class ImageDetailAdapter extends BaseAdapter {
         } else {
             mViewHolder = (ViewHolder) convertView.getTag();
         }
-        Picasso.with(context).load(list.get(position).getAccessUrl()).into(mViewHolder.iv_detail);
-
+        ImageDisplayUtil.showImageView(context, list.get(position).getAccessUrl(), mViewHolder.iv_detail);
         return convertView;
     }
 
