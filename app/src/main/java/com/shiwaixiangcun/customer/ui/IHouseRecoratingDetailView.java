@@ -11,7 +11,7 @@ public interface IHouseRecoratingDetailView {
      * 设置过后的回调
      * @param result
      */
-    void setBgaAdpaterAndClickResult(RecoratingDetailBean result);
+    void setInfo(RecoratingDetailBean result);
 
 
 }

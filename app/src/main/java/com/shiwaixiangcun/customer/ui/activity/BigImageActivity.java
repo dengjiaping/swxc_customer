@@ -1,24 +1,23 @@
 package com.shiwaixiangcun.customer.ui.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-
 import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.model.RecoratingDetailBean;
+import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 import com.shiwaixiangcun.customer.utils.Utils;
 import com.shiwaixiangcun.customer.widget.ZoomImageView;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -73,7 +72,7 @@ public class BigImageActivity extends AppCompatActivity implements View.OnClickL
         mData();
 
         if (Utils.isNotEmpty(bigimage)) {
-            Picasso.with(this).load(bigimage).into(ziv_image);
+            ImageDisplayUtil.showImageView(this, bigimage, ziv_image);
         }
 
         iv_close_big_image.setOnClickListener(this);
@@ -88,7 +87,8 @@ public class BigImageActivity extends AppCompatActivity implements View.OnClickL
                 ZoomImageView imageView = new ZoomImageView(
                         getApplicationContext());
 //                imageView.setImageResource(mImgs[position]);
-                Picasso.with(BigImageActivity.this).load(mylist.get(position).getAccessUrl()).into(imageView);
+
+                ImageDisplayUtil.showImageView(BigImageActivity.this, mylist.get(position).getAccessUrl(), imageView);
                 container.addView(imageView);
                 mImageViews[position] = imageView;
                 return imageView;

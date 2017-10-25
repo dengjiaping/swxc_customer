@@ -3,7 +3,6 @@ package com.shiwaixiangcun.customer.ui.activity.heath;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
@@ -222,16 +221,6 @@ public class CommonActivity extends BaseActivity implements View.OnClickListener
 
     }
 
-    @Override
-    //设置回退
-    //覆盖Activity类的onKeyDown(int keyCoder,KeyEvent event)方法
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if ((keyCode == KeyEvent.KEYCODE_BACK) && mWebView.canGoBack()) {
-            mWebView.goBack(); //goBack()表示返回WebView的上一页面
-            return true;
-        }
-        return false;
-    }
 
     //Web视图
     private final class MyWebViewClient extends WebViewClient {

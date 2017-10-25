@@ -15,9 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.Common;
@@ -107,48 +107,41 @@ public class ManageAddressActivity extends BaseActivity implements View.OnClickL
      * 初始化Data数据
      */
     private void initData() {
-        HashMap<String, Object> params = new HashMap<>();
-        params.put("access_token", token);
-        params.put("fields", "");
-        HttpRequest.get(GlobalAPI.getAddress, params, new HttpCallBack() {
-            @Override
-            public void onSuccess(String responseJson) {
-                super.onSuccess(responseJson);
-                Log.e(BUG_TAG, "onSuccess");
-                if (responseJson == null) {
-                    return;
-                }
-                Log.e(BUG_TAG, responseJson);
-                Type listType = new TypeToken<ResponseEntity<List<AddressBean>>>() {
-                }.getType();
-                Gson gson = new Gson();
-                ResponseEntity<List<AddressBean>> response = gson.fromJson(responseJson, listType);
-                if (response == null) {
-                    return;
-                }
-                switch (response.getResponseCode()) {
-                    case 1001:
-                        mAddressBeanList.clear();
-                        mAddressBeanList.addAll(response.getData());
-                        mManageAdapter.notifyDataSetChanged();
-                        break;
+        OkGo.<String>get(GlobalAPI.getAddress)
+                .params("access_token", token)
+                .params("fields", "")
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        Log.e(BUG_TAG, "onSuccess");
+                        if (response == null) {
+                            return;
+                        }
+                        Log.e(BUG_TAG, response.body());
+                        Type listType = new TypeToken<ResponseEntity<List<AddressBean>>>() {
+                        }.getType();
+                        ResponseEntity<List<AddressBean>> responseEntity = JsonUtil.fromJson(response.body(), listType);
+                        if (responseEntity == null) {
+                            return;
+                        }
+                        switch (responseEntity.getResponseCode()) {
+                            case 1001:
+                                mAddressBeanList.clear();
+                                mAddressBeanList.addAll(responseEntity.getData());
+                                mManageAdapter.notifyDataSetChanged();
+                                break;
 
-                    case 1018:
-                        RefreshTokenUtil.sendIntDataInvatation(mContext, refresh_token);
-                        break;
-                    default:
-                        Toast.makeText(mContext, "验证错误", Toast.LENGTH_SHORT).show();
-                        break;
+                            case 1018:
+                                RefreshTokenUtil.sendIntDataInvatation(mContext, refresh_token);
+                                break;
+                            default:
+                                Toast.makeText(mContext, "验证错误", Toast.LENGTH_SHORT).show();
+                                break;
 
-                }
+                        }
+                    }
+                });
 
-            }
-
-            @Override
-            public void onFailed(Exception e) {
-
-            }
-        });
 
     }
 
@@ -304,13 +297,11 @@ public class ManageAddressActivity extends BaseActivity implements View.OnClickL
      * @param addressBean
      */
     private void deleteAddress(AddressBean addressBean) {
-        HashMap<String, String> stringHashMap = new HashMap<>();
-        stringHashMap.put("access_token", token);
-        stringHashMap.put("id", addressBean.getId() + "");
-        Log.e(BUG_TAG, "delete  " + token);
-        Log.e(BUG_TAG, "delete  " + addressBean.getId());
+
+
         OkGo.<String>delete(GlobalAPI.deleteAddress)
-                .params(stringHashMap, false)
+                .params("access_token", token)
+                .params("id", addressBean.getId() + "")
                 .isSpliceUrl(true)
                 .execute(new StringDialogCallBack(this) {
                     @Override

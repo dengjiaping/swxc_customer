@@ -70,7 +70,7 @@ public class MessageDetailActivity extends BaseActivity {
         webSettings.setBuiltInZoomControls(true); //设置内置的缩放控件。若为false，则该WebView不可缩放
         webSettings.setDisplayZoomControls(false); //隐藏原生的缩放控件
         //其他细节操作
-        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE); //关闭webview中缓存
+//        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE); //关闭webview中缓存
         webSettings.setAllowFileAccess(true); //设置可以访问文件
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true); //支持通过JS打开新窗口
         webSettings.setLoadsImagesAutomatically(true); //支持自动加载图片
@@ -84,18 +84,12 @@ public class MessageDetailActivity extends BaseActivity {
     }
 
     private void initViewAndEvent() {
-//        if (strTitle == null) {
-//            strTitle = "";
-//        }
-
         mBackLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-//        mTvPageName.setText(strTitle);
-
         strUrl.append(GlobalAPI.DC_DOMAIN)
                 .append("/cooperation/wap/problem_detail_page/?partner=")
                 .append(partner)

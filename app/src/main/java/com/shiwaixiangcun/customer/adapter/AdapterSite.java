@@ -20,7 +20,7 @@ public class AdapterSite extends BaseQuickAdapter<Site, BaseViewHolder> {
 
     @Override
     protected void convert(BaseViewHolder helper, Site item) {
-        helper.setText(R.id.tv_site, item.site);
+        helper.setText(R.id.tv_site, item.getName());
 
     }
 }

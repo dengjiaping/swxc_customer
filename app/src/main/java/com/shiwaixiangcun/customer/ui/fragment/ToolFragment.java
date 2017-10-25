@@ -114,7 +114,7 @@ public class ToolFragment extends LazyFragment {
                 break;
         }
 
-        mAdapterTool.addData(mToolList);
+//        mAdapterTool.addData(mToolList);
     }
 
     @Override

@@ -8,10 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.model.RecoratingListBean;
-import com.squareup.picasso.Picasso;
+import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 
 import java.util.List;
 
@@ -57,7 +56,7 @@ public class DecordatingListAdapter extends BaseAdapter {
         } else {
             mViewHolder = (ViewHolder) convertView.getTag();
         }
-        Picasso.with(context).load(list.get(position).getLogo()).into(mViewHolder.iv_recorating);
+        ImageDisplayUtil.showImageView(context, list.get(position).getLogo(), mViewHolder.iv_recorating);
         mViewHolder.tv_decorating_title.setText(list.get(position).getName());
         mViewHolder.tv_recorating_content.setText(list.get(position).getSummary());
         return convertView;

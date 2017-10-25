@@ -16,8 +16,8 @@ import android.widget.ImageView;
 
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.model.AwardBean;
+import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 import com.shiwaixiangcun.customer.utils.Utils;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -32,6 +32,29 @@ public class AwardAdapter extends BaseAdapter {
     public AwardAdapter(List<AwardBean.DataBean.ElementsBean> list, Context context) {
         this.list = list;
         this.context = context;
+    }
+
+    //获得圆角图片的方法
+    public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, float roundPx) {
+
+        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap
+                .getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(output);
+
+        final int color = 0xff424242;
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+        final RectF rectF = new RectF(rect);
+
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(color);
+        canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+
+        return output;
     }
 
     @Override
@@ -64,16 +87,8 @@ public class AwardAdapter extends BaseAdapter {
         if (Utils.isNotEmpty(list.get(position).getCoverPath().getAccessUrl())) {
 
 
-            Picasso.with(context).load(list.get(position).getCoverPath().getAccessUrl()).into(mViewHolder.iv_award);
+            ImageDisplayUtil.showImageView(context, list.get(position).getCoverPath().getAccessUrl(), mViewHolder.iv_award);
 
-
-//                Bitmap bitmap = null;
-//                try {
-//                    bitmap = Picasso.with(context).load(list.get(position).getCoverPath()).get();
-//                    mViewHolder.iv_award.setImageBitmap(bitmap);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
 
         }
         return convertView;
@@ -81,30 +96,6 @@ public class AwardAdapter extends BaseAdapter {
 
     static class ViewHolder {
         ImageView iv_award;
-    }
-
-
-    //获得圆角图片的方法
-    public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, float roundPx) {
-
-        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap
-                .getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(output);
-
-        final int color = 0xff424242;
-        final Paint paint = new Paint();
-        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
-        final RectF rectF = new RectF(rect);
-
-        paint.setAntiAlias(true);
-        canvas.drawARGB(0, 0, 0, 0);
-        paint.setColor(color);
-        canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
-
-        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.drawBitmap(bitmap, rect, rect, paint);
-
-        return output;
     }
 
 }

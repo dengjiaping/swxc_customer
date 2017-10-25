@@ -6,12 +6,11 @@ import android.graphics.drawable.Drawable;
 import android.provider.MediaStore;
 import android.widget.ImageView;
 
-
+import com.bumptech.glide.Glide;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.photo.core.PhotoFinal;
 import com.shiwaixiangcun.customer.photo.model.PhotoFolderInfo;
 import com.shiwaixiangcun.customer.photo.model.PhotoInfo;
-import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -24,8 +23,6 @@ import java.util.List;
  */
 public class PhotoUtil {
 
-    private static Drawable defaultDrawable;
-
     private static final String[] projectionPhotos = {
             MediaStore.Images.Media._ID,
             MediaStore.Images.Media.BUCKET_ID,
@@ -35,19 +32,20 @@ public class PhotoUtil {
             MediaStore.Images.Media.ORIENTATION,
             MediaStore.Images.Thumbnails.DATA
     };
+    private static Drawable defaultDrawable;
 
     public static void display(Activity activity, String path, ImageView imageView, int width, int height) {
         if (isNotNull(activity, imageView)) return;
         imageView.setImageResource(R.mipmap.ic_gf_default_photo);
         if (null == path) {
-            Picasso.with(activity).load(R.mipmap.ic_gf_default_photo).into(imageView);
+            Glide.with(activity).load(R.mipmap.ic_gf_default_photo).into(imageView);
         } else {
-            Picasso.with(activity)
+            Glide.with(activity)
                     .load(new File(path))
                     .placeholder(R.mipmap.ic_gf_default_photo)
                     .error(defaultDrawable)
-                    .resize(width, height)
-                    .centerInside()
+
+                    .centerCrop()
                     .into(imageView);
         }
 
@@ -57,13 +55,12 @@ public class PhotoUtil {
         if (isNotNull(activity, imageView)) return;
         imageView.setImageResource(R.mipmap.ic_gf_default_photo);
         if (0 == drawable) {
-            Picasso.with(activity).load(R.mipmap.ic_gf_default_photo).into(imageView);
+            Glide.with(activity).load(R.mipmap.ic_gf_default_photo).into(imageView);
         } else {
-            Picasso.with(activity)
+            Glide.with(activity)
                     .load(drawable)
                     .error(defaultDrawable)
-                    .resize(width, height)
-                    .centerInside()
+                    .centerCrop()
                     .into(imageView);
         }
 

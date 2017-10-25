@@ -16,9 +16,9 @@ import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.model.MerchDetailBean;
+import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 import com.shiwaixiangcun.customer.utils.Utils;
 import com.shiwaixiangcun.customer.widget.ZoomImageView;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -78,7 +78,7 @@ public class BigIamgeMerchatImageActivity extends AppCompatActivity implements V
         mData();
 
         if (Utils.isNotEmpty(bigimage)) {
-            Picasso.with(this).load(bigimage).into(ziv_image);
+            ImageDisplayUtil.showImageView(this, bigimage, ziv_image);
         }
 
         iv_close_big_image.setOnClickListener(this);
@@ -93,7 +93,8 @@ public class BigIamgeMerchatImageActivity extends AppCompatActivity implements V
                 ZoomImageView imageView = new ZoomImageView(
                         getApplicationContext());
 //                imageView.setImageResource(mImgs[position]);
-                Picasso.with(BigIamgeMerchatImageActivity.this).load(mylist.get(position).getAccessUrl()).into(imageView);
+
+                ImageDisplayUtil.showImageView(BigIamgeMerchatImageActivity.this, mylist.get(position).getAccessUrl(), imageView);
                 container.addView(imageView);
                 mImageViews[position] = imageView;
                 return imageView;

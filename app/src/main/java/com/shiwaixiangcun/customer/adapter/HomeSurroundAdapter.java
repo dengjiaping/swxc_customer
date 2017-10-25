@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.model.AllMerchBean;
+import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 import com.shiwaixiangcun.customer.utils.Utils;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -61,7 +61,8 @@ public class HomeSurroundAdapter extends BaseAdapter {
         mViewHolder.tv_merch_name.setText(list.get(position).getName());
         mViewHolder.tv_merch_content.setText(list.get(position).getFeature());
         if (Utils.isNotEmpty(list.get(position).getCover())){
-            Picasso.with(context).load(list.get(position).getCover()).into(mViewHolder.iv_merch);
+            ImageDisplayUtil.showImageView(context, list.get(position).getCover(), mViewHolder.iv_merch);
+
         }
 
         return convertView;

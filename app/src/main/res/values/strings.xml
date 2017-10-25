@@ -49,7 +49,10 @@
     <string name="main_mall">商城</string>
     <string name="main_me">我的</string>
     <string name="my_family">我的家人</string>
-    <string name="recipe">健康食谱</string>
+
+    <string name="recipe">养生食谱</string>
+    <string name="privacy_policy">"《世外生活隐私政策》"</string>
+    <string name="introduce">"智慧康养服务平台"</string>
     <string name="after_service">售后服务</string>
     <string name="after_service_detail">售后详情</string>
 </resources>

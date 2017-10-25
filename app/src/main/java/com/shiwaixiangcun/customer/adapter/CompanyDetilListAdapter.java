@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.model.RecoratingDetailBean;
+import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 import com.shiwaixiangcun.customer.utils.Utils;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -60,7 +60,8 @@ public class CompanyDetilListAdapter extends BaseAdapter {
         if (null != designCharts && designCharts.size() != 0){
             if (Utils.isNotEmpty(list.get(position).getDesignCharts().get(0).getAccessUrl())) {
                 mViewHolder.iv_thumbImageURL.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                Picasso.with(context).load(list.get(position).getDesignCharts().get(0).getAccessUrl()).into(mViewHolder.iv_thumbImageURL);
+                ImageDisplayUtil.showImageView(context, list.get(position).getDesignCharts().get(0).getAccessUrl(), mViewHolder.iv_thumbImageURL);
+
             }
         }
 

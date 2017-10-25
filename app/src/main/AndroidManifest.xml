@@ -169,7 +169,7 @@
             android:name=".ui.activity.heath.BloodFatHistoryActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.activity.ForLifeActivity"
+            android:name=".ui.activity.AboutActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name="com.mob.tools.MobUIShell"
@@ -512,7 +512,24 @@
             android:name=".ui.activity.MessageActivity"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".MessageDetailActivity">
+        <activity
+            android:name=".MessageDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.MoreToolsActivity">
+        </activity>
+        <activity android:name=".ui.activity.ToolsDetailActivity">
+        </activity>
+        <activity android:name=".ui.activity.PrivacyActivity">
+        </activity>
+        <activity android:name=".ui.activity.MerchantActivity">
+        </activity>
+        <activity android:name=".ui.activity.NotOpenActivity">
+        </activity>
+        <activity android:name=".ui.activity.TelephoneActivity">
+        </activity>
+        <activity android:name=".ui.activity.RescueWayActivity">
+        </activity>
+        <activity android:name=".ui.activity.ChunyuDoctorActivity">
         </activity>
         <activity android:name=".ui.activity.AfterServiceActivity">
         </activity>

@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.baidu.mobstat.StatService;
 import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.R;
-import com.shiwaixiangcun.customer.ui.fragment.FragmentHome;
+import com.shiwaixiangcun.customer.ui.fragment.FragmentMain;
 import com.shiwaixiangcun.customer.ui.fragment.FragmentMall;
 import com.shiwaixiangcun.customer.ui.fragment.FragmentMe;
 
@@ -36,7 +36,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     LinearLayout mLlayoutMe;
     @BindView(R.id.layout_bottom_bar)
     LinearLayout mLayoutBottomBar;
-    private FragmentHome mFragmentHome;
+    private FragmentMain mFragmentHome;
     private FragmentMall mFragmentMall;
     private FragmentMe mFragmentMe;
     private long exitTime;
@@ -94,7 +94,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         switch (position) {
             case 0:
                 if (mFragmentHome == null) {
-                    mFragmentHome = new FragmentHome();
+                    mFragmentHome = new FragmentMain();
                     transaction.add(R.id.main_content, mFragmentHome);
                 } else {
                     transaction.show(mFragmentHome);

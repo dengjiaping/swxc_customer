@@ -3,7 +3,6 @@ package com.shiwaixiangcun.customer.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -73,14 +72,8 @@ public class SurroundTopActivity extends AppCompatActivity implements View.OnCli
 
         surroundTop = new SurroundTopImpl(this);
         surroundTop.setBgaAdpaterAndClick(this, merchant);
-
-        for (int i = 0; i < 10; i++) {
-            list_surround_top.add("sss" + i);
-        }
         homeSurroundAdapter = new SurroundMerchAdapter(elements_merch, this);
         lv_surround_top.setAdapter(homeSurroundAdapter);
-
-
         back_left.setOnClickListener(this);
         lv_surround_top.setOnItemClickListener(this);
     }
@@ -108,7 +101,6 @@ public class SurroundTopActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Log.e("bbbbbbmmmbmmb", i + "");
         Intent intent = new Intent(SurroundTopActivity.this, SurroundDetailActivity.class);
         intent.putExtra("merchId", elements_merch.get(i).getId() + "");
         startActivity(intent);

@@ -100,6 +100,7 @@ public class FragmentOrder extends LazyFragment {
     @Override
     public void onResume() {
         super.onResume();
+        requestData();
 
     }
 

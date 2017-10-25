@@ -44,9 +44,11 @@ public class ResidentCertificationActivity extends BaseActivity implements View.
     private ResidentBean.DataBean.ChildrenBeanXXX secondData;
     private ResidentBean.DataBean.ChildrenBeanXXX.ChildrenBeanXX thirdData;
     private residentLastBean.DataBean fourthData;
+
     private List<residentLastBean.DataBean> mHouseDataList;
 
     private List<residentLastBean.DataBean> mFourDataList;
+
     private String houseName;
     private int houseID;
 

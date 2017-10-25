@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,16 +19,17 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.SurroundDetailAdapter;
 import com.shiwaixiangcun.customer.model.MerchDetailBean;
 import com.shiwaixiangcun.customer.presenter.impl.SurroundDetailImpl;
+import com.shiwaixiangcun.customer.ui.ISurroundDetailView;
+import com.shiwaixiangcun.customer.ui.dialog.DialogLoginOut;
+import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
+import com.shiwaixiangcun.customer.utils.Utils;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 import com.shiwaixiangcun.customer.widget.MyGridView;
-import com.shiwaixiangcun.customer.widget.SelfLoginoutDialog;
-import com.shiwaixiangcun.customer.utils.Utils;
-import com.shiwaixiangcun.customer.ui.ISurroundDetailView;
-import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ import java.util.List;
 
 public class SurroundDetailActivity extends AppCompatActivity implements View.OnClickListener, ISurroundDetailView, ScrollView.OnScrollChangeListener {
 
+    List<MerchDetailBean.DataBean.CertificateBean> list_certificate = new ArrayList<>();
     private ChangeLightImageView back_left;
     private MyGridView gv_surround_detail;
     private List<String> list_gv_surround_detail = new ArrayList<>();
@@ -55,7 +57,6 @@ public class SurroundDetailActivity extends AppCompatActivity implements View.On
     private TextView tv_merch_detail_introduce;
     private List<MerchDetailBean.DataBean.AtlasBean> list_merch = new ArrayList<>();
     private SurroundDetailAdapter surroundDetailAdapter;
-    List<MerchDetailBean.DataBean.CertificateBean> list_certificate = new ArrayList<>();
     private ImageView iv_location_image;
     private ImageView iv_phone_image;
     private TextView tv_food_title;
@@ -201,7 +202,7 @@ public class SurroundDetailActivity extends AppCompatActivity implements View.On
         list_merch.clear();
         basicInformation = result.getData().getBasicInformation();
         if (Utils.isNotEmpty(basicInformation.getCover())) {
-            Picasso.with(SurroundDetailActivity.this).load(basicInformation.getCover()).into(iv_merch_image);
+            Glide.with(SurroundDetailActivity.this).load(basicInformation.getCover()).into(iv_merch_image);
         }
 
         tv_merch_detail_title.setText(basicInformation.getName());
@@ -224,7 +225,7 @@ public class SurroundDetailActivity extends AppCompatActivity implements View.On
         tv_food_title.setText(basicInformation.getRecommendStr());
         tv_phone_top.setText(basicInformation.getCallButton());
         if (Utils.isNotEmpty(basicInformation.getRecommendIcon())){
-            Picasso.with(SurroundDetailActivity.this).load(basicInformation.getRecommendIcon()).into(iv_food_icon);
+            Glide.with(SurroundDetailActivity.this).load(basicInformation.getRecommendIcon()).into(iv_food_icon);
         }
 
 
@@ -271,7 +272,8 @@ public class SurroundDetailActivity extends AppCompatActivity implements View.On
             View view = LayoutInflater.from(this).inflate(R.layout.item_surround_detail_image, id_gallery, false);
             ImageView iv_certificates = (ImageView) view.findViewById(R.id.iv_certificates);
             if (Utils.isNotEmpty(certificates.get(i).getThumbImageURL())) {
-                Picasso.with(this).load(certificates.get(i).getAccessUrl()).into(iv_certificates);
+
+                ImageDisplayUtil.showImageView(this, certificates.get(i).getAccessUrl(), iv_certificates);
             }
             iv_certificates.setBackgroundColor(Color.parseColor("#332D3230"));
             final int finalI = i;
@@ -311,14 +313,14 @@ public class SurroundDetailActivity extends AppCompatActivity implements View.On
 
 
     private void CallPhoneDialog(final String phone) {
-        final SelfLoginoutDialog selfLoginoutDialog = new SelfLoginoutDialog(SurroundDetailActivity.this, R.layout.item_dialog_call_phone);
-        selfLoginoutDialog.setTitle("是否要拨打此电话？");
-        selfLoginoutDialog.setMessage(phone);
-//        selfLoginoutDialog.setColor();
-        selfLoginoutDialog.setYesOnclickListener("是", new SelfLoginoutDialog.onYesOnclickListener() {
+        final DialogLoginOut dialogLoginOut = new DialogLoginOut(SurroundDetailActivity.this, R.layout.item_dialog_call_phone);
+        dialogLoginOut.setTitle("是否要拨打此电话？");
+        dialogLoginOut.setMessage(phone);
+//        dialogLoginOut.setColor();
+        dialogLoginOut.setYesOnclickListener("是", new DialogLoginOut.onYesOnclickListener() {
             @Override
             public void onYesClick() {
-                selfLoginoutDialog.dismiss();
+                dialogLoginOut.dismiss();
                 Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phone));
                 if (ActivityCompat.checkSelfPermission(SurroundDetailActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                     // TODO: Consider calling
@@ -334,13 +336,13 @@ public class SurroundDetailActivity extends AppCompatActivity implements View.On
             }
         });
 
-        selfLoginoutDialog.setNoOnclickListener("否", new SelfLoginoutDialog.onNoOnclickListener() {
+        dialogLoginOut.setNoOnclickListener("否", new DialogLoginOut.onNoOnclickListener() {
             @Override
             public void onNoClick() {
 
-                selfLoginoutDialog.dismiss();
+                dialogLoginOut.dismiss();
             }
         });
-        selfLoginoutDialog.show();
+        dialogLoginOut.show();
     }
 }

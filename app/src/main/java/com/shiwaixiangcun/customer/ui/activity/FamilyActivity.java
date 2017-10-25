@@ -70,7 +70,7 @@ public class FamilyActivity extends BaseActivity implements View.OnClickListener
      */
     private void initData() {
         String strToken = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
-        final String strRefreshToken = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.Refresh_token, "");
+        final String refreshToken = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.Refresh_token, "");
         OkGo.<String>get(GlobalAPI.getFamily)
                 .params("access_token", strToken)
                 .params("isTrue", false)
@@ -90,9 +90,11 @@ public class FamilyActivity extends BaseActivity implements View.OnClickListener
                                 mMyFamilyList.addAll(responseEntity.getData());
                                 mMyFamilyAdapter.notifyDataSetChanged();
                                 break;
+
                             case 1018:
-                                RefreshTokenUtil.sendIntDataInvatation(mContext, strRefreshToken);
+                                RefreshTokenUtil.sendIntDataInvatation(mContext, refreshToken);
                                 break;
+
                             default:
                                 showToastShort("获取数据失败");
                                 break;

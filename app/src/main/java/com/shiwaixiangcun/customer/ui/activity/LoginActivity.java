@@ -10,8 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
-import com.baidu.mobstat.SendStrategyEnum;
-import com.baidu.mobstat.StatService;
 import com.google.gson.reflect.TypeToken;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -55,11 +53,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         setContentView(R.layout.activity_login);
         Intent intent = getIntent();
         mineLogin = intent.getStringExtra("mineLogin");
-        //        百度统计
-        StatService.setLogSenderDelayed(10);
-        StatService.setSendLogStrategy(this, SendStrategyEnum.APP_START, 1, false);
-        StatService.setSessionTimeOut(30);
-        initView();
+
+        initView(savedInstanceState);
         initData();
 
     }
@@ -67,14 +62,18 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putString("account", et_username.getText().toString());
     }
 
-    private void initView() {
+    private void initView(Bundle savedInstanceState) {
         tv_get_verification = (TextView) findViewById(R.id.tv_get_verification);
         btn_login = (Button) findViewById(R.id.btn_login);
         et_get_psw = (EditText) findViewById(R.id.et_get_psw);
         et_username = (EditText) findViewById(R.id.et_username);
         back_left = (ChangeLightImageView) findViewById(R.id.back_left);
+        if (savedInstanceState != null) {
+            et_username.setText(savedInstanceState.getString("account"));
+        }
 
 
     }
@@ -257,14 +256,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Override
     protected void onResume() {
         super.onResume();
-        StatService.onResume(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        StatService.onPause(this);
-        finish();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        finish();
+    }
 }

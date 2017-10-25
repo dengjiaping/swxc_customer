@@ -6,7 +6,6 @@ package com.shiwaixiangcun.customer;
  */
 
 public class GlobalAPI {
-
     //春雨医生测试服务器
     public static String DC_DOMAIN = "https://test.chunyu.me";
     public static String HM_DOMAIN = "http://hm.shiwaixiangcun.cn";
@@ -20,9 +19,10 @@ public class GlobalAPI {
 //    public static String MK_DOMAIN = "http://mk.hxteb.com";
 //    public static String OT_DOMAIN = "http://ot.hxteb.com";
 //    public static String NO_DOMAIN = "http://hxteb.com";
-//    public static  String PM_DOMAIN = "http://pm.hxteb.com";
-    public static String getEvaluating = HM_DOMAIN + "/mi/assessment/view.htm";
+//    public static String PM_DOMAIN = "http://pm.hxteb.com";
     //健康地址获取
+    public static String getEvaluating = HM_DOMAIN + "/mi/assessment/view.htm";
+
     public static String getPhysical = HM_DOMAIN + "/mc/customer/detail.json";
     public static String getHeartRate = HM_DOMAIN + "/mc/pressure/heartrate.json";
     public static String getBloodSugar = HM_DOMAIN + "/mc/sugar/list.json";
@@ -45,6 +45,7 @@ public class GlobalAPI {
     public static String getRecipeType = HM_DOMAIN + "/mi/health/dietType.json";
     public static String getRecipeList = HM_DOMAIN + "/mi/health/dietList.json";
     public static String getMessage = HM_DOMAIN + "/mc/message/core/list.json";
+
     public static String afterService = MK_DOMAIN + "/mc/after/sale/listPage.json";
     public static String afterServiceDetail = MK_DOMAIN + "/mc/after/sale/detail.json";
     public static String cancelAfterService = MK_DOMAIN + "/mc/after/sale/cancel.json";
@@ -52,6 +53,15 @@ public class GlobalAPI {
     public static String rightRecord = PM_DOMAIN + "/mc/online/rights/listpage.json";
     public static String rightDetail = PM_DOMAIN + "/mc/online/rights/detail.json";
     public static String addEvaluate = MK_DOMAIN + "/mc/evaluate/add.json";
+
+    public static String getMerchant = PM_DOMAIN + "/mi/merchant/listpage/type.json";
+    public static String getToolCategory = OT_DOMAIN + "/mi/app/category/tree.json";
+    public static String getPrivacy = PM_DOMAIN + "/mi/privacyPolicy.htm";
+    public static String getSite = OT_DOMAIN + "/mi/site/listdata.json";
+
+
+
+
     private static String DOMAIN = MK_DOMAIN;
     public static String getCategory = DOMAIN + "/mi/goods/category/tree.json";
     //地址相关接口

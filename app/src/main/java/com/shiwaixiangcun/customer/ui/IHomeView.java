@@ -1,7 +1,7 @@
 package com.shiwaixiangcun.customer.ui;
 
-import com.shiwaixiangcun.customer.model.AnnouncementBean;
 import com.shiwaixiangcun.customer.model.InformationBean;
+import com.shiwaixiangcun.customer.model.NoticeBean;
 import com.shiwaixiangcun.customer.model.PageBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.model.WeatherDataBean;
@@ -30,14 +30,14 @@ public interface IHomeView {
      *
      * @param result
      */
-    void setAnnouncementResult(ResponseEntity<PageBean<AnnouncementBean>> result);
+    void setAnnouncementResult(ResponseEntity<PageBean<NoticeBean>> result);
 
     /**
      * 公告
      *
      * @param result
      */
-    void setHeadlineResult(ResponseEntity<PageBean<AnnouncementBean>> result);
+    void setHeadlineResult(ResponseEntity<PageBean<NoticeBean>> result);
 
 
     void setInformationResult(InformationBean result);

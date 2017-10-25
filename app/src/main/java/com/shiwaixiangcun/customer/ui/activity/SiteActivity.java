@@ -8,15 +8,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.google.gson.reflect.TypeToken;
 import com.jaeger.recyclerviewdivider.RecyclerViewDivider;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 import com.shiwaixiangcun.customer.BaseActivity;
+import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterSite;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.model.Site;
 import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
+import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,14 +54,29 @@ public class SiteActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void initData() {
-        Site site1 = new Site(1, "恒信天鹅堡森林公园");
-        Site site2 = new Site(2, "恒信天然森林");
-        Site site3 = new Site(3, "恒信三岔湖森林公园");
 
-        mSiteList.add(site1);
-        mSiteList.add(site2);
-        mSiteList.add(site3);
+        OkGo.<String>get(GlobalAPI.getSite)
+                .params("fields", "id,name,defaultShow")
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        Type type = new TypeToken<ResponseEntity<List<Site>>>() {
+                        }.getType();
+                        ResponseEntity<List<Site>> responseEntity = JsonUtil.fromJson(response.body(), type);
+                        if (responseEntity == null) {
+                            return;
+                        }
+                        switch (responseEntity.getResponseCode()) {
+                            case 1001:
+                                mSiteList.addAll(responseEntity.getData());
         mAdapterSite.notifyDataSetChanged();
+                                break;
+                            default:
+                                showToastShort("获取数据失败");
+                                break;
+    }
+                    }
+                });
     }
 
     private void initViewAndEvent() {
@@ -78,7 +101,7 @@ public class SiteActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Site site = (Site) adapter.getData().get(position);
-                String name = site.site;
+                String name = site.getName();
                 AppSharePreferenceMgr.put(mContext, GlobalConfig.SITE_NAME, name);
                 Intent intent = new Intent();
                 intent.putExtra("site", name);

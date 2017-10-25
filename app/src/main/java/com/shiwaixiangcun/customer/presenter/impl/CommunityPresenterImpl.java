@@ -7,7 +7,7 @@ import com.google.gson.reflect.TypeToken;
 import com.shiwaixiangcun.customer.Common;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
-import com.shiwaixiangcun.customer.model.AnnouncementBean;
+import com.shiwaixiangcun.customer.model.NoticeBean;
 import com.shiwaixiangcun.customer.model.PageBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.presenter.ICommunityPresenter;
@@ -45,9 +45,9 @@ public class CommunityPresenterImpl implements ICommunityPresenter {
             public void onSuccess(String responseJson) {
                 Log.i("oooooo---onSuccess---COMMUNITY_ANNOUNCEMENT", responseJson);
                 // 分页列表
-                Type type = new TypeToken<ResponseEntity<PageBean<AnnouncementBean>>>() {
+                Type type = new TypeToken<ResponseEntity<PageBean<NoticeBean>>>() {
                 }.getType();
-                ResponseEntity<PageBean<AnnouncementBean>> responseEntity_ann = JsonUtil.fromJson(responseJson, type);
+                ResponseEntity<PageBean<NoticeBean>> responseEntity_ann = JsonUtil.fromJson(responseJson, type);
                 communityView.setBgaAdpaterAndClickResult(responseEntity_ann);
 
             }

@@ -100,6 +100,7 @@ public class App extends MultiDexApplication {
         headers.put("User-Agent", "android");
         HttpParams params = new HttpParams();
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
+
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor("OkGo");
         loggingInterceptor.setPrintLevel(HttpLoggingInterceptor.Level.BODY);        //log打印级别，决定了log显示的详细程度
         loggingInterceptor.setColorLevel(Level.INFO);
@@ -111,6 +112,7 @@ public class App extends MultiDexApplication {
         builder.cookieJar(new CookieJarImpl(new DBCookieStore(this)));              //使用数据库保持cookie，如果cookie不过期，则一直有效
         HttpsUtils.SSLParams sslParams1 = HttpsUtils.getSslSocketFactory();
         builder.sslSocketFactory(sslParams1.sSLSocketFactory, sslParams1.trustManager);
+
         OkGo.getInstance().init(this)
                 //必须调用初始化
                 .setOkHttpClient(builder.build())               //建议设置OkHttpClient，不设置会使用默认的

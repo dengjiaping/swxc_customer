@@ -18,8 +18,8 @@ import com.baidu.mobstat.StatService;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.ImageMerchantDetailAdapter;
 import com.shiwaixiangcun.customer.model.MerchDetailBean;
+import com.shiwaixiangcun.customer.ui.dialog.DialogLoginOut;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
-import com.shiwaixiangcun.customer.widget.SelfLoginoutDialog;
 
 import java.util.List;
 
@@ -94,14 +94,14 @@ public class MerchantDetailToImagesActivity extends AppCompatActivity implements
 
 
     private void showLoginoutDialog() {
-        final SelfLoginoutDialog selfLoginoutDialog = new SelfLoginoutDialog(MerchantDetailToImagesActivity.this, R.layout.item_dialog_call_phone);
-        selfLoginoutDialog.setTitle("是否要拨打此电话？");
-        selfLoginoutDialog.setMessage(phone);
-//        selfLoginoutDialog.setColor();
-        selfLoginoutDialog.setYesOnclickListener("是", new SelfLoginoutDialog.onYesOnclickListener() {
+        final DialogLoginOut dialogLoginOut = new DialogLoginOut(MerchantDetailToImagesActivity.this, R.layout.item_dialog_call_phone);
+        dialogLoginOut.setTitle("是否要拨打此电话？");
+        dialogLoginOut.setMessage(phone);
+//        dialogLoginOut.setColor();
+        dialogLoginOut.setYesOnclickListener("是", new DialogLoginOut.onYesOnclickListener() {
             @Override
             public void onYesClick() {
-                selfLoginoutDialog.dismiss();
+                dialogLoginOut.dismiss();
                 Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phone));
                 if (ActivityCompat.checkSelfPermission(MerchantDetailToImagesActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                     // TODO: Consider calling
@@ -117,14 +117,14 @@ public class MerchantDetailToImagesActivity extends AppCompatActivity implements
             }
         });
 
-        selfLoginoutDialog.setNoOnclickListener("否", new SelfLoginoutDialog.onNoOnclickListener() {
+        dialogLoginOut.setNoOnclickListener("否", new DialogLoginOut.onNoOnclickListener() {
             @Override
             public void onNoClick() {
 
-                selfLoginoutDialog.dismiss();
+                dialogLoginOut.dismiss();
             }
         });
-        selfLoginoutDialog.show();
+        dialogLoginOut.show();
     }
 
     @Override

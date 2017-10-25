@@ -44,11 +44,10 @@
                 android:layout_marginRight="20dp"
                 android:orientation="horizontal">
 
-                <com.shiwaixiangcun.customer.widget.ImageViewPlus
+                <com.shiwaixiangcun.customer.widget.CircleImageView
                     android:id="@+id/iv_head_image"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:scaleType="fitXY"
                     android:src="@mipmap/defalt_image"/>
 
                 <ImageView
@@ -92,11 +91,11 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:lines="1"
-                    android:maxEms="15"
                     android:id="@+id/tv_information_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:maxEms="15"
                     android:text="王明"
                     android:textColor="@color/word_grad"
                     android:textSize="16sp" />
@@ -238,10 +237,10 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_marginRight="28dp"
                     android:id="@+id/tv_information_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="28dp"
                     android:text="135919191991"
                     android:textColor="@color/word_grad"
                     android:textSize="16sp" />
@@ -254,12 +253,12 @@
 
     <Button
         android:id="@+id/btn_loginout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
         android:background="@drawable/acr_white_bg"
         android:text="退出登录"
         android:textColor="@color/word_red" />

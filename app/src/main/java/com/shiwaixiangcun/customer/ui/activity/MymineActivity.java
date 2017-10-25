@@ -29,13 +29,13 @@ import com.shiwaixiangcun.customer.ui.IMyMineView;
 import com.shiwaixiangcun.customer.ui.activity.mall.MallActivity;
 import com.shiwaixiangcun.customer.ui.activity.mall.ManageAddressActivity;
 import com.shiwaixiangcun.customer.ui.activity.mall.OrderActivity;
+import com.shiwaixiangcun.customer.ui.dialog.DialogLoginOut;
+import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.utils.Utils;
 import com.shiwaixiangcun.customer.utils.VersionUpdateUtil;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
-import com.shiwaixiangcun.customer.widget.ImageViewPlus;
-import com.shiwaixiangcun.customer.widget.SelfLoginoutDialog;
-import com.squareup.picasso.Picasso;
+import com.shiwaixiangcun.customer.widget.CircleImageView;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -72,7 +72,7 @@ public class MymineActivity extends AppCompatActivity implements View.OnClickLis
     private RelativeLayout rl_head_mine;
     private RelativeLayout rl_feed_back;
     private TextView tv_user_name;
-    private ImageViewPlus iv_head_my_image;
+    private CircleImageView iv_head_my_image;
     private MyMineImpl myMine;
     private TextView tv_wy_phone;
     private RelativeLayout rl_wy_lay;
@@ -102,7 +102,7 @@ public class MymineActivity extends AppCompatActivity implements View.OnClickLis
         rl_head_mine = (RelativeLayout) findViewById(R.id.rl_head_mine);
         rl_feed_back = (RelativeLayout) findViewById(R.id.rl_feed_back);
         tv_user_name = (TextView) findViewById(R.id.tv_user_name);
-        iv_head_my_image = (ImageViewPlus) findViewById(R.id.iv_head_my_image);
+        iv_head_my_image = (CircleImageView) findViewById(R.id.iv_head_my_image);
         tv_wy_phone = (TextView) findViewById(R.id.tv_wy_phone);
         rl_wy_lay = (RelativeLayout) findViewById(R.id.rl_wy_lay);
         rl_for_life = (RelativeLayout) findViewById(R.id.rl_for_life);
@@ -156,7 +156,7 @@ public class MymineActivity extends AppCompatActivity implements View.OnClickLis
                 showLoginoutDialog(tv_wy_phone.getText().toString().trim());
                 break;
             case R.id.rl_for_life:
-                Intent intent_version = new Intent(this, ForLifeActivity.class);
+                Intent intent_version = new Intent(this, AboutActivity.class);
                 startActivity(intent_version);
                 break;
             case R.id.rl_app_address:
@@ -206,7 +206,7 @@ public class MymineActivity extends AppCompatActivity implements View.OnClickLis
 
             tv_user_name.setText(username);
             if (Utils.isNotEmpty(head_image_path)) {
-                Picasso.with(this).load(head_image_path).into(iv_head_my_image);
+                ImageDisplayUtil.showImageView(this, head_image_path, iv_head_my_image);
             } else {
                 iv_head_my_image.setImageResource(R.mipmap.defalt_image);
             }
@@ -227,14 +227,14 @@ public class MymineActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void showLoginoutDialog(final String phone) {
-        final SelfLoginoutDialog selfLoginoutDialog = new SelfLoginoutDialog(MymineActivity.this, R.layout.item_dialog_call_phone);
-        selfLoginoutDialog.setTitle("是否要拨打此电话？");
-        selfLoginoutDialog.setMessage(phone);
-//        selfLoginoutDialog.setColor();
-        selfLoginoutDialog.setYesOnclickListener("是", new SelfLoginoutDialog.onYesOnclickListener() {
+        final DialogLoginOut dialogLoginOut = new DialogLoginOut(MymineActivity.this, R.layout.item_dialog_call_phone);
+        dialogLoginOut.setTitle("是否要拨打此电话？");
+        dialogLoginOut.setMessage(phone);
+//        dialogLoginOut.setColor();
+        dialogLoginOut.setYesOnclickListener("是", new DialogLoginOut.onYesOnclickListener() {
             @Override
             public void onYesClick() {
-                selfLoginoutDialog.dismiss();
+                dialogLoginOut.dismiss();
                 Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phone));
                 if (ActivityCompat.checkSelfPermission(MymineActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                     // TODO: Consider calling
@@ -250,14 +250,14 @@ public class MymineActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
 
-        selfLoginoutDialog.setNoOnclickListener("否", new SelfLoginoutDialog.onNoOnclickListener() {
+        dialogLoginOut.setNoOnclickListener("否", new DialogLoginOut.onNoOnclickListener() {
             @Override
             public void onNoClick() {
 
-                selfLoginoutDialog.dismiss();
+                dialogLoginOut.dismiss();
             }
         });
-        selfLoginoutDialog.show();
+        dialogLoginOut.show();
     }
 
     /**

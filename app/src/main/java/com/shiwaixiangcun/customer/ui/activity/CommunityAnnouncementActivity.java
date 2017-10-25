@@ -13,7 +13,7 @@ import com.baidu.mobstat.StatService;
 import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.ComListAdapter;
-import com.shiwaixiangcun.customer.model.AnnouncementBean;
+import com.shiwaixiangcun.customer.model.NoticeBean;
 import com.shiwaixiangcun.customer.model.PageBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.presenter.impl.CommunityPresenterImpl;
@@ -29,7 +29,7 @@ public class CommunityAnnouncementActivity extends BaseActivity implements View.
     private TextView tv_page_name;
     private ListView lv_community;
     private List<String> list_community = new ArrayList<>();
-    private List<AnnouncementBean> elements_anno;
+    private List<NoticeBean> elements_anno;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +79,7 @@ public class CommunityAnnouncementActivity extends BaseActivity implements View.
 
 
     @Override
-    public void setBgaAdpaterAndClickResult(ResponseEntity<PageBean<AnnouncementBean>> result) {
+    public void setBgaAdpaterAndClickResult(ResponseEntity<PageBean<NoticeBean>> result) {
         if (result != null) {
             elements_anno = result.getData().getElements();
 
