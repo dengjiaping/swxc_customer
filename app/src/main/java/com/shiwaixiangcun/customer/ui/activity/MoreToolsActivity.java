@@ -15,7 +15,6 @@ import com.lzy.okgo.model.Response;
 import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.Common;
 import com.shiwaixiangcun.customer.GlobalAPI;
-import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterService;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
@@ -63,7 +62,7 @@ public class MoreToolsActivity extends BaseActivity implements View.OnClickListe
 
     private void initData() {
         OkGo.<String>get(GlobalAPI.getToolCategory)
-                .params("siteId", GlobalConfig.siteID)
+                .params("siteId", 20)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {

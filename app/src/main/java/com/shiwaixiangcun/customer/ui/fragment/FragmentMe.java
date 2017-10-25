@@ -243,20 +243,12 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, IM
         final DialogLoginOut dialogLoginOut = new DialogLoginOut(mContext, R.layout.item_dialog_call_phone);
         dialogLoginOut.setTitle("是否要拨打此电话？");
         dialogLoginOut.setMessage(phone);
-//        dialogLoginOut.setColor();
         dialogLoginOut.setYesOnclickListener("是", new DialogLoginOut.onYesOnclickListener() {
             @Override
             public void onYesClick() {
                 dialogLoginOut.dismiss();
                 Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phone));
                 if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
                     return;
                 }
                 startActivity(intent);
