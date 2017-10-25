@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="4dp"
-            android:text="智慧健康服务平台"
+            android:text="@string/introduce"
             android:textColor="#cc1c2b36"
             android:textSize="18sp"
             app:layout_constraintHorizontal_bias="0.54"

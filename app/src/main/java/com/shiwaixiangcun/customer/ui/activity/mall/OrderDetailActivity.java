@@ -207,13 +207,21 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void handleEvent(SimpleEvent simpleEvent) {
-        Log.e(BUG_TAG, "点击回传");
-        if (simpleEvent.mEventType != SimpleEvent.UPDATE_ORDER_DETAIL) {
-            return;
+
+        switch (simpleEvent.mEventType) {
+
+            case SimpleEvent.UPDATE_ORDER_DETAIL:
+                if (simpleEvent.mEventValue == 1) {
+                    updateUI((OrderDetailBean) simpleEvent.mData);
+                }
+                break;
+            case SimpleEvent.PAY_SUCCESS:
+                mDialogPay.dismiss();
+                initData();
+                break;
+            case SimpleEvent.PAY_FAIL:
         }
-        if (simpleEvent.mEventValue == 1) {
-            updateUI((OrderDetailBean) simpleEvent.mData);
-        }
+
     }
 
     /**

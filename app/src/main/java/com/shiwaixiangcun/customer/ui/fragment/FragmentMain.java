@@ -246,115 +246,6 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
             }
         });
         initToolsData();
-
-//        mAdapterTool.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-//                ToolBean toolBean = mToolList.get(position);
-//                Bundle bundle = new Bundle();
-//
-//                String isOrNotLogin = SharePreference.getStringSpParams(mContext, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
-//                switch (toolBean.id) {
-//                    case 1:
-//                        //体征数据
-//
-//                        if (Utils.isNotEmpty(isOrNotLogin)) {
-//                            readyGo(PhysicalActivity.class);
-//                        } else {
-//                            readyGo(LoginActivity.class);
-//                        }
-//
-//
-//                        break;
-//                    case 2:
-//                        //健康评测
-//                        readyGo(HealthEvaluationActivity.class);
-//                        break;
-//                    case 3:
-//                        //健康方案
-//                        if (Utils.isNotEmpty(isOrNotLogin)) {
-//                            bundle.putInt("type", 3);
-//                            readyGo(WebActivity.class, bundle);
-//                        } else {
-//                            readyGo(LoginActivity.class);
-//                        }
-//
-//
-//                        break;
-//                    case 4:
-//
-//                        if (Utils.isNotEmpty(isOrNotLogin)) {
-//                            bundle.putInt("type", 4);
-//                            readyGo(WebActivity.class, bundle);
-//                        } else {
-//                            readyGo(LoginActivity.class);
-//                        }
-//
-//                        break;
-//                    case 5:
-//                        //预约挂号
-//                        bundle.putInt("type", 5);
-//                        readyGo(WebActivity.class, bundle);
-//                        break;
-//                    case 6:
-//                        //健康食谱
-////                        Toast.makeText(mContext, "暂未开通此功能", Toast.LENGTH_SHORT).show();
-//                        readyGo(RecipeActivity.class);
-//                        break;
-//                    case 7:
-//                        //在线问诊
-//                        bundle.putInt("type", 7);
-//                        readyGo(WebActivity.class, bundle);
-//                        break;
-//                    case 8:
-//                        //在线报修
-//                        if (Utils.isNotEmpty(isOrNotLogin)) {
-//                            if (!ContextSession.isPropertyAuth()) {
-//                                readyGo(ResidentCertificationActivity.class);
-//                            } else {
-//                                readyGo(OnlineServiceActivity.class);
-//                            }
-//                        } else {
-//                            readyGo(LoginActivity.class);
-//                        }
-//                        break;
-//                    case 9:
-//                        //找装修
-//                        readyGo(LookDecoratingActivity.class);
-//                        break;
-//                    case 10:
-//                        //房屋租售
-//
-//                        if (Utils.isNotEmpty(isOrNotLogin)) {
-//                            readyGo(HouseRentingActivity.class);
-//                        } else {
-//                            readyGo(LoginActivity.class);
-//                        }
-//
-//
-//                        break;
-//                    case 11:
-//                        //在线缴费
-//
-//                        if (Utils.isNotEmpty(isOrNotLogin)) {
-//                            Toast.makeText(mContext, "暂未开通此功能", Toast.LENGTH_SHORT).show();
-//                        } else {
-//                            readyGo(LoginActivity.class);
-//                        }
-//
-//
-//                        break;
-//                    case 12:
-//                        //周边生活
-//                        readyGo(MoreToolsActivity.class);
-//                        break;
-//
-//
-//                }
-//            }
-//        });
-//
-
     }
 
     private void initToolsData() {
@@ -526,6 +417,7 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
         ToolCategoryBean.ChildrenBeanX allItem = new ToolCategoryBean.ChildrenBeanX();
         allItem.setName("更多服务");
         firstTool.add(allItem);
+        mToolList.clear();
         mToolList.addAll(firstTool);
         mAdapterTool.addData(firstTool);
         mAdapterTool.notifyDataSetChanged();
