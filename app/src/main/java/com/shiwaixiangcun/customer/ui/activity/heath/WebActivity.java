@@ -1,16 +1,13 @@
 package com.shiwaixiangcun.customer.ui.activity.heath;
 
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -22,17 +19,11 @@ import android.widget.TextView;
 
 import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.Common;
-import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
-import com.shiwaixiangcun.customer.ui.activity.LoginActivity;
 import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.SharePreference;
-import com.shiwaixiangcun.customer.utils.Utils;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -101,12 +92,16 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
         webSettings.setUseWideViewPort(true); //将图片调整到适合webview的大小
         webSettings.setLoadWithOverviewMode(true); // 缩放至屏幕的大小
         //缩放操作
+        webSettings.setDomStorageEnabled(true);
         webSettings.setSupportZoom(true); //支持缩放，默认为true。是下面那个的前提。
         webSettings.setBuiltInZoomControls(true); //设置内置的缩放控件。若为false，则该WebView不可缩放
-        webSettings.setDisplayZoomControls(false); //隐藏原生的缩放控件
+        webSettings.setBlockNetworkImage(false);
         //其他细节操作
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE); //关闭webview中缓存
         webSettings.setAllowFileAccess(true); //设置可以访问文件
+        String user_agent = "Mozilla/5.0 (Linux; Android 5.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Mobile Safari/537.36";
+        webSettings.setUserAgentString(user_agent);
+
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true); //支持通过JS打开新窗口
         webSettings.setLoadsImagesAutomatically(true); //支持自动加载图片
         webSettings.setDefaultTextEncodingName("utf-8");//设置编码格式
@@ -115,55 +110,19 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
     private void initView() {
         mBackLeft.setOnClickListener(this);
         urlBuilder.append(strLink);
-        isApperenceToken = true;
-        switch (type) {
-            case 3:
-                if (!Utils.isNotEmpty(isLogin)) {
-                    readyGoThenKill(LoginActivity.class);
-                }
-                urlBuilder.append(strLink);
-                isApperenceToken = true;
-                break;
-            case 4:
-
-                if (!Utils.isNotEmpty(isLogin)) {
-                    readyGoThenKill(LoginActivity.class);
-                }
-                urlBuilder.append(GlobalAPI.HM_DOMAIN).append("/mc/serviceList/view.htm");
-                mTvPageName.setText("健康动态");
-                isApperenceToken = true;
-                break;
-            case 5:
-                urlBuilder.append("https://wy.guahao.com/fastorder/hospital");
-                mTvPageName.setText("预约挂号");
-                break;
-            case 7:
-                mTvPageName.setText("在线问诊");
-                return;
-            case 14:
-                urlBuilder.append("https://ztg.zhongan.com/promote/showcase/landingH5.htm?promoteType=2&promotionCode=INST170970022019&redirectType=h5");
-                mTvPageName.setText("健康保险");
-                break;
-            case 15:
-                urlBuilder.append(GlobalAPI.getTravel);
-                mTvPageName.setText("旅游度假");
-                break;
-        }
-        if (isApperenceToken) {
+        if (authorization) {
             urlBuilder.append("?access_token=").append(tokenString);
         }
         Log.e(BUG_TAG, "webview加载" + urlBuilder.toString());
-        Map<String, String> headers = new HashMap<>();
 
         removeCookie(mContext);
-        mWebView.loadUrl(urlBuilder.toString(), headers);
+
+//        mWebView.loadUrl("https://open.zhongan.com/standard/insure/productShowPageMobile.htm?productCode=PRD160600129006&promotionCode=INST170970022019&payChannel=wxpay,alipay,alipay_app&accessChannel=mobile");
+        mWebView.loadUrl(urlBuilder.toString());
         mWebView.setWebChromeClient(new MyWebChromeViewClient());
-        mWebView.setWebViewClient(new WebViewClient());
+        mWebView.setWebViewClient(new MyWebViewClient());
 
     }
-
-
-
 
 
     private void initData() {
@@ -221,12 +180,6 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private class MyWebViewClient extends WebViewClient {
-        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-            mWebView.loadUrl(request.getUrl().toString());
-            return true;
-        }
 
         public boolean shouldOverrideUrlLoading(WebView view, String url) { //  重写此方法表明点击网页里面的链接还是在当前的webview里跳转，不跳到浏览器那边
             view.loadUrl(url);
@@ -234,7 +187,4 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
         }
 
     }
-
-
-
 }

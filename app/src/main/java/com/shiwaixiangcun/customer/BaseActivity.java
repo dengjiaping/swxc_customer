@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 
+import com.baidu.mobstat.SendStrategyEnum;
+import com.baidu.mobstat.StatService;
 import com.shiwaixiangcun.customer.ui.fragment.CubeFragmentActivity;
 
 /**
@@ -29,9 +31,29 @@ public class BaseActivity extends CubeFragmentActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         mContext = this;
+        StatService.setLogSenderDelayed(10);
+        StatService.setSendLogStrategy(this, SendStrategyEnum.APP_START, 1, false);
+        StatService.setSessionTimeOut(30);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 
     protected void readyGo(Class<?> clazz, Bundle bundle) {
         Intent intent = new Intent(this, clazz);

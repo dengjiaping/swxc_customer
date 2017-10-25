@@ -2,10 +2,12 @@ package com.shiwaixiangcun.customer.presenter.impl;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.shiwaixiangcun.customer.Common;
+import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
 import com.shiwaixiangcun.customer.model.ImageReturnbean;
@@ -15,6 +17,7 @@ import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.presenter.IOnlineServicePresenter;
 import com.shiwaixiangcun.customer.ui.IOnlineServiceView;
 import com.shiwaixiangcun.customer.ui.dialog.DialogLoading;
+import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.LoginOutUtil;
 import com.shiwaixiangcun.customer.utils.RefreshTokenUtil;
@@ -32,6 +35,8 @@ import java.util.List;
  */
 
 public class OnlineServiceImpl implements IOnlineServicePresenter {
+    String refresh_token;
+    String strToken;
     private IOnlineServiceView iOnlineServiceView;
     private String content;
     private HashMap<String, File> hash_image;
@@ -72,10 +77,10 @@ public class OnlineServiceImpl implements IOnlineServicePresenter {
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(login_detail, type);
-        final String refresh_token = responseEntity.getData().getRefresh_token();
-
+        refresh_token = (String) AppSharePreferenceMgr.get(context, GlobalConfig.Refresh_token, "");
+        strToken = (String) AppSharePreferenceMgr.get(context, GlobalConfig.TOKEN, "");
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("access_token", responseEntity.getData().getAccess_token());
+        hashMap.put("access_token", strToken);
         hashMap.put("content", content);
 //        hashMap.put("imageIds", "");
         Log.i("dddddd", hashMap.toString() + "-----------" + Common.OnlineRepair);
@@ -86,13 +91,26 @@ public class OnlineServiceImpl implements IOnlineServicePresenter {
                 Type type = new TypeToken<ResponseEntity>() {
                 }.getType();
                 ResponseEntity responseEntity = JsonUtil.fromJson(responseJson, ResponseEntity.class);
-                if (responseEntity.getResponseCode() == 1001){
-                    iOnlineServiceView.setBgaAdpaterAndClickResult(responseEntity);
-                }else if (responseEntity.getResponseCode() == 1018){
-                    RefreshTokenUtil.sendIntDataInvatation(context, refresh_token);
-                }else if (responseEntity.getResponseCode() == 1019){
-                    LoginOutUtil.sendLoginOutUtil(context);
+                if (responseEntity == null) {
+                    return;
                 }
+                switch (responseEntity.getResponseCode()) {
+                    case 1001:
+                        iOnlineServiceView.setBgaAdpaterAndClickResult(responseEntity);
+                        break;
+                    case 1002:
+                        Toast.makeText(context, responseEntity.getMessage(), Toast.LENGTH_SHORT).show();
+                        break;
+                    case 1018:
+                        RefreshTokenUtil.sendIntDataInvatation(context, refresh_token);
+                        break;
+                    case 1019:
+                        LoginOutUtil.sendLoginOutUtil(context);
+                        break;
+
+
+                }
+
 
 
             }
@@ -118,24 +136,20 @@ public class OnlineServiceImpl implements IOnlineServicePresenter {
         }
 
 
-        Log.i("mmmmmmmmmmm", list_file.size() + "");
         String login_detail = SharePreference.getStringSpParams(context, Common.IS_SAVE_LOGIN, Common.SISAVELOGIN);
-        Log.i("eeeeeettt", login_detail);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(login_detail, type);
-
+        refresh_token = (String) AppSharePreferenceMgr.get(context, GlobalConfig.Refresh_token, "");
+        strToken = (String) AppSharePreferenceMgr.get(context, GlobalConfig.TOKEN, "");
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("access_token", responseEntity.getData().getAccess_token());
+        hashMap.put("access_token", strToken);
         hashMap.put("images", list_file);
-
-        Log.i("dddddd", hashMap.toString() + "-----------" + Common.fileSend);
 
 
         HttpRequest.post(Common.fileSend, hashMap, new HttpCallBack() {
             @Override
             public void onSuccess(String responseJson) {
-                Log.i("oooooo---onSuccess---", responseJson);
                 Type type = new TypeToken<ResponseEntity<List<ImageReturnbean>>>() {
                 }.getType();
                 ResponseEntity<List<ImageReturnbean>> responseEntity = JsonUtil.fromJson(responseJson, type);
@@ -148,7 +162,7 @@ public class OnlineServiceImpl implements IOnlineServicePresenter {
                     }
                     s_imageId = str_imaId.substring(0, str_imaId.length() - 1);
 
-                    sendOnlineServiceImageHttp(context,s_imageId);
+                    sendOnlineServiceImageHttp(context, s_imageId);
                 }
             }
 
@@ -161,15 +175,15 @@ public class OnlineServiceImpl implements IOnlineServicePresenter {
     }
 
     //在线报修
-    private void sendOnlineServiceImageHttp(Context context,String s_imageId) {
+    private void sendOnlineServiceImageHttp(Context context, String s_imageId) {
         String login_detail = SharePreference.getStringSpParams(context, Common.IS_SAVE_LOGIN, Common.SISAVELOGIN);
-        Log.i("eeeeeettt", login_detail);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(login_detail, type);
-
+        refresh_token = (String) AppSharePreferenceMgr.get(context, GlobalConfig.Refresh_token, "");
+        strToken = (String) AppSharePreferenceMgr.get(context, GlobalConfig.TOKEN, "");
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("access_token", responseEntity.getData().getAccess_token());
+        hashMap.put("access_token", strToken);
         hashMap.put("content", content);
         hashMap.put("imageIds", s_imageId);
         Log.i("ddddddaaaa", hashMap.toString() + "-----------" + Common.OnlineRepair);
@@ -177,7 +191,6 @@ public class OnlineServiceImpl implements IOnlineServicePresenter {
             @Override
             public void onSuccess(String responseJson) {
                 mDialogLoading.close();
-                Log.i("oooooo---onSuccess---aaaa", responseJson);
                 Type type = new TypeToken<ResponseEntity>() {
                 }.getType();
                 ResponseEntity responseEntity = JsonUtil.fromJson(responseJson, ResponseEntity.class);
@@ -193,6 +206,7 @@ public class OnlineServiceImpl implements IOnlineServicePresenter {
             }
         });
     }
+
     //个人信息
     private void sendInformationHttp(final Context context) {
         String login_detail = SharePreference.getStringSpParams(context, Common.IS_SAVE_LOGIN, Common.SISAVELOGIN);

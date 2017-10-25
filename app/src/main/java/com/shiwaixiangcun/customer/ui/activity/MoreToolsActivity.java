@@ -3,6 +3,7 @@ package com.shiwaixiangcun.customer.ui.activity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -12,6 +13,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.shiwaixiangcun.customer.BaseActivity;
+import com.shiwaixiangcun.customer.Common;
 import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
@@ -20,6 +22,8 @@ import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.model.ToolCategoryBean;
 import com.shiwaixiangcun.customer.utils.GridUtils;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
+import com.shiwaixiangcun.customer.utils.SharePreference;
+import com.shiwaixiangcun.customer.utils.StringUtil;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
 import java.lang.reflect.Type;
@@ -29,6 +33,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * 全部服务Activity
+ */
 public class MoreToolsActivity extends BaseActivity implements View.OnClickListener {
 
 
@@ -43,6 +50,7 @@ public class MoreToolsActivity extends BaseActivity implements View.OnClickListe
 
     private List<AdapterService.MySection> mList;
     private AdapterService mAdapterService;
+    private String isLogin = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +91,7 @@ public class MoreToolsActivity extends BaseActivity implements View.OnClickListe
                                         treeBean.setLink(childrenBean.getLink());
                                         treeBean.setImageLink(childrenBean.getImageLink());
                                         treeBean.setSign(childrenBean.getSign());
+                                        treeBean.setAuthorization(childrenBean.isAuthorization());
                                         AdapterService.MySection childItem = new AdapterService.MySection(treeBean);
                                         mList.add(childItem);
                                     }
@@ -102,6 +111,7 @@ public class MoreToolsActivity extends BaseActivity implements View.OnClickListe
 
     private void initViewAndEvent() {
         mTvPageName.setText("全部服务");
+        isLogin = SharePreference.getStringSpParams(mContext, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
         mList = new ArrayList<>();
         mBackLeft.setOnClickListener(this);
         mAdapterService = new AdapterService(mList);
@@ -111,17 +121,35 @@ public class MoreToolsActivity extends BaseActivity implements View.OnClickListe
         mAdapterService.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Log.e(BUG_TAG, "click");
                 AdapterService.MySection bean = (AdapterService.MySection) adapter.getData().get(position);
+                ToolCategoryBean.ChildrenBeanX.ChildrenBean treeBean = bean.getTreeBean();
                 if (bean.getTreeBean() == null) {
                     return;
                 } else {
-                    GridUtils.readyGo(mContext, bean.getTreeBean());
+                    if (treeBean.isAuthorization()) {
+                        if (StringUtil.isEmpty(isLogin)) {
+                            readyGo(LoginActivity.class);
+                        } else {
+                            GridUtils.readyGo(mContext, treeBean);
+                        }
+                    } else {
+                        GridUtils.readyGo(mContext, treeBean);
+
+                    }
+
                 }
 
             }
         });
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isLogin = SharePreference.getStringSpParams(mContext, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
     }
 
     @Override

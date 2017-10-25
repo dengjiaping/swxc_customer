@@ -140,12 +140,9 @@ public class OnlineServiceActivity extends BasePhotoActivity implements AdapterV
         listAdpater.setImageListener(new PhotoShowListAdpater.onImageListener() {
             @Override
             public void imageScence(List<String> json) {
-                Log.i("ggggggfff", json.size() + "----------" + hash_image.size());
                 for (int i = 0; i < hash_image.size(); i++) {
                     hash_image.clear();
-                    Log.i("ggggggfff", hash_image.size() + "");
                 }
-                Log.i("ggggggfff", hash_image.size() + "");
                 for (int i = 0; i < json.size(); i++) {
                     Bitmap bitmap = BitmapFactory.decodeFile(json.get(i));
                     try {
@@ -204,7 +201,7 @@ public class OnlineServiceActivity extends BasePhotoActivity implements AdapterV
                         //快速点击后的逻辑，可以提示用户点击太快，休息一会
                         Toast.makeText(OnlineServiceActivity.this, "点击太快，休息一会", Toast.LENGTH_SHORT).show();
                     } else {
-                        Log.i("bbbbbbbv", "有图片" + hash_image.size());
+                        Log.e("bbbbbbbv", "有图片" + hash_image.size());
                         if (Utils.isNotEmpty(et_online_content.getText().toString().trim())) {
                             onlineService = new OnlineServiceImpl(this, et_online_content.getText().toString().trim(), hash_image);
                             onlineService.setHaveImageClick(this);
@@ -219,7 +216,7 @@ public class OnlineServiceActivity extends BasePhotoActivity implements AdapterV
                         //快速点击后的逻辑，可以提示用户点击太快，休息一会
                         Toast.makeText(OnlineServiceActivity.this, "点击太快，休息一会", Toast.LENGTH_SHORT).show();
                     } else {
-                        Log.i("bbbbbbbv", "没图片");
+                        Log.e("bbbbbbbv", "没图片");
                         if (Utils.isNotEmpty(et_online_content.getText().toString().trim())) {
                             onlineService = new OnlineServiceImpl(this, et_online_content.getText().toString().trim(), hash_image);
                             onlineService.setBgaAdpaterAndClick(this);
@@ -285,7 +282,7 @@ public class OnlineServiceActivity extends BasePhotoActivity implements AdapterV
 
     @Override
     public void setBgaAdpaterAndClickResult(ResponseEntity result) {
-        Log.i("bbbbbmmmm", result.getResponseCode() + "");
+        Log.e("bbbbbmmmm", result.getResponseCode() + "");
         if (result.getResponseCode() == 1001) {
             rl_success_submit.setVisibility(View.VISIBLE);
             tv_top_right.setVisibility(View.GONE);
@@ -295,7 +292,7 @@ public class OnlineServiceActivity extends BasePhotoActivity implements AdapterV
 
     @Override
     public void setHaveImageResult(ResponseEntity result) {
-        Log.i("bbbbbmmmmaaa", result.getResponseCode() + "");
+        Log.e("bbbbbmmmmaaa", result.getResponseCode() + "");
         if (result.getResponseCode() == 1001) {
             rl_success_submit.setVisibility(View.VISIBLE);
             tv_top_right.setVisibility(View.GONE);

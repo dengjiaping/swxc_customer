@@ -12,12 +12,15 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.shiwaixiangcun.customer.BaseActivity;
+import com.shiwaixiangcun.customer.Common;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterToolDetail;
 import com.shiwaixiangcun.customer.model.ToolCategoryBean;
 import com.shiwaixiangcun.customer.utils.DisplayUtil;
 import com.shiwaixiangcun.customer.utils.GridUtils;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
+import com.shiwaixiangcun.customer.utils.SharePreference;
+import com.shiwaixiangcun.customer.utils.StringUtil;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
 import java.util.List;
@@ -40,6 +43,7 @@ public class ToolsDetailActivity extends BaseActivity implements View.OnClickLis
     @BindView(R.id.tv_top_right)
     TextView mTvTopRight;
     View bottomView = null;
+    String isLogin = "";
     private TextView tvBottom;
 
     @Override
@@ -88,12 +92,30 @@ public class ToolsDetailActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 ToolCategoryBean.ChildrenBeanX.ChildrenBean bean = (ToolCategoryBean.ChildrenBeanX.ChildrenBean) adapter.getData().get(position);
-                GridUtils.readyGo(mContext, bean);
+
+
+                if (bean.isAuthorization()) {
+                    if (StringUtil.isEmpty(isLogin)) {
+                        readyGo(LoginActivity.class);
+                    } else {
+                        GridUtils.readyGo(mContext, bean);
+                    }
+                } else {
+                    GridUtils.readyGo(mContext, bean);
+
+                }
             }
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isLogin = SharePreference.getStringSpParams(mContext, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
+    }
+
     private void initData() {
+        isLogin = SharePreference.getStringSpParams(mContext, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
         Bundle extras = getIntent().getExtras();
         String json = extras.getString("item");
         isShowRight = extras.getBoolean("show");

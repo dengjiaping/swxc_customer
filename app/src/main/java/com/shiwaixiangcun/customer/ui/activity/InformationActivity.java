@@ -35,6 +35,7 @@ import com.shiwaixiangcun.customer.model.User;
 import com.shiwaixiangcun.customer.model.UserInfoBean;
 import com.shiwaixiangcun.customer.presenter.impl.HouseInformationImpl;
 import com.shiwaixiangcun.customer.ui.IHouseInformationView;
+import com.shiwaixiangcun.customer.ui.dialog.DialogLoginOut;
 import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.CompressionImageUtil;
 import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
@@ -49,7 +50,6 @@ import com.shiwaixiangcun.customer.utils.WheelPriorityDialogFragment;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 import com.shiwaixiangcun.customer.widget.CircleImageView;
 import com.shiwaixiangcun.customer.widget.PhotoAlbumDialog;
-import com.shiwaixiangcun.customer.widget.SelfLoginoutDialog;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -264,26 +264,26 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void showLoginoutDialog() {
-        final SelfLoginoutDialog selfLoginoutDialog = new SelfLoginoutDialog(InformationActivity.this, R.layout.item_dialog_loginout);
-        selfLoginoutDialog.setTitle("你确定要退出账号吗？");
-        selfLoginoutDialog.setMessage("退出账号后，您的信息将不会失去。但您将收不到关于您的任何通知信息。");
-//        selfLoginoutDialog.setColor();
-        selfLoginoutDialog.setYesOnclickListener("确认退出", new SelfLoginoutDialog.onYesOnclickListener() {
+        final DialogLoginOut dialogLoginOut = new DialogLoginOut(InformationActivity.this, R.layout.item_dialog_loginout);
+        dialogLoginOut.setTitle("你确定要退出账号吗？");
+        dialogLoginOut.setMessage("退出账号后，您的信息将不会失去。但您将收不到关于您的任何通知信息。");
+//        dialogLoginOut.setColor();
+        dialogLoginOut.setYesOnclickListener("确认退出", new DialogLoginOut.onYesOnclickListener() {
             @Override
             public void onYesClick() {
                 houseInformation = new HouseInformationImpl(InformationActivity.this, "");
                 houseInformation.setLogout(InformationActivity.this);
-                selfLoginoutDialog.dismiss();
+                dialogLoginOut.dismiss();
             }
         });
-        selfLoginoutDialog.setNoOnclickListener("取消", new SelfLoginoutDialog.onNoOnclickListener() {
+        dialogLoginOut.setNoOnclickListener("取消", new DialogLoginOut.onNoOnclickListener() {
             @Override
             public void onNoClick() {
 
-                selfLoginoutDialog.dismiss();
+                dialogLoginOut.dismiss();
             }
         });
-        selfLoginoutDialog.show();
+        dialogLoginOut.show();
     }
 
     @Override

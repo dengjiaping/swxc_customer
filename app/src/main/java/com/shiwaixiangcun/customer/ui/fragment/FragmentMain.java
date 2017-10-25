@@ -360,7 +360,7 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
     private void initToolsData() {
 
         OkGo.<String>get(GlobalAPI.getToolCategory)
-                .params("siteId", GlobalConfig.siteID)
+                .params("siteId", 20)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {

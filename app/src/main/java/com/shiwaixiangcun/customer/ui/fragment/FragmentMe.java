@@ -36,13 +36,13 @@ import com.shiwaixiangcun.customer.ui.activity.InformationActivity;
 import com.shiwaixiangcun.customer.ui.activity.LoginActivity;
 import com.shiwaixiangcun.customer.ui.activity.mall.ManageAddressActivity;
 import com.shiwaixiangcun.customer.ui.activity.mall.OrderActivity;
+import com.shiwaixiangcun.customer.ui.dialog.DialogLoginOut;
 import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.utils.Utils;
 import com.shiwaixiangcun.customer.utils.VersionUpdateUtil;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 import com.shiwaixiangcun.customer.widget.CircleImageView;
-import com.shiwaixiangcun.customer.widget.SelfLoginoutDialog;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -240,14 +240,14 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, IM
     }
 
     private void showLoginoutDialog(final String phone) {
-        final SelfLoginoutDialog selfLoginoutDialog = new SelfLoginoutDialog(mContext, R.layout.item_dialog_call_phone);
-        selfLoginoutDialog.setTitle("是否要拨打此电话？");
-        selfLoginoutDialog.setMessage(phone);
-//        selfLoginoutDialog.setColor();
-        selfLoginoutDialog.setYesOnclickListener("是", new SelfLoginoutDialog.onYesOnclickListener() {
+        final DialogLoginOut dialogLoginOut = new DialogLoginOut(mContext, R.layout.item_dialog_call_phone);
+        dialogLoginOut.setTitle("是否要拨打此电话？");
+        dialogLoginOut.setMessage(phone);
+//        dialogLoginOut.setColor();
+        dialogLoginOut.setYesOnclickListener("是", new DialogLoginOut.onYesOnclickListener() {
             @Override
             public void onYesClick() {
-                selfLoginoutDialog.dismiss();
+                dialogLoginOut.dismiss();
                 Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phone));
                 if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                     // TODO: Consider calling
@@ -263,14 +263,14 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, IM
             }
         });
 
-        selfLoginoutDialog.setNoOnclickListener("否", new SelfLoginoutDialog.onNoOnclickListener() {
+        dialogLoginOut.setNoOnclickListener("否", new DialogLoginOut.onNoOnclickListener() {
             @Override
             public void onNoClick() {
 
-                selfLoginoutDialog.dismiss();
+                dialogLoginOut.dismiss();
             }
         });
-        selfLoginoutDialog.show();
+        dialogLoginOut.show();
     }
 
     @Override

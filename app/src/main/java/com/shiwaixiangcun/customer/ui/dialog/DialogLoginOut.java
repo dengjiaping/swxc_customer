@@ -1,4 +1,4 @@
-package com.shiwaixiangcun.customer.widget;
+package com.shiwaixiangcun.customer.ui.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -12,10 +12,9 @@ import com.shiwaixiangcun.customer.R;
 
 
 /**
- * 创建自定义的dialog，主要学习其实现原理
- * Created by chengguo on 2016/3/22.
+ * 退出登录Dialog
  */
-public class SelfLoginoutDialog extends Dialog {
+public class DialogLoginOut extends Dialog {
 
     private Button yes;//确定按钮
     private Button no;//取消按钮
@@ -28,6 +27,12 @@ public class SelfLoginoutDialog extends Dialog {
 
     private onNoOnclickListener noOnclickListener;//取消按钮被点击了的监听器
     private onYesOnclickListener yesOnclickListener;//确定按钮被点击了的监听器
+    private int layoutId;
+
+    public DialogLoginOut(Context context, int layoutId) {
+        super(context, R.style.AlertDialogStyle);
+        this.layoutId = layoutId;
+    }
 
     /**
      * 设置取消按钮的显示内容和监听
@@ -53,13 +58,6 @@ public class SelfLoginoutDialog extends Dialog {
             yesStr = str;
         }
         this.yesOnclickListener = onYesOnclickListener;
-    }
-
-    private int layoutId;
-
-    public SelfLoginoutDialog(Context context, int layoutId) {
-        super(context, R.style.AlertDialogStyle);
-        this.layoutId = layoutId;
     }
 
     @Override
@@ -147,7 +145,7 @@ public class SelfLoginoutDialog extends Dialog {
         titleStr = title;
     }
 
-    public void setColor(){
+    public void setColor() {
         yes.setTextColor(Color.parseColor("#fb5f5f"));
     }
 
@@ -164,10 +162,10 @@ public class SelfLoginoutDialog extends Dialog {
      * 设置确定按钮和取消被点击的接口
      */
     public interface onYesOnclickListener {
-        public void onYesClick();
+        void onYesClick();
     }
 
     public interface onNoOnclickListener {
-        public void onNoClick();
+        void onNoClick();
     }
 }

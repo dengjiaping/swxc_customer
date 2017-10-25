@@ -17,8 +17,8 @@ android {
         applicationId "com.shiwaixiangcun.customer"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 6
-        versionName "1.2.2"
+        versionCode 7
+        versionName "1.2.5"
         signingConfig signingConfigs.release
         multiDexEnabled true
     }
@@ -66,7 +66,7 @@ dependencies {
     compile files('libs/MobCommons-2017.0412.1554.jar')
     compile files('libs/MobTools-2017.0412.1554.jar')
 
-    //分享
+    //ShareSDK
     compile files('libs/ShareSDK-Core-2.8.3.jar')
     compile files('libs/ShareSDK-QQ-2.8.3.jar')
     compile files('libs/ShareSDK-QZone-2.8.3.jar')

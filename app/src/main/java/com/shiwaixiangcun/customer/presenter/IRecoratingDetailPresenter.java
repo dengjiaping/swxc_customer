@@ -9,7 +9,7 @@ import android.content.Context;
 
 public interface IRecoratingDetailPresenter {
 
-    void setBgaAdpaterAndClick(Context context);
+    void RequestData(Context context);
 
 
 }

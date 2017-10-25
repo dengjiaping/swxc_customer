@@ -25,11 +25,11 @@ import com.shiwaixiangcun.customer.adapter.SurroundDetailAdapter;
 import com.shiwaixiangcun.customer.model.MerchDetailBean;
 import com.shiwaixiangcun.customer.presenter.impl.SurroundDetailImpl;
 import com.shiwaixiangcun.customer.ui.ISurroundDetailView;
+import com.shiwaixiangcun.customer.ui.dialog.DialogLoginOut;
 import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 import com.shiwaixiangcun.customer.utils.Utils;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 import com.shiwaixiangcun.customer.widget.MyGridView;
-import com.shiwaixiangcun.customer.widget.SelfLoginoutDialog;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -313,14 +313,14 @@ public class SurroundDetailActivity extends AppCompatActivity implements View.On
 
 
     private void CallPhoneDialog(final String phone) {
-        final SelfLoginoutDialog selfLoginoutDialog = new SelfLoginoutDialog(SurroundDetailActivity.this, R.layout.item_dialog_call_phone);
-        selfLoginoutDialog.setTitle("是否要拨打此电话？");
-        selfLoginoutDialog.setMessage(phone);
-//        selfLoginoutDialog.setColor();
-        selfLoginoutDialog.setYesOnclickListener("是", new SelfLoginoutDialog.onYesOnclickListener() {
+        final DialogLoginOut dialogLoginOut = new DialogLoginOut(SurroundDetailActivity.this, R.layout.item_dialog_call_phone);
+        dialogLoginOut.setTitle("是否要拨打此电话？");
+        dialogLoginOut.setMessage(phone);
+//        dialogLoginOut.setColor();
+        dialogLoginOut.setYesOnclickListener("是", new DialogLoginOut.onYesOnclickListener() {
             @Override
             public void onYesClick() {
-                selfLoginoutDialog.dismiss();
+                dialogLoginOut.dismiss();
                 Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phone));
                 if (ActivityCompat.checkSelfPermission(SurroundDetailActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                     // TODO: Consider calling
@@ -336,13 +336,13 @@ public class SurroundDetailActivity extends AppCompatActivity implements View.On
             }
         });
 
-        selfLoginoutDialog.setNoOnclickListener("否", new SelfLoginoutDialog.onNoOnclickListener() {
+        dialogLoginOut.setNoOnclickListener("否", new DialogLoginOut.onNoOnclickListener() {
             @Override
             public void onNoClick() {
 
-                selfLoginoutDialog.dismiss();
+                dialogLoginOut.dismiss();
             }
         });
-        selfLoginoutDialog.show();
+        dialogLoginOut.show();
     }
 }

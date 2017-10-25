@@ -57,11 +57,12 @@
             android:orientation="horizontal">
 
             <ImageView
-
                 android:id="@+id/iv_phone"
+
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:layout_below="@+id/tv_title"
+                android:layout_gravity="center_vertical"
                 android:layout_toEndOf="@+id/llayout_phone"
                 android:src="@drawable/surround_phone"/>
 

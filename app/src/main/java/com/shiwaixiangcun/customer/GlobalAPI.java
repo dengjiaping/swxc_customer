@@ -6,9 +6,8 @@ package com.shiwaixiangcun.customer;
  */
 
 public class GlobalAPI {
-
-    private static final String PM_DOMAIN = "http://pm.shiwaixiangcun.cn";
     //春雨医生测试服务器
+    public static String PM_DOMAIN = "http://pm.shiwaixiangcun.cn";
     public static String DC_DOMAIN = "https://test.chunyu.me";
     public static String HM_DOMAIN = "http://hm.shiwaixiangcun.cn";
     public static String NO_DOMAIN = "http://shiwaixiangcun.cn";
@@ -20,8 +19,10 @@ public class GlobalAPI {
 //    public static String MK_DOMAIN = "http://mk.hxteb.com";
 //    public static String OT_DOMAIN = "http://ot.hxteb.com";
 //    public static String NO_DOMAIN = "http://hxteb.com";
-    public static String getEvaluating = HM_DOMAIN + "/mi/assessment/view.htm";
+//    public static String PM_DOMAIN = "http://pm.hxteb.com";
     //健康地址获取
+    public static String getEvaluating = HM_DOMAIN + "/mi/assessment/view.htm";
+
     public static String getPhysical = HM_DOMAIN + "/mc/customer/detail.json";
     public static String getHeartRate = HM_DOMAIN + "/mc/pressure/heartrate.json";
     public static String getBloodSugar = HM_DOMAIN + "/mc/sugar/list.json";
