@@ -86,6 +86,7 @@ public class ManageAddressActivity extends BaseActivity implements View.OnClickL
         initToken();
         initView();
         initEvent();
+
     }
 
     /**
@@ -155,6 +156,7 @@ public class ManageAddressActivity extends BaseActivity implements View.OnClickL
     @Override
     protected void onResume() {
         super.onResume();
+        initToken();
         initData();
     }
 

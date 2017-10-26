@@ -41,6 +41,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
+/**
+ * 商品列表
+ */
 public class GoodListActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.back_left)
     ChangeLightImageView mBackLeft;
@@ -57,10 +60,10 @@ public class GoodListActivity extends BaseActivity implements View.OnClickListen
     private List<ElementBean.ElementsBean> mGoodList = new ArrayList<>();
 
     //当前页码
-    private int mCurrentPage = 1;
+    private int mCurrentPage = GlobalConfig.first_page;
 
     //每页显示数目
-    private int mPageSize = 15;
+    private int mPageSize = GlobalConfig.page_size;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,19 +112,22 @@ public class GoodListActivity extends BaseActivity implements View.OnClickListen
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(final RefreshLayout refreshlayout) {
-                refreshlayout.getLayout().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        requestData(type, flag, mCurrentPage, mPageSize, false);
-                    }
-                }, 2000);
+
+                refreshlayout.finishLoadmore();
+                mCurrentPage = 1;
+                requestData(type, flag, mCurrentPage, mPageSize, false);
+
             }
         });
         mRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
+
+                if (mCurrentPage == 1) {
+                    mCurrentPage++;
+                }
+                refreshlayout.finishRefresh();
                 requestData(type, flag, mCurrentPage, mPageSize, true);
-                Log.e(BUG_TAG, "当前页码" + mCurrentPage);
             }
         });
         RecyclerViewDivider divider = new RecyclerViewDivider.Builder(this)
@@ -175,16 +181,24 @@ public class GoodListActivity extends BaseActivity implements View.OnClickListen
 
                         switch (data.getResponseCode()) {
                             case 1001:
-                                mRefreshLayout.finishRefresh();
-                                mRefreshLayout.finishLoadmore();
 
                                 if (data.getData().getElements().size() == 0) {
+                                    mRefreshLayout.finishLoadmore(true);
+                                    mRefreshLayout.finishRefresh(true);
                                     return;
+
                                 }
+
                                 if (isLoadMore) {
-                                    mCurrentPage += 1;
-                                } else mCurrentPage = 1;
-                                EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_GOOD_LIST, flag, data.getData()));
+                                    mCurrentPage++;
+                                    EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_GOOD_LIST, flag, data.getData()));
+                                    mRefreshLayout.finishLoadmore(true);
+                                } else {
+                                    mCurrentPage = 1;
+                                    mGoodList.clear();
+                                    EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_GOOD_LIST, flag, data.getData()));
+                                    mRefreshLayout.finishRefresh(true);
+                                }
                                 break;
                         }
                     }
@@ -211,23 +225,27 @@ public class GoodListActivity extends BaseActivity implements View.OnClickListen
             //更新品质好货
             case 1:
                 ElementBean data = (ElementBean) simpleEvent.getData();
-                mAdapterGoodList.addData(data.getElements());
+                mGoodList.addAll(data.getElements());
+                mAdapterGoodList.notifyDataSetChanged();
                 break;
 
             //更新热卖商品
             case 2:
                 ElementBean hotData = (ElementBean) simpleEvent.getData();
-                mAdapterGoodList.addData(hotData.getElements());
+                mGoodList.addAll(hotData.getElements());
+                mAdapterGoodList.notifyDataSetChanged();
                 break;
             //更新 新品热卖
             case 3:
                 ElementBean newData = (ElementBean) simpleEvent.getData();
-                mAdapterGoodList.addData(newData.getElements());
+                mGoodList.addAll(newData.getElements());
+                mAdapterGoodList.notifyDataSetChanged();
                 break;
             //更新每日精选
             case 4:
                 ElementBean jingxuanData = (ElementBean) simpleEvent.getData();
-                mAdapterGoodList.addData(jingxuanData.getElements());
+                mGoodList.addAll(jingxuanData.getElements());
+                mAdapterGoodList.notifyDataSetChanged();
                 break;
 
         }

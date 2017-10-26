@@ -113,7 +113,6 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
     private Activity mContext;
 
     private int pinzhiGoodID = 0;
-    private int mCurrentPg = 1;
     private int currentPage = GlobalConfig.first_page;
     private int pageSize = GlobalConfig.page_size;
 
@@ -128,7 +127,7 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
         requestKeyword();
         requestBanner();
         requestData();
-        requestGood("GuessLike", 5, mCurrentPg, pageSize, false);
+        requestGood("GuessLike", 5, currentPage, pageSize, false);
     }
 
 

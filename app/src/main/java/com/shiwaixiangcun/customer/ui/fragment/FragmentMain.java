@@ -252,7 +252,7 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
     private void initToolsData() {
 
         OkGo.<String>get(GlobalAPI.getToolCategory)
-                .params("siteId", 20)
+                .params("siteId", GlobalConfig.siteID)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -404,6 +404,7 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
             case 4:
                 setTools(simpleEvent);
                 break;
+<<<<<<< HEAD
             case 6:
                 Site site = (Site) simpleEvent.getData();
                 mTvLocation.setText(site.getName());
@@ -411,6 +412,8 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
 //                AppSharePreferenceMgr.put(mContext, GlobalConfig.SITE_NAME, site.getName());
                 break;
 
+=======
+>>>>>>> 1.2.5
 
         }
 

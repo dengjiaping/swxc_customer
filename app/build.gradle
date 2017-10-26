@@ -14,9 +14,15 @@ android {
     defaultConfig {
         applicationId "com.shiwaixiangcun.customer"
         minSdkVersion 19
+<<<<<<< HEAD
         targetSdkVersion 26
         versionCode 7
         versionName "1.2.5"
+=======
+        targetSdkVersion 25
+        versionCode 8
+        versionName "1.2.6"
+>>>>>>> 1.2.5
         signingConfig signingConfigs.release
         multiDexEnabled true
     }
