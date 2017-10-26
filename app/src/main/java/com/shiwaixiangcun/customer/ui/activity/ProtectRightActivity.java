@@ -25,9 +25,6 @@ import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.RefreshTokenUtil;
 import com.shiwaixiangcun.customer.utils.StringUtil;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
-import com.zhihu.matisse.Matisse;
-import com.zhihu.matisse.MimeType;
-import com.zhihu.matisse.engine.impl.PicassoEngine;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -104,13 +101,7 @@ public class ProtectRightActivity extends BaseActivity implements View.OnClickLi
             case R.id.iv_choose_image:
                 showToastShort("点击选择图片");
 
-                Matisse.from(this)
-                        .choose(MimeType.allOf())
-                        .theme(R.style.Matisse_Zhihu)
-                        .countable(true)
-                        .maxSelectable(9)
-                        .imageEngine(new PicassoEngine())
-                        .forResult(REQUEST_CODE_CHOOSE);
+
                 // TODO: 2017/10/16
                 break;
         }

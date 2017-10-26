@@ -45,6 +45,7 @@ import com.shiwaixiangcun.customer.model.BannerBean;
 import com.shiwaixiangcun.customer.model.NoticeBean;
 import com.shiwaixiangcun.customer.model.PageBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
+import com.shiwaixiangcun.customer.model.Site;
 import com.shiwaixiangcun.customer.model.ToolCategoryBean;
 import com.shiwaixiangcun.customer.ui.activity.BannerDetailsActivity;
 import com.shiwaixiangcun.customer.ui.activity.CommunityAnnouncementActivity;
@@ -113,7 +114,7 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
     private List<ToolCategoryBean.ChildrenBeanX> mToolList = new ArrayList<>();
     private AdapterMain mAdapterMain;
     private List<AdapterMain.MultipleItem> mMainList;
-    private String siteName;
+    private String siteName = "";
     private Context mContext;
     private List<String> imageList = new ArrayList<>();
     private Intent intent;
@@ -136,7 +137,7 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
     protected void initViewsAndEvents(View view) {
 
         initHeader(view);
-        siteName = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.SITE_NAME, "世外生活");
+        siteName = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.SITE_NAME, "天鹅堡森林公园");
         mIvMessage.setOnClickListener(this);
         mLlayoutSite.setOnClickListener(this);
         mTvLocation.setText(siteName);
@@ -202,11 +203,11 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
         viewTools = LayoutInflater.from(mContext).inflate(R.layout.layout_header_tools, null);
         viewAnnouncement = LayoutInflater.from(mContext).inflate(R.layout.layout_header_announce, null);
         viewBanner = LayoutInflater.from(mContext).inflate(R.layout.layout_home_banner, null);
-        mRvTools = (RecyclerView) viewTools.findViewById(R.id.rv_tools);
-        mBanner = (Banner) viewBanner.findViewById(R.id.banner_second);
+        mRvTools = viewTools.findViewById(R.id.rv_tools);
+        mBanner = viewBanner.findViewById(R.id.banner_second);
 
-        tvMore = (TextView) viewAnnouncement.findViewById(R.id.tv_more);
-        viewAnimator = (ViewAnimator) viewAnnouncement.findViewById(R.id.animator);
+        tvMore = viewAnnouncement.findViewById(R.id.tv_more);
+        viewAnimator = viewAnnouncement.findViewById(R.id.animator);
 
         tvMore.setOnClickListener(this);
         mAdapterTool = new AdapterTool(R.layout.layout_tool);
@@ -387,9 +388,7 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
             //头条新闻
             case 1:
                 setDataHeadLine(simpleEvent, false);
-
                 break;
-
             case 5:
                 setDataHeadLine(simpleEvent, true);
                 break;
@@ -404,6 +403,14 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
 
             case 4:
                 setTools(simpleEvent);
+                break;
+            case 6:
+                Site site = (Site) simpleEvent.getData();
+                mTvLocation.setText(site.getName());
+
+//                AppSharePreferenceMgr.put(mContext, GlobalConfig.SITE_NAME, site.getName());
+                break;
+
 
         }
 
@@ -569,6 +576,38 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
         initHeadLineData(currentPage, pageSize, false);
         initBanner();
         initAnnouncement();
+        initSite();
+
+    }
+
+    /**
+     * 获取站点
+     */
+    private void initSite() {
+        OkGo.<String>get(GlobalAPI.getSite)
+                .params("fields", "id,name,defaultShow")
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        Type type = new TypeToken<ResponseEntity<List<Site>>>() {
+                        }.getType();
+                        ResponseEntity<List<Site>> responseEntity = JsonUtil.fromJson(response.body(), type);
+                        if (responseEntity == null) {
+                            return;
+                        }
+                        switch (responseEntity.getResponseCode()) {
+                            case 1001:
+                                if (responseEntity.getData().size() > 0) {
+                                    Site site = responseEntity.getData().get(0);
+                                    EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_MAIN, 6, site));
+
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                });
 
     }
 

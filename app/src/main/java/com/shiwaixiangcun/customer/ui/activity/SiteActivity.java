@@ -69,12 +69,12 @@ public class SiteActivity extends BaseActivity implements View.OnClickListener {
                         switch (responseEntity.getResponseCode()) {
                             case 1001:
                                 mSiteList.addAll(responseEntity.getData());
-        mAdapterSite.notifyDataSetChanged();
+                                mAdapterSite.notifyDataSetChanged();
                                 break;
                             default:
                                 showToastShort("获取数据失败");
                                 break;
-    }
+                        }
                     }
                 });
     }

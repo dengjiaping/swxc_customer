@@ -50,10 +50,10 @@ public class AwardActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void initLayout() {
-        back_left = (ChangeLightImageView) findViewById(R.id.back_left);
-        tv_page_name = (TextView) findViewById(R.id.tv_page_name);
-        lv_award = (LoadMoreListView) findViewById(R.id.lv_award);
-        refreshable_layout = (RefreshLayout) findViewById(R.id.refreshable_layout);
+        back_left = findViewById(R.id.back_left);
+        tv_page_name = findViewById(R.id.tv_page_name);
+        lv_award = findViewById(R.id.lv_award);
+        refreshable_layout = findViewById(R.id.refreshable_layout);
     }
 
     private void initData() {
