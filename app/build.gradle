@@ -17,8 +17,8 @@ android {
         applicationId "com.shiwaixiangcun.customer"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 7
-        versionName "1.2.5"
+        versionCode 8
+        versionName "1.2.6"
         signingConfig signingConfigs.release
         multiDexEnabled true
     }

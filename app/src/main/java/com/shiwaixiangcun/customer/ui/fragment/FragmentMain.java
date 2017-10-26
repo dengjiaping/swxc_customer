@@ -136,7 +136,7 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
     protected void initViewsAndEvents(View view) {
 
         initHeader(view);
-        siteName = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.SITE_NAME, "世外生活");
+        siteName = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.SITE_NAME, "天鹅堡森林公园");
         mIvMessage.setOnClickListener(this);
         mLlayoutSite.setOnClickListener(this);
         mTvLocation.setText(siteName);
@@ -251,7 +251,7 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
     private void initToolsData() {
 
         OkGo.<String>get(GlobalAPI.getToolCategory)
-                .params("siteId", 20)
+                .params("siteId", GlobalConfig.siteID)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -389,7 +389,6 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
                 setDataHeadLine(simpleEvent, false);
 
                 break;
-
             case 5:
                 setDataHeadLine(simpleEvent, true);
                 break;
@@ -404,6 +403,7 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
 
             case 4:
                 setTools(simpleEvent);
+                break;
 
         }
 

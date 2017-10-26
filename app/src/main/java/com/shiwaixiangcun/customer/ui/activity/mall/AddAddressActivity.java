@@ -62,7 +62,8 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
     String userName;
     String userPhone;
     String userAddress;
-
+    String strToken = "";
+    String strRefreshToken = "";
 
     private boolean isDefault = false;
 
@@ -71,6 +72,7 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_address);
         ButterKnife.bind(this);
+        initToken();
         initView();
         initEvent();
     }
@@ -78,6 +80,14 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
     @Override
     protected void onResume() {
         super.onResume();
+        initToken();
+
+    }
+
+    private void initToken() {
+        strToken = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
+        strRefreshToken = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.Refresh_token, "");
+
 
     }
 
@@ -134,9 +144,8 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
             final String refresh_token = responseEntity.getData().getRefresh_token();
 
 
-            String tokenString = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
             HashMap<String, Object> params = new HashMap<>();
-            params.put("access_token", tokenString);
+            params.put("access_token", strToken);
             params.put("name", userName);
             params.put("phone", userPhone);
             params.put("address", userAddress);
@@ -167,7 +176,7 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
                             Toast.makeText(mContext, response.getMessage(), Toast.LENGTH_SHORT).show();
                             break;
                         case 1018:
-                            RefreshTokenUtil.sendIntDataInvatation(mContext, refresh_token);
+                            RefreshTokenUtil.sendIntDataInvatation(mContext, strRefreshToken);
                         default:
                             Toast.makeText(mContext, "保存失败", Toast.LENGTH_SHORT).show();
                             break;
