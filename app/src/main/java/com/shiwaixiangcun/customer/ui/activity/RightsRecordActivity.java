@@ -15,7 +15,10 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 import com.shiwaixiangcun.customer.BaseActivity;
+import com.shiwaixiangcun.customer.ContextSession;
 import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
@@ -51,8 +54,8 @@ public class RightsRecordActivity extends BaseActivity {
     private AdapterRight mAdapterRight;
     private String refreshToken;
     private String tokenString;
-    private int page = 1;
-    private int pageSize = 15;
+    private int mCurrentPage = GlobalConfig.first_page;
+    private int mPageSize = GlobalConfig.page_size;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,17 +63,36 @@ public class RightsRecordActivity extends BaseActivity {
         setContentView(R.layout.activity_rights_record);
         ButterKnife.bind(this);
         initViewAndEvent();
-        requestData();
+        initToken();
+        requestData(mCurrentPage, mPageSize, false);
     }
 
-    private void requestData() {
-        refreshToken = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.Refresh_token, "");
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initToken();
+    }
+
+    private void initToken() {
+        refreshToken = ContextSession.getTokenString();
         tokenString = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
+    }
+
+    private void requestData(int page, int pageSize, final boolean isLoadMore) {
+
         OkGo.<String>get(GlobalAPI.rightRecord)
                 .params("access_token", tokenString)
-                .params("page.pn", page)
-                .params("page.size", pageSize)
+                .params("mCurrentPage.pn", page)
+                .params("mCurrentPage.size", pageSize)
                 .execute(new StringCallback() {
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+
+                        mRefreshLayout.finishRefresh();
+                        mRefreshLayout.finishLoadmore();
+                    }
+
                     @Override
                     public void onSuccess(Response<String> response) {
                         Log.e(BUG_TAG, "success");
@@ -84,26 +106,36 @@ public class RightsRecordActivity extends BaseActivity {
                         }
                         switch (responseEntity.getResponseCode()) {
                             case 1001:
-
                                 if (responseEntity.getData().getElements().size() == 0 || responseEntity.getData().getElements() == null) {
                                     mRlayoutNoData.setVisibility(View.VISIBLE);
                                 } else {
-                                    mList.clear();
+                                    if (isLoadMore) {
+                                        mCurrentPage++;
+                                        mRefreshLayout.finishLoadmore();
+                                    } else {
+                                        mCurrentPage = 1;
+                                        mList.clear();
+                                        mRefreshLayout.finishRefresh();
+                                    }
                                     mList.addAll(responseEntity.getData().getElements());
                                     mAdapterRight.notifyDataSetChanged();
                                 }
                                 break;
                             case 1018:
+                                mRefreshLayout.finishRefresh();
+                                mRefreshLayout.finishLoadmore();
                                 RefreshTokenUtil.sendIntDataInvatation(mContext, refreshToken);
                                 break;
                             default:
                                 Log.e(BUG_TAG, "加载失败");
+                                mRefreshLayout.finishRefresh();
+                                mRefreshLayout.finishLoadmore();
                                 break;
                         }
 
+
                     }
                 });
-
 
     }
 
@@ -135,6 +167,25 @@ public class RightsRecordActivity extends BaseActivity {
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("detail", bean);
                 readyGo(RightDetailActivity.class, bundle);
+            }
+        });
+
+        mRefreshLayout.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+
+                refreshlayout.finishLoadmore();
+                if (mCurrentPage == 1) {
+                    mCurrentPage++;
+                }
+                requestData(mCurrentPage, mPageSize, false);
+            }
+
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                refreshlayout.finishRefresh();
+                requestData(mCurrentPage, mPageSize, true);
+
             }
         });
 

@@ -78,30 +78,30 @@ public class SurroundDetailActivity extends AppCompatActivity implements View.On
     }
 
     private void initLayout() {
-        back_left = (ChangeLightImageView) findViewById(R.id.back_left);
-        gv_surround_detail = (MyGridView) findViewById(R.id.gv_surround_detail);
-        id_gallery = (LinearLayout) findViewById(R.id.id_gallery);
-        sv_surround_detail = (ScrollView) findViewById(R.id.sv_surround_detail);
-        tv_page_name = (TextView) findViewById(R.id.tv_page_name);
-        rl_bottom_phone = (RelativeLayout) findViewById(R.id.rl_bottom_phone);
-        tv_phone_top = (TextView) findViewById(R.id.tv_phone_top);
-        tv_phone_number = (TextView) findViewById(R.id.tv_phone_number);
-        tv_phone_bottom = (TextView) findViewById(R.id.tv_phone_bottom);
-        iv_merch_image = (ImageView) findViewById(R.id.iv_merch_image);
-        tv_merch_detail_title = (TextView) findViewById(R.id.tv_merch_detail_title);
-        tv_detail_future = (TextView) findViewById(R.id.tv_detail_future);
-        tv_merch_detail_location = (TextView) findViewById(R.id.tv_merch_detail_location);
-        tv_merch_detail_introduce = (TextView) findViewById(R.id.tv_merch_detail_introduce);
-        iv_location_image = (ImageView) findViewById(R.id.iv_location_image);
-        iv_phone_image = (ImageView) findViewById(R.id.iv_phone_image);
-        tv_food_title = (TextView) findViewById(R.id.tv_food_title);
-        ll_food_title = (LinearLayout) findViewById(R.id.ll_food_title);
-        ll_introduce_title = (LinearLayout) findViewById(R.id.ll_introduce_title);
-        rl_check_more = (RelativeLayout) findViewById(R.id.rl_check_more);
-        tv_qualification = (TextView) findViewById(R.id.tv_qualification);
-        iv_food_icon = (ImageView) findViewById(R.id.iv_food_icon);
-        tv_introduce_a = (TextView) findViewById(R.id.tv_introduce_a);
-        tv_introduce_b = (TextView) findViewById(R.id.tv_introduce_b);
+        back_left = findViewById(R.id.back_left);
+        gv_surround_detail = findViewById(R.id.gv_surround_detail);
+        id_gallery = findViewById(R.id.id_gallery);
+        sv_surround_detail = findViewById(R.id.sv_surround_detail);
+        tv_page_name = findViewById(R.id.tv_page_name);
+        rl_bottom_phone = findViewById(R.id.rl_bottom_phone);
+        tv_phone_top = findViewById(R.id.tv_phone_top);
+        tv_phone_number = findViewById(R.id.tv_phone_number);
+        tv_phone_bottom = findViewById(R.id.tv_phone_bottom);
+        iv_merch_image = findViewById(R.id.iv_merch_image);
+        tv_merch_detail_title = findViewById(R.id.tv_merch_detail_title);
+        tv_detail_future = findViewById(R.id.tv_detail_future);
+        tv_merch_detail_location = findViewById(R.id.tv_merch_detail_location);
+        tv_merch_detail_introduce = findViewById(R.id.tv_merch_detail_introduce);
+        iv_location_image = findViewById(R.id.iv_location_image);
+        iv_phone_image = findViewById(R.id.iv_phone_image);
+        tv_food_title = findViewById(R.id.tv_food_title);
+        ll_food_title = findViewById(R.id.ll_food_title);
+        ll_introduce_title = findViewById(R.id.ll_introduce_title);
+        rl_check_more = findViewById(R.id.rl_check_more);
+        tv_qualification = findViewById(R.id.tv_qualification);
+        iv_food_icon = findViewById(R.id.iv_food_icon);
+        tv_introduce_a = findViewById(R.id.tv_introduce_a);
+        tv_introduce_b = findViewById(R.id.tv_introduce_b);
 
 
         sv_surround_detail.smoothScrollTo(0, 20);
@@ -270,7 +270,7 @@ public class SurroundDetailActivity extends AppCompatActivity implements View.On
         for (int i = 0; i < certificates.size(); i++) {
 
             View view = LayoutInflater.from(this).inflate(R.layout.item_surround_detail_image, id_gallery, false);
-            ImageView iv_certificates = (ImageView) view.findViewById(R.id.iv_certificates);
+            ImageView iv_certificates = view.findViewById(R.id.iv_certificates);
             if (Utils.isNotEmpty(certificates.get(i).getThumbImageURL())) {
 
                 ImageDisplayUtil.showImageView(this, certificates.get(i).getAccessUrl(), iv_certificates);
@@ -280,7 +280,6 @@ public class SurroundDetailActivity extends AppCompatActivity implements View.On
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    String url_bit_image = certificates.get(finalI).getAccessUrl();
                     Log.i("vvvviiia", "----------aaa" + finalI);
                     Intent intent = new Intent(SurroundDetailActivity.this,BigIamgeMerchanActivity.class);
                     intent.putExtra("bigimagelist",(Serializable) certificates);

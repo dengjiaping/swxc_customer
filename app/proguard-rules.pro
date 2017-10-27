@@ -199,6 +199,10 @@
 -dontwarn okio.**
 -keep class okio.**{*;}
 
+#bugly
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}
+
 
 #-------------------------------------------------------------------------
 

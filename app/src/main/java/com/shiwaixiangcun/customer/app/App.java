@@ -3,6 +3,7 @@ package com.shiwaixiangcun.customer.app;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
+import android.text.TextUtils;
 
 import com.baidu.mobstat.StatService;
 import com.lzy.okgo.OkGo;
@@ -24,7 +25,11 @@ import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.shiwaixiangcun.customer.R;
+import com.tencent.bugly.crashreport.CrashReport;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
@@ -70,6 +75,35 @@ public class App extends MultiDexApplication {
         return mContext;
     }
 
+    /**
+     * 获取进程号对应的进程名
+     *
+     * @param pid 进程号
+     * @return 进程名
+     */
+    private static String getProcessName(int pid) {
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader("/proc/" + pid + "/cmdline"));
+            String processName = reader.readLine();
+            if (!TextUtils.isEmpty(processName)) {
+                processName = processName.trim();
+            }
+            return processName;
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        } finally {
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
+        }
+        return null;
+    }
+
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
@@ -87,12 +121,31 @@ public class App extends MultiDexApplication {
         instance = this;
         ShareSDK.initSDK(this);
         initOkGo();
+        initBugly();
         //百度统计
         StatService.setAppChannel(this, "RepleceWithYourChannel", true);
         StatService.setOn(this, StatService.JAVA_EXCEPTION_LOG);
 
     }
 
+    /**
+     * 初始化Bugly
+     */
+    private void initBugly() {
+
+        Context context = getApplicationContext();
+        String packageName = context.getPackageName();
+        String processName = getProcessName(android.os.Process.myPid());
+        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(context);
+        strategy.setUploadProcess(processName == null || processName.equals(packageName));
+
+        CrashReport.initCrashReport(getApplicationContext(), "0428c441f2", ServerConfigManger.getInstance().isRelease(this), strategy);
+
+    }
+
+    /**
+     * 初始化网络请求框架OkGo
+     */
     private void initOkGo() {
         //---------这里给出的是示例代码,告诉你可以这么传,实际使用的时候,根据需要传,不需要就不传-------------//
         HttpHeaders headers = new HttpHeaders();

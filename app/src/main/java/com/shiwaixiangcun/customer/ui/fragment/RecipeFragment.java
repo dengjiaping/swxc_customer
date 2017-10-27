@@ -199,7 +199,7 @@ public class RecipeFragment extends LazyFragment {
     }
 
     @Override
-    protected void DestroyViewAndThing() {
+    protected void destroyViewAndThing() {
 
     }
 

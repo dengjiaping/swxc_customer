@@ -1,35 +1,37 @@
-package com.shiwaixiangcun.customer.app
+package com.shiwaixiangcun.customer.app;
 
-import android.app.Application
-import android.content.pm.ApplicationInfo
+import android.app.Application;
+import android.content.pm.ApplicationInfo;
 
 /**
  * Created by Administrator on 2017/10/26.
- *
- *
+ * <p>
  * 正式环境和测试环境管理类
  */
 
-class ServerConfigManger private constructor() {
+public class ServerConfigManger {
 
-    private object ServerConfigMangerHolder {
-        private val instance = ServerConfigManger()
+    private ServerConfigManger() {
     }
 
-    fun isRelease(pApplication: Application): Boolean {
-        val applicationInfo = pApplication.applicationInfo
-        val processName = applicationInfo.processName
-        return if (processName.endsWith(".debug")) {
-            false
-        } else {
-            true
-        }
+    public static ServerConfigManger getInstance() {
+        return ServerConfigMangerHolder.instance;
     }
 
-    companion object {
+    /**
+     * 判断是否是正式环境
+     *
+     * @param pApplication
+     * @return
+     */
+    public boolean isRelease(Application pApplication) {
+        ApplicationInfo applicationInfo = pApplication.getApplicationInfo();
+        String processName = applicationInfo.processName;
+        return !processName.endsWith(".debug");
+    }
 
-        val instance: ServerConfigManger
-            get() = ServerConfigMangerHolder.instance
+    private static class ServerConfigMangerHolder {
+        private static final ServerConfigManger instance = new ServerConfigManger();
     }
 
 }

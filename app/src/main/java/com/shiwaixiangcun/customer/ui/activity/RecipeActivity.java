@@ -16,6 +16,7 @@ import com.lzy.okgo.model.Response;
 import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.R;
+import com.shiwaixiangcun.customer.model.RecipeTypeBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.ui.fragment.RecipeFragment;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
@@ -29,6 +30,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * @author Administrator
+ */
 public class RecipeActivity extends BaseActivity implements View.OnClickListener {
 
 
@@ -100,7 +104,6 @@ public class RecipeActivity extends BaseActivity implements View.OnClickListener
                         });
                         break;
                     default:
-//                        EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.GET_RECIPE_TYPE, 2, responseEntity.getData()));
                         showToastShort("获取类别失败");
                         break;
                 }
@@ -115,6 +118,8 @@ public class RecipeActivity extends BaseActivity implements View.OnClickListener
         switch (v.getId()) {
             case R.id.back_left:
                 finish();
+                break;
+            default:
                 break;
         }
     }

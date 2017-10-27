@@ -161,16 +161,16 @@ public class PhotoSelectActivity extends BasePhotoActivity implements View.OnCli
     }
 
     private void initView() {
-        tv_empty_view = (TextView) findViewById(R.id.tv_empty_view);
-        iv_back = (ImageView) findViewById(R.id.iv_back);
-        tv_select_finish = (TextView) findViewById(R.id.tv_select_finish);
-        tv_photo_folder = (TextView) findViewById(R.id.tv_photo_folder);
-        gv_photo_list = (GridView) findViewById(R.id.gv_photo_list);
-        ll_folder_panel = (LinearLayout) findViewById(R.id.ll_folder_panel);
-        lv_folder_list = (ListView) findViewById(R.id.lv_folder_list);
-        back_left = (ChangeLightImageView) findViewById(R.id.back_left);
-        tv_page_name = (TextView) findViewById(R.id.tv_page_name);
-        tv_top_right = (TextView) findViewById(R.id.tv_top_right);
+        tv_empty_view = findViewById(R.id.tv_empty_view);
+        iv_back = findViewById(R.id.iv_back);
+        tv_select_finish = findViewById(R.id.tv_select_finish);
+        tv_photo_folder = findViewById(R.id.tv_photo_folder);
+        gv_photo_list = findViewById(R.id.gv_photo_list);
+        ll_folder_panel = findViewById(R.id.ll_folder_panel);
+        lv_folder_list = findViewById(R.id.lv_folder_list);
+        back_left = findViewById(R.id.back_left);
+        tv_page_name = findViewById(R.id.tv_page_name);
+        tv_top_right = findViewById(R.id.tv_top_right);
         this.tv_page_name.setText("添加照片");
         tv_top_right.setText("相机胶卷");
         tv_top_right.setTextColor(Color.parseColor("#1CCC8C"));
@@ -183,7 +183,7 @@ public class PhotoSelectActivity extends BasePhotoActivity implements View.OnCli
         switch (id) {
             case R.id.tv_select_finish:
                 if (PhotoFinal.getCallback() != null)
-                    PhotoFinal.getCallback().onHanlderSuccess(PhotoFinal.REQUEST_CODE_MUTI, new ArrayList<PhotoInfo>(mSelectPhotoMap.values()));
+                    PhotoFinal.getCallback().onHandlerSuccess(PhotoFinal.REQUEST_CODE_MUTI, new ArrayList<PhotoInfo>(mSelectPhotoMap.values()));
                 this.finish();
                 break;
             case R.id.iv_back:

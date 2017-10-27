@@ -3,7 +3,6 @@ package com.shiwaixiangcun.customer.utils;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.shiwaixiangcun.customer.Common;
 import com.shiwaixiangcun.customer.ContextSession;
@@ -16,6 +15,7 @@ import com.shiwaixiangcun.customer.ui.activity.LookDecoratingActivity;
 import com.shiwaixiangcun.customer.ui.activity.MerchantActivity;
 import com.shiwaixiangcun.customer.ui.activity.NotOpenActivity;
 import com.shiwaixiangcun.customer.ui.activity.OnlineServiceActivity;
+import com.shiwaixiangcun.customer.ui.activity.ProtectRightActivity;
 import com.shiwaixiangcun.customer.ui.activity.RecipeActivity;
 import com.shiwaixiangcun.customer.ui.activity.RescueWayActivity;
 import com.shiwaixiangcun.customer.ui.activity.ResidentCertificationActivity;
@@ -127,7 +127,7 @@ public class GridUtils {
                     break;
                 //消费维权
                 case "SAFEGUARD_RIGHTS":
-                    Toast.makeText(context, "暂未开通", Toast.LENGTH_SHORT).show();
+                    readyGo(context, ProtectRightActivity.class);
                     break;
                 //健康管理
                 case "HEALTH_MANAGEMENT":

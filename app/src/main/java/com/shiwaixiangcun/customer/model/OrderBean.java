@@ -7,7 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/9/15.
+ * @author Administrator
+ * @date 2017/9/15
+ * <p>
+ * desc 订单Item
  */
 
 public class OrderBean {
@@ -89,9 +92,7 @@ public class OrderBean {
          */
 
 
-        //是否评价
         private boolean evaluated;
-        //是否售后
         private boolean afterSaled;
         private String afterSaleStatus;
         private int goodsTotal;

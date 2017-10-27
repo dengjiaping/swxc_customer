@@ -404,16 +404,14 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
             case 4:
                 setTools(simpleEvent);
                 break;
-<<<<<<< HEAD
+
             case 6:
                 Site site = (Site) simpleEvent.getData();
                 mTvLocation.setText(site.getName());
 
-//                AppSharePreferenceMgr.put(mContext, GlobalConfig.SITE_NAME, site.getName());
+//               AppSharePreferenceMgr.put(mContext, GlobalConfig.SITE_NAME, site.getName());
                 break;
 
-=======
->>>>>>> 1.2.5
 
         }
 

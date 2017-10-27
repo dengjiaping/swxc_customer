@@ -282,7 +282,7 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
      * @param bannerView
      */
     private void setBannerView(View bannerView) {
-        mBannerMall = (Banner) bannerView.findViewById(R.id.banner_mall);
+        mBannerMall = bannerView.findViewById(R.id.banner_mall);
 
     }
 
@@ -294,15 +294,15 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
      */
     private void setSuggest(View suggestView) {
 
-        mTvPinzhiTitle = (TextView) suggestView.findViewById(R.id.tv_pinzhi_name);
-        mTvPinzhiPrice = (TextView) suggestView.findViewById(R.id.tv_pinzhi_price);
-        mIvPinzhiCover = (ImageView) suggestView.findViewById(R.id.iv_pinzhi_icon);
-        mIvHotCover = (ImageView) suggestView.findViewById(R.id.iv_hot_cover);
-        mIvNewCover = (ImageView) suggestView.findViewById(R.id.iv_new_cover);
-        LinearLayout mLlayoutHot = (LinearLayout) suggestView.findViewById(R.id.llayout_hot_good);
-        LinearLayout mLlayoutNew = (LinearLayout) suggestView.findViewById(R.id.llayout_new_good);
-        LinearLayout mLlayoutPinzhi = (LinearLayout) suggestView.findViewById(R.id.llayout_pingzhi);
-        TextView mTvMore = (TextView) suggestView.findViewById(R.id.tv_pinzhi_more);
+        mTvPinzhiTitle = suggestView.findViewById(R.id.tv_pinzhi_name);
+        mTvPinzhiPrice = suggestView.findViewById(R.id.tv_pinzhi_price);
+        mIvPinzhiCover = suggestView.findViewById(R.id.iv_pinzhi_icon);
+        mIvHotCover = suggestView.findViewById(R.id.iv_hot_cover);
+        mIvNewCover = suggestView.findViewById(R.id.iv_new_cover);
+        LinearLayout mLlayoutHot = suggestView.findViewById(R.id.llayout_hot_good);
+        LinearLayout mLlayoutNew = suggestView.findViewById(R.id.llayout_new_good);
+        LinearLayout mLlayoutPinzhi = suggestView.findViewById(R.id.llayout_pingzhi);
+        TextView mTvMore = suggestView.findViewById(R.id.tv_pinzhi_more);
         mLlayoutPinzhi.setOnClickListener(this);
         mLlayoutHot.setOnClickListener(this);
         mLlayoutNew.setOnClickListener(this);
@@ -400,8 +400,8 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
      */
     private void setJingxuanView(View jingxuanView) {
         TextView mTvMore;
-        mTvMore = (TextView) jingxuanView.findViewById(R.id.tv_jingxuan_more);
-        mRvJingxuan = (RecyclerView) jingxuanView.findViewById(R.id.rv_mall_jingxuan);
+        mTvMore = jingxuanView.findViewById(R.id.tv_jingxuan_more);
+        mRvJingxuan = jingxuanView.findViewById(R.id.rv_mall_jingxuan);
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         mJingXuanAdapter = new AdapterJingxuan(jingxuanList);

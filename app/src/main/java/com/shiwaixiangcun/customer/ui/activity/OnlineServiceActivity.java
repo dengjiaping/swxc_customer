@@ -69,9 +69,9 @@ public class OnlineServiceActivity extends BasePhotoActivity implements AdapterV
     /**
      * 回调
      */
-    private PhotoFinal.OnHanlderResultCallback mOnHanlderResultCallback = new PhotoFinal.OnHanlderResultCallback() {
+    private PhotoFinal.OnHandlerResultCallback mOnHandlerResultCallback = new PhotoFinal.OnHandlerResultCallback() {
         @Override
-        public void onHanlderSuccess(int reqeustCode, List<PhotoInfo> resultList) {
+        public void onHandlerSuccess(int reqeustCode, List<PhotoInfo> resultList) {
             if (reqeustCode == PhotoFinal.REQUEST_CODE_MUTI) {
                 //是选择图片回来的照片
                 sekectList.clear();
@@ -129,7 +129,7 @@ public class OnlineServiceActivity extends BasePhotoActivity implements AdapterV
         layoutView();
 
 
-        selectView = (GridView) findViewById(R.id.gv_selected);
+        selectView = findViewById(R.id.gv_selected);
         listAdpater = new PhotoShowListAdpater(this, sekectList, mScreenWidth);
 
 
@@ -158,13 +158,13 @@ public class OnlineServiceActivity extends BasePhotoActivity implements AdapterV
     }
 
     private void layoutView() {
-        tv_top_right = (TextView) findViewById(R.id.tv_top_right);
-        back_left = (ChangeLightImageView) findViewById(R.id.back_left);
-        et_online_content = (EditText) findViewById(R.id.et_online_content);
-        btn_submit_online = (Button) findViewById(R.id.btn_submit_online);
-        rl_success_submit = (RelativeLayout) findViewById(R.id.rl_success_submit);
-        btn_ok = (Button) findViewById(R.id.btn_ok);
-        tv_page_name = (TextView) findViewById(R.id.tv_page_name);
+        tv_top_right = findViewById(R.id.tv_top_right);
+        back_left = findViewById(R.id.back_left);
+        et_online_content = findViewById(R.id.et_online_content);
+        btn_submit_online = findViewById(R.id.btn_submit_online);
+        rl_success_submit = findViewById(R.id.rl_success_submit);
+        btn_ok = findViewById(R.id.btn_ok);
+        tv_page_name = findViewById(R.id.tv_page_name);
 
 
     }
@@ -201,7 +201,7 @@ public class OnlineServiceActivity extends BasePhotoActivity implements AdapterV
                         //快速点击后的逻辑，可以提示用户点击太快，休息一会
                         Toast.makeText(OnlineServiceActivity.this, "点击太快，休息一会", Toast.LENGTH_SHORT).show();
                     } else {
-                        Log.e("bbbbbbbv", "有图片" + hash_image.size());
+
                         if (Utils.isNotEmpty(et_online_content.getText().toString().trim())) {
                             onlineService = new OnlineServiceImpl(this, et_online_content.getText().toString().trim(), hash_image);
                             onlineService.setHaveImageClick(this);
@@ -216,7 +216,6 @@ public class OnlineServiceActivity extends BasePhotoActivity implements AdapterV
                         //快速点击后的逻辑，可以提示用户点击太快，休息一会
                         Toast.makeText(OnlineServiceActivity.this, "点击太快，休息一会", Toast.LENGTH_SHORT).show();
                     } else {
-                        Log.e("bbbbbbbv", "没图片");
                         if (Utils.isNotEmpty(et_online_content.getText().toString().trim())) {
                             onlineService = new OnlineServiceImpl(this, et_online_content.getText().toString().trim(), hash_image);
                             onlineService.setBgaAdpaterAndClick(this);
@@ -276,7 +275,7 @@ public class OnlineServiceActivity extends BasePhotoActivity implements AdapterV
         PhotoShowListAdpater.PhotoViewHolder vh = (PhotoShowListAdpater.PhotoViewHolder) view.getTag();
         if (position == sekectList.size() && vh.iv_thumb.getVisibility() != View.GONE) {
             final FunctionConfig functionConfig = initConfig();
-            PhotoFinal.openMuti(functionConfig, mOnHanlderResultCallback);
+            PhotoFinal.openMuti(functionConfig, mOnHandlerResultCallback);
         }
     }
 

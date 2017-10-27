@@ -93,7 +93,7 @@ public class ToolFragment extends LazyFragment {
     }
 
     @Override
-    protected void DestroyViewAndThing() {
+    protected void destroyViewAndThing() {
 
     }
 

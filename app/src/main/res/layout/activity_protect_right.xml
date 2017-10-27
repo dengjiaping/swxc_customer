@@ -82,21 +82,25 @@
                     android:layout_marginTop="10dp"
                     android:background="@color/bg_white">
 
+                    <android.support.v7.widget.RecyclerView
+
+                        android:id="@+id/rv_images"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="8dp"
+                        android:visibility="visible">
+
+                    </android.support.v7.widget.RecyclerView>
+
                     <ImageView
                         android:id="@+id/iv_choose_image"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="20dp"
-                        android:src="@drawable/phone_lpw"/>
+                        android:src="@drawable/phone_lpw"
+                        android:visibility="visible"/>
 
-                    <HorizontalScrollView
-                        android:id="@+id/hsv_images"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:visibility="gone">
-
-                    </HorizontalScrollView>
 
                 </LinearLayout>
             </LinearLayout>

@@ -21,7 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -29,7 +28,7 @@ import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
@@ -59,7 +58,11 @@ import java.util.List;
 import butterknife.BindView;
 
 /**
- * Created by Administrator on 2017/9/18.
+ *
+ * @author Administrator
+ * @date 2017/9/18
+ *
+ * 订单Fragment
  */
 
 public class FragmentOrder extends LazyFragment {
@@ -90,6 +93,10 @@ public class FragmentOrder extends LazyFragment {
     private DialogPay mDialogPay;
     private DialogInfo mDialogConfirm;
 
+
+    private int mCurrentPage = GlobalConfig.first_page;
+    private int mPageSize = GlobalConfig.page_size;
+
     public static Fragment getInstance(String title) {
         FragmentOrder fragment = new FragmentOrder();
         fragment.mTitle = title;
@@ -100,7 +107,7 @@ public class FragmentOrder extends LazyFragment {
     @Override
     public void onResume() {
         super.onResume();
-        requestData();
+        requestData(mCurrentPage, mPageSize, false);
 
     }
 
@@ -116,16 +123,23 @@ public class FragmentOrder extends LazyFragment {
 
     }
 
+
+    /**
+     * Fragment第一次可见
+     */
     @Override
     protected void onFirstUserVisible() {
 
-        requestData();
+        requestData(mCurrentPage, mPageSize, false);
 
     }
 
+    /**
+     * Fragment可见状态
+     */
     @Override
     protected void onUserVisible() {
-        requestData();
+        requestData(mCurrentPage, mPageSize, false);
 
     }
 
@@ -135,7 +149,7 @@ public class FragmentOrder extends LazyFragment {
     }
 
     @Override
-    protected void DestroyViewAndThing() {
+    protected void destroyViewAndThing() {
         EventBus.getDefault().unregister(this);
 
     }
@@ -160,17 +174,20 @@ public class FragmentOrder extends LazyFragment {
             }
         });
 
-        mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+        mRefreshLayout.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                if (mCurrentPage == 1) {
+                    mCurrentPage++;
+                }
+                requestData(mCurrentPage, mPageSize, true);
+
+            }
+
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
+                requestData(mCurrentPage, mPageSize, false);
 
-                refreshlayout.getLayout().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        // TODO: 2017/9/23 下拉刷新
-                        requestData();
-                    }
-                }, 2000);
             }
         });
         mAdapterOrder.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -250,6 +267,11 @@ public class FragmentOrder extends LazyFragment {
                         });
 
                         break;
+                    case "已评价":
+                        showToast("已经评价过该商品");
+                    default:
+
+                        break;
                 }
             }
         });
@@ -259,12 +281,16 @@ public class FragmentOrder extends LazyFragment {
 
     /**
      * 请求订单数据
+     *
+     * @param currentPage
+     * @param pageSize
+     * @param isLoadMore
      */
-    private void requestData() {
+    private void requestData(int currentPage, int pageSize, final boolean isLoadMore) {
         Log.e(BUG_TAG, "请求数据");
         HttpParams httpParams = new HttpParams();
-        httpParams.put("page.pn", 1);
-        httpParams.put("page.size", 10);
+        httpParams.put("page.pn", currentPage);
+        httpParams.put("page.size", pageSize);
         httpParams.put("orderStatus", stature);
         httpParams.put("access_token", tokenString);
         OkGo.<String>get(GlobalAPI.getAllOrders)
@@ -273,30 +299,47 @@ public class FragmentOrder extends LazyFragment {
                     @Override
                     public void onSuccess(Response<String> response) {
                         Log.e(BUG_TAG, response.getRawCall().request().toString());
-                        if (response == null) {
-                            return;
-                        }
                         String responseJson = response.body();
                         Type listType = new TypeToken<ResponseEntity<OrderBean>>() {
                         }.getType();
-                        Gson gson = new Gson();
-                        ResponseEntity<OrderBean> order = gson.fromJson(responseJson, listType);
-                        if (order == null) {
+                        ResponseEntity<OrderBean> orderBean = JsonUtil.fromJson(responseJson, listType);
+                        if (orderBean == null) {
                             return;
                         }
-                        mRefreshLayout.finishRefresh();
-                        mRefreshLayout.finishLoadmore();
-                        mOrder = order.getData();
+                        switch (orderBean.getResponseCode()) {
+                            case 1001:
+                                mOrder = orderBean.getData();
 
-                        if (mOrder.getSize() == 0) {
-                            mLlayoutNodata.setVisibility(View.VISIBLE);
+
+                                if (mOrder.getElements().size() == 0) {
+                                    mLlayoutNodata.setVisibility(View.VISIBLE);
+                                    mRefreshLayout.finishRefresh();
+                                    mRefreshLayout.finishLoadmore();
+                                    return;
+
+                                }
+                                if (mOrder.getElements().size() > 0) {
+                                    if (isLoadMore) {
+                                        mCurrentPage++;
+                                        mRefreshLayout.finishLoadmore();
+
+                                    } else {
+                                        mCurrentPage = 1;
+                                        mRefreshLayout.finishRefresh();
+                                        mOrderList.clear();
+                                    }
+                                    mLlayoutNodata.setVisibility(View.GONE);
+                                    mOrderList.addAll(mOrder.getElements());
+                                    mAdapterOrder.notifyDataSetChanged();
+                                }
+                                break;
+                            default:
+                                mRefreshLayout.finishRefresh();
+                                mRefreshLayout.finishLoadmore();
+                                break;
+
                         }
-                        if (mOrder.getSize() > 0) {
-                            mLlayoutNodata.setVisibility(View.GONE);
-                            mOrderList.clear();
-                            mOrderList.addAll(mOrder.getElements());
-                            mAdapterOrder.notifyDataSetChanged();
-                        }
+
                     }
                 });
     }
@@ -323,17 +366,8 @@ public class FragmentOrder extends LazyFragment {
                 stature = "Finished";
                 break;
             default:
-                stature = "";
                 break;
         }
-
-//        String loginInfo = SharePreference.getStringSpParams(mContext, Common.IS_SAVE_LOGIN, Common.SISAVELOGIN);
-//        Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
-//        }.getType();
-//        ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(loginInfo, type);
-//        if (responseEntity == null) {
-//            return;
-//        }
 
 
     }
@@ -376,6 +410,8 @@ public class FragmentOrder extends LazyFragment {
                         break;
                     case 0:
                         Toast.makeText(mContext, "请选择一种支付方式", Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
                         break;
                 }
             }
@@ -436,7 +472,7 @@ public class FragmentOrder extends LazyFragment {
                         switch (responseEntity != null ? responseEntity.getResponseCode() : 0) {
                             case 1001:
                                 Snackbar.make(mRootView, "删除成功", Snackbar.LENGTH_SHORT).show();
-                                requestData();
+                                requestData(mCurrentPage, mPageSize, false);
                                 break;
 
                             case 1018:
@@ -482,7 +518,7 @@ public class FragmentOrder extends LazyFragment {
                         switch (responseEntity != null ? responseEntity.getResponseCode() : 0) {
                             case 1001:
                                 Snackbar.make(mRootView, prompt + "成功", Snackbar.LENGTH_SHORT).show();
-                                requestData();
+                                requestData(mCurrentPage, mPageSize, false);
                                 break;
                             default:
                                 Snackbar.make(mRootView, prompt + "失败", Snackbar.LENGTH_LONG)
@@ -508,11 +544,13 @@ public class FragmentOrder extends LazyFragment {
             case SimpleEvent.PAY_SUCCESS:
                 Toast.makeText(mContext, "支付成功", Toast.LENGTH_SHORT).show();
 //                readyGo(OrderDetailActivity.class);
-                requestData();
+                requestData(mCurrentPage, mPageSize, false);
                 break;
             case SimpleEvent.PAY_FAIL:
                 Log.e(BUG_TAG, "支付失败");
                 Toast.makeText(mContext, "支付失败", Toast.LENGTH_SHORT).show();
+                break;
+            default:
                 break;
         }
     }

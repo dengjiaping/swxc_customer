@@ -16,7 +16,9 @@ import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/9/15.
+ * @author Administrator
+ * @date 2017/9/15
+ * 订单Adapter
  */
 
 public class AdapterOrder extends BaseQuickAdapter<OrderBean.ElementsBean, BaseViewHolder> {
@@ -27,6 +29,7 @@ public class AdapterOrder extends BaseQuickAdapter<OrderBean.ElementsBean, BaseV
 
     @Override
     protected void convert(BaseViewHolder helper, OrderBean.ElementsBean item) {
+
         OrderBean.ElementsBean.OrderDetailDtoListBean orderDetailDtoListBean = item.getOrderDetailDtoList().get(0);
         helper.setText(R.id.tv_order_number, item.getOrderNumber());
         helper.setText(R.id.tv_description, "共" + item.getGoodsTotal() + "件商品 合计 ￥"
@@ -41,6 +44,7 @@ public class AdapterOrder extends BaseQuickAdapter<OrderBean.ElementsBean, BaseV
         helper.setText(R.id.tv_order_amount, "x " + orderDetailDtoListBean.getGoodsAmount());
         helper.addOnClickListener(R.id.btn_red);
         helper.addOnClickListener(R.id.btn_white);
+
         ImageDisplayUtil.showImageView(mContext, orderDetailDtoListBean.getThumbImageURL(), mIvCover);
         switch (item.getOrderStatus()) {
             case "WaitDeliver":
@@ -48,14 +52,14 @@ public class AdapterOrder extends BaseQuickAdapter<OrderBean.ElementsBean, BaseV
                 mBtnWhite.setVisibility(View.GONE);
                 mBtnRed.setVisibility(View.GONE);
                 llayoutStature.setVisibility(View.GONE);
-                break;
+                return;
             case "Closed":
                 helper.setText(R.id.tv_order_stature, "已关闭");
                 llayoutStature.setVisibility(View.VISIBLE);
                 mBtnWhite.setVisibility(View.VISIBLE);
                 mBtnRed.setVisibility(View.GONE);
                 mBtnWhite.setText("删除订单");
-                break;
+                return;
             case "WaitPay":
                 helper.setText(R.id.tv_order_stature, "等待付款");
                 llayoutStature.setVisibility(View.VISIBLE);
@@ -63,25 +67,31 @@ public class AdapterOrder extends BaseQuickAdapter<OrderBean.ElementsBean, BaseV
                 mBtnWhite.setVisibility(View.VISIBLE);
                 mBtnWhite.setText("取消订单");
                 mBtnRed.setText("付款");
-
-
-                break;
+                return;
             case "Delivered":
                 helper.setText(R.id.tv_order_stature, "已发货");
                 llayoutStature.setVisibility(View.VISIBLE);
                 mBtnWhite.setVisibility(View.GONE);
                 mBtnRed.setVisibility(View.VISIBLE);
                 mBtnRed.setText("确认收货");
-                break;
+                return;
             case "Finished":
                 helper.setText(R.id.tv_order_stature, "已完成");
                 llayoutStature.setVisibility(View.GONE);
                 llayoutStature.setVisibility(View.VISIBLE);
                 mBtnWhite.setVisibility(View.VISIBLE);
                 mBtnRed.setVisibility(View.GONE);
-                mBtnWhite.setText("评价");
+                if (item.isEvaluated()) {
+                    mBtnWhite.setText("已评价");
+                } else {
+                    mBtnWhite.setText("评价");
+                }
+                return;
+            default:
+                break;
 
         }
+
 
     }
 }

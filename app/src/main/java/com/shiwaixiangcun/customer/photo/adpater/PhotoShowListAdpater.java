@@ -2,9 +2,6 @@ package com.shiwaixiangcun.customer.photo.adpater;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -25,6 +22,7 @@ public class PhotoShowListAdpater extends ViewHolderAdapter<PhotoShowListAdpater
     private int mScreenWidth;
     private int mRowWidth;
     private List<String> mSelectList;
+    private onImageListener onImageListener;
 
     public PhotoShowListAdpater(Context context, List<String> list, int mScreenWidth) {
         super(context, list);
@@ -50,16 +48,13 @@ public class PhotoShowListAdpater extends ViewHolderAdapter<PhotoShowListAdpater
         view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
     }
 
-
     @Override
     public void onBindViewHolder(PhotoViewHolder viewHolder, final int position) {
-        Log.i("bbbbbbbbbnnn",position+"-----------"+mSelectList.size());
         if (position == mSelectList.size()) {
             PhotoUtil.display((Activity) getContext(), R.mipmap.phone_lpw, viewHolder.iv_thumb, mRowWidth, mRowWidth);
-            Log.i("bbbbbbbbbbbvvv",position+"-----------"+getMaxSize());
-//            if (position == getMaxSize()-1){
+
                 viewHolder.iv_delete_select.setVisibility(View.GONE);
-//            }
+
 
             final int maxSize = getMaxSize();
             if (position == maxSize) {
@@ -67,7 +62,6 @@ public class PhotoShowListAdpater extends ViewHolderAdapter<PhotoShowListAdpater
 
             }
         } else {
-            Log.i("bbbbbbbbb", mSelectList.get(position));
             PhotoUtil.display((Activity) getContext(), mSelectList.get(position), viewHolder.iv_thumb, mRowWidth, mRowWidth);
             viewHolder.iv_delete_select.setVisibility(View.VISIBLE);
         }
@@ -75,7 +69,6 @@ public class PhotoShowListAdpater extends ViewHolderAdapter<PhotoShowListAdpater
         viewHolder.iv_delete_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("vvvvvvooo","点击了删除"+position);
                 mSelectList.remove(position);
                 notifyDataSetChanged();
                 onImageListener.imageScence(mSelectList);
@@ -89,6 +82,15 @@ public class PhotoShowListAdpater extends ViewHolderAdapter<PhotoShowListAdpater
         return -1;
     }
 
+    public void setImageListener(onImageListener onImageListener) {
+        this.onImageListener = onImageListener;
+    }
+
+    //添加日历回调
+    public interface onImageListener {
+        void imageScence(List<String> json);
+    }
+
     public class PhotoViewHolder extends ViewHolderAdapter.ViewHolder {
 
         public ImageView iv_thumb;
@@ -97,25 +99,16 @@ public class PhotoShowListAdpater extends ViewHolderAdapter<PhotoShowListAdpater
 
         public PhotoViewHolder(View view) {
             super(view);
-            iv_check = (ImageView) view.findViewById(R.id.iv_check);
-            iv_delete_select = (ImageView) view.findViewById(R.id.iv_delete_select);
+            iv_check = view.findViewById(R.id.iv_check);
+            iv_delete_select = view.findViewById(R.id.iv_delete_select);
             iv_check.setVisibility(View.GONE);
 
             iv_delete_select.setVisibility(View.VISIBLE);
 //            Resources resources = getContext().getResources();
 //            Drawable drawable = resources.getDrawable(R.mipmap.h);
 //            iv_check.setImageDrawable(drawable);
-            iv_thumb = (ImageView) view.findViewById(R.id.iv_thumb);
+            iv_thumb = view.findViewById(R.id.iv_thumb);
         }
-    }
-    private onImageListener onImageListener;
-    //添加日历回调
-    public interface onImageListener {
-        void imageScence(List<String> json);
-    }
-
-    public void setImageListener(onImageListener onImageListener) {
-        this.onImageListener = onImageListener;
     }
 
 }

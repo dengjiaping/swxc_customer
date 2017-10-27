@@ -95,16 +95,22 @@ public abstract class LazyFragment extends Fragment {
     private void onFirstUserInvisible() {
     }
 
+    /**
+     * 用户不可见
+     */
     protected abstract void onUserInvisible();
 
     @Override
     public void onDestroy() {
-        DestroyViewAndThing();
+        destroyViewAndThing();
         unbinder.unbind();
         super.onDestroy();
     }
 
-    protected abstract void DestroyViewAndThing();
+    /**
+     * 销毁数据
+     */
+    protected abstract void destroyViewAndThing();
 
     protected void readyGo(Class<?> clazz) {
         Intent intent = new Intent(getActivity(), clazz);

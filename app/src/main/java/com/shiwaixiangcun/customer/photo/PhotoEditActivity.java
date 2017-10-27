@@ -34,6 +34,18 @@ public class PhotoEditActivity extends BasePhotoActivity {
     private ImageView iv_take_photo;
     private PhotoInfo photoInfo;
 
+    /**
+     * 取某个范围的任意数
+     *
+     * @param min
+     * @param max
+     * @return
+     */
+    public static int getRandom(int min, int max) {
+        Random random = new Random();
+        int s = random.nextInt(max) % (max - min + 1) + min;
+        return s;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,20 +57,18 @@ public class PhotoEditActivity extends BasePhotoActivity {
         StatService.setSendLogStrategy(this, SendStrategyEnum.APP_START, 1, false);
         StatService.setSessionTimeOut(30);
 
-        iv_take_photo = (ImageView) findViewById(R.id.iv_take_photo);
+        iv_take_photo = findViewById(R.id.iv_take_photo);
     }
-
 
     public void savePhoto(View v) {
         if (photoInfo != null) {
             ArrayList<PhotoInfo> photoList = new ArrayList();
             photoList.add(photoInfo);
-            PhotoFinal.getCallback().onHanlderSuccess(PhotoFinal.REQUEST_CODE_CAMERA, photoList);
+            PhotoFinal.getCallback().onHandlerSuccess(PhotoFinal.REQUEST_CODE_CAMERA, photoList);
             PhotoFinal.getSelectPhotoActivityCallback().callback();
             this.finish();
         }
     }
-
 
     /**
      * 拍照
@@ -102,7 +112,7 @@ public class PhotoEditActivity extends BasePhotoActivity {
                     if (photoInfo != null) {
                         ArrayList<PhotoInfo> photoList = new ArrayList();
                         photoList.add(photoInfo);
-                        PhotoFinal.getCallback().onHanlderSuccess(PhotoFinal.REQUEST_CODE_CAMERA, photoList);
+                        PhotoFinal.getCallback().onHandlerSuccess(PhotoFinal.REQUEST_CODE_CAMERA, photoList);
                         PhotoFinal.getSelectPhotoActivityCallback().callback();
                         this.finish();
                     }
@@ -127,19 +137,6 @@ public class PhotoEditActivity extends BasePhotoActivity {
         if (mMediaScanner != null) {
             mMediaScanner.scanFile(filePath, "image/jpeg");
         }
-    }
-
-    /**
-     * 取某个范围的任意数
-     *
-     * @param min
-     * @param max
-     * @return
-     */
-    public static int getRandom(int min, int max) {
-        Random random = new Random();
-        int s = random.nextInt(max) % (max - min + 1) + min;
-        return s;
     }
 
     @Override

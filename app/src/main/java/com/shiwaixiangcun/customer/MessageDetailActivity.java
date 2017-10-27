@@ -90,7 +90,7 @@ public class MessageDetailActivity extends BaseActivity {
                 finish();
             }
         });
-        strUrl.append(GlobalAPI.DC_DOMAIN)
+        strUrl.append(GlobalAPI.getDoctor)
                 .append("/cooperation/wap/problem_detail_page/?partner=")
                 .append(partner)
                 .append("&problem_id=")

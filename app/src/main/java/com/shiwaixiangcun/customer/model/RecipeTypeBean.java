@@ -1,4 +1,4 @@
-package com.shiwaixiangcun.customer.ui.activity;
+package com.shiwaixiangcun.customer.model;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by Administrator on 2017/10/12.
  */
 
-class RecipeTypeBean {
+public class RecipeTypeBean {
 
 
     /**

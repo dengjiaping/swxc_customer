@@ -1,8 +1,5 @@
-package com.shiwaixiangcun.customer.adapter;/**
- * Author:Administrator
- * Date:  2017/9/13
- * Desc： eg
- */
+package com.shiwaixiangcun.customer.adapter;
+
 
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -15,7 +12,9 @@ import com.shiwaixiangcun.customer.model.AddressBean;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/9/13.
+ * Date:  2017/9/13
+ * Desc： eg
+ * @author Administrator
  */
 
 public class AdapterAddress extends BaseQuickAdapter<AddressBean, BaseViewHolder> {
