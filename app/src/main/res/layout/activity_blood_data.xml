@@ -1,4 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_sugar_history"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/top_bar_white"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="@drawable/divider"/>
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srlEnableLoadmore="true"
+        app:srlEnablePureScrollMode="true">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_blood_pressure_history"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
+</LinearLayout>
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_blood_data"
@@ -15,7 +48,7 @@
         android:layout_height="match_parent">
 
         <include layout="@layout/refresh_black_head" />
-        <!-- 鏀寔鎵�鏈夊疄鐜癙ullable鎺ュ彛鐨刅iew -->
+        <!-- 支持所有实现Pullable接口的View -->
 
         <com.shiwaixiangcun.customer.pullableview.PullableListView
             android:divider="#00000000"

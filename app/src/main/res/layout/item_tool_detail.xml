@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
+    android:background="@color/bg_white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_detail_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:text="健康数据"
+        android:textColor="@color/black_text_100"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toRightOf="@+id/iv_detail_cover"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/iv_detail_cover"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/home_xiu"/>
+
+    <TextView
+        android:id="@+id/tv_detail_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="6dp"
+        android:maxLines="2"
+        android:textColor="@color/black_text_40"
+        android:textSize="14sp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toRightOf="@+id/iv_detail_cover"
+        app:layout_constraintRight_toLeftOf="@+id/iv_right"
+        app:layout_constraintTop_toBottomOf="@+id/tv_detail_title"
+        tools:text="自我测评健康"/>
+
+    <ImageView
+        android:id="@+id/iv_right"
+        android:layout_width="17dp"
+        android:layout_height="17dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="36dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/to_right"/>
+
+</android.support.constraint.ConstraintLayout>

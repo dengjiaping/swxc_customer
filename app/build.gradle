@@ -1,43 +1,72 @@
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
-
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
     useLibrary 'org.apache.http.legacy'
+    signingConfigs {
+        release {
+            keyAlias 'shiwaixiangcun'
+            keyPassword '123456'
+            storeFile file('doc/shiwaixiangcun.jks')
+            storePassword '123456'
+        }
+    }
 
     defaultConfig {
         applicationId "com.shiwaixiangcun.customer"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 4
-        versionName "1.1.1"
+        versionCode 8
+        versionName "1.2.6"
+        signingConfig signingConfigs.release
+        multiDexEnabled true
     }
+
     buildTypes {
         release {
+            //混淆
             minifyEnabled false
+            // 移除无用的resource文件
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            minifyEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.release
+
+            //开发版本
+            manifestPlaceholders = [label: "@string/app_name_dev", CHANNEL_VALUE: "LeanCloud"]
         }
     }
 
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']
         }
-
     }
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
-
     compile project(':mypicker')
     compile project(':awesomelistview')
-    compile project(':library')
+//    compile project(':library')
     compile project(':smallchart')
     compile files('libs/MobCommons-2017.0412.1554.jar')
     compile files('libs/MobTools-2017.0412.1554.jar')
+
+    //ShareSDK
     compile files('libs/ShareSDK-Core-2.8.3.jar')
     compile files('libs/ShareSDK-QQ-2.8.3.jar')
     compile files('libs/ShareSDK-QZone-2.8.3.jar')
@@ -47,19 +76,30 @@ dependencies {
     compile files('libs/ShareSDK-Wechat-Moments-2.8.3.jar')
     compile files('libs/jpush-android_v3.0.6.jar')
     compile files('libs/jcore-android_v1.1.3.jar')
+    compile files('libs/alipaySdk-20170725.jar')
 
+
+
+    compile 'com.android.support:design:25.3.1'
+    compile 'com.lzy.net:okgo:3.0.4'
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.lzy.net:okgo:2.1.4'
-    compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.google.code.gson:gson:2.8.0'
-    compile 'com.android.support:design:24.0.0'
     compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.alibaba:fastjson:1.2.31'
+    compile 'com.alibaba:fastjson:1.2.39'
     compile 'com.jakewharton:butterknife:8.4.0'
+    compile 'com.youth.banner:banner:1.4.9'
+    compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.22'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.zhy:flowlayout-lib:1.0.3'
+    compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:1.0.2'
+    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
+    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'
+    compile 'com.android.support:cardview-v7:25.3.1'
+    compile 'com.jaeger.recyclerviewdivider:library:1.0.1'
+    compile 'com.github.lecho:hellocharts-library:1.5.8@aar'
+    compile 'com.squareup.okhttp3:okhttp:3.5.0'
+    testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
-    compile ('com.alibaba.android:vlayout:1.2.0@aar') {
-        transitive = true
-    }
-
 }

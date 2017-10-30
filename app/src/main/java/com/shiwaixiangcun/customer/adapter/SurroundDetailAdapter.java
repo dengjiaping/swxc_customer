@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.model.MerchDetailBean;
+import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 import com.shiwaixiangcun.customer.utils.Utils;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -60,7 +60,7 @@ public class SurroundDetailAdapter extends BaseAdapter {
         mViewHolder.iv_merch_atlas.setScaleType(ImageView.ScaleType.CENTER_CROP);
         if (Utils.isNotEmpty(list.get(position).getAtlasList().get(0).getAccessUrl())){
 
-            Picasso.with(context).load(list.get(position).getAtlasList().get(0).getAccessUrl()).into(mViewHolder.iv_merch_atlas);
+            ImageDisplayUtil.showImageView(context, list.get(position).getAtlasList().get(0).getAccessUrl(), mViewHolder.iv_merch_atlas);
         }
         mViewHolder.tv_merch_atlas_name.setText(list.get(position).getTitle());
         if (null != list.get(position).getAtlasList()){

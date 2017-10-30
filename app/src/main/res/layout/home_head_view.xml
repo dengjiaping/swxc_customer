@@ -1,5 +1,376 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/ui_base_color"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_home_banner"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@color/ui_white">
+
+        <com.youth.banner.Banner
+            android:id="@+id/banner_first"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="@color/white"
+
+            app:indicator_drawable_selected="@drawable/selector_indicator_selected"
+            app:indicator_drawable_unselected="@drawable/selector_indicator_unselected"
+            app:indicator_height="@dimen/indicator_height"
+            app:indicator_margin="@dimen/indicator_margin"
+            app:indicator_width="@dimen/indicator_width"
+            />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_weather"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:background="@color/ui_white"
+        android:gravity="center_vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_weather_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="天鹅堡实时天气： "
+            android:textColor="@color/word_black"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/tv_weather_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_weather_title"
+            android:textColor="@color/word_black"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:textColor="@color/word_grad"
+            android:textSize="14sp"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <com.shiwaixiangcun.customer.widget.tablayout.SlidingTabLayout
+                android:id="@+id/tablayout_tools"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/bg_white"
+                app:tl_indicator_color="#1CCC8C"
+                app:tl_indicator_height="3dp"
+                app:tl_indicator_width_equal_title="true"
+                app:tl_tab_padding="22dp"
+                app:tl_tab_space_equal="true"
+                app:tl_textBold="BOTH"
+                app:tl_textSelectColor="@color/black_text_100"
+                app:tl_textUnselectColor="@color/black_text_60"
+                app:tl_underline_color="#1A00">
+
+            </com.shiwaixiangcun.customer.widget.tablayout.SlidingTabLayout>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/vp_tools"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@color/bg_white">
+
+            </android.support.v4.view.ViewPager>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/ui_white"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/ui_base_color"/>
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_online_service"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="1"
+                    android:drawablePadding="7dp"
+                    android:drawableTop="@mipmap/home_xiu"
+                    android:gravity="center"
+                    android:text="在线报修"
+                    android:textColor="@color/word_black"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:id="@+id/tv_house_renting"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:drawablePadding="7dp"
+                    android:drawableTop="@mipmap/home_zu"
+                    android:gravity="center"
+                    android:text="房屋租售"
+                    android:textColor="@color/word_black"
+                    android:textSize="12sp"/>
+
+                <TextView
+
+                    android:id="@+id/tv_look_decorating"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:drawablePadding="7dp"
+                    android:drawableTop="@mipmap/home_zxiu"
+                    android:gravity="center"
+                    android:text="找装修"
+                    android:textColor="@color/word_black"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:id="@+id/tv_health"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:drawablePadding="7dp"
+                    android:drawableTop="@mipmap/home_kang"
+                    android:gravity="center"
+                    android:text="健康"
+                    android:textColor="@color/word_black"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_surrounding_life"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+
+                    android:drawablePadding="7dp"
+                    android:drawableTop="@mipmap/surround_life"
+                    android:gravity="center"
+                    android:text="周边生活"
+                    android:textColor="@color/word_black"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:id="@+id/tv_awards"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:layout_weight="1"
+
+
+                    android:drawablePadding="7dp"
+                    android:drawableTop="@mipmap/award"
+                    android:gravity="center"
+                    android:text="活动"
+                    android:textColor="@color/word_black"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="29dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="29dp"
+                    android:layout_weight="1"
+                    android:drawablePadding="7dp"
+
+                    android:gravity="center"
+
+                    android:textColor="@color/word_black"
+                    android:textSize="12sp"/>
+
+                <TextView
+
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="29dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="29dp"
+                    android:layout_weight="1"
+                    android:drawablePadding="7dp"
+
+                    android:gravity="center"
+
+                    android:textColor="@color/word_black"
+                    android:textSize="12sp"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/ui_base_color"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:background="@color/ui_white"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="74dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="15dp"
+            android:src="@mipmap/home_sg"/>
+
+        <com.shiwaixiangcun.customer.widget.LooperTextView
+            android:id="@+id/looperview"
+            android:layout_width="0dp"
+            android:layout_height="60px"
+            android:layout_marginTop="10px"
+            android:layout_weight="6"
+            android:background="#00ffff"
+            android:padding="10dp"
+            android:visibility="gone"
+            />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_weight="6"
+            android:background="@color/ui_white"
+            android:gravity="center">
+
+            <ViewAnimator
+                android:id="@+id/animator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="20dp">
+
+
+            </ViewAnimator>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_announcement"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/ll_gt"
+            android:layout_weight="6"
+            android:gravity="center_vertical"
+            android:text="天鹅堡A区停电通知"
+            android:textColor="@color/word_black"
+            android:textSize="16sp"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/tv_more_more"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="更多"
+            android:textColor="@color/word_grad"
+            android:textSize="14sp"/>
+    </LinearLayout>
+
+
+    <com.youth.banner.Banner
+        android:id="@+id/banner_second"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@color/white"
+        android:padding="16dp"
+        app:indicator_drawable_selected="@drawable/selector_indicator_selected"
+        app:indicator_drawable_unselected="@drawable/selector_indicator_unselected"
+
+
+        app:indicator_height="@dimen/indicator_height"
+        app:indicator_margin="@dimen/indicator_margin"
+        app:indicator_width="@dimen/indicator_width">
+
+    </com.youth.banner.Banner>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/ui_white">
+
+        <TextView
+            android:layout_width="4dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:background="@color/ui_green"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:text="热点资讯"
+            android:textColor="@color/word_black"
+            android:textSize="16sp"/>
+    </RelativeLayout>
+
+
+</LinearLayout><?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"

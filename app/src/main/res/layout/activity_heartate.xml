@@ -1,4 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:id="@+id/activity_heartate"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/ui_white"
+             tools:context="com.shiwaixiangcun.customer.ui.activity.heath.HeartRateActivity">
+
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srlEnableLoadmore="true"
+        app:srlEnablePureScrollMode="true">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/lv_detail_heartate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </android.support.v7.widget.RecyclerView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <include
+        layout="@layout/top_bar_transparent"/>
+</FrameLayout>
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_heartate"
@@ -14,7 +42,7 @@
         android:layout_height="match_parent">
 
         <include layout="@layout/refresh_head" />
-        <!-- 鏀寔鎵�鏈夊疄鐜癙ullable鎺ュ彛鐨刅iew -->
+        <!-- 支持所有实现Pullable接口的View -->
 
         <com.shiwaixiangcun.customer.pullableview.PullableScrollView
             android:id="@+id/sv_heartate"
@@ -40,7 +68,7 @@
                         android:textColor="@color/word_white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="蹇冪巼"/>
+                        android:text="心率"/>
                     <TextView
                         android:id="@+id/tv_heartate_data"
                         android:layout_marginTop="42dp"
@@ -102,7 +130,7 @@
                         android:textColor="@color/word_black_heart"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="蹇冪巼鏁版嵁"/>
+                        android:text="心率数据"/>
                 </RelativeLayout>
 
                 <com.shiwaixiangcun.customer.widget.MyListView

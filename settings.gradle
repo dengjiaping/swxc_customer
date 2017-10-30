@@ -1,1 +1,1 @@
-include ':app', ':smallchart', ':mypicker', ':library', ':awesomelistview'
+include ':app', ':smallchart', ':mypicker', ':awesomelistview'

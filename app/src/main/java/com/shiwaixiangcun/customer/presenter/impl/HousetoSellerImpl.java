@@ -6,6 +6,189 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.shiwaixiangcun.customer.Common;
+import com.shiwaixiangcun.customer.http.HttpCallBack;
+import com.shiwaixiangcun.customer.http.HttpRequest;
+import com.shiwaixiangcun.customer.model.HouseSelectListBean;
+import com.shiwaixiangcun.customer.model.InformationBean;
+import com.shiwaixiangcun.customer.model.LoginResultBean;
+import com.shiwaixiangcun.customer.model.ResponseEntity;
+import com.shiwaixiangcun.customer.presenter.IOnhousetosellerPresenter;
+import com.shiwaixiangcun.customer.ui.IHouseToSellerView;
+import com.shiwaixiangcun.customer.ui.dialog.DialogLoading;
+import com.shiwaixiangcun.customer.utils.JsonUtil;
+import com.shiwaixiangcun.customer.utils.LoginOutUtil;
+import com.shiwaixiangcun.customer.utils.RefreshTokenUtil;
+import com.shiwaixiangcun.customer.utils.SharePreference;
+
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.List;
+
+/**
+ * Created by Administrator on 2017/5/25.
+ */
+
+public class HousetoSellerImpl implements IOnhousetosellerPresenter {
+    private IHouseToSellerView iHouseToSellerView;
+    private String str_houseId;
+    private String str_content;
+    private DialogLoading mDialogLoading;
+
+    public HousetoSellerImpl(IHouseToSellerView iHouseToSellerView, String str_houseId, String str_content) {
+        this.iHouseToSellerView = iHouseToSellerView;
+        this.str_houseId = str_houseId;
+        this.str_content = str_content;
+    }
+
+    @Override
+    public void setBgaAdpaterAndClick(Context context) {
+        mDialogLoading = new DialogLoading(context, "正在提交");
+        mDialogLoading.show();
+        sendToRentHttp(context);
+    }
+
+    @Override
+    public void setHouseList(Context context) {
+        sendHouseListHttp(context);
+    }
+
+    @Override
+    public void setInformation(Context context) {
+        sendInformationHttp(context);
+    }
+
+
+    //出租房
+    private void sendToRentHttp(final Context context) {
+        String login_detail = SharePreference.getStringSpParams(context, Common.IS_SAVE_LOGIN, Common.SISAVELOGIN);
+        Log.i("eeeeeettt", login_detail);
+        Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
+        }.getType();
+        ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(login_detail, type);
+        final String refresh_token = responseEntity.getData().getRefresh_token();
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("access_token", responseEntity.getData().getAccess_token());
+        hashMap.put("content", str_content);
+        hashMap.put("houseId", str_houseId);
+
+        Log.i("dddddd", hashMap.toString() + "-----------" + Common.toSeller);
+        HttpRequest.post(Common.toSeller, hashMap, new HttpCallBack() {
+            @Override
+            public void onSuccess(String responseJson) {
+                Log.i("oooooo---onSuccess---", responseJson);
+                Type type = new TypeToken<ResponseEntity>() {
+                }.getType();
+                ResponseEntity responseEntity = JsonUtil.fromJson(responseJson, ResponseEntity.class);
+                if (responseEntity.getResponseCode() == 1001) {
+                    iHouseToSellerView.setBgaAdpaterAndClickResult(responseEntity);
+                    mDialogLoading.close();
+                } else if (responseEntity.getResponseCode() == 1018) {
+                    RefreshTokenUtil.sendIntDataInvatation(context, refresh_token);
+                } else if (responseEntity.getResponseCode() == 1019) {
+                    LoginOutUtil.sendLoginOutUtil(context);
+                }else if (responseEntity.getResponseCode() == 1002){
+                    Toast.makeText(context,responseEntity.getMessage(),Toast.LENGTH_LONG).show();
+                    mDialogLoading.close();
+                }
+
+            }
+
+            @Override
+            public void onFailed(Exception e) {
+                Log.i("oooooo---onFailed---", e.toString());
+                Toast.makeText(context,"网络异常，请稍后再试...",Toast.LENGTH_LONG).show();
+                mDialogLoading.close();
+            }
+        });
+    }
+
+
+    //房列表
+    private void sendHouseListHttp(final Context context) {
+        String login_detail = SharePreference.getStringSpParams(context, Common.IS_SAVE_LOGIN, Common.SISAVELOGIN);
+        Log.i("eeeeeettt", login_detail);
+        Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
+        }.getType();
+        ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(login_detail, type);
+        final String refresh_token = responseEntity.getData().getRefresh_token();
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("access_token", responseEntity.getData().getAccess_token());
+        hashMap.put("fields", "id,numberDesc");
+
+
+        Log.i("dddddd", hashMap.toString() + "-----------" + Common.associatedHouses);
+        HttpRequest.get(Common.associatedHouses, hashMap, new HttpCallBack() {
+            @Override
+            public void onSuccess(String responseJson) {
+                Log.i("oooooo---onSuccess---aaaa", responseJson);
+                Type type = new TypeToken<ResponseEntity<List<HouseSelectListBean>>>() {
+                }.getType();
+                ResponseEntity<List<HouseSelectListBean>> responseEntity = JsonUtil.fromJson(responseJson, type);
+                if (null != responseEntity.getData()) {
+                    if (responseEntity.getResponseCode() == 1001) {
+                        List<HouseSelectListBean> data = responseEntity.getData();
+                        iHouseToSellerView.setHouseListResult(data);
+                    } else if (responseEntity.getResponseCode() == 1018) {
+                        RefreshTokenUtil.sendIntDataInvatation(context, refresh_token);
+                    } else if (responseEntity.getResponseCode() == 1019) {
+                        LoginOutUtil.sendLoginOutUtil(context);
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailed(Exception e) {
+                Log.i("oooooo---onFailed---", e.toString());
+            }
+        });
+    }
+
+    //个人信息
+    private void sendInformationHttp(final Context context) {
+        String login_detail = SharePreference.getStringSpParams(context, Common.IS_SAVE_LOGIN, Common.SISAVELOGIN);
+        Log.i("eeeeeettt", login_detail);
+        Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
+        }.getType();
+        final ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(login_detail, type);
+        final String refresh_token = responseEntity.getData().getRefresh_token();
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("access_token", responseEntity.getData().getAccess_token());
+
+        Log.i("dddddd", hashMap.toString() + "-----------" + Common.information);
+        HttpRequest.get(Common.information, hashMap, new HttpCallBack() {
+            @Override
+            public void onSuccess(String responseJson) {
+                Log.i("oooooo---onSuccess---", responseJson);
+                InformationBean user = new Gson().fromJson(responseJson, InformationBean.class);
+                if (user.getResponseCode() == 1001) {
+                    iHouseToSellerView.setInformationResult(user);
+                } else if (user.getResponseCode() == 1018) {
+                    RefreshTokenUtil.sendIntDataInvatation(context, refresh_token);
+                } else if (user.getResponseCode() == 1019) {
+                    LoginOutUtil.sendLoginOutUtil(context);
+                }
+            }
+
+            @Override
+            public void onFailed(Exception e) {
+                Log.i("oooooo---onFailed---", e.toString());
+            }
+        });
+    }
+
+
+}
+package com.shiwaixiangcun.customer.presenter.impl;
+
+import android.content.Context;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;

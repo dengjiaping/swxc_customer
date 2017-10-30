@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/activity_resident_certification"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/ui_base_color">
+
+    <LinearLayout
+        android:id="@+id/include"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+        <include
+            layout="@layout/top_bar_xx"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/include"
+        android:background="@color/ui_white"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="添加家人"
+            android:textColor="@color/word_black"
+            android:textSize="22sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="目前仅支持添加世外生活注册用户为家人"
+            android:textColor="@color/word_grad"
+            android:textSize="14sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="33dp"
+            android:layout_marginTop="64dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:background="@drawable/acr_circle_bg"
+                android:gravity="center"
+                android:text="1"
+                android:textColor="@color/word_white"
+                android:textSize="12sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:text="选择家庭关系"
+                android:textColor="@color/word_black"
+                android:textSize="14sp"/>
+
+            <ImageView
+                android:layout_width="11dp"
+                android:layout_height="11dp"
+                android:layout_marginLeft="3dp"
+                android:src="@mipmap/to_right"/>
+
+            <TextView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/acr_circle_grad_bg"
+                android:gravity="center"
+                android:text="2"
+                android:textColor="@color/word_white"
+                android:textSize="12sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:text="验证家人手机"
+                android:textColor="@color/word_little_grad"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.shiwaixiangcun.customer.widget.WheelView
+                android:id="@+id/WheelView_first"
+                android:layout_width="0dp"
+                android:layout_height="217dp"
+                android:layout_centerHorizontal="true"
+                android:layout_weight="1"
+                android:background="@color/ui_white"
+                android:contentDescription="test_number_picker_view"
+                app:npv_ItemPaddingHorizental="5dp"
+                app:npv_ItemPaddingVertical="5dp"
+                app:npv_ShowCount="5"
+                app:npv_TextArray="@array/main_priority_menu_new"
+                app:npv_TextSizeNormal="16sp"
+                app:npv_TextSizeSelected="20sp"
+                app:npv_WrapSelectorWheel="true"/>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_to_other"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/acr_blue_bg"
+        android:gravity="center"
+        android:text="下一步"
+        android:textColor="@color/word_white"
+        android:textSize="16sp"/>
+
+</RelativeLayout>
