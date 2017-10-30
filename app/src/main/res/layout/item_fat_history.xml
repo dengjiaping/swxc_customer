@@ -20,7 +20,7 @@
             android:layout_marginLeft="30dp"
             android:text="2017-5-28 17:30"
             android:textColor="@color/word_grad_sub"
-            android:textSize="14sp" />
+            android:textSize="14sp"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -35,49 +35,49 @@
                 android:layout_height="wrap_content"
                 android:text="总胆固醇"
                 android:textColor="@color/word_grad_sub"
-                android:textSize="12sp" />
+                android:textSize="12sp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="/"
                 android:textColor="@color/word_grad_sub"
-                android:textSize="12sp" />
+                android:textSize="12sp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="甘油三酯"
                 android:textColor="@color/word_grad_sub"
-                android:textSize="12sp" />
+                android:textSize="12sp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="/"
                 android:textColor="@color/word_grad_sub"
-                android:textSize="12sp" />
+                android:textSize="12sp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="高密度脂蛋白"
                 android:textColor="@color/word_grad_sub"
-                android:textSize="12sp" />
+                android:textSize="12sp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="/"
                 android:textColor="@color/word_grad_sub"
-                android:textSize="12sp" />
+                android:textSize="12sp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="低密度脂蛋白"
                 android:textColor="@color/word_grad_sub"
-                android:textSize="12sp" />
+                android:textSize="12sp"/>
 
 
         </LinearLayout>
@@ -95,53 +95,60 @@
                 android:layout_height="wrap_content"
                 android:text="4.9"
                 android:textColor="@color/word_black"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="/"
                 android:textColor="@color/word_black"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
+
             <TextView
                 android:id="@+id/tv_item_triglyceride"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="4.9"
                 android:textColor="@color/word_black"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="/"
                 android:textColor="@color/word_black"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
+
             <TextView
                 android:id="@+id/tv_item_topLipo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="4.9"
                 android:textColor="@color/word_black"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="/"
                 android:textColor="@color/word_black"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
+
             <TextView
                 android:id="@+id/tv_item_lowLipo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="4.9"
                 android:textColor="@color/word_black"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"
                 android:text="mmol/L"
                 android:textColor="@color/word_grad_sub"
-                android:textSize="14sp" />
+                android:textSize="14sp"/>
         </LinearLayout>
 
 

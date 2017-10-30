@@ -19,7 +19,6 @@ import java.util.List;
 public class AdapterJingxuan extends BaseQuickAdapter<MallBean.DataBean.DailySelectionListBean, BaseViewHolder> {
 
 
-
     public AdapterJingxuan(@Nullable List<MallBean.DataBean.DailySelectionListBean> data) {
         super(R.layout.item_jingxuan, data);
     }

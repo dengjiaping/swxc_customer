@@ -8,9 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.shiwaixiangcun.customer.R;
-import com.shiwaixiangcun.customer.model.GoodDetail;
 import com.shiwaixiangcun.customer.widget.flowtag.OnInitSelectedPosition;
-
 
 import java.util.ArrayList;
 import java.util.List;

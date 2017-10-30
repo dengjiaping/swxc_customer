@@ -21,6 +21,7 @@ public class SharePreference {
         String string = sharedPreferences.getString(paramName, "");
         return string;
     }
+
     //保存图片
     public static void saveBitmapToSpParams(Context context, String spName, String paramName, String str) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(spName, Context.MODE_PRIVATE);

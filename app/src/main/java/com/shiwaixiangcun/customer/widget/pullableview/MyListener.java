@@ -13,7 +13,7 @@ public class MyListener implements PullToRefreshLayout.OnRefreshListener {
     @Override
     public void onRefresh(final PullToRefreshLayout pullToRefreshLayout) {
         Log.i("bbbbbbvvc", "shuaxinkaishi");
-        if (onRefreshListener != null){
+        if (onRefreshListener != null) {
             onRefreshListener.refreshScence(true);
         }
 
@@ -22,7 +22,7 @@ public class MyListener implements PullToRefreshLayout.OnRefreshListener {
             @Override
             public void handleMessage(Message msg) {
                 Log.i("bbbbbbvvc", "shuaxincchenggong");
-                if (onRefreshOkListener != null){
+                if (onRefreshOkListener != null) {
                     onRefreshOkListener.refreshOkScence(true);
                 }
 
@@ -59,9 +59,9 @@ public class MyListener implements PullToRefreshLayout.OnRefreshListener {
         void refreshScence(boolean isnot);
     }
 
-	//开始刷新回调
-	public interface onRefreshOkListener {
-		void refreshOkScence(boolean isnot);
-	}
+    //开始刷新回调
+    public interface onRefreshOkListener {
+        void refreshOkScence(boolean isnot);
+    }
 
 }

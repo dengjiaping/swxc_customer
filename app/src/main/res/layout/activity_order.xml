@@ -34,6 +34,7 @@
                 tl:tl_textUnselectColor="#682d3230"
                 tl:tl_underline_color="#1A00">
             </com.shiwaixiangcun.customer.widget.tablayout.SlidingTabLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"

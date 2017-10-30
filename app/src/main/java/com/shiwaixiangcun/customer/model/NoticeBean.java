@@ -18,7 +18,7 @@ public class NoticeBean implements Serializable {
      * publishTime : 1495679255000
      * source : 来源123
      * summary : huodong2
-
+     * <p>
      * title : 测试保存2
      * top : false
      */

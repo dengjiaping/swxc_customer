@@ -77,17 +77,17 @@ public class GoodDetail {
          * feature : 打发我个
          * goodsCode : null
          * goodsDetail : <p>dsfwgwergrw</p>
-
-         <p>&nbsp;</p>
-
-         <p>rgrg</p>
-
-         <p>&nbsp;</p>
-
-         <p>rgrg</p>
-
-         <p><img alt="" height="91" src="http://resource.shiwaixiangcun.cn/group1/M00/00/56/rBKx51m2Q2-AcXT_AAA2Ynb5NIs251.jpg" width="121" /></p>
-
+         * <p>
+         * <p>&nbsp;</p>
+         * <p>
+         * <p>rgrg</p>
+         * <p>
+         * <p>&nbsp;</p>
+         * <p>
+         * <p>rgrg</p>
+         * <p>
+         * <p><img alt="" height="91" src="http://resource.shiwaixiangcun.cn/group1/M00/00/56/rBKx51m2Q2-AcXT_AAA2Ynb5NIs251.jpg" width="121" /></p>
+         * <p>
          * goodsName : 芒果01（有运费）
          * goodsNumber : 100004
          * goodsPriceStores : [{"attributeIds":null,"attributes":"1kg_1","goodsCode":null,"price":0.01,"sellerNumber":null,"storeAmount":9}]

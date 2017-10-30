@@ -6,7 +6,6 @@ import android.content.Context;
 import com.baidu.mobstat.StatService;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cookie.store.MemoryCookieStore;
-import com.lzy.okgo.cookie.store.PersistentCookieStore;
 import com.lzy.okgo.model.HttpHeaders;
 
 import cn.jpush.android.api.JPushInterface;
@@ -16,6 +15,18 @@ public class App extends Application {
     private static Context mContext;
     private static App instance;
 
+    public static App getInstance() {
+        return instance;
+    }
+
+    /**
+     * 获取上下文
+     *
+     * @return Context
+     */
+    public static Context getContext() {
+        return mContext;
+    }
 
     @Override
     public void onCreate() {
@@ -51,22 +62,6 @@ public class App extends Application {
         StatService.setAppChannel(this, "RepleceWithYourChannel", true);
         StatService.setOn(this, StatService.JAVA_EXCEPTION_LOG);
 
-    }
-
-
-
-
-    public static App getInstance() {
-        return instance;
-    }
-
-    /**
-     * 获取上下文
-     *
-     * @return Context
-     */
-    public static Context getContext() {
-        return mContext;
     }
 
 

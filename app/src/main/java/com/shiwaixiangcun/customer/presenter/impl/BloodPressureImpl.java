@@ -7,15 +7,14 @@ import com.google.gson.reflect.TypeToken;
 import com.shiwaixiangcun.customer.http.Common;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
 import com.shiwaixiangcun.customer.http.HttpRequest;
-import com.shiwaixiangcun.customer.model.BloodPressurebean;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.presenter.IBloodPressurePresenter;
 import com.shiwaixiangcun.customer.response.ResponseEntity;
+import com.shiwaixiangcun.customer.ui.IBloodPressureView;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.LoginOutUtil;
 import com.shiwaixiangcun.customer.utils.RefreshTockenUtil;
 import com.shiwaixiangcun.customer.utils.ShareUtil;
-import com.shiwaixiangcun.customer.ui.IBloodPressureView;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -81,4 +80,8 @@ public class BloodPressureImpl implements IBloodPressurePresenter {
     }
 
 
+    @Override
+    public void setBgaAdapterAndClick(Context context) {
+
+    }
 }

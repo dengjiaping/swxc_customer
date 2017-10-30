@@ -31,6 +31,7 @@ import okhttp3.OkHttpClient;
 public class App extends Application {
     private static Context mContext;
     private static App instance;
+
     //下拉刷新框架 防止泄漏
     static {
         //设置全局的Header构建器

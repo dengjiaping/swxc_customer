@@ -14,6 +14,7 @@ import java.lang.reflect.Type;
 
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+
 /**
  * Created by Administrator on 2017/9/15.
  */

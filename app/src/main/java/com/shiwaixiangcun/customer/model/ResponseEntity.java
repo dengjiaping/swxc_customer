@@ -2,7 +2,7 @@ package com.shiwaixiangcun.customer.model;
 
 /**
  * Created by fyj on 2017/5/24.
- *  http返回通用model
+ * http返回通用model
  */
 public class ResponseEntity<T> {
 

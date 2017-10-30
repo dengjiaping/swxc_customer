@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * Created by Administrator on 2016/7/13.
- *
+ * <p>
  * 血糖历史Adapter
  */
 public class AdapterSugarHistory extends BaseQuickAdapter<BloodSugarBean.ElementsBean, BaseViewHolder> {

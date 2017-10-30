@@ -20,8 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/iv_no"
         android:layout_centerInParent="true"
-        android:text="没有待付款订单"
         android:layout_marginTop="8dp"
+        android:text="没有待付款订单"
         android:textColor="#6a2d3230"
         android:textSize="16sp"
         />

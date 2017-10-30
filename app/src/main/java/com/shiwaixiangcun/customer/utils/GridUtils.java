@@ -44,11 +44,11 @@ public class GridUtils {
         //先判断是H5页面还是原生页面
         //再判断是否需要登录
         if (bean.getAppCategoryStatus().endsWith("H5")) {
-                bundle.putInt("type", 12);
-                bundle.putString("title", bean.getName());
-                bundle.putString("link", bean.getLink());
-                bundle.putBoolean("authorization", bean.isAuthorization());
-                readyGo(context, WebActivity.class, bundle);
+            bundle.putInt("type", 12);
+            bundle.putString("title", bean.getName());
+            bundle.putString("link", bean.getLink());
+            bundle.putBoolean("authorization", bean.isAuthorization());
+            readyGo(context, WebActivity.class, bundle);
         } else {
             switch (bean.getSign()) {
 
@@ -84,9 +84,9 @@ public class GridUtils {
                 case "HOUSE_RENTAL":
                     if (Utils.isNotEmpty(isLogin)) {
                         readyGo(context, HouseRentingActivity.class);
-                        } else {
+                    } else {
                         readyGo(context, LoginActivity.class);
-                        }
+                    }
                     break;
                 //在线报修
                 case "ONLINE_REPAIR":
@@ -319,7 +319,7 @@ public class GridUtils {
                 case "INTELLIGENT_CARE":
                     break;
             }
-            }
+        }
 
 
     }

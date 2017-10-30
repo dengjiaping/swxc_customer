@@ -27,17 +27,17 @@ public class HttpExecuteType {
 
     public HttpExecuteType(RequestType requestType, String url) {
         this.requestType = requestType;
-        switch (requestType){
-            case GET :
+        switch (requestType) {
+            case GET:
                 getRequest = OkGo.<String>get(url).headers("Authorization", HttpRequest.getTokenByApplication());
                 break;
-            case POST :
+            case POST:
                 postRequest = OkGo.<String>post(url).headers("Authorization", HttpRequest.getTokenByApplication());
                 break;
             case PUT:
                 putRequest = OkGo.<String>put(url).headers("Authorization", HttpRequest.getTokenByApplication());
                 break;
-            case DELETE :
+            case DELETE:
                 deleteRequest = OkGo.<String>delete(url).headers("Authorization", HttpRequest.getTokenByApplication());
                 break;
         }
@@ -46,17 +46,17 @@ public class HttpExecuteType {
 
     public HttpExecuteType addParams(String key, Object value) {
 
-        switch (requestType){
-            case GET :
+        switch (requestType) {
+            case GET:
                 getRequest.params(key, value.toString());
                 break;
 
-            case POST :
-                if (value instanceof List || value instanceof ArrayList){
-                     postRequest.addFileParams(key, (List<File>) value);
-                }else if (value instanceof File){
+            case POST:
+                if (value instanceof List || value instanceof ArrayList) {
+                    postRequest.addFileParams(key, (List<File>) value);
+                } else if (value instanceof File) {
                     postRequest.params(key, (File) value);
-                }else {
+                } else {
                     postRequest.params(key, value.toString());
                 }
                 break;
@@ -65,7 +65,7 @@ public class HttpExecuteType {
                 putRequest.params(key, value.toString());
                 break;
 
-            case DELETE :
+            case DELETE:
                 deleteRequest.params(key, value.toString());
                 break;
         }
@@ -74,10 +74,10 @@ public class HttpExecuteType {
     }
 
 
-    public void executeJson(final HttpCallBack httpCallBack){
+    public void executeJson(final HttpCallBack httpCallBack) {
 
-        switch (requestType){
-            case GET :
+        switch (requestType) {
+            case GET:
                 getRequest.execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -86,7 +86,7 @@ public class HttpExecuteType {
 
                 });
                 break;
-            case POST :
+            case POST:
                 postRequest.execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -104,7 +104,7 @@ public class HttpExecuteType {
 
                 });
                 break;
-            case DELETE :
+            case DELETE:
                 deleteRequest.execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -118,10 +118,10 @@ public class HttpExecuteType {
     }
 
 
-    public <T> void executeEntity(final HttpCallBack<T> httpCallBack){
+    public <T> void executeEntity(final HttpCallBack<T> httpCallBack) {
 
-        switch (requestType){
-            case GET :
+        switch (requestType) {
+            case GET:
                 getRequest.execute(new JsonCallBack<ResponseEntity<T>>() {
                     @Override
                     public void onSuccess(Response<ResponseEntity<T>> response) {
@@ -139,7 +139,7 @@ public class HttpExecuteType {
 
                 });
                 break;
-            case POST :
+            case POST:
                 postRequest.execute(new JsonCallBack<ResponseEntity<T>>() {
 
                     @Override
@@ -156,7 +156,7 @@ public class HttpExecuteType {
                     }
                 });
                 break;
-            case DELETE :
+            case DELETE:
                 deleteRequest.execute(new JsonCallBack<ResponseEntity<T>>() {
 
                     @Override

@@ -9,6 +9,7 @@
     <include
         android:id="@+id/include"
         layout="@layout/home_top"/>
+
     <com.shiwaixiangcun.customer.widget.pullableview.PullToRefreshLayout
         android:id="@+id/refresh_view"
         android:layout_width="match_parent"
@@ -29,94 +30,6 @@
 
         <include layout="@layout/load_more" />
     </com.shiwaixiangcun.customer.widget.pullableview.PullToRefreshLayout>
-
-    <RelativeLayout
-        android:id="@+id/rl_net_not"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/include"
-        android:background="@color/ui_base_color"
-        android:visibility="gone">
-
-        <ImageView
-            android:id="@+id/iv_net_not_image"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="113dp"
-            android:src="@mipmap/netno" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/iv_net_not_image"
-            android:layout_centerHorizontal="true"
-            android:text="获取数据失败"
-            android:textColor="@color/word_grad"
-            android:textSize="18sp" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="49dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="50dp"
-            android:layout_marginLeft="38dp"
-            android:layout_marginRight="38dp"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/back_start_end"
-            android:text="点击重新加载"
-            android:textColor="@color/word_white"
-            android:textSize="15sp" />
-    </RelativeLayout>
-
-</RelativeLayout>
-
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/ui_base_color"
-    tools:context=".ui.activity.HomeActivity">
-
-    <include
-        android:id="@+id/include"
-        layout="@layout/top_bar_blue" />
-    <!--<ListView-->
-
-    <!--android:layout_below="@+id/include"-->
-    <!--android:background="@color/ui_white"-->
-    <!--android:id="@+id/lv_details"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:divider="#F9F9F9"-->
-    <!--android:dividerHeight="1dp"-->
-    <!--android:scrollbars="none">-->
-
-    <!--</ListView>-->
-
-    <com.shiwaixiangcun.customer.pullableview.PullToRefreshLayout
-        android:id="@+id/refresh_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/include">
-
-        <include layout="@layout/refresh_black_head" />
-        <!-- 支持所有实现Pullable接口的View -->
-
-        <com.shiwaixiangcun.customer.pullableview.PullableListView
-            android:id="@+id/lv_details"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/ui_white"
-            android:divider="#F9F9F9"
-            android:dividerHeight="1dp"
-            android:scrollbars="none" />
-
-        <include layout="@layout/load_more" />
-    </com.shiwaixiangcun.customer.pullableview.PullToRefreshLayout>
 
     <RelativeLayout
         android:id="@+id/rl_net_not"

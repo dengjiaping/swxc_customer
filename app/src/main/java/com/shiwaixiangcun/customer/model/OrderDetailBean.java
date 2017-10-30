@@ -55,6 +55,7 @@ public class OrderDetailBean {
 
     public static class ExpressWay {
     }
+
     public static class BuyersInfoBean {
         /**
          * customerName : 15520447006

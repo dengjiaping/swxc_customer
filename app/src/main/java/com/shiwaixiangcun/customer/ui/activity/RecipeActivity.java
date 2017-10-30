@@ -10,14 +10,12 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
-import com.idtk.smallchart.chart.CurveChart;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.R;
-import com.shiwaixiangcun.customer.model.CurrentOrder;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.ui.fragment.RecipeFragment;
 import com.shiwaixiangcun.customer.utils.JsonUtil;

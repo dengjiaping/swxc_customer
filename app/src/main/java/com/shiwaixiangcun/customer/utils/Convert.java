@@ -1,9 +1,7 @@
 package com.shiwaixiangcun.customer.utils;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonIOException;
-import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonReader;
 
@@ -17,10 +15,6 @@ import java.lang.reflect.Type;
 public class Convert {
     private static Gson create() {
         return Convert.GsonHolder.gson;
-    }
-
-    private static class GsonHolder {
-        private static Gson gson = new Gson();
     }
 
     public static <T> T fromJson(String json, Class<T> type) throws JsonIOException, JsonSyntaxException {
@@ -49,6 +43,10 @@ public class Convert {
 
     public static String toJson(Object src, Type typeOfSrc) {
         return create().toJson(src, typeOfSrc);
+    }
+
+    private static class GsonHolder {
+        private static Gson gson = new Gson();
     }
 
 //    public static String formatJson(String json) {

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:orientation="vertical"
-    android:paddingBottom="8dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="8dp">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/white"
+              android:orientation="vertical"
+              android:paddingBottom="8dp"
+              android:paddingLeft="16dp"
+              android:paddingRight="16dp"
+              android:paddingTop="8dp">
 
     <TextView
         android:id="@+id/tv_title"
@@ -16,7 +16,7 @@
         android:layout_gravity=""
         android:text="热卖商品"
         android:textColor="@color/more_gray"
-        android:textSize="16sp" />
+        android:textSize="16sp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,7 +30,7 @@
             android:layout_gravity="center"
             android:text="大家都在选择"
             android:textColor="@color/mall_des"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
 
         <ImageView
             android:id="@+id/iv_cover"
@@ -38,7 +38,7 @@
             android:layout_height="50dp"
             android:layout_marginLeft="16dp"
             android:scaleType="centerCrop"
-            android:src="@mipmap/m" />
+            android:src="@mipmap/m"/>
 
     </LinearLayout>
 
