@@ -7,13 +7,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/9/11.
+ * @author Administrator
+ * @date 2017/9/11
  */
 
 public class GoodDetail {
+
+
     /**
-     * data : {"categoryFullName":"水果蔬菜","categoryId":2,"cityName":"通州","feature":"打发我个","goodsCode":null,"goodsDetail":"<p>dsfwgwergrw<\/p>\n\n<p>&nbsp;<\/p>\n\n<p>rgrg<\/p>\n\n<p>&nbsp;<\/p>\n\n<p>rgrg<\/p>\n\n<p><img alt=\"\" height=\"91\" src=\"http://resource.shiwaixiangcun.cn/group1/M00/00/56/rBKx51m2Q2-AcXT_AAA2Ynb5NIs251.jpg\" width=\"121\" /><\/p>\n","goodsName":"芒果01（有运费）","goodsNumber":100004,"goodsPriceStores":[{"attributeIds":null,"attributes":"1kg_1","goodsCode":null,"price":0.01,"sellerNumber":null,"storeAmount":9}],"goodsStatus":"ENABLE","id":109,"images":[{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/56/rBKx51m2Q0WATSGoAAAyxNR9tng611.jpg","fileId":4427,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/56/rBKx51m2Q0WATSGoAAAyxNR9tng611.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/56/rBKx51m2Q0eAV8mqAAA76G3dmhA833.jpg","fileId":4428,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/56/rBKx51m2Q0eAV8mqAAA76G3dmhA833.jpg"}],"limitBuyAmount":3,"minPrice":0.01,"publishTime":null,"publishWay":"Now","published":true,"salesVolume":0,"sellerId":1070,"sellerNumber":null,"services":[{"id":240,"name":"7天退换","remark":"商家承诺7天无理由退换货"},{"id":241,"name":"48小时快速退款","remark":"收到退货包裹并确认无误后，将在48小时内办理退款，退款将原路返回，不同银行处理时间不同，预计1-5个工作日到账"},{"id":242,"name":"世外自营","remark":"世外生活负责发货并提供售后服务"},{"id":243,"name":"货到付款","remark":"支持送货上门后再收款，支持现金、微信等方式"}],"shopName":"helin旗舰店","specifications":[{"attributes":[{"id":36,"selected":false,"value":"1kg"}],"id":1,"name":"重量"}],"stock":12,"transportMoney":23.3}
-     * message : 操作成功
+     * data : {"adSellTime":null,"advanceSellTime":null,"advanceStatus":"NoAdvance","badTotal":0,"categoryFullName":"地方特产-特色食品-零食","categoryId":10,"cityName":"赤水","evaluateTotal":2,"evaluates":[{"attrDescription":"重量:2kg","avatar":"http://resource.shiwaixiangcun.cn/group1/M00/00/00/rBKx5VkZZlOAIivEAAAcGHPVROQ697.png","content":"垃圾商品","evaluateTime":"2017-10-30","id":1,"images":[{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n-eAeprFADb-QImlinU709.jpg","fileId":3958,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n-eAeprFADb-QImlinU709.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n-2AZgiIACm1-ZELSxQ766.jpg","fileId":3959,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n-2AZgiIACm1-ZELSxQ766.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n_SAUQ9KADQ9oFFyyDg811.jpg","fileId":3960,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n_SAUQ9KADQ9oFFyyDg811.jpg"}],"nick":"1***6","score":3},{"attrDescription":"重量:1kg","avatar":"http://resource.shiwaixiangcun.cn/group1/M00/00/00/rBKx5VkZZlOAIivEAAAcGHPVROQ697.png","content":"商品质量差得令人窒息","evaluateTime":"2017-10-30","id":2,"images":[],"nick":"1***6","score":2}],"feature":"好吃","goodsCode":null,"goodsDetail":"<p>撒娇回复我改为覆盖物if贵司发布该会所的覅USD浩丰科技收到货覅&nbsp;&nbsp;<\/p>\n\n<p>ksafkljdskfhidsf<\/p>\n\n<p>&nbsp;<\/p>\n","goodsName":"零食","goodsNumber":100020,"goodsPriceStores":[{"attributeIds":null,"attributes":"1kg_3","goodsCode":null,"price":0.01,"sellerNumber":null,"storeAmount":1231243},{"attributeIds":null,"attributes":"2kg_3","goodsCode":null,"price":0.01,"sellerNumber":null,"storeAmount":23241}],"goodsStatus":"ENABLE","highTotal":0,"id":20,"images":[{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg","fileId":3954,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2iveAKFyQAAAl6egL2YI348.jpg","fileId":3955,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2iveAKFyQAAAl6egL2YI348.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivuAXF8nAACEsbNYTTk159.jpg","fileId":3956,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivuAXF8nAACEsbNYTTk159.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2iv-AdqF7AACW98spLrw343.jpg","fileId":3957,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2iv-AdqF7AACW98spLrw343.jpg"}],"lastDeliveryTime":null,"latestDeliveryTime":null,"limitBuyAmount":0,"midTotal":2,"minPrice":0.01,"publishTime":null,"publishWay":"Now","published":true,"salesVolume":2,"sellerId":1,"sellerNumber":null,"services":[{"id":226,"name":"7天退换","remark":"商家承诺7天无理由退换货"},{"id":227,"name":"假一赔十","remark":"若收到的商品是假买品牌，可获得加倍赔偿"},{"id":228,"name":"48小时快速退款","remark":"收到退货包裹并确认无误后，将在48小时内办理退款，退款将原路返回，不同银行处理时间不同，预计1-5个工作日到账"}],"shopName":"世外健康旗舰店","specifications":[{"attributes":[{"id":12,"selected":false,"value":"1kg"},{"id":13,"selected":false,"value":"2kg"}],"id":3,"name":"重量"}],"stock":1254484,"transportMoney":0}
+     * message : 鎿嶄綔鎴愬姛
      * responseCode : 1001
      * success : true
      */
@@ -22,9 +25,6 @@ public class GoodDetail {
     private String message;
     private int responseCode;
     private boolean success;
-
-    public GoodDetail() {
-    }
 
     public DataBean getData() {
         return data;
@@ -71,56 +71,68 @@ public class GoodDetail {
             }
         };
         /**
-         * categoryFullName : 水果蔬菜
-         * categoryId : 2
-         * cityName : 通州
-         * feature : 打发我个
+         * adSellTime : null
+         * advanceSellTime : null
+         * advanceStatus : NoAdvance
+         * badTotal : 0
+         * categoryFullName : 地方特产-特色食品-零食
+         * categoryId : 10
+         * cityName : 赤水
+         * evaluateTotal : 2
+         * evaluates : [{"attrDescription":"重量:2kg","avatar":"http://resource.shiwaixiangcun.cn/group1/M00/00/00/rBKx5VkZZlOAIivEAAAcGHPVROQ697.png","content":"垃圾商品","evaluateTime":"2017-10-30","id":1,"images":[{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n-eAeprFADb-QImlinU709.jpg","fileId":3958,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n-eAeprFADb-QImlinU709.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n-2AZgiIACm1-ZELSxQ766.jpg","fileId":3959,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n-2AZgiIACm1-ZELSxQ766.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n_SAUQ9KADQ9oFFyyDg811.jpg","fileId":3960,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n_SAUQ9KADQ9oFFyyDg811.jpg"}],"nick":"1***6","score":3},{"attrDescription":"重量:1kg","avatar":"http://resource.shiwaixiangcun.cn/group1/M00/00/00/rBKx5VkZZlOAIivEAAAcGHPVROQ697.png","content":"商品质量差得令人窒息","evaluateTime":"2017-10-30","id":2,"images":[],"nick":"1***6","score":2}]
+         * feature : 好吃
          * goodsCode : null
-         * goodsDetail : <p>dsfwgwergrw</p>
+         * goodsDetail : <p>撒娇回复我改为覆盖物if贵司发布该会所的覅USD浩丰科技收到货覅&nbsp;&nbsp;</p>
+
+         <p>ksafkljdskfhidsf</p>
 
          <p>&nbsp;</p>
 
-         <p>rgrg</p>
-
-         <p>&nbsp;</p>
-
-         <p>rgrg</p>
-
-         <p><img alt="" height="91" src="http://resource.shiwaixiangcun.cn/group1/M00/00/56/rBKx51m2Q2-AcXT_AAA2Ynb5NIs251.jpg" width="121" /></p>
-
-         * goodsName : 芒果01（有运费）
-         * goodsNumber : 100004
-         * goodsPriceStores : [{"attributeIds":null,"attributes":"1kg_1","goodsCode":null,"price":0.01,"sellerNumber":null,"storeAmount":9}]
+         * goodsName : 零食
+         * goodsNumber : 100020
+         * goodsPriceStores : [{"attributeIds":null,"attributes":"1kg_3","goodsCode":null,"price":0.01,"sellerNumber":null,"storeAmount":1231243},{"attributeIds":null,"attributes":"2kg_3","goodsCode":null,"price":0.01,"sellerNumber":null,"storeAmount":23241}]
          * goodsStatus : ENABLE
-         * id : 109
-         * images : [{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/56/rBKx51m2Q0WATSGoAAAyxNR9tng611.jpg","fileId":4427,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/56/rBKx51m2Q0WATSGoAAAyxNR9tng611.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/56/rBKx51m2Q0eAV8mqAAA76G3dmhA833.jpg","fileId":4428,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/56/rBKx51m2Q0eAV8mqAAA76G3dmhA833.jpg"}]
-         * limitBuyAmount : 3
+         * highTotal : 0
+         * id : 20
+         * images : [{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg","fileId":3954,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2iveAKFyQAAAl6egL2YI348.jpg","fileId":3955,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2iveAKFyQAAAl6egL2YI348.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivuAXF8nAACEsbNYTTk159.jpg","fileId":3956,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivuAXF8nAACEsbNYTTk159.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2iv-AdqF7AACW98spLrw343.jpg","fileId":3957,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2iv-AdqF7AACW98spLrw343.jpg"}]
+         * lastDeliveryTime : null
+         * latestDeliveryTime : null
+         * limitBuyAmount : 0
+         * midTotal : 2
          * minPrice : 0.01
          * publishTime : null
          * publishWay : Now
          * published : true
-         * salesVolume : 0
-         * sellerId : 1070
+         * salesVolume : 2
+         * sellerId : 1
          * sellerNumber : null
-         * services : [{"id":240,"name":"7天退换","remark":"商家承诺7天无理由退换货"},{"id":241,"name":"48小时快速退款","remark":"收到退货包裹并确认无误后，将在48小时内办理退款，退款将原路返回，不同银行处理时间不同，预计1-5个工作日到账"},{"id":242,"name":"世外自营","remark":"世外生活负责发货并提供售后服务"},{"id":243,"name":"货到付款","remark":"支持送货上门后再收款，支持现金、微信等方式"}]
-         * shopName : helin旗舰店
-         * specifications : [{"attributes":[{"id":36,"selected":false,"value":"1kg"}],"id":1,"name":"重量"}]
-         * stock : 12
-         * transportMoney : 23.3
+         * services : [{"id":226,"name":"7天退换","remark":"商家承诺7天无理由退换货"},{"id":227,"name":"假一赔十","remark":"若收到的商品是假买品牌，可获得加倍赔偿"},{"id":228,"name":"48小时快速退款","remark":"收到退货包裹并确认无误后，将在48小时内办理退款，退款将原路返回，不同银行处理时间不同，预计1-5个工作日到账"}]
+         * shopName : 世外健康旗舰店
+         * specifications : [{"attributes":[{"id":12,"selected":false,"value":"1kg"},{"id":13,"selected":false,"value":"2kg"}],"id":3,"name":"重量"}]
+         * stock : 1254484
+         * transportMoney : 0
          */
 
-
+        private long adSellTime;
+        private long advanceSellTime;
+        private String advanceStatus;
+        private int badTotal;
         private String categoryFullName;
         private int categoryId;
         private String cityName;
+        private int evaluateTotal;
         private String feature;
         private String goodsCode;
         private String goodsDetail;
         private String goodsName;
         private int goodsNumber;
         private String goodsStatus;
+        private int highTotal;
         private int id;
+        private long lastDeliveryTime;
+        private String latestDeliveryTime;
         private int limitBuyAmount;
+        private int midTotal;
         private double minPrice;
         private String publishTime;
         private String publishWay;
@@ -130,9 +142,10 @@ public class GoodDetail {
         private String sellerNumber;
         private String shopName;
         private int stock;
-        private double transportMoney;
+        private int transportMoney;
+        private List<EvaluatesBean> evaluates;
         private List<GoodsPriceStoresBean> goodsPriceStores;
-        private List<ImagesBean> images;
+        private List<ImagesBeanX> images;
         private List<ServicesBean> services;
         private List<SpecificationsBean> specifications;
 
@@ -140,17 +153,26 @@ public class GoodDetail {
         }
 
         protected DataBean(Parcel in) {
+            this.adSellTime = in.readLong();
+            this.advanceSellTime = in.readLong();
+            this.advanceStatus = in.readString();
+            this.badTotal = in.readInt();
             this.categoryFullName = in.readString();
             this.categoryId = in.readInt();
             this.cityName = in.readString();
+            this.evaluateTotal = in.readInt();
             this.feature = in.readString();
             this.goodsCode = in.readString();
             this.goodsDetail = in.readString();
             this.goodsName = in.readString();
             this.goodsNumber = in.readInt();
             this.goodsStatus = in.readString();
+            this.highTotal = in.readInt();
             this.id = in.readInt();
+            this.lastDeliveryTime = in.readLong();
+            this.latestDeliveryTime = in.readString();
             this.limitBuyAmount = in.readInt();
+            this.midTotal = in.readInt();
             this.minPrice = in.readDouble();
             this.publishTime = in.readString();
             this.publishWay = in.readString();
@@ -160,15 +182,44 @@ public class GoodDetail {
             this.sellerNumber = in.readString();
             this.shopName = in.readString();
             this.stock = in.readInt();
-            this.transportMoney = in.readDouble();
-            this.goodsPriceStores = new ArrayList<GoodsPriceStoresBean>();
-            in.readList(this.goodsPriceStores, GoodsPriceStoresBean.class.getClassLoader());
-            this.images = new ArrayList<ImagesBean>();
-            in.readList(this.images, ImagesBean.class.getClassLoader());
-            this.services = new ArrayList<ServicesBean>();
-            in.readList(this.services, ServicesBean.class.getClassLoader());
-            this.specifications = new ArrayList<SpecificationsBean>();
-            in.readList(this.specifications, SpecificationsBean.class.getClassLoader());
+            this.transportMoney = in.readInt();
+            this.evaluates = in.createTypedArrayList(EvaluatesBean.CREATOR);
+            this.goodsPriceStores = in.createTypedArrayList(GoodsPriceStoresBean.CREATOR);
+            this.images = in.createTypedArrayList(ImagesBeanX.CREATOR);
+            this.services = in.createTypedArrayList(ServicesBean.CREATOR);
+            this.specifications = in.createTypedArrayList(SpecificationsBean.CREATOR);
+        }
+
+        public long getAdSellTime() {
+            return adSellTime;
+        }
+
+        public void setAdSellTime(long adSellTime) {
+            this.adSellTime = adSellTime;
+        }
+
+        public long getAdvanceSellTime() {
+            return advanceSellTime;
+        }
+
+        public void setAdvanceSellTime(long advanceSellTime) {
+            this.advanceSellTime = advanceSellTime;
+        }
+
+        public String getAdvanceStatus() {
+            return advanceStatus;
+        }
+
+        public void setAdvanceStatus(String advanceStatus) {
+            this.advanceStatus = advanceStatus;
+        }
+
+        public int getBadTotal() {
+            return badTotal;
+        }
+
+        public void setBadTotal(int badTotal) {
+            this.badTotal = badTotal;
         }
 
         public String getCategoryFullName() {
@@ -193,6 +244,14 @@ public class GoodDetail {
 
         public void setCityName(String cityName) {
             this.cityName = cityName;
+        }
+
+        public int getEvaluateTotal() {
+            return evaluateTotal;
+        }
+
+        public void setEvaluateTotal(int evaluateTotal) {
+            this.evaluateTotal = evaluateTotal;
         }
 
         public String getFeature() {
@@ -243,6 +302,14 @@ public class GoodDetail {
             this.goodsStatus = goodsStatus;
         }
 
+        public int getHighTotal() {
+            return highTotal;
+        }
+
+        public void setHighTotal(int highTotal) {
+            this.highTotal = highTotal;
+        }
+
         public int getId() {
             return id;
         }
@@ -251,12 +318,36 @@ public class GoodDetail {
             this.id = id;
         }
 
+        public long getLastDeliveryTime() {
+            return lastDeliveryTime;
+        }
+
+        public void setLastDeliveryTime(long lastDeliveryTime) {
+            this.lastDeliveryTime = lastDeliveryTime;
+        }
+
+        public String getLatestDeliveryTime() {
+            return latestDeliveryTime;
+        }
+
+        public void setLatestDeliveryTime(String latestDeliveryTime) {
+            this.latestDeliveryTime = latestDeliveryTime;
+        }
+
         public int getLimitBuyAmount() {
             return limitBuyAmount;
         }
 
         public void setLimitBuyAmount(int limitBuyAmount) {
             this.limitBuyAmount = limitBuyAmount;
+        }
+
+        public int getMidTotal() {
+            return midTotal;
+        }
+
+        public void setMidTotal(int midTotal) {
+            this.midTotal = midTotal;
         }
 
         public double getMinPrice() {
@@ -331,12 +422,20 @@ public class GoodDetail {
             this.stock = stock;
         }
 
-        public double getTransportMoney() {
+        public int getTransportMoney() {
             return transportMoney;
         }
 
-        public void setTransportMoney(double transportMoney) {
+        public void setTransportMoney(int transportMoney) {
             this.transportMoney = transportMoney;
+        }
+
+        public List<EvaluatesBean> getEvaluates() {
+            return evaluates;
+        }
+
+        public void setEvaluates(List<EvaluatesBean> evaluates) {
+            this.evaluates = evaluates;
         }
 
         public List<GoodsPriceStoresBean> getGoodsPriceStores() {
@@ -347,11 +446,11 @@ public class GoodDetail {
             this.goodsPriceStores = goodsPriceStores;
         }
 
-        public List<ImagesBean> getImages() {
+        public List<ImagesBeanX> getImages() {
             return images;
         }
 
-        public void setImages(List<ImagesBean> images) {
+        public void setImages(List<ImagesBeanX> images) {
             this.images = images;
         }
 
@@ -378,17 +477,26 @@ public class GoodDetail {
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
+            dest.writeLong(this.adSellTime);
+            dest.writeLong(this.advanceSellTime);
+            dest.writeString(this.advanceStatus);
+            dest.writeInt(this.badTotal);
             dest.writeString(this.categoryFullName);
             dest.writeInt(this.categoryId);
             dest.writeString(this.cityName);
+            dest.writeInt(this.evaluateTotal);
             dest.writeString(this.feature);
             dest.writeString(this.goodsCode);
             dest.writeString(this.goodsDetail);
             dest.writeString(this.goodsName);
             dest.writeInt(this.goodsNumber);
             dest.writeString(this.goodsStatus);
+            dest.writeInt(this.highTotal);
             dest.writeInt(this.id);
+            dest.writeLong(this.lastDeliveryTime);
+            dest.writeString(this.latestDeliveryTime);
             dest.writeInt(this.limitBuyAmount);
+            dest.writeInt(this.midTotal);
             dest.writeDouble(this.minPrice);
             dest.writeString(this.publishTime);
             dest.writeString(this.publishWay);
@@ -398,15 +506,213 @@ public class GoodDetail {
             dest.writeString(this.sellerNumber);
             dest.writeString(this.shopName);
             dest.writeInt(this.stock);
-            dest.writeDouble(this.transportMoney);
-            dest.writeList(this.goodsPriceStores);
-            dest.writeList(this.images);
-            dest.writeList(this.services);
-            dest.writeList(this.specifications);
+            dest.writeInt(this.transportMoney);
+            dest.writeTypedList(this.evaluates);
+            dest.writeTypedList(this.goodsPriceStores);
+            dest.writeTypedList(this.images);
+            dest.writeTypedList(this.services);
+            dest.writeTypedList(this.specifications);
+        }
+
+        public static class EvaluatesBean implements Parcelable {
+            public static final Parcelable.Creator<EvaluatesBean> CREATOR = new Parcelable.Creator<EvaluatesBean>() {
+                @Override
+                public EvaluatesBean createFromParcel(Parcel source) {
+                    return new EvaluatesBean(source);
+                }
+
+                @Override
+                public EvaluatesBean[] newArray(int size) {
+                    return new EvaluatesBean[size];
+                }
+            };
+            /**
+             * attrDescription : 重量:2kg
+             * avatar : http://resource.shiwaixiangcun.cn/group1/M00/00/00/rBKx5VkZZlOAIivEAAAcGHPVROQ697.png
+             * content : 垃圾商品
+             * evaluateTime : 2017-10-30
+             * id : 1
+             * images : [{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n-eAeprFADb-QImlinU709.jpg","fileId":3958,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n-eAeprFADb-QImlinU709.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n-2AZgiIACm1-ZELSxQ766.jpg","fileId":3959,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n-2AZgiIACm1-ZELSxQ766.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n_SAUQ9KADQ9oFFyyDg811.jpg","fileId":3960,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n_SAUQ9KADQ9oFFyyDg811.jpg"}]
+             * nick : 1***6
+             * score : 3
+             */
+
+            private String attrDescription;
+            private String avatar;
+            private String content;
+            private String evaluateTime;
+            private int id;
+            private String nick;
+            private int score;
+            private List<ImagesBean> images;
+
+            public EvaluatesBean() {
+            }
+
+            protected EvaluatesBean(Parcel in) {
+                this.attrDescription = in.readString();
+                this.avatar = in.readString();
+                this.content = in.readString();
+                this.evaluateTime = in.readString();
+                this.id = in.readInt();
+                this.nick = in.readString();
+                this.score = in.readInt();
+                this.images = new ArrayList<ImagesBean>();
+                in.readList(this.images, ImagesBean.class.getClassLoader());
+            }
+
+            public String getAttrDescription() {
+                return attrDescription;
+            }
+
+            public void setAttrDescription(String attrDescription) {
+                this.attrDescription = attrDescription;
+            }
+
+            public String getAvatar() {
+                return avatar;
+            }
+
+            public void setAvatar(String avatar) {
+                this.avatar = avatar;
+            }
+
+            public String getContent() {
+                return content;
+            }
+
+            public void setContent(String content) {
+                this.content = content;
+            }
+
+            public String getEvaluateTime() {
+                return evaluateTime;
+            }
+
+            public void setEvaluateTime(String evaluateTime) {
+                this.evaluateTime = evaluateTime;
+            }
+
+            public int getId() {
+                return id;
+            }
+
+            public void setId(int id) {
+                this.id = id;
+            }
+
+            public String getNick() {
+                return nick;
+            }
+
+            public void setNick(String nick) {
+                this.nick = nick;
+            }
+
+            public int getScore() {
+                return score;
+            }
+
+            public void setScore(int score) {
+                this.score = score;
+            }
+
+            public List<ImagesBean> getImages() {
+                return images;
+            }
+
+            public void setImages(List<ImagesBean> images) {
+                this.images = images;
+            }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeString(this.attrDescription);
+                dest.writeString(this.avatar);
+                dest.writeString(this.content);
+                dest.writeString(this.evaluateTime);
+                dest.writeInt(this.id);
+                dest.writeString(this.nick);
+                dest.writeInt(this.score);
+                dest.writeList(this.images);
+            }
+
+            public static class ImagesBean implements Parcelable {
+                public static final Creator<ImagesBean> CREATOR = new Creator<ImagesBean>() {
+                    @Override
+                    public ImagesBean createFromParcel(Parcel source) {
+                        return new ImagesBean(source);
+                    }
+
+                    @Override
+                    public ImagesBean[] newArray(int size) {
+                        return new ImagesBean[size];
+                    }
+                };
+                /**
+                 * accessUrl : http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n-eAeprFADb-QImlinU709.jpg
+                 * fileId : 3958
+                 * thumbImageURL : http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n-eAeprFADb-QImlinU709.jpg
+                 */
+
+                private String accessUrl;
+                private int fileId;
+                private String thumbImageURL;
+
+                public ImagesBean() {
+                }
+
+                protected ImagesBean(Parcel in) {
+                    this.accessUrl = in.readString();
+                    this.fileId = in.readInt();
+                    this.thumbImageURL = in.readString();
+                }
+
+                public String getAccessUrl() {
+                    return accessUrl;
+                }
+
+                public void setAccessUrl(String accessUrl) {
+                    this.accessUrl = accessUrl;
+                }
+
+                public int getFileId() {
+                    return fileId;
+                }
+
+                public void setFileId(int fileId) {
+                    this.fileId = fileId;
+                }
+
+                public String getThumbImageURL() {
+                    return thumbImageURL;
+                }
+
+                public void setThumbImageURL(String thumbImageURL) {
+                    this.thumbImageURL = thumbImageURL;
+                }
+
+                @Override
+                public int describeContents() {
+                    return 0;
+                }
+
+                @Override
+                public void writeToParcel(Parcel dest, int flags) {
+                    dest.writeString(this.accessUrl);
+                    dest.writeInt(this.fileId);
+                    dest.writeString(this.thumbImageURL);
+                }
+            }
         }
 
         public static class GoodsPriceStoresBean implements Parcelable {
-            public static final Creator<GoodsPriceStoresBean> CREATOR = new Creator<GoodsPriceStoresBean>() {
+            public static final Parcelable.Creator<GoodsPriceStoresBean> CREATOR = new Parcelable.Creator<GoodsPriceStoresBean>() {
                 @Override
                 public GoodsPriceStoresBean createFromParcel(Parcel source) {
                     return new GoodsPriceStoresBean(source);
@@ -419,11 +725,11 @@ public class GoodDetail {
             };
             /**
              * attributeIds : null
-             * attributes : 1kg_1
+             * attributes : 1kg_3
              * goodsCode : null
              * price : 0.01
              * sellerNumber : null
-             * storeAmount : 9
+             * storeAmount : 1231243
              */
 
             private String attributeIds;
@@ -509,32 +815,32 @@ public class GoodDetail {
             }
         }
 
-        public static class ImagesBean implements Parcelable {
-            public static final Creator<ImagesBean> CREATOR = new Creator<ImagesBean>() {
+        public static class ImagesBeanX implements Parcelable {
+            public static final Parcelable.Creator<ImagesBeanX> CREATOR = new Parcelable.Creator<ImagesBeanX>() {
                 @Override
-                public ImagesBean createFromParcel(Parcel source) {
-                    return new ImagesBean(source);
+                public ImagesBeanX createFromParcel(Parcel source) {
+                    return new ImagesBeanX(source);
                 }
 
                 @Override
-                public ImagesBean[] newArray(int size) {
-                    return new ImagesBean[size];
+                public ImagesBeanX[] newArray(int size) {
+                    return new ImagesBeanX[size];
                 }
             };
             /**
-             * accessUrl : http://resource.shiwaixiangcun.cn/group1/M00/00/56/rBKx51m2Q0WATSGoAAAyxNR9tng611.jpg
-             * fileId : 4427
-             * thumbImageURL : http://resource.shiwaixiangcun.cn/group1/M00/00/56/rBKx51m2Q0WATSGoAAAyxNR9tng611.jpg
+             * accessUrl : http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg
+             * fileId : 3954
+             * thumbImageURL : http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg
              */
 
             private String accessUrl;
             private int fileId;
             private String thumbImageURL;
 
-            public ImagesBean() {
+            public ImagesBeanX() {
             }
 
-            protected ImagesBean(Parcel in) {
+            protected ImagesBeanX(Parcel in) {
                 this.accessUrl = in.readString();
                 this.fileId = in.readInt();
                 this.thumbImageURL = in.readString();
@@ -578,7 +884,7 @@ public class GoodDetail {
         }
 
         public static class ServicesBean implements Parcelable {
-            public static final Creator<ServicesBean> CREATOR = new Creator<ServicesBean>() {
+            public static final Parcelable.Creator<ServicesBean> CREATOR = new Parcelable.Creator<ServicesBean>() {
                 @Override
                 public ServicesBean createFromParcel(Parcel source) {
                     return new ServicesBean(source);
@@ -590,7 +896,7 @@ public class GoodDetail {
                 }
             };
             /**
-             * id : 240
+             * id : 226
              * name : 7天退换
              * remark : 商家承诺7天无理由退换货
              */
@@ -646,7 +952,7 @@ public class GoodDetail {
         }
 
         public static class SpecificationsBean implements Parcelable {
-            public static final Creator<SpecificationsBean> CREATOR = new Creator<SpecificationsBean>() {
+            public static final Parcelable.Creator<SpecificationsBean> CREATOR = new Parcelable.Creator<SpecificationsBean>() {
                 @Override
                 public SpecificationsBean createFromParcel(Parcel source) {
                     return new SpecificationsBean(source);
@@ -658,8 +964,8 @@ public class GoodDetail {
                 }
             };
             /**
-             * attributes : [{"id":36,"selected":false,"value":"1kg"}]
-             * id : 1
+             * attributes : [{"id":12,"selected":false,"value":"1kg"},{"id":13,"selected":false,"value":"2kg"}]
+             * id : 3
              * name : 重量
              */
 
@@ -726,7 +1032,7 @@ public class GoodDetail {
                     }
                 };
                 /**
-                 * id : 36
+                 * id : 12
                  * selected : false
                  * value : 1kg
                  */

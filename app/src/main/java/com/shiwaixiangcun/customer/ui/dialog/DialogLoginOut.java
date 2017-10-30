@@ -13,6 +13,7 @@ import com.shiwaixiangcun.customer.R;
 
 /**
  * 退出登录Dialog
+ * @author Administrator
  */
 public class DialogLoginOut extends Dialog {
 
@@ -130,10 +131,10 @@ public class DialogLoginOut extends Dialog {
      * 初始化界面控件
      */
     private void initView() {
-        yes = (Button) findViewById(R.id.yes);
-        no = (Button) findViewById(R.id.no);
-        titleTv = (TextView) findViewById(R.id.title);
-        messageTv = (TextView) findViewById(R.id.message);
+        yes = findViewById(R.id.yes);
+        no = findViewById(R.id.no);
+        titleTv = findViewById(R.id.title);
+        messageTv = findViewById(R.id.message);
     }
 
     /**

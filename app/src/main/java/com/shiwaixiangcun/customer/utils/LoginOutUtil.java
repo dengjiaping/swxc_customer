@@ -22,7 +22,9 @@ import java.util.HashMap;
 
 
 /**
- * Created by Administrator on 2017/5/15.
+ *
+ * @author Administrator
+ * @date 2017/5/15
  */
 
 public class LoginOutUtil implements Serializable {

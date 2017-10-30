@@ -266,6 +266,8 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
                             case 1001:
                                 EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_MAIN, 4, responseEntity.getData()));
                                 break;
+                            default:
+                                break;
 
                         }
 
@@ -410,6 +412,8 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
                 mTvLocation.setText(site.getName());
 
 //               AppSharePreferenceMgr.put(mContext, GlobalConfig.SITE_NAME, site.getName());
+                break;
+            default:
                 break;
 
 

@@ -64,8 +64,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-
-        <!--Bugly-->
+        <!-- Bugly -->
         <meta-data
             android:name="BUGLY_APPID"
             android:value="0428c441f2"/>
@@ -78,7 +77,6 @@
         <meta-data
             android:name="BUGLY_ENABLE_DEBUG"
             android:value="true"/>
-
 
         <!-- 百度统计 -->
         <meta-data
@@ -109,8 +107,7 @@
             android:name="BaiduMobAd_WIFI_LOCATION"
             android:value="true"/>
 
-
-        <!--激光推送-->
+        <!-- 激光推送 -->
         <meta-data
             android:name="JPUSH_CHANNEL"
             android:value="developer-default"/>
@@ -118,8 +115,7 @@
             android:name="JPUSH_APPKEY"
             android:value="7fb6ffb9a1ffb3edaa6d4ab8"/>
 
-
-        <!--Activity-->
+        <!-- Activity -->
 
         <activity android:name=".ui.activity.StartPageActivity">
             <intent-filter>
@@ -274,13 +270,12 @@
             android:screenOrientation="portrait">
         </activity>
         <activity android:name=".ui.activity.BigImageActivity"/>
-
-
         <activity android:name=".ui.activity.BannerDetailsActivity"/>
 
         <!-- 激光 -->
         <!-- Required SDK 核心功能 -->
         <!-- 可配置android:process参数将PushService放在其他进程中 -->
+
 
         <!-- Required SDK核心功能 -->
         <receiver
@@ -328,8 +323,6 @@
                 <category android:name="com.shiwaixiangcun.customer"/>
             </intent-filter>
         </activity>
-
-
         <activity
             android:name=".ui.activity.SurroundLifeActivity"
             android:screenOrientation="portrait"/>
@@ -534,12 +527,10 @@
         </activity>
         <activity android:name=".ui.activity.mall.EvaluateActivity">
         </activity>
-        <activity android:name=".ui.activity.mall.RefundActivity"
-            >
-
+        <activity android:name=".ui.activity.mall.RefundActivity">
         </activity>
 
-        <!--Service-->
+        <!-- Service -->
         <service
             android:name="cn.jpush.android.service.PushService"
             android:enabled="true"
@@ -574,6 +565,8 @@
         <!-- Required SDK核心功能 -->
         <receiver android:name="cn.jpush.android.service.AlarmReceiver"/>
 
+        <activity android:name=".ui.activity.EvaluatesListActivity">
+        </activity>
     </application>
 
 </manifest>

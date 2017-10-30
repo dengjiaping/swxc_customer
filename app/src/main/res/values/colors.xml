@@ -66,4 +66,5 @@
     <color name="indicator_selected">#FF1CCC8C</color>
     <color name="indicator_unselected">#77000000</color>
     <color name="stature_gray">#262d3231</color>
+    <color name="red_flag">#FFFF4449</color>
 </resources>

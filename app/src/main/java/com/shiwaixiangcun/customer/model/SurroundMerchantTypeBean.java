@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/7/22.
+ * Created by Administrator on 2017/10/30.
  */
 
 public class SurroundMerchantTypeBean implements Serializable {

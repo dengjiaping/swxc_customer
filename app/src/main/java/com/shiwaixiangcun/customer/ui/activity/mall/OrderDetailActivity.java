@@ -1,5 +1,6 @@
 package com.shiwaixiangcun.customer.ui.activity.mall;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -52,7 +53,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by Administrator on 2017/9/18.
+ * @author Administrator
+ * @date 2017/9/18
  */
 
 public class OrderDetailActivity extends BaseActivity implements View.OnClickListener {
@@ -130,7 +132,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     private DialogPay mDialogPay;
     private int orderId = 0;
     private String tokenString;
-    private String refresh_token;
+    private String refreshToken;
     private OrderDetailBean mOrderDetail;
     private OrderDetailBean.OrderInfoBean orderInfo;
 
@@ -157,7 +159,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(loginInfo, type);
-        refresh_token = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.Refresh_token, "");
+        refreshToken = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.Refresh_token, "");
         tokenString = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
         Log.e(BUG_TAG, tokenString);
         Log.e(BUG_TAG, String.valueOf(orderId));
@@ -184,7 +186,9 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                                 EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_ORDER_DETAIL, 1, orderDetail));
                                 break;
                             case 1018:
-                                RefreshTokenUtil.sendIntDataInvatation(mContext, refresh_token);
+                                RefreshTokenUtil.sendIntDataInvatation(mContext, refreshToken);
+                                break;
+                            default:
                                 break;
 
                         }
@@ -224,6 +228,9 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                 initData();
                 break;
             case SimpleEvent.PAY_FAIL:
+                break;
+            default:
+                break;
         }
 
     }
@@ -233,6 +240,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
      *
      * @param orderDetail
      */
+    @SuppressLint("SetTextI18n")
     public void updateUI(OrderDetailBean orderDetail) {
 
         Log.e(BUG_TAG, "更新界面");
@@ -279,6 +287,8 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                 mBtnCommit.setOnClickListener(this);
                 break;
 
+            default:
+                break;
 
         }
 
@@ -387,6 +397,8 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                         });
                         mDialogDelete.show();
                         break;
+                    default:
+                        break;
                 }
 
                 break;
@@ -421,6 +433,9 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                 readyGo(RefundActivity.class, refundBundle);
                 refundOrder();
                 break;
+            default:
+                break;
+
         }
     }
 
@@ -453,6 +468,8 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                         break;
                     case 0:
                         Toast.makeText(mContext, "请选择一种支付方式", Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
                         break;
                 }
             }

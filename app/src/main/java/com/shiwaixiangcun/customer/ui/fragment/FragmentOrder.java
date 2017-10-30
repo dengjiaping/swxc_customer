@@ -1,5 +1,6 @@
 package com.shiwaixiangcun.customer.ui.fragment;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -58,10 +59,9 @@ import java.util.List;
 import butterknife.BindView;
 
 /**
- *
  * @author Administrator
  * @date 2017/9/18
- *
+ * <p>
  * 订单Fragment
  */
 
@@ -157,6 +157,7 @@ public class FragmentOrder extends LazyFragment {
     /**
      * 初始化数据
      */
+    @SuppressLint("SetTextI18n")
     private void initView() {
         mDialogCancel = new DialogInfo(mContext);
         mDialogDelete = new DialogInfo(mContext);
@@ -186,6 +187,7 @@ public class FragmentOrder extends LazyFragment {
 
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
+                mCurrentPage = 1;
                 requestData(mCurrentPage, mPageSize, false);
 
             }
@@ -310,20 +312,25 @@ public class FragmentOrder extends LazyFragment {
                             case 1001:
                                 mOrder = orderBean.getData();
 
-
                                 if (mOrder.getElements().size() == 0) {
-                                    mLlayoutNodata.setVisibility(View.VISIBLE);
+                                    mCurrentPage = 1;
+                                    if (!isLoadMore) {
+
+                                        mLlayoutNodata.setVisibility(View.VISIBLE);
+                                    }
                                     mRefreshLayout.finishRefresh();
                                     mRefreshLayout.finishLoadmore();
                                     return;
 
                                 }
+
                                 if (mOrder.getElements().size() > 0) {
                                     if (isLoadMore) {
                                         mCurrentPage++;
                                         mRefreshLayout.finishLoadmore();
 
                                     } else {
+
                                         mCurrentPage = 1;
                                         mRefreshLayout.finishRefresh();
                                         mOrderList.clear();

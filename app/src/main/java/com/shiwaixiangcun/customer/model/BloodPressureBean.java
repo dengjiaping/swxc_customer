@@ -7,9 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/6/2.
+ * Created by Administrator on 2017/10/30.
  */
-
 public class BloodPressureBean implements Parcelable {
 
     public static final Parcelable.Creator<BloodPressureBean> CREATOR = new Parcelable.Creator<BloodPressureBean>() {

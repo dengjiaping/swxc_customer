@@ -78,10 +78,11 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, IM
         }
     };
     private ChangeLightImageView back_left;
-    private RelativeLayout rl_head_mine;
-    private RelativeLayout rl_feed_back;
-    private TextView tv_user_name;
-    private CircleImageView iv_head_my_image;
+    private RelativeLayout rlHeadMine;
+    private RelativeLayout rlFeedBack;
+    private TextView tvUserName;
+    private CircleImageView ivHeadMyImage;
+
     private MyMineImpl myMine;
     private TextView tv_wy_phone;
     private RelativeLayout rl_wy_lay;
@@ -108,16 +109,16 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, IM
         if (Utils.isNotEmpty(isOrnotLogin_service)) {
             String head_image_path = SharePreference.getStringSpParams(mContext, Common.ISIMAGEHEAD, Common.SIIMAGEHEAD);
             String username = SharePreference.getStringSpParams(mContext, Common.ISUSERNAME, Common.SIUSERNAME);
-            tv_user_name.setText(username);
+            tvUserName.setText(username);
             if (Utils.isNotEmpty(head_image_path)) {
-                ImageDisplayUtil.showImageView(mContext, head_image_path, iv_head_my_image);
+                ImageDisplayUtil.showImageView(mContext, head_image_path, ivHeadMyImage);
             } else {
-                iv_head_my_image.setImageResource(R.mipmap.defalt_image);
+                ivHeadMyImage.setImageResource(R.mipmap.defalt_image);
             }
 
         } else {
-            tv_user_name.setText("立即登录");
-            iv_head_my_image.setImageResource(R.mipmap.defalt_image);
+            tvUserName.setText("立即登录");
+            ivHeadMyImage.setImageResource(R.mipmap.defalt_image);
         }
 
         StatService.onResume(mContext);
@@ -130,20 +131,20 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, IM
     }
 
     private void layoutView(View view) {
-        back_left = (ChangeLightImageView) view.findViewById(R.id.back_left);
+        back_left = view.findViewById(R.id.back_left);
         back_left.setVisibility(View.GONE);
-        rl_head_mine = (RelativeLayout) view.findViewById(R.id.rl_head_mine);
-        rl_feed_back = (RelativeLayout) view.findViewById(R.id.rl_feed_back);
-        tv_user_name = (TextView) view.findViewById(R.id.tv_user_name);
-        iv_head_my_image = (CircleImageView) view.findViewById(R.id.iv_head_my_image);
-        tv_wy_phone = (TextView) view.findViewById(R.id.tv_wy_phone);
-        rl_wy_lay = (RelativeLayout) view.findViewById(R.id.rl_wy_lay);
-        rl_for_life = (RelativeLayout) view.findViewById(R.id.rl_for_life);
-        rl_app_update = (RelativeLayout) view.findViewById(R.id.rl_app_updata);
-        rl_app_address = (RelativeLayout) view.findViewById(R.id.rl_app_address);
-        rl_app_service = (RelativeLayout) view.findViewById(R.id.rl_app_after_service);
-        rl_app_order = (RelativeLayout) view.findViewById(R.id.rl_app_order);
-        rl_app_family = (RelativeLayout) view.findViewById(R.id.rl_app_family);
+        rlHeadMine = view.findViewById(R.id.rl_head_mine);
+        rlFeedBack = view.findViewById(R.id.rl_feed_back);
+        tvUserName = view.findViewById(R.id.tv_user_name);
+        ivHeadMyImage = view.findViewById(R.id.iv_head_my_image);
+        tv_wy_phone = view.findViewById(R.id.tv_wy_phone);
+        rl_wy_lay = view.findViewById(R.id.rl_wy_lay);
+        rl_for_life = view.findViewById(R.id.rl_for_life);
+        rl_app_update = view.findViewById(R.id.rl_app_updata);
+        rl_app_address = view.findViewById(R.id.rl_app_address);
+        rl_app_service = view.findViewById(R.id.rl_app_after_service);
+        rl_app_order = view.findViewById(R.id.rl_app_order);
+        rl_app_family = view.findViewById(R.id.rl_app_family);
 
         //初始化相关变量
         initVariable();
@@ -153,8 +154,8 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, IM
     private void initData() {
 
         back_left.setOnClickListener(this);
-        rl_head_mine.setOnClickListener(this);
-        rl_feed_back.setOnClickListener(this);
+        rlHeadMine.setOnClickListener(this);
+        rlFeedBack.setOnClickListener(this);
         rl_wy_lay.setOnClickListener(this);
         rl_for_life.setOnClickListener(this);
         rl_app_order.setOnClickListener(this);
@@ -237,6 +238,8 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, IM
                     startActivity(intent);
 
                 }
+                break;
+            default:
                 break;
 
         }

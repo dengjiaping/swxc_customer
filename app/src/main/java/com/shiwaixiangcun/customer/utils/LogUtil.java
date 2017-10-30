@@ -11,7 +11,9 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 /**
- * Created by Administrator on 2017/9/13.
+ *
+ * @author Administrator
+ * @date 2017/9/13
  */
 
 public class LogUtil {

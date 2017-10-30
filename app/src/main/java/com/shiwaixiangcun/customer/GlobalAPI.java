@@ -51,6 +51,7 @@ public class GlobalAPI {
     public static String afterServiceDetail = MK_DOMAIN + "/mc/after/sale/detail.json";
     public static String cancelAfterService = MK_DOMAIN + "/mc/after/sale/cancel.json";
     public static String addEvaluate = MK_DOMAIN + "/mc/evaluate/add.json";
+    public static String getEvaluateList = MK_DOMAIN + "/mi/evaluate/listpage.json";
     //春雨医生正式服务器
     private static String DC_DOMAIN_RELEASE = "https://www.chunyuyisheng.com";
     private static String HM_DOMAIN_RELEASE = "http://hm.hxteb.com";

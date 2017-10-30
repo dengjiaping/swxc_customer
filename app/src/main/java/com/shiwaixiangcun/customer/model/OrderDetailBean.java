@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/9/18.
+ *
+ * @author Administrator
+ * @date 2017/9/18
  */
 
 public class OrderDetailBean implements Parcelable {
@@ -325,10 +327,11 @@ public class OrderDetailBean implements Parcelable {
     }
 
     public static class OrderStatusBean implements Parcelable {
+
         public static final Creator<OrderStatusBean> CREATOR = new Creator<OrderStatusBean>() {
             @Override
-            public OrderStatusBean createFromParcel(Parcel source) {
-                return new OrderStatusBean(source);
+            public OrderStatusBean createFromParcel(Parcel in) {
+                return new OrderStatusBean(in);
             }
 
             @Override
@@ -336,25 +339,21 @@ public class OrderDetailBean implements Parcelable {
                 return new OrderStatusBean[size];
             }
         };
-        /**
-         * status : Finished
-         */
-
         private String status;
-
-        public OrderStatusBean() {
-        }
+        private String afterSaleStatus;
+        private boolean afterSaled;
 
         protected OrderStatusBean(Parcel in) {
-            this.status = in.readString();
+            status = in.readString();
+            afterSaleStatus = in.readString();
+            afterSaled = in.readByte() != 0;
         }
 
-        public String getStatus() {
-            return status;
-        }
-
-        public void setStatus(String status) {
-            this.status = status;
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(status);
+            dest.writeString(afterSaleStatus);
+            dest.writeByte((byte) (afterSaled ? 1 : 0));
         }
 
         @Override
@@ -362,9 +361,16 @@ public class OrderDetailBean implements Parcelable {
             return 0;
         }
 
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeString(this.status);
+        public String getStatus() {
+            return status;
+        }
+
+        public String getAfterSaleStatus() {
+            return afterSaleStatus;
+        }
+
+        public boolean isAfterSaled() {
+            return afterSaled;
         }
     }
 

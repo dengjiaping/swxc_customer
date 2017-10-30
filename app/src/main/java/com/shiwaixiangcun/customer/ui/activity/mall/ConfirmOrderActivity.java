@@ -1,5 +1,6 @@
 package com.shiwaixiangcun.customer.ui.activity.mall;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -56,6 +57,8 @@ import okhttp3.Call;
 
 /**
  * 订单确认页面
+ *
+ * @author Administrator
  */
 public class ConfirmOrderActivity extends BaseActivity implements View.OnClickListener {
 
@@ -124,10 +127,10 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     TextView mShouldPay;
     @BindView(R.id.btn_commit)
     Button mBtnCommit;
+    String refreshToken;
     private boolean hasAddress = false;
     private int mGoodId;
     private String mStrMessage;
-
     private String mChooseValue;
     private String mChooseId;
     private GoodDetail.DataBean data;
@@ -136,7 +139,6 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private int addressId;
     private DialogPay mDialogPay;
     private double goodPrice;
-
     private String mOrderNumber;
     private int mOrderId;
 
@@ -181,8 +183,12 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         mRLayoutHasAddress.setOnClickListener(this);
     }
 
+    @SuppressLint("SetTextI18n")
     private void initView() {
         mTvPageName.setText("确认订单");
+
+        refreshToken = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.Refresh_token, "");
+        tokenString = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
         //设置商品信息
         mDialogPay = new DialogPay(this);
         mTvGoodTitle.setText(data.getGoodsName());
@@ -269,8 +275,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         }.getType();
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(loginInfo, type);
 
-        final String refresh_token = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.Refresh_token, "");
-        tokenString = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
+
         mStrMessage = mEdtMessage.getText().toString();
         HttpParams params = new HttpParams();
         params.put("addressId", addressId);
@@ -325,7 +330,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                                 break;
 
                             case 1018:
-                                RefreshTokenUtil.sendIntDataInvatation(mContext, refresh_token);
+                                RefreshTokenUtil.sendIntDataInvatation(mContext, refreshToken);
                                 break;
                             default:
                                 Toast.makeText(mContext, currentOrder.getMessage(), Toast.LENGTH_SHORT).show();
@@ -431,7 +436,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     }
 
     public void getDefaultAddress() {
-        HashMap<String, Object> params = new HashMap<>();
+        HashMap<String, Object> params = new HashMap<>(2);
         params.put("access_token", tokenString);
         params.put("fields", "");
         HttpRequest.get(GlobalAPI.getAddress, params, new HttpCallBack() {
@@ -466,7 +471,9 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                         }
                         break;
                     default:
-                        Toast.makeText(mContext, "验证错误", Toast.LENGTH_SHORT).show();
+                        mRLayoutHasAddress.setVisibility(View.GONE);
+                        mRLayoutNoAddress.setVisibility(View.VISIBLE);
+                        Toast.makeText(mContext, "获取地址出错", Toast.LENGTH_SHORT).show();
                         break;
 
                 }

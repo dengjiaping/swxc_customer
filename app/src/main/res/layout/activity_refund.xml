@@ -33,6 +33,7 @@
         app:srlEnablePureScrollMode="true">
 
         <ScrollView
+            android:id="@+id/sv_body"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -151,11 +152,13 @@
                 </LinearLayout>
 
                 <RelativeLayout
+                    android:id="@+id/llayout_good_statue"
                     android:layout_width="match_parent"
                     android:layout_height="54dp"
                     android:layout_marginBottom="8dp"
                     android:layout_marginTop="8dp"
                     android:background="@color/bg_white"
+                    android:clickable="true"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp">
 
@@ -218,15 +221,14 @@
                             app:layout_constraintTop_toTopOf="parent"/>
 
                         <EditText
-                            android:id="@+id/textView10"
+                            android:id="@+id/tv_money"
                             android:layout_width="80dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="0dp"
+                            android:layout_height="0dp"
                             android:layout_marginTop="20dp"
                             android:background="@null"
                             android:gravity="center_vertical"
                             android:inputType="number"
-                            android:text="300.00"
+                            android:text="0.00"
                             android:textColor="#FFFF1717"
                             android:textSize="16sp"
                             app:layout_constraintLeft_toRightOf="@+id/textView11"
@@ -247,7 +249,7 @@
                             app:layout_constraintTop_toTopOf="parent"/>
 
                         <TextView
-                            android:id="@+id/textView12"
+                            android:id="@+id/tv_refund_message"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
@@ -257,13 +259,13 @@
                             android:background="@null"
 
                             android:gravity="center_vertical"
-                            android:text="最多￥409.00，包含发货邮费￥10.00"
                             android:textColor="@color/black_text_60"
                             android:textSize="14sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView9"/>
+                            app:layout_constraintTop_toBottomOf="@+id/textView9"
+                            tools:text="最多￥409.00，包含发货邮费￥10.00"/>
                     </android.support.constraint.ConstraintLayout>
 
                     <View
