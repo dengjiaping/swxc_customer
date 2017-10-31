@@ -12,7 +12,9 @@ import java.util.List;
 
 
 /**
- * Created by Administrator on 2016/7/13.
+ *
+ * @author Administrator
+ * @date 2016/7/13
  * 心率数据的列表Adapter
  */
 public class AdapterHeartRate extends BaseQuickAdapter<HeartRateBean.ElementsBean, BaseViewHolder> {

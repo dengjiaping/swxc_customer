@@ -27,7 +27,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by Administrator on 2017/9/11.
+ *
+ * @author XuJhin
+ * @date 2017/9/11
+ * 支持的服务
  */
 
 public class DialogSupport extends Dialog implements DialogInterface.OnCancelListener, View.OnClickListener {

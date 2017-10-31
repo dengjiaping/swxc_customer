@@ -124,7 +124,7 @@ public class MallCategoryActivity extends BaseActivity implements View.OnClickLi
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         mDetailFragment = CategoryDetailFragment.newInstance();
         Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("right", (ArrayList<? extends Parcelable>) mCategory.getData());
+        bundle.putParcelableArrayList("addRight", (ArrayList<? extends Parcelable>) mCategory.getData());
         mDetailFragment.setArguments(bundle);
         mDetailFragment.setListener(this);
         fragmentTransaction.add(R.id.flayout_pin, mDetailFragment);

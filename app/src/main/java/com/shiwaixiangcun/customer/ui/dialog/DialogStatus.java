@@ -21,7 +21,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by Administrator on 2017/10/16.
+ *
+ * @author Administrator
+ * @date 2017/10/16
  */
 
 

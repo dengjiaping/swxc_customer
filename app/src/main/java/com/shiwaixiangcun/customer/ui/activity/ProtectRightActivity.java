@@ -59,6 +59,7 @@ public class ProtectRightActivity extends BaseActivity implements View.OnClickLi
      */
     private static final int MAX_IMAGE_NUMBER = 4;
     private static final int CODE_SUCCESS = 1001;
+    private static final int MAX_TEXT = 200;
     String strToken;
     String strContent;
     String strRefreshToken;
@@ -125,8 +126,8 @@ public class ProtectRightActivity extends BaseActivity implements View.OnClickLi
 
         mTvTopRight.setText("维权记录");
         mTvPageName.setText("消费维权");
-        strToken = (String) AppSharePreferenceMgr.get(this, GlobalConfig.TOKEN, "");
-        strRefreshToken = (String) AppSharePreferenceMgr.get(this, GlobalConfig.TOKEN, "");
+        initToken();
+
         mTvTopRight.setVisibility(View.VISIBLE);
         mTvTopRight.setOnClickListener(this);
         mBackLeft.setOnClickListener(this);
@@ -147,6 +148,12 @@ public class ProtectRightActivity extends BaseActivity implements View.OnClickLi
             }
         });
 
+
+    }
+
+    private void initToken() {
+        strToken = (String) AppSharePreferenceMgr.get(this, GlobalConfig.TOKEN, "");
+        strRefreshToken = (String) AppSharePreferenceMgr.get(this, GlobalConfig.TOKEN, "");
     }
 
     @Override
@@ -162,6 +169,8 @@ public class ProtectRightActivity extends BaseActivity implements View.OnClickLi
                 strContent = mEdtContent.getText().toString().trim();
                 if (StringUtil.isEmpty(strContent)) {
                     showToastShort(getResources().getString(R.string.protect_right_hint));
+                } else if (strContent.length() > MAX_TEXT) {
+                    showToastShort("维权信息不得超过200字");
                 } else {
                     if (getCurrentFocus() != null) {
                         ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
@@ -265,7 +274,7 @@ public class ProtectRightActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void submitInfo(String strContent, String imageIds) {
-        OkGo.<String>post(GlobalAPI.right)
+        OkGo.<String>post(GlobalAPI.addRight)
                 .params("access_token", strToken)
                 .params("content", strContent)
                 .params("imageIds", imageIds)
@@ -273,8 +282,10 @@ public class ProtectRightActivity extends BaseActivity implements View.OnClickLi
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
+                        showToastShort("提交维权信息失败，请重试");
                     }
 
+                    @Override
                     public void onSuccess(Response<String> response) {
 
                         ResponseEntity responseEntity = JsonUtil.fromJson(response.body(), ResponseEntity.class);
@@ -304,7 +315,7 @@ public class ProtectRightActivity extends BaseActivity implements View.OnClickLi
                                 break;
                             default:
 
-                                showToastShort("提交失败");
+                                showToastShort("提交维权信息失败");
                                 Log.e(BUG_TAG, "加载失败");
                                 break;
                         }

@@ -24,6 +24,7 @@
             app:srlEnableLoadmore="true"
             app:srlEnablePureScrollMode="true">
 
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_evaluate"
                 android:layout_width="match_parent"

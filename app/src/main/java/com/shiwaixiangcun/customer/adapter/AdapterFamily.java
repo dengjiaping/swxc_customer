@@ -15,7 +15,10 @@ import com.shiwaixiangcun.customer.utils.StringUtil;
 import com.shiwaixiangcun.customer.widget.CircleImageView;
 
 /**
- * Created by Administrator on 2017/9/25.
+ *
+ * @author Administrator
+ * @date 2017/9/25
+ * 家人
  */
 
 public class AdapterFamily extends BaseQuickAdapter<HealthUserBean, BaseViewHolder> {

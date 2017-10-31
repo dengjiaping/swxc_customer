@@ -116,6 +116,10 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
     List<GoodDetail.DataBean.EvaluatesBean> mEvaluatesBeanList = new ArrayList<>();
     private DialogSku dialogSku;
     private int mGoodId;
+    private int highTotal;
+    private int allTotal;
+    private int midTotal;
+    private int badTotal;
     private GoodDetail.DataBean goodBean;
     private String isOrNotLogin;
     private StringBuilder shareUrl = new StringBuilder();
@@ -180,6 +184,11 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
             case 1:
                 goodBean = (GoodDetail.DataBean) simpleEvent.getData();
 
+
+                highTotal = goodBean.getHighTotal();
+                midTotal = goodBean.getMidTotal();
+                badTotal = goodBean.getBadTotal();
+                allTotal = goodBean.getEvaluateTotal();
                 //设置缺货状态
                 if (ALL_ADVANCE.equals(goodBean.getAdvanceStatus())) {
 
@@ -509,7 +518,14 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
                 }
                 break;
             case R.id.tv_evaluate_all:
-                readyGo(EvaluatesListActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("goodID", mGoodId);
+                bundle.putInt("allTotal", allTotal);
+                bundle.putInt("highTotal", highTotal);
+                bundle.putInt("midTotal", midTotal);
+                bundle.putInt("badTotal", badTotal);
+
+                readyGo(EvaluatesListActivity.class, bundle);
                 break;
             default:
                 break;

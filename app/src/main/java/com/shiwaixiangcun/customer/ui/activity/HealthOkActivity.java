@@ -107,9 +107,9 @@ public class HealthOkActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void layoutView() {
-        head_view = (RelativeLayout) findViewById(R.id.head_view);
+        head_view = findViewById(R.id.head_view);
         MyListener myListener = new MyListener();
-        PullToRefreshLayout refresh_view = (PullToRefreshLayout) findViewById(R.id.refresh_view);
+        PullToRefreshLayout refresh_view = findViewById(R.id.refresh_view);
         refresh_view.setOnRefreshListener(myListener);
         myListener.setRefreshListener(new MyListener.onRefreshListener() {
             @Override
@@ -119,35 +119,35 @@ public class HealthOkActivity extends AppCompatActivity implements View.OnClickL
         });
 
 
-        back_left = (ChangeLightImageView) findViewById(R.id.back_left);
-        rl_blood_pressure = (RelativeLayout) findViewById(R.id.rl_blood_pressure);
-        rl_health_heart_rate = (RelativeLayout) findViewById(R.id.rl_health_heart_rate);
-        rl_blood_sugar = (RelativeLayout) findViewById(R.id.rl_blood_sugar);
-        rl_weight_person = (RelativeLayout) findViewById(R.id.rl_weight_person);
-        ll_blood_fat = (LinearLayout) findViewById(R.id.ll_blood_fat);
-        tv_blood_pressure_data = (TextView) findViewById(R.id.tv_blood_pressure_data);
-        tv_blood_pressure_ok_time = (TextView) findViewById(R.id.tv_blood_pressure_ok_time);
-        tv_heart_ok_data = (TextView) findViewById(R.id.tv_heart_ok_data);
-        tv_heart_ok_time = (TextView) findViewById(R.id.tv_heart_ok_time);
-        tv_blood_sugar_ok_data = (TextView) findViewById(R.id.tv_blood_sugar_ok_data);
-        tv_blood_sugar_ok_time = (TextView) findViewById(R.id.tv_blood_sugar_ok_time);
-        tv_weight_ok_data = (TextView) findViewById(R.id.tv_weight_ok_data);
-        tv_weight_ok_time = (TextView) findViewById(R.id.tv_weight_ok_time);
-        tv_ok_totalCholesterol = (TextView) findViewById(R.id.tv_ok_totalCholesterol);
-        tv_ok_triglyceride = (TextView) findViewById(R.id.tv_ok_triglyceride);
-        tv_ok_topLipo = (TextView) findViewById(R.id.tv_ok_topLipo);
-        tv_ok_lowLipo = (TextView) findViewById(R.id.tv_ok_lowLipo);
-        tv_blood_fat_ok_time = (TextView) findViewById(R.id.tv_blood_fat_ok_time);
-        iv_health_status = (ImageView) findViewById(R.id.iv_health_status);
-        tv_center_health = (TextView) findViewById(R.id.tv_center_health);
-        tv_bottom_health = (TextView) findViewById(R.id.tv_bottom_health);
+        back_left = findViewById(R.id.back_left);
+        rl_blood_pressure = findViewById(R.id.rl_blood_pressure);
+        rl_health_heart_rate = findViewById(R.id.rl_health_heart_rate);
+        rl_blood_sugar = findViewById(R.id.rl_blood_sugar);
+        rl_weight_person = findViewById(R.id.rl_weight_person);
+        ll_blood_fat = findViewById(R.id.ll_blood_fat);
+        tv_blood_pressure_data = findViewById(R.id.tv_blood_pressure_data);
+        tv_blood_pressure_ok_time = findViewById(R.id.tv_blood_pressure_ok_time);
+        tv_heart_ok_data = findViewById(R.id.tv_heart_ok_data);
+        tv_heart_ok_time = findViewById(R.id.tv_heart_ok_time);
+        tv_blood_sugar_ok_data = findViewById(R.id.tv_blood_sugar_ok_data);
+        tv_blood_sugar_ok_time = findViewById(R.id.tv_blood_sugar_ok_time);
+        tv_weight_ok_data = findViewById(R.id.tv_weight_ok_data);
+        tv_weight_ok_time = findViewById(R.id.tv_weight_ok_time);
+        tv_ok_totalCholesterol = findViewById(R.id.tv_ok_totalCholesterol);
+        tv_ok_triglyceride = findViewById(R.id.tv_ok_triglyceride);
+        tv_ok_topLipo = findViewById(R.id.tv_ok_topLipo);
+        tv_ok_lowLipo = findViewById(R.id.tv_ok_lowLipo);
+        tv_blood_fat_ok_time = findViewById(R.id.tv_blood_fat_ok_time);
+        iv_health_status = findViewById(R.id.iv_health_status);
+        tv_center_health = findViewById(R.id.tv_center_health);
+        tv_bottom_health = findViewById(R.id.tv_bottom_health);
 
-        tv_botton_not_all = (TextView) findViewById(R.id.tv_botton_not_all);
-        ll_top_health = (LinearLayout) findViewById(R.id.ll_top_health);
-        ll_low_health = (LinearLayout) findViewById(R.id.ll_low_health);
+        tv_botton_not_all = findViewById(R.id.tv_botton_not_all);
+        ll_top_health = findViewById(R.id.ll_top_health);
+        ll_low_health = findViewById(R.id.ll_low_health);
 
-        tv_top_datacomplete = (TextView) findViewById(R.id.tv_top_datacomplete);
-        tv_low_datacomplete = (TextView) findViewById(R.id.tv_low_datacomplete);
+        tv_top_datacomplete = findViewById(R.id.tv_top_datacomplete);
+        tv_low_datacomplete = findViewById(R.id.tv_low_datacomplete);
 
 
     }
@@ -483,7 +483,7 @@ public class HealthOkActivity extends AppCompatActivity implements View.OnClickL
 //                if (bloodSugarBean.getResponseCode() == 1001) {
 //                    elements_sugar = bloodSugarBean.getData().getElements();
 //                } else if (bloodSugarBean.getResponseCode() == 1018) {
-//                    RefreshTokenUtil.sendIntDataInvatation(context, refresh_token);
+//                    RefreshTokenUtil.sendIntDataInvatation(context, refreshToken);
 //                } else if (bloodSugarBean.getResponseCode() == 1019) {
 //                    LoginOutUtil.sendLoginOutUtil(context);
 //                }
@@ -523,7 +523,7 @@ public class HealthOkActivity extends AppCompatActivity implements View.OnClickL
 //                if (pressureFatBean.getResponseCode() == 1001) {
 //                    elements_fat = pressureFatBean.getData().getElements();
 //                } else if (pressureFatBean.getResponseCode() == 1018) {
-//                    RefreshTokenUtil.sendIntDataInvatation(context, refresh_token);
+//                    RefreshTokenUtil.sendIntDataInvatation(context, refreshToken);
 //                } else if (pressureFatBean.getResponseCode() == 1019) {
 //                    LoginOutUtil.sendLoginOutUtil(context);
 //                }

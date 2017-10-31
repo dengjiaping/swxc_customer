@@ -13,7 +13,10 @@ import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/9/6.
+ *
+ * @author Administrator
+ * @date 2017/9/6
+ * 精选商品
  */
 
 public class AdapterJingxuan extends BaseQuickAdapter<MallBean.DataBean.DailySelectionListBean, BaseViewHolder> {

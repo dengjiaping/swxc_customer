@@ -22,7 +22,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by Administrator on 2017/9/22.
+ *
+ * @author XuJhin
+ * @date 2017/9/22
+ * 支付对话框
  */
 
 public class DialogPay extends Dialog implements View.OnClickListener {

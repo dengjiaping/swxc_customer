@@ -25,6 +25,9 @@ import com.shiwaixiangcun.customer.utils.JsonUtil;
 
 import java.lang.reflect.Type;
 
+/**
+ * @author Administrator
+ */
 public class StartPageActivity extends BaseActivity {
 
     CountDownTimer cdt;
@@ -45,7 +48,7 @@ public class StartPageActivity extends BaseActivity {
     }
 
     private void layoutView() {
-        tv_center_word = (TextView) findViewById(R.id.tv_center_word);
+        tv_center_word = findViewById(R.id.tv_center_word);
         AlphaAnimation alpha = new AlphaAnimation(0.0f, 1.0f);
         alpha.setDuration(500);
         alpha.setFillAfter(true);
@@ -64,8 +67,8 @@ public class StartPageActivity extends BaseActivity {
         OkGo.<String>post(GlobalAPI.refreshToken)
                 .params("client_id", GlobalConfig.clientId)
                 .params("client_secret", GlobalConfig.clientSecret)
-                .params("grant_type", "refresh_token")
-                .params("refresh_token", refresh_token)
+                .params("grant_type", "refreshToken")
+                .params("refreshToken", refresh_token)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -86,9 +89,6 @@ public class StartPageActivity extends BaseActivity {
                             default:
                                 Log.e(BUG_TAG, "刷新失败");
                                 Intent intent = new Intent();
-//                                intent.putExtra("mineLogin", "Login");
-//                                intent.setClass(mContext, LoginActivity.class);
-//                                startActivity(intent);
                                 readyGoThenKill(MainActivity.class);
                                 finish();
                                 break;
@@ -117,11 +117,7 @@ public class StartPageActivity extends BaseActivity {
 
             }
         };
-//
-//        if (StringUtil.isEmpty(refreshToken)) {
-//            readyGoThenKill(MainActivity.class);
-//            finish();
-//        }
+
         refreshToken(mContext, refreshToken);
 
 

@@ -21,8 +21,8 @@ import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.Common;
+import com.shiwaixiangcun.customer.ContextSession;
 import com.shiwaixiangcun.customer.GlobalAPI;
-import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterManageAddress;
 import com.shiwaixiangcun.customer.http.HttpCallBack;
@@ -34,7 +34,6 @@ import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.ui.dialog.DialogInfo;
 import com.shiwaixiangcun.customer.ui.dialog.DialogLoading;
-import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.DisplayUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.RefreshTokenUtil;
@@ -97,9 +96,8 @@ public class ManageAddressActivity extends BaseActivity implements View.OnClickL
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(login_info, type);
-
-        token = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
-        refresh_token = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.Refresh_token, "");
+        token = ContextSession.getTokenString();
+        refresh_token = ContextSession.getRefreshToken();
         Log.e(BUG_TAG, responseEntity.getData().getAccess_token());
     }
 

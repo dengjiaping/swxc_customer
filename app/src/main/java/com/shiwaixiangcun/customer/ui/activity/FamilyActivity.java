@@ -16,13 +16,12 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.shiwaixiangcun.customer.BaseActivity;
+import com.shiwaixiangcun.customer.ContextSession;
 import com.shiwaixiangcun.customer.GlobalAPI;
-import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterMyFamily;
 import com.shiwaixiangcun.customer.model.MyFamilyBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
-import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.RefreshTokenUtil;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
@@ -49,6 +48,8 @@ public class FamilyActivity extends BaseActivity implements View.OnClickListener
     Button mBtnAddFamily;
     AdapterMyFamily mMyFamilyAdapter;
     List<MyFamilyBean.DataBean> mMyFamilyList;
+    private String token;
+    private String refreshToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,10 +70,8 @@ public class FamilyActivity extends BaseActivity implements View.OnClickListener
      * 初始化网络数据
      */
     private void initData() {
-        String strToken = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
-        final String refreshToken = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.Refresh_token, "");
         OkGo.<String>get(GlobalAPI.getFamily)
-                .params("access_token", strToken)
+                .params("access_token", token)
                 .params("isTrue", false)
                 .execute(new StringCallback() {
                     @Override
@@ -110,10 +109,17 @@ public class FamilyActivity extends BaseActivity implements View.OnClickListener
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initToken();
+    }
+
     /**
      * 初始化视图以及点击事件
      */
     private void initViewAndEvent() {
+        initToken();
         mTvPageName.setText(R.string.my_family);
         mBackLeft.setOnClickListener(this);
         mBtnAddFamily.setOnClickListener(this);
@@ -141,6 +147,11 @@ public class FamilyActivity extends BaseActivity implements View.OnClickListener
 
     }
 
+    private void initToken() {
+        token = ContextSession.getTokenString();
+        refreshToken = ContextSession.getRefreshToken();
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -151,6 +162,9 @@ public class FamilyActivity extends BaseActivity implements View.OnClickListener
                 readyGo(AddFamilyActivity.class);
 //                finish();
                 break;
+            default:
+                break;
+
         }
 
     }

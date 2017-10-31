@@ -231,7 +231,7 @@
                             android:id="@+id/btn_refund"
                             style="?android:attr/borderlessButtonStyle"
                             android:layout_width="90dp"
-                            android:layout_height="32dp"
+                            android:layout_height="@dimen/button_height"
                             android:layout_marginBottom="4dp"
                             android:layout_marginRight="8dp"
                             android:background="@drawable/selector_button_white"
@@ -285,7 +285,7 @@
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
                         android:text="买家留言"
-                        android:textColor="#FF2D3230"
+                        android:textColor="@color/black_text_100"
                         android:textSize="16sp"/>
 
                     <TextView
@@ -297,7 +297,7 @@
                         android:gravity="center_vertical"
                         android:hint="该买家没有留言"
                         android:maxLines="1"
-                        android:textColor="@color/mall_text"
+                        android:textColor="@color/black_text_60"
                         android:textColorHint="@color/gray"
                         android:textSize="16sp"/>
                 </LinearLayout>
@@ -335,7 +335,7 @@
                         android:gravity="center_vertical"
                         android:hint="暂无快递信息"
                         android:minHeight="54dp"
-                        android:textColor="@color/mall_text"
+                        android:textColor="@color/black_text_60"
                         android:textColorHint="@color/gray"
                         android:textSize="16sp"
                         tools:text="这是一这是一个这是一个这是一个这是一个这是一个这是一个这是一个这是一个这是一个这是一个这是一个个"/>
@@ -377,7 +377,7 @@
                             android:gravity="center"
                             android:orientation="horizontal"
                             android:text="8425600001235"
-                            android:textColor="#FF2D3230"
+                            android:textColor="@color/black_text_60"
                             android:textSize="16sp">
 
 
@@ -411,7 +411,7 @@
                             android:gravity="center"
                             android:orientation="horizontal"
                             android:text="2017-8-21 18:21:23"
-                            android:textColor="#FF2D3230"
+                            android:textColor="@color/black_text_60"
                             android:textSize="16sp">
 
 
@@ -445,7 +445,7 @@
                             android:gravity="center"
                             android:orientation="horizontal"
                             android:text="支付宝"
-                            android:textColor="#FF2D3230"
+                            android:textColor="@color/black_text_60"
                             android:textSize="16sp">
 
 
@@ -602,7 +602,7 @@
             <Button
                 android:id="@+id/btn_commit"
                 android:layout_width="100dp"
-                android:layout_height="40dp"
+                android:layout_height="44dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:background="@drawable/selector_button_red"

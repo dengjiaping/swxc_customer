@@ -13,7 +13,10 @@ import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/9/20.
+ *
+ * @author Administrator
+ * @date 2017/9/20
+ * 商品列表
  */
 
 public class AdapterGoodList extends BaseQuickAdapter<ElementBean.ElementsBean, BaseViewHolder> {

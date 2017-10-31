@@ -30,6 +30,7 @@ import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
+import com.shiwaixiangcun.customer.ContextSession;
 import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
@@ -42,7 +43,6 @@ import com.shiwaixiangcun.customer.ui.activity.mall.EvaluateActivity;
 import com.shiwaixiangcun.customer.ui.activity.mall.OrderDetailActivity;
 import com.shiwaixiangcun.customer.ui.dialog.DialogInfo;
 import com.shiwaixiangcun.customer.ui.dialog.DialogPay;
-import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.ArithmeticUtils;
 import com.shiwaixiangcun.customer.utils.DisplayUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
@@ -87,7 +87,7 @@ public class FragmentOrder extends LazyFragment {
     private String stature;
     private String mStringPrompt;
     private String tokenString;
-    private String refresh_token;
+    private String refreshToken;
     private DialogInfo mDialogCancel;
     private DialogInfo mDialogDelete;
     private DialogPay mDialogPay;
@@ -107,6 +107,7 @@ public class FragmentOrder extends LazyFragment {
     @Override
     public void onResume() {
         super.onResume();
+        initToken();
         requestData(mCurrentPage, mPageSize, false);
 
     }
@@ -289,7 +290,6 @@ public class FragmentOrder extends LazyFragment {
      * @param isLoadMore
      */
     private void requestData(int currentPage, int pageSize, final boolean isLoadMore) {
-        Log.e(BUG_TAG, "请求数据");
         HttpParams httpParams = new HttpParams();
         httpParams.put("page.pn", currentPage);
         httpParams.put("page.size", pageSize);
@@ -300,7 +300,6 @@ public class FragmentOrder extends LazyFragment {
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
-                        Log.e(BUG_TAG, response.getRawCall().request().toString());
                         String responseJson = response.body();
                         Type listType = new TypeToken<ResponseEntity<OrderBean>>() {
                         }.getType();
@@ -357,8 +356,8 @@ public class FragmentOrder extends LazyFragment {
         mContext = this.getActivity();
         EventBus.getDefault().register(this);
         mStringPrompt = mTitle;
-        tokenString = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
-        refresh_token = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.Refresh_token, "");
+        initToken();
+
         switch (mTitle) {
             case "全部":
                 stature = "";
@@ -372,12 +371,25 @@ public class FragmentOrder extends LazyFragment {
             case "已完成":
                 stature = "Finished";
                 break;
+
+            case "待评价":
+                // TODO: 2017/10/31
+                stature = "";
             default:
                 break;
         }
 
 
     }
+
+    /**
+     * 初始化Token
+     */
+    private void initToken() {
+        tokenString = ContextSession.getTokenString();
+        refreshToken = ContextSession.getRefreshToken();
+    }
+
 
     private void gotoDetail(int orderId) {
         Intent intent = new Intent();
@@ -483,7 +495,7 @@ public class FragmentOrder extends LazyFragment {
                                 break;
 
                             case 1018:
-                                RefreshTokenUtil.sendIntDataInvatation(mContext, refresh_token);
+                                RefreshTokenUtil.sendIntDataInvatation(mContext, refreshToken);
                                 break;
                             default:
                                 Snackbar.make(mRootView, "删除失败", Snackbar.LENGTH_LONG)

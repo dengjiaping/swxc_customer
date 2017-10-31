@@ -21,6 +21,7 @@ import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.Common;
+import com.shiwaixiangcun.customer.ContextSession;
 import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
@@ -36,7 +37,6 @@ import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.pay.PayUtil;
 import com.shiwaixiangcun.customer.ui.dialog.DialogPay;
-import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.ArithmeticUtils;
 import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
@@ -187,8 +187,8 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private void initView() {
         mTvPageName.setText("确认订单");
 
-        refreshToken = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.Refresh_token, "");
-        tokenString = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
+        initToken();
+
         //设置商品信息
         mDialogPay = new DialogPay(this);
         mTvGoodTitle.setText(data.getGoodsName());
@@ -222,16 +222,18 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         mRLayoutHasAddress.setVisibility(View.INVISIBLE);
         //获取默认地址
         getDefaultAddress();
-//        if (hasAddress) {
-//            mRLayoutHasAddress.setVisibility(View.VISIBLE);
-//            mLlayoutAddAddress.setVisibility(View.GONE);
-//            mTvUserName.setText(defaultAddress.getDeliveryName());
-//            mTvUserPhone.setText(defaultAddress.getDeliveryPhone());
-//            mTvAddress.setText(defaultAddress.getDeliveryAddress());
-//        } else {
-//            mRLayoutHasAddress.setVisibility(View.GONE);
-//            mLlayoutAddAddress.setVisibility(View.VISIBLE);
-//        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initToken();
+    }
+
+    private void initToken() {
+        refreshToken = ContextSession.getRefreshToken();
+        tokenString = ContextSession.getTokenString();
     }
 
 
@@ -257,6 +259,8 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.btn_commit:
                 putData();
+                break;
+            default:
                 break;
         }
     }
@@ -292,11 +296,10 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 .execute(new StringDialogCallBack(this) {
                     @Override
                     public void onSuccess(Response<String> response) {
-                        Log.e(BUG_TAG, response.getRawCall().request().toString());
-                        Log.e(BUG_TAG, response.body());
                         String jsonString = response.body();
                         CurrentOrder currentOrder = JsonUtil.fromJson(jsonString, CurrentOrder.class);
                         Log.e(BUG_TAG, currentOrder.getResponseCode() + "");
+
                         switch (currentOrder.getResponseCode()) {
                             case 1001:
                                 Toast.makeText(mContext, "提交订单成功", Toast.LENGTH_SHORT).show();
@@ -323,6 +326,8 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                                                 break;
                                             case 0:
                                                 Toast.makeText(mContext, "请选择一种支付方式", Toast.LENGTH_SHORT).show();
+                                                break;
+                                            default:
                                                 break;
                                         }
                                     }

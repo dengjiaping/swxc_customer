@@ -22,8 +22,8 @@ import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.Common;
+import com.shiwaixiangcun.customer.ContextSession;
 import com.shiwaixiangcun.customer.GlobalAPI;
-import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.event.EventCenter;
 import com.shiwaixiangcun.customer.event.SimpleEvent;
@@ -34,7 +34,6 @@ import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.pay.PayUtil;
 import com.shiwaixiangcun.customer.ui.dialog.DialogInfo;
 import com.shiwaixiangcun.customer.ui.dialog.DialogPay;
-import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.ArithmeticUtils;
 import com.shiwaixiangcun.customer.utils.DateUtil;
 import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
@@ -154,15 +153,19 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
         EventCenter.getInstance().unregister(this);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initToken();
+        initData();
+    }
+
     private void initData() {
         String loginInfo = SharePreference.getStringSpParams(mContext, Common.IS_SAVE_LOGIN, Common.SISAVELOGIN);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(loginInfo, type);
-        refreshToken = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.Refresh_token, "");
-        tokenString = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
-        Log.e(BUG_TAG, tokenString);
-        Log.e(BUG_TAG, String.valueOf(orderId));
+        initToken();
         OkGo.<String>get(GlobalAPI.getOrderDetail)
                 .params("access_token", tokenString)
                 .params("id", orderId)
@@ -194,6 +197,11 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                         }
                     }
                 });
+    }
+
+    private void initToken() {
+        refreshToken = ContextSession.getRefreshToken();
+        tokenString = ContextSession.getTokenString();
     }
 
     private void initView() {
@@ -242,8 +250,6 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
      */
     @SuppressLint("SetTextI18n")
     public void updateUI(OrderDetailBean orderDetail) {
-
-        Log.e(BUG_TAG, "更新界面");
         switch (orderDetail.getOrderStatus().getStatus()) {
             case "Finished":
                 mBtnCommit.setVisibility(View.GONE);
@@ -292,7 +298,6 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
 
         }
 
-        // TODO: 2017/9/23 设置配送信息
 
         mOrderDetail = orderDetail;
         //更新收货人信息
@@ -344,6 +349,16 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
         ImageDisplayUtil.showImageView(this, goodsDetailBean.getImgPath(), mIvGoodCover);
         Log.e(BUG_TAG, orderDetail.getBuyersInfo().getDeliveryAddress());
 
+
+        OrderDetailBean.OrderStatusBean orderStatus = orderDetail.getOrderStatus();
+
+        if ("Pending".equals(orderStatus.getAfterSaleStatus())) {
+            mBtnRefund.setText("退款中");
+        } else if ("RefundSuccess".equals(orderStatus.getAfterSaleStatus())) {
+            mBtnRefund.setText("退款成功");
+        } else if ("CancelServer".equals(orderStatus.getAfterSaleStatus())) {
+            mBtnRefund.setText("服务取消");
+        }
     }
 
 
@@ -428,10 +443,22 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                 break;
 
             case R.id.btn_refund:
-                Bundle refundBundle = new Bundle();
-                refundBundle.putParcelable("orderDetail", mOrderDetail);
-                readyGo(RefundActivity.class, refundBundle);
-                refundOrder();
+                switch (mBtnRefund.getText().toString()) {
+                    case "退款":
+                        Bundle refundBundle = new Bundle();
+                        refundBundle.putParcelable("orderDetail", mOrderDetail);
+                        refundBundle.putInt("orderID", orderId);
+                        readyGo(RefundActivity.class, refundBundle);
+                        refundOrder();
+                        break;
+                    case "退款中":
+                        showToastShort("退款正在处理，请耐心等待");
+                        break;
+                    default:
+                        break;
+
+                }
+
                 break;
             default:
                 break;

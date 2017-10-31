@@ -222,15 +222,17 @@
 
                         <EditText
                             android:id="@+id/tv_money"
-                            android:layout_width="80dp"
-                            android:layout_height="0dp"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
                             android:layout_marginTop="20dp"
                             android:background="@null"
                             android:gravity="center_vertical"
-                            android:inputType="number"
+                            android:inputType="numberDecimal"
                             android:text="0.00"
                             android:textColor="#FFFF1717"
                             android:textSize="16sp"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintLeft_toRightOf="@+id/textView11"
                             app:layout_constraintTop_toTopOf="parent"/>
 
@@ -251,7 +253,7 @@
                         <TextView
                             android:id="@+id/tv_refund_message"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="17dp"
                             android:layout_marginBottom="10dp"
                             android:layout_marginLeft="20dp"
                             android:layout_marginRight="8dp"
@@ -283,9 +285,11 @@
                         android:layout_marginRight="20dp"
                         android:layout_marginTop="8dp"
                         android:background="@null"
+                        android:ellipsize="end"
                         android:gravity="top"
-                        android:hint="宝贝满足你的期待吗？说说它的优点和不足吧"
+                        android:hint="在这里说说你要退款的原因..."
                         android:lineSpacingMultiplier="1.2"
+                        android:maxLines="4"
                         android:textColor="@color/black_text_80"
                         android:textColorHint="@color/black_text_60"
                         android:textSize="16sp"/>
@@ -293,26 +297,28 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="110dp"
                     android:background="@color/bg_white"
+                    android:orientation="horizontal">
 
-                    android:paddingBottom="16dp">
+                    <android.support.v7.widget.RecyclerView
+
+                        android:id="@+id/rv_images"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="20dp"
+                        android:visibility="visible">
+
+                    </android.support.v7.widget.RecyclerView>
 
                     <ImageView
                         android:id="@+id/iv_choose_image"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-
-                        android:layout_marginLeft="20dp"
-                        android:src="@drawable/phone_lpw"/>
-
-                    <HorizontalScrollView
-                        android:id="@+id/hsv_images"
-                        android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:visibility="gone">
-
-                    </HorizontalScrollView>
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/phone_lpw"
+                        android:visibility="visible"/>
 
                 </LinearLayout>
             </LinearLayout>

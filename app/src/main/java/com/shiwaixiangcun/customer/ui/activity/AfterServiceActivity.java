@@ -10,19 +10,20 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.reflect.TypeToken;
-import com.jaeger.recyclerviewdivider.RecyclerViewDivider;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 import com.shiwaixiangcun.customer.BaseActivity;
+import com.shiwaixiangcun.customer.ContextSession;
 import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterAfterService;
 import com.shiwaixiangcun.customer.model.AfterServiceBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
-import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.DisplayUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.RefreshTokenUtil;
@@ -37,6 +38,8 @@ import butterknife.ButterKnife;
 
 /**
  * 售后服务页面
+ *
+ * @author Administrator
  */
 
 public class AfterServiceActivity extends BaseActivity {
@@ -55,8 +58,8 @@ public class AfterServiceActivity extends BaseActivity {
     private String tokenString;
     private String refreshToken;
 
-    private int page = 1;
-    private int pageSize = 20;
+    private int mCurrentPage = GlobalConfig.first_page;
+    private int mPageSize = GlobalConfig.page_size;
 
     public AfterServiceActivity() {
     }
@@ -66,22 +69,33 @@ public class AfterServiceActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_after_service);
         ButterKnife.bind(this);
+        initToken();
         initViewAndEvent();
-        requestData();
+        requestData(false);
     }
 
-    private void requestData() {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initToken();
+        requestData(false);
+    }
 
-        refreshToken = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.Refresh_token, "");
-        tokenString = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
+    private void initToken() {
+        refreshToken = ContextSession.getRefreshToken();
+        tokenString = ContextSession.getTokenString();
+    }
+
+    private void requestData(final boolean isLoadMore) {
+
+
         OkGo.<String>get(GlobalAPI.afterService)
                 .params("access_token", tokenString)
-                .params("page.pn", page)
-                .params("page.size", pageSize)
+                .params("page.pn", mCurrentPage)
+                .params("page.size", mPageSize)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
-                        Log.e(BUG_TAG, "success");
                         Type type = new TypeToken<ResponseEntity<AfterServiceBean>>() {
                         }.getType();
 
@@ -92,7 +106,14 @@ public class AfterServiceActivity extends BaseActivity {
                         }
                         switch (responseEntity.getResponseCode()) {
                             case 1001:
-                                mAfterServiceList.clear();
+                                if (isLoadMore) {
+                                    mCurrentPage++;
+                                    mRefreshLayout.finishLoadmore();
+                                } else {
+
+                                    mRefreshLayout.finishRefresh();
+                                    mAfterServiceList.clear();
+                                }
                                 mAfterServiceList.addAll(responseEntity.getData().getElements());
                                 mAdapterAfterService.notifyDataSetChanged();
                                 break;
@@ -137,6 +158,32 @@ public class AfterServiceActivity extends BaseActivity {
                 Bundle bundle = new Bundle();
                 bundle.putInt("id", bean.getId());
                 readyGo(AfterDetailActivity.class, bundle);
+            }
+        });
+
+        mRefreshLayout.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                if (mRefreshLayout.isRefreshing()) {
+                    mRefreshLayout.finishRefresh();
+                }
+
+                if (mCurrentPage == 1) {
+                    mCurrentPage++;
+                }
+                requestData(true);
+
+            }
+
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                if (mRefreshLayout.isLoading()) {
+                    mRefreshLayout.finishLoadmore();
+                }
+
+                mCurrentPage = 1;
+                requestData(false);
+
             }
         });
 

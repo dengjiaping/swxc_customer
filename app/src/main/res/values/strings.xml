@@ -54,6 +54,6 @@
     <string name="privacy_policy">"《世外生活隐私政策》"</string>
     <string name="introduce">"智慧康养服务平台"</string>
     <string name="after_service">售后服务</string>
-    <string name="after_service_detail">售后详情</string>
+    <string name="after_service_detail">服务详情</string>
     <string name="protect_right_hint">请输入你遇到的问题</string>
 </resources>

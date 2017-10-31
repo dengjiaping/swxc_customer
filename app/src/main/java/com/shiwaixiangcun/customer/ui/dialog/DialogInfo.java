@@ -18,7 +18,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by Administrator on 2017/9/18.
+ *
+ * @author XuJhin
+ * @date 2017/9/18
  * 消息提示对话框
  */
 
@@ -58,7 +60,8 @@ public class DialogInfo extends Dialog {
         super.show();
         Window dialogWindow = getWindow();
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
-        DisplayMetrics d = mContext.getResources().getDisplayMetrics(); // 获取屏幕宽、高用
+        DisplayMetrics d = mContext.getResources().getDisplayMetrics();
+        // 获取屏幕宽、高用
         lp.width = (int) (d.widthPixels * 0.77);
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         lp.gravity = Gravity.CENTER;

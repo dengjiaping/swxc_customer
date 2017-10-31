@@ -1,7 +1,6 @@
 package com.shiwaixiangcun.customer.ui.activity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,6 +19,8 @@ import butterknife.ButterKnife;
 
 /**
  * 添加家人页面
+ *
+ * @author Administrator
  */
 public class AddFamilyActivity extends BaseActivity implements View.OnClickListener, WheelView.OnValueChangeListener {
 
@@ -82,6 +83,8 @@ public class AddFamilyActivity extends BaseActivity implements View.OnClickListe
                 readyGo(AddFamilySecondActivity.class, bundle);
                 finish();
                 break;
+            default:
+                break;
         }
 
     }
@@ -92,10 +95,10 @@ public class AddFamilyActivity extends BaseActivity implements View.OnClickListe
             case R.id.WheelView_first:
                 relation = strRelationShip[newVal];
                 break;
+            default:
+                break;
 
         }
-        Log.e(BUG_TAG, relation);
-
 
     }
 }

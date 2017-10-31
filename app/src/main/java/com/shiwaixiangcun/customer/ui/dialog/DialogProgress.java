@@ -17,7 +17,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by Administrator on 2017/10/27.
+ *
+ * @author XuJhin
+ * @date 2017/10/27
  */
 
 public class DialogProgress extends Dialog {

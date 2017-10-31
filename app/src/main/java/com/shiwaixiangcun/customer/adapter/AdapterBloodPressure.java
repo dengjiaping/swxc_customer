@@ -11,7 +11,9 @@ import com.shiwaixiangcun.customer.utils.DateUtil;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/9/29.
+ *
+ * @author Administrator
+ * @date 2017/9/29
  * 血压历史Adapter
  */
 

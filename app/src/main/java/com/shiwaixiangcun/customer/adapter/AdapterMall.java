@@ -13,7 +13,9 @@ import com.shiwaixiangcun.customer.utils.ArithmeticUtils;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/9/12.
+ *
+ * @author Administrator
+ * @date 2017/9/12
  */
 
 public class AdapterMall extends BaseQuickAdapter<ElementBean.ElementsBean, BaseViewHolder> {

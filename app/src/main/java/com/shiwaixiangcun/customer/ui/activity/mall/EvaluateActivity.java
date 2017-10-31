@@ -320,7 +320,7 @@ public class EvaluateActivity extends BaseActivity implements View.OnClickListen
                         }
                         switch (responseEntity.getResponseCode()) {
                             case 1001:
-                                showToastShort("提交评价成功");
+                                showToastShort("谢谢你的评价");
                                 finish();
                                 break;
                             case 1002:

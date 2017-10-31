@@ -27,8 +27,6 @@ android {
 
     buildTypes {
         release {
-            buildConfigField("boolean", "API_ENV", "true")
-
             //混淆
             minifyEnabled true
             // 移除无用的resource文件
@@ -37,8 +35,6 @@ android {
             signingConfig signingConfigs.release
         }
         debug {
-
-            buildConfigField("boolean", "API_ENV", "false")
         }
     }
 

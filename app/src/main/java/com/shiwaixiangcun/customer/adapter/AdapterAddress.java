@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * Date:  2017/9/13
- * Desc： eg
+ * Desc： 地址列表
  * @author Administrator
  */
 
@@ -28,8 +28,9 @@ public class AdapterAddress extends BaseQuickAdapter<AddressBean, BaseViewHolder
         helper.setText(R.id.tv_user_name, item.getDeliveryName());
         helper.setText(R.id.tv_user_phone, item.getDeliveryPhone());
         helper.setText(R.id.tv_address, item.getDeliveryAddress());
-        if (item.isDefaulted())
+        if (item.isDefaulted()) {
             helper.getView(R.id.tv_flag).setVisibility(View.VISIBLE);
+        }
 
     }
 }

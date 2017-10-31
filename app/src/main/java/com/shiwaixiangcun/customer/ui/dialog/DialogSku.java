@@ -45,6 +45,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
+/**
+ * @author XuJhin
+ *         商品选择Sku
+ */
 public class DialogSku extends Dialog implements DialogInterface.OnCancelListener, View.OnClickListener {
 
     private final String BUG_TAG = "skuDialog";
@@ -114,7 +118,8 @@ public class DialogSku extends Dialog implements DialogInterface.OnCancelListene
         setCanceledOnTouchOutside(true);
         Window dialogWindow = getWindow();
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
-        DisplayMetrics d = mContext.getResources().getDisplayMetrics(); // 获取屏幕宽、高用
+        DisplayMetrics d = mContext.getResources().getDisplayMetrics();
+        // 获取屏幕宽、高用
         lp.height = (int) (d.heightPixels * 0.7);
         lp.gravity = Gravity.BOTTOM;
         dialogWindow.setAttributes(lp);

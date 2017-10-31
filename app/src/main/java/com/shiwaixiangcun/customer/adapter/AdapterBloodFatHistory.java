@@ -12,7 +12,10 @@ import java.util.List;
 
 
 /**
- * Created by Administrator on 2016/7/13.
+ *
+ * @author Administrator
+ * @date 2016/7/13
+ * 血糖列表
  */
 public class AdapterBloodFatHistory extends BaseQuickAdapter<BloodFatBean.ElementsBean, BaseViewHolder> {
 

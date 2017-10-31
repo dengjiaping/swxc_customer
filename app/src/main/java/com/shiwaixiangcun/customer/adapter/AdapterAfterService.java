@@ -13,7 +13,10 @@ import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/10/13.
+ *
+ * @author Administrator
+ * @date 2017/10/13
+ * 售后服务
  */
 
 public class AdapterAfterService extends BaseQuickAdapter<AfterServiceBean.ElementsBean, BaseViewHolder> {

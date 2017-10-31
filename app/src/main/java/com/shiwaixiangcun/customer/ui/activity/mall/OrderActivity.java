@@ -20,10 +20,13 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * @author Administrator
+ */
 public class OrderActivity extends BaseActivity implements View.OnClickListener {
 
     private final String[] mTitles = {
-            "全部", "待付款", "待收货", "已完成"
+            "全部", "待付款", "待收货", "已完成", "待评价"
     };
     @BindView(R.id.back_left)
     ChangeLightImageView mBackLeft;
@@ -72,6 +75,8 @@ public class OrderActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.btn_go_mall:
                 readyGo(MallActivity.class);
+                break;
+            default:
                 break;
         }
     }

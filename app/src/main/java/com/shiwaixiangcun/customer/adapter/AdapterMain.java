@@ -14,7 +14,9 @@ import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/10/17.
+ * @author Administrator
+ * @date 2017/10/17
+ * 首页
  */
 
 public class AdapterMain extends BaseMultiItemQuickAdapter<AdapterMain.MultipleItem, BaseViewHolder> {
@@ -56,6 +58,8 @@ public class AdapterMain extends BaseMultiItemQuickAdapter<AdapterMain.MultipleI
                 helper.setText(R.id.tv_summary, data.getSummary());
                 helper.setText(R.id.tv_source, data.getSource());
                 helper.setText(R.id.tv_publishTime, DateUtil.getMillon(data.getPublishTime()));
+                break;
+            default:
                 break;
 
         }

@@ -18,6 +18,9 @@ import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * @author Administrator
+ */
 public class RecipeArticleActivity extends BaseActivity {
 
     @BindView(R.id.back_left)

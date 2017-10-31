@@ -32,6 +32,7 @@ import butterknife.ButterKnife;
 
 /**
  * @author Administrator
+ * 食谱页面
  */
 public class RecipeActivity extends BaseActivity implements View.OnClickListener {
 

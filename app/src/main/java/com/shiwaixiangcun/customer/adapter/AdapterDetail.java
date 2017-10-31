@@ -19,7 +19,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by Administrator on 2017/9/8.
+ *
+ * @author Administrator
+ * @date 2017/9/8
+ *
+ * 分类 category
  */
 
 public class AdapterDetail extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
