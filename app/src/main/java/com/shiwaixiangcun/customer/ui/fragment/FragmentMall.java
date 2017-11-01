@@ -68,6 +68,7 @@ import butterknife.Unbinder;
 
 /**
  * 商城 Fragment
+ * @author Administrator
  */
 
 public class FragmentMall extends BaseFragment implements View.OnClickListener {

@@ -24,7 +24,7 @@ public class AdapterWeightHistory extends BaseQuickAdapter<WeightBean.ElementsBe
 
     @Override
     protected void convert(BaseViewHolder helper, WeightBean.ElementsBean item) {
-        helper.setText(R.id.tv_weight_data_time, DateUtil.getMillon(item.getCreateTime()));
+        helper.setText(R.id.tv_weight_data_time, DateUtil.getSecond(item.getCreateTime()));
         helper.setText(R.id.tv_weight_data, ArithmeticUtils.format(item.getWeight()) + " kg");
         helper.setText(R.id.tv_weight_data_bmi, ArithmeticUtils.format(item.getBmi()));
 

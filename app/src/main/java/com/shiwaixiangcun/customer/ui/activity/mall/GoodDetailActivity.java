@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -73,7 +75,7 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
 
     private final static int CODE_SUCCESS = 1001;
     private final static String ALL_ADVANCE = "AllAdvance";
-
+    private static final String PRESALE_END = "预售已结束";
     @BindView(R.id.back_left)
     ChangeLightImageView mBackLeft;
     @BindView(R.id.tv_page_name)
@@ -149,7 +151,7 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
     private RelativeLayout mRlayoutChoice;
     private TextView mTvCategory;
     private TextView mTvEvaluateAll;
-    private TextView mTvAdSellTime;
+    private TextView mAdSellTime;
     private TextView mTvCurrentPrice;
     private TextView mTvPrimePrice;
     /**
@@ -158,6 +160,19 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
     private LinearLayout mLlayoutWebView;
     private WebView mWebView;
     private AdapterEvaluate mAdapterEvaluate;
+
+    private long adSellTime;
+    @SuppressLint("HandlerLeak")
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 1) {
+                mAdSellTime.setText(dateInterval(adSellTime));
+                sendEmptyMessageDelayed(1, 1000);
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,30 +194,16 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
             return;
         }
         switch (simpleEvent.mEventValue) {
-
-
             case 1:
                 goodBean = (GoodDetail.DataBean) simpleEvent.getData();
-
-
                 highTotal = goodBean.getHighTotal();
                 midTotal = goodBean.getMidTotal();
                 badTotal = goodBean.getBadTotal();
                 allTotal = goodBean.getEvaluateTotal();
-                //设置缺货状态
-                if (ALL_ADVANCE.equals(goodBean.getAdvanceStatus())) {
 
-                    mTvPrice.setVisibility(View.GONE);
-                    cLayoutAdvance.setVisibility(View.VISIBLE);
-                    mTvAdSellTime.setText(DateUtil.getMillon(goodBean.getAdSellTime()));
-                    mTvLatestDeliveryTime.setText("最晚" + goodBean.getLatestDeliveryTime() + "前发货");
-
-                } else {
-                    cLayoutAdvance.setVisibility(View.GONE);
-                }
                 //更新界面
 
-                if (goodBean.getEvaluates().size() == 0) {
+                if (goodBean.getEvaluateTotal() == 0) {
                     mTvEvaluateAll.setVisibility(View.GONE);
                     mTvEvaluateAmount.setVisibility(View.GONE);
                 } else {
@@ -224,9 +225,7 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
                 if (goodBean.isPublished()) {
                     mRlayoutChoice.setVisibility(View.VISIBLE);
                     mRlayoutPurchase.setVisibility(View.VISIBLE);
-                    mTvCurrentPrice.setText("¥ " + ArithmeticUtils.format(goodBean.getMinPrice()));
-                    mTvPrimePrice.setText("¥ " + ArithmeticUtils.format(goodBean.getMinPrice()));
-                    mTvPrimePrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+
                     mTvHint.setVisibility(View.GONE);
                 } else {
                     mRlayoutPurchase.setVisibility(View.GONE);
@@ -282,7 +281,30 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
                     }
                 });
 
+                //商品预售
+                if (ALL_ADVANCE.equals(goodBean.getAdvanceStatus())) {
 
+                    mTvPrice.setVisibility(View.GONE);
+                    cLayoutAdvance.setVisibility(View.VISIBLE);
+                    mTvCurrentPrice.setText("¥ " + ArithmeticUtils.format(goodBean.getMinPrice()));
+                    mTvPrimePrice.setVisibility(View.GONE);
+                    mTvPrimePrice.setText("¥ " + ArithmeticUtils.format(goodBean.getMinPrice()));
+                    mTvPrimePrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                    mTvLatestDeliveryTime.setText("最晚 " + DateUtil.getCustomFormat(goodBean.getAdSellTime(), "MM月dd日 HH:mm") + " 前发货");
+                    mAdSellTime.setText(dateInterval(goodBean.getAdSellTime()));
+                    adSellTime = goodBean.getAdSellTime();
+                    if (PRESALE_END.equals(mAdSellTime.getText())) {
+                        mBtnPurchase.setVisibility(View.GONE);
+                        mTvHint.setVisibility(View.VISIBLE);
+                    }
+                    handler.sendEmptyMessage(1);
+
+                } else {
+                    cLayoutAdvance.setVisibility(View.GONE);
+                }
+
+
+                break;
             case 2:
                 String htmlString = (String) simpleEvent.getData();
                 mWebView.loadUrl(htmlString);
@@ -291,6 +313,45 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
                 break;
             default:
                 break;
+        }
+    }
+
+    /**
+     * 转换距离预售结束时间
+     *
+     * @param adSellTime 预售时间
+     * @return
+     */
+    private String dateInterval(long adSellTime) {
+        long now = System.currentTimeMillis();
+        if (adSellTime <= now) {
+            return PRESALE_END;
+        } else {
+            long interval = adSellTime - now;
+            int ss = 1000;
+            int mi = ss * 60;
+            int hh = mi * 60;
+            int dd = hh * 24;
+
+            long day = interval / dd;
+            long hour = (interval - day * dd) / hh;
+            long minute = (interval - day * dd - hour * hh) / mi;
+            long second = (interval - day * dd - hour * hh - minute * mi) / ss;
+            long milliSecond = interval - day * dd - hour * hh - minute * mi - second * ss;
+            //天
+            String strDay = day < 10 ? "0" + day : "" + day;
+            //小时
+            String strHour = hour < 10 ? "0" + hour : "" + hour;
+            //分钟
+            String strMinute = minute < 10 ? "0" + minute : "" + minute;
+            //秒
+            String strSecond = second < 10 ? "0" + second : "" + second;
+            //毫秒
+            String strMilliSecond = milliSecond < 10 ? "0" + milliSecond : "" + milliSecond;
+            strMilliSecond = milliSecond < 100 ? "0" + strMilliSecond : "" + strMilliSecond;
+
+            return "距离预售结束还剩  " + strDay + "天 " + strHour + ":" + strMinute + ":" + strSecond;
+
         }
     }
 
@@ -313,7 +374,7 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
      */
     private void requestDetail() {
 
-        HashMap<String, Object> hashMap = new HashMap<>(3);
+        HashMap<String, Object> hashMap = new HashMap<>(1);
         hashMap.put("id", mGoodId);
         OkGo.<String>get(GlobalAPI.getGoodDetail)
                 .params("id", mGoodId)
@@ -328,6 +389,11 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
                             GoodDetail.DataBean data = goodDetail.getData();
                             EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_GOOD_DETAIL, 1, data));
                         }
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
                     }
                 });
 
@@ -412,6 +478,8 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
         mWebView = viewDetail.findViewById(R.id.webview);
         mLlayoutWebView = viewDetail.findViewById(R.id.llayout_webView);
 
+        mTvEvaluateAll = viewDetail.findViewById(R.id.tv_evaluate_all);
+        mTvEvaluateAll.setOnClickListener(this);
         initWebView();
 
 
@@ -434,13 +502,12 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
         mRlayoutChoice = viewGoodInfo.findViewById(R.id.rl_choice);
         mTvCategory = viewGoodInfo.findViewById(R.id.tv_category);
         cLayoutAdvance = viewGoodInfo.findViewById(R.id.cLayout_advance);
-        mTvEvaluateAll = viewDetail.findViewById(R.id.tv_evaluate_all);
 
-        mTvAdSellTime = viewDetail.findViewById(R.id.tv_count_down);
-        mTvLatestDeliveryTime = viewGoodInfo.findViewById(R.id.tv_explain);
+        mAdSellTime = viewGoodInfo.findViewById(R.id.tv_end_time);
+        mTvLatestDeliveryTime = viewGoodInfo.findViewById(R.id.tv_last_delivery);
         mTvCurrentPrice = viewGoodInfo.findViewById(R.id.tv_price_current);
         mTvPrimePrice = viewGoodInfo.findViewById(R.id.tv_price_prime);
-        mTvEvaluateAll.setOnClickListener(this);
+
         mBanner.setBannerStyle(BannerConfig.NUM_INDICATOR);
 
         mRlayoutChoice.setOnClickListener(this);

@@ -27,6 +27,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+/**
+ * @author Administrator
+ */
 public class CategoryDetailFragment extends Fragment implements CheckListener {
 
     @BindView(R.id.detail_recyclerView)

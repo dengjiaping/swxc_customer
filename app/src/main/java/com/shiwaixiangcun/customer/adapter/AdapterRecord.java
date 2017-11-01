@@ -53,7 +53,7 @@ public class AdapterRecord extends RecyclerView.Adapter<AdapterRecord.RecordView
     @Override
     public void onBindViewHolder(RecordViewHolder holder, int position) {
         AfterServiceDetail.DataBean.RecordsBean recordsBean = mRecordsList.get(position);
-        holder.mTvDate.setText(DateUtil.getMillon(recordsBean.getTime()));
+        holder.mTvDate.setText(DateUtil.getSecond(recordsBean.getTime()));
         holder.mTvRecord.setText(recordsBean.getContent());
 
     }

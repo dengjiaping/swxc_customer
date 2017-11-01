@@ -25,7 +25,7 @@ public class AdapterBloodPressure extends BaseQuickAdapter<BloodPressureBean.Ele
     @Override
     protected void convert(BaseViewHolder helper, BloodPressureBean.ElementsBean item) {
 
-        helper.setText(R.id.tv_pressure_data_time, DateUtil.getMillon(item.getCreateTime()));
+        helper.setText(R.id.tv_pressure_data_time, DateUtil.getSecond(item.getCreateTime()));
         helper.setText(R.id.tv_pressure_data_shrinkBlood, item.getShrinkBlood() + "");
         helper.setText(R.id.tv_pressure_data_relaxationBlood, item.getRelaxationBlood() + "");
 

@@ -27,7 +27,7 @@ public class AdapterHeartRate extends BaseQuickAdapter<HeartRateBean.ElementsBea
 
     @Override
     protected void convert(BaseViewHolder helper, HeartRateBean.ElementsBean item) {
-        helper.setText(R.id.tv_heartate_list_time, DateUtil.getMillon(item.getCreateTime()));
+        helper.setText(R.id.tv_heartate_list_time, DateUtil.getSecond(item.getCreateTime()));
 
         helper.setText(R.id.tv_heatate_list_data, "" + item.getHeartRate());
 

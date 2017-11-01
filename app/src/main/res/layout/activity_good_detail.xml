@@ -68,9 +68,9 @@
 
         android:id="@+id/tv_hint"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:layout_gravity="bottom"
-        android:background="#cc06a409"
+        android:background="#f11ccc8c"
         android:gravity="center"
         android:text="很抱歉，该商品已下架"
         android:textColor="@color/white"/>

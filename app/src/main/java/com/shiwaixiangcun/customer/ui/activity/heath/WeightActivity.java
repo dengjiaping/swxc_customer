@@ -244,7 +244,7 @@ public class WeightActivity extends BaseActivity implements View.OnClickListener
 
         mTvWeightData.setText(elementsBean.getWeight() + "");
         mTvWeightBmi.setText(elementsBean.getBmi() + "");
-        mTvWeightTime.setText(DateUtil.getMillon(elementsBean.getCreateTime()));
+        mTvWeightTime.setText(DateUtil.getSecond(elementsBean.getCreateTime()));
         mTvWeightDream.setText(elementsBean.getWeightDream() + "");
         mTvWeightIntroduce.setText(elementsBean.getSuggestion());
         Log.e(BUG_TAG, elementsBean.getSuggestion());

@@ -33,7 +33,7 @@ public class AdapterRight extends BaseQuickAdapter<RightsRecordBean.ElementsBean
                 helper.setBackgroundRes(R.id.tv_stature, R.drawable.shape_stature_gray);
                 helper.setText(R.id.tv_stature, "已完成");
         }
-        helper.setText(R.id.tv_date, DateUtil.getMillon(item.getTime()));
+        helper.setText(R.id.tv_date, DateUtil.getSecond(item.getTime()));
 
     }
 }

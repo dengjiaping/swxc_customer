@@ -270,7 +270,7 @@ public class BloodSugarActivity extends BaseActivity implements View.OnClickList
             mTvKf.setText("饭后两小时");
         }
         mTvBloodSugarData.setText(elementsBean.getBloodSugar() + "");
-        mTvBloodSugarTime.setText("" + DateUtil.getMillon(elementsBean.getCreateTime()));
+        mTvBloodSugarTime.setText("" + DateUtil.getSecond(elementsBean.getCreateTime()));
         mTvHealthIntroduce.setText(elementsBean.getSuggestion());
     }
 

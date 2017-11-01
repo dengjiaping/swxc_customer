@@ -166,7 +166,7 @@ public class RightDetailActivity extends BaseActivity implements View.OnClickLis
 
                 mTvNumber.setText(data.getNumber());
                 mTvReason.setText(data.getContent());
-                mTvDate.setText(DateUtil.getMillon(data.getTime()));
+                mTvDate.setText(DateUtil.getSecond(data.getTime()));
 
 
                 if (data.getImages().size() == 0) {

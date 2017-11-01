@@ -32,17 +32,20 @@ import java.util.HashMap;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 
+/**
+ * @author Administrator
+ */
 public class SurroundDetailsActivity extends BaseActivity implements View.OnClickListener, IDetailView {
 
-    private ChangeLightImageView back_left;
-    private ImageView iv_share_right;
+    private ChangeLightImageView backLeft;
+    private ImageView ivShareRight;
     private ObservableWebView webView;
     private String articleId;
     private StringBuilder urlWeb = new StringBuilder();
     private StringBuilder urlShare = new StringBuilder();
     private String detailTitle;
-    private TextView tv_page_name;
-    private TextView tv_top;
+    private TextView tvPageName;
+    private TextView tvTop;
     private String detailContent;
     private String shareImage;
 
@@ -65,7 +68,7 @@ public class SurroundDetailsActivity extends BaseActivity implements View.OnClic
         layoutView();
         initData();
 
-        webView = (ObservableWebView) findViewById(R.id.webview);
+        webView = findViewById(R.id.webview);
         //设置WebView属性，能够执行Javascript脚本
         webView.getSettings().setJavaScriptEnabled(true);
         //加载需要显示的网页
@@ -80,13 +83,13 @@ public class SurroundDetailsActivity extends BaseActivity implements View.OnClic
                 int scrollY = webView.getScrollY();
                 if (scrollY > 300) {
                     if (Utils.isNotEmpty(detailTitle)) {
-                        tv_page_name.setText(detailTitle);
-                        tv_top.setVisibility(View.VISIBLE);
+                        tvPageName.setText(detailTitle);
+                        tvTop.setVisibility(View.VISIBLE);
                     }
 
                 } else {
-                    tv_page_name.setText("");
-                    tv_top.setVisibility(View.GONE);
+                    tvPageName.setText("");
+                    tvTop.setVisibility(View.GONE);
                 }
 
             }
@@ -96,20 +99,20 @@ public class SurroundDetailsActivity extends BaseActivity implements View.OnClic
     }
 
     private void layoutView() {
-        back_left = (ChangeLightImageView) findViewById(R.id.back_left);
-        iv_share_right = (ImageView) findViewById(R.id.iv_share_right);
-        tv_top = (TextView) findViewById(R.id.tv_top);
-        tv_page_name = (TextView) findViewById(R.id.tv_page_name);
-        tv_page_name.setEllipsize(TextUtils.TruncateAt.END);
-        tv_page_name.setLines(1);
+        backLeft = findViewById(R.id.back_left);
+        ivShareRight = findViewById(R.id.iv_share_right);
+        tvTop = findViewById(R.id.tv_top);
+        tvPageName = findViewById(R.id.tv_page_name);
+        tvPageName.setEllipsize(TextUtils.TruncateAt.END);
+        tvPageName.setLines(1);
     }
 
     private void initData() {
         urlWeb.append(Common.domainPM).append("/mi/article/detailView.htm").append("?articleId=").append(articleId).append("&app=true");
         urlShare.append(Common.domainPM).append("/mi/article/detailView.htm").append("?articleId=").append(articleId);
-        iv_share_right.setVisibility(View.VISIBLE);
-        back_left.setOnClickListener(this);
-        iv_share_right.setOnClickListener(this);
+        ivShareRight.setVisibility(View.VISIBLE);
+        backLeft.setOnClickListener(this);
+        ivShareRight.setOnClickListener(this);
     }
 
     @Override
@@ -122,19 +125,11 @@ public class SurroundDetailsActivity extends BaseActivity implements View.OnClic
             case R.id.iv_share_right:
                 showShare();
                 break;
+            default:
+                break;
         }
     }
 
-//    @Override
-//    //设置回退
-//    //覆盖Activity类的onKeyDown(int keyCoder,KeyEvent event)方法
-//    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        if ((keyCode == KeyEvent.KEYCODE_BACK) && webView.canGoBack()) {
-//            webView.goBack(); //goBack()表示返回WebView的上一页面
-//            return true;
-//        }
-//        return false;
-//    }
 
     @Override
     public void setBgaAdpaterAndClickResult(ResponseEntity result) {
@@ -152,9 +147,8 @@ public class SurroundDetailsActivity extends BaseActivity implements View.OnClic
         // text是分享文本，所有平台都需要这个字段
         oks.setText(detailContent);
         //分享网络图片，新浪微博分享网络图片需要通过审核后申请高级写入接口，否则请注释掉测试新浪微博
-//        oks.setImageUrl("http://f1.sharesdk.cn/imgs/2014/02/26/owWpLZo_638x960.jpg");
-        // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
-        oks.setImagePath(shareImage);//确保SDcard下面存在此张图片
+        oks.setImagePath(shareImage);
+        //确保SDcard下面存在此张图片
 
         // url仅在微信（包括好友和朋友圈）中使用
         oks.setUrl(urlShare.toString());
@@ -200,7 +194,9 @@ public class SurroundDetailsActivity extends BaseActivity implements View.OnClic
         StatService.onPause(this);
     }
 
-    //Web视图
+    /**
+     *
+     */
     private class HelloWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {

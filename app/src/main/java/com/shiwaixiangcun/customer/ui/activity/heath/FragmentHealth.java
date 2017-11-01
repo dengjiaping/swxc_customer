@@ -183,33 +183,33 @@ public class FragmentHealth extends BaseFragment implements View.OnClickListener
         mTvBpName.setText("血压");
         mTvBpDetail.setText("(mmHg)");
         mTvBpData.setText(String.format("%d/%d", healthUserBean.getShrinkBlood(), healthUserBean.getRelaxationBlood()));
-        mTvBpDate.setText(DateUtil.getMillon(healthUserBean.getPressureCreateTime()) + "");
+        mTvBpDate.setText(DateUtil.getSecond(healthUserBean.getPressureCreateTime()) + "");
         //初始化心率
         setVisible(healthUserBean.getHeartRateStatus(), mCvP);
         mTvPName.setText("心率");
         mTvPDetail.setText("(bpm)");
         mTvPData.setText(String.valueOf(healthUserBean.getHeartRate()) + "");
-        mTvPDate.setText(DateUtil.getMillon(healthUserBean.getHeartRateTime()));
+        mTvPDate.setText(DateUtil.getSecond(healthUserBean.getHeartRateTime()));
 
         //初始化血糖
         setVisible(healthUserBean.getSugarStatus(), mCvGlu);
         mTvGluData.setText("血糖");
         mTvGluDetail.setText("(mmol/L)");
         mTvGluData.setText(String.valueOf(healthUserBean.getBloodSugar()));
-        mTvGluDate.setText(DateUtil.getMillon(healthUserBean.getBloodCreateTime()));
+        mTvGluDate.setText(DateUtil.getSecond(healthUserBean.getBloodCreateTime()));
         //初始化体重的值
         setVisible(healthUserBean.getBmiStatus(), mCvBw);
         mTvBwName.setText("体重");
         mTvBwDetail.setText("(kg)");
         mTvBwData.setText(String.valueOf(healthUserBean.getWeight()));
         mTvBwOther.setText("BMI " + String.valueOf(healthUserBean.getBmi()));
-        mTvBwDate.setText(DateUtil.getMillon(healthUserBean.getBmiCreateTime()));
+        mTvBwDate.setText(DateUtil.getSecond(healthUserBean.getBmiCreateTime()));
 
         //初始化血脂
         setVisible(healthUserBean.getBloodStatus(), mCvTc);
         mTvTcDetail.setText("(mmol/L)");
         mTvTcName.setText("血脂");
-        mTvTcDate.setText(DateUtil.getMillon(healthUserBean.getBloodCreateTime()));
+        mTvTcDate.setText(DateUtil.getSecond(healthUserBean.getBloodCreateTime()));
         mTvLdlData.setText(String.valueOf(healthUserBean.getLowLipo()));
         mTvTchoData.setText(String.valueOf(healthUserBean.getTotalCholesterol()));
         mTvTgData.setText(String.valueOf(healthUserBean.getTriglyceride()));

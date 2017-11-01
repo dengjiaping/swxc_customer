@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -30,21 +31,33 @@ public class AdapterOrder extends BaseQuickAdapter<OrderBean.ElementsBean, BaseV
     @Override
     protected void convert(BaseViewHolder helper, OrderBean.ElementsBean item) {
 
+
+        String stature = item.getAfterSaleStatus();
         OrderBean.ElementsBean.OrderDetailDtoListBean orderDetailDtoListBean = item.getOrderDetailDtoList().get(0);
-        helper.setText(R.id.tv_order_number, item.getOrderNumber());
-        helper.setText(R.id.tv_description, "共" + item.getGoodsTotal() + "件商品 合计 ￥"
-                + ArithmeticUtils.format(item.getRealyPay()) + " (含运费 ￥" + ArithmeticUtils.format(item.getTransportMoney()) + ")");
+        LinearLayout llayoutStature = helper.getView(R.id.llayout_stature);
         Button mBtnWhite = helper.getView(R.id.btn_white);
         Button mBtnRed = helper.getView(R.id.btn_red);
-        LinearLayout llayoutStature = helper.getView(R.id.llayout_stature);
-        ImageView mIvCover = helper.getView(R.id.iv_cover);
-        helper.setText(R.id.tv_title, orderDetailDtoListBean.getGoodsName());
-        helper.setText(R.id.tv_desc, orderDetailDtoListBean.getGoodsAttrDescription());
-        helper.setText(R.id.tv_price, "￥ " + ArithmeticUtils.format(orderDetailDtoListBean.getPrice()));
-        helper.setText(R.id.tv_order_amount, "x " + orderDetailDtoListBean.getGoodsAmount());
+        ImageView mIvCover = helper.getView(R.id.iv_good_cover);
+        TextView mTvPending = helper.getView(R.id.tv_refunding);
+
+        helper.setText(R.id.tv_order_number, item.getOrderNumber());
+        helper.setText(R.id.tv_description, "共"
+                + item.getGoodsTotal() + "件商品 合计 ￥"
+                + ArithmeticUtils.format(item.getRealyPay())
+                + " (含运费 ￥" + ArithmeticUtils.format(item.getTransportMoney())
+                + ")");
+        helper.setText(R.id.tv_good_title, orderDetailDtoListBean.getGoodsName());
+        helper.setText(R.id.tv_good_desc, orderDetailDtoListBean.getGoodsAttrDescription());
+        helper.setText(R.id.tv_good_item_price, "￥ " + ArithmeticUtils.format(orderDetailDtoListBean.getPrice()));
+        helper.setText(R.id.tv_good_amount, "x " + orderDetailDtoListBean.getGoodsAmount());
         helper.addOnClickListener(R.id.btn_red);
         helper.addOnClickListener(R.id.btn_white);
 
+        if ("Pending".equals(stature)) {
+            mTvPending.setVisibility(View.VISIBLE);
+        } else {
+            mTvPending.setVisibility(View.GONE);
+        }
         ImageDisplayUtil.showImageView(mContext, orderDetailDtoListBean.getThumbImageURL(), mIvCover);
         switch (item.getOrderStatus()) {
             case "WaitDeliver":

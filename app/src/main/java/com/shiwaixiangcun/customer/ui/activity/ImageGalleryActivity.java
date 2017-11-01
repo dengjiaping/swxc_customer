@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -14,36 +12,34 @@ import android.widget.TextView;
 
 import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
+import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.R;
-import com.shiwaixiangcun.customer.model.MerchDetailBean;
 import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 import com.shiwaixiangcun.customer.utils.Utils;
 import com.shiwaixiangcun.customer.widget.ZoomImageView;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * http://www.2cto.com/kf/201608/532939.html
+ *
+ * @author Administrator
  */
 
-public class BigIamgeMerchatImageActivity extends AppCompatActivity implements View.OnClickListener ,ViewPager.OnPageChangeListener{
+public class ImageGalleryActivity extends BaseActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
 
-    private ZoomImageView ziv_image;
-    private ImageView iv_close_big_image;
+    private ZoomImageView zivImage;
+    private ImageView ivCloseBigImage;
     private String bigimage;
 
-
     private ViewPager mViewPager;
-    //    private int[] mImgs = new int[] { R.mipmap.add_house, R.mipmap.defalt_image,
-//            R.mipmap.close };
-//    private ImageView[] mImageViews = new ImageView[mImgs.length];
-    private List<MerchDetailBean.DataBean.AtlasBean.AtlasListBean> mylist;
+    private ArrayList<String> mImageList;
     private ImageView[] mImageViews;
     private ViewGroup group;
     private ImageView[] tips;
     private int serid;
     private String titleImage = "";
-    private TextView tv_title_image;
+    private TextView tvTitleImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,34 +51,33 @@ public class BigIamgeMerchatImageActivity extends AppCompatActivity implements V
         StatService.setSessionTimeOut(30);
 
         Intent intent = getIntent();
-        mylist = (List<MerchDetailBean.DataBean.AtlasBean.AtlasListBean>) intent.getSerializableExtra("bigimagelist");
-        titleImage = intent.getStringExtra("titleImage");
+        mImageList = new ArrayList<>();
+        mImageList.addAll(intent.getStringArrayListExtra("imageList"));
+        titleImage = intent.getStringExtra("imageTitle");
         serid = intent.getIntExtra("serid", 100);
-        mImageViews = new ImageView[mylist.size()];
-//        bigimage = intent.getStringExtra("bigimage");
-        layoutview();
+        mImageViews = new ImageView[mImageList.size()];
+        initViewAndEvent();
         initData();
         mViewPager.setCurrentItem(0);
     }
 
-    private void layoutview() {
-        ziv_image = (ZoomImageView) findViewById(R.id.ziv_image);
-        iv_close_big_image = (ImageView) findViewById(R.id.iv_close_big_image);
-        group = (ViewGroup) findViewById(R.id.viewGroup);
-        mViewPager = (ViewPager) findViewById(R.id.id_viewpager);
-        tv_title_image = (TextView) findViewById(R.id.tv_title_image);
+    private void initViewAndEvent() {
+        zivImage = findViewById(R.id.ziv_image);
+        ivCloseBigImage = findViewById(R.id.iv_close_big_image);
+        group = findViewById(R.id.viewGroup);
+        mViewPager = findViewById(R.id.id_viewpager);
+        tvTitleImage = findViewById(R.id.tv_title_image);
     }
 
     private void initData() {
-        tv_title_image.setText(titleImage);
+        tvTitleImage.setText(titleImage);
         mData();
 
         if (Utils.isNotEmpty(bigimage)) {
-            ImageDisplayUtil.showImageView(this, bigimage, ziv_image);
+            ImageDisplayUtil.showImageView(this, bigimage, zivImage);
         }
 
-        iv_close_big_image.setOnClickListener(this);
-
+        ivCloseBigImage.setOnClickListener(this);
 
 
         mViewPager.setOnPageChangeListener(this);
@@ -92,9 +87,7 @@ public class BigIamgeMerchatImageActivity extends AppCompatActivity implements V
             public Object instantiateItem(ViewGroup container, int position) {
                 ZoomImageView imageView = new ZoomImageView(
                         getApplicationContext());
-//                imageView.setImageResource(mImgs[position]);
-
-                ImageDisplayUtil.showImageView(BigIamgeMerchatImageActivity.this, mylist.get(position).getAccessUrl(), imageView);
+                ImageDisplayUtil.showImageView(ImageGalleryActivity.this, mImageList.get(position), imageView);
                 container.addView(imageView);
                 mImageViews[position] = imageView;
                 return imageView;
@@ -113,7 +106,7 @@ public class BigIamgeMerchatImageActivity extends AppCompatActivity implements V
 
             @Override
             public int getCount() {
-                return mylist.size();
+                return mImageList.size();
             }
         });
 
@@ -122,11 +115,10 @@ public class BigIamgeMerchatImageActivity extends AppCompatActivity implements V
 
     private void mData() {
         //将点点加入到ViewGroup中
-        tips = new ImageView[mylist.size()];
+        tips = new ImageView[mImageList.size()];
         for (int i = 0; i < tips.length; i++) {
-            Log.i("bbbbbiii",i+"");
             ImageView imageView = new ImageView(this);
-            imageView.setLayoutParams(new ViewGroup.LayoutParams(10, 10));
+            imageView.setLayoutParams(new ViewGroup.LayoutParams(8, 8));
             tips[i] = imageView;
             if (i == 0) {
                 tips[i].setBackgroundResource(R.mipmap.image_wright);
@@ -136,8 +128,8 @@ public class BigIamgeMerchatImageActivity extends AppCompatActivity implements V
 
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT));
-            layoutParams.leftMargin = 5;
-            layoutParams.rightMargin = 5;
+            layoutParams.leftMargin = 8;
+            layoutParams.rightMargin = 8;
             group.addView(imageView, layoutParams);
         }
     }
@@ -148,6 +140,8 @@ public class BigIamgeMerchatImageActivity extends AppCompatActivity implements V
         switch (id) {
             case R.id.iv_close_big_image:
                 finish();
+                break;
+            default:
                 break;
         }
     }

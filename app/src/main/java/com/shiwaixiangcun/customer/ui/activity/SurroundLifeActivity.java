@@ -32,6 +32,9 @@ import java.util.List;
 
 import static com.shiwaixiangcun.customer.app.App.getContext;
 
+/**
+ * @author Administrator
+ */
 public class SurroundLifeActivity extends AppCompatActivity implements View.OnClickListener, IHomeSurroundView {
 
     private ChangeLightImageView back_left;
@@ -65,13 +68,13 @@ public class SurroundLifeActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void initLayout() {
-        back_left = (ChangeLightImageView) findViewById(R.id.back_left);
-        tv_page_name = (TextView) findViewById(R.id.tv_page_name);
-        lv_surround = (PullableListView) findViewById(R.id.lv_surround);
+        back_left = findViewById(R.id.back_left);
+        tv_page_name = findViewById(R.id.tv_page_name);
+        lv_surround = findViewById(R.id.lv_surround);
 
 
         MyListener myListener = new MyListener();
-        PullToRefreshLayout refresh_view = (PullToRefreshLayout) findViewById(R.id.refresh_view);
+        PullToRefreshLayout refresh_view = findViewById(R.id.refresh_view);
         refresh_view.setOnRefreshListener(myListener);
         myListener.setRefreshListener(new MyListener.onRefreshListener() {
             @Override
@@ -83,14 +86,14 @@ public class SurroundLifeActivity extends AppCompatActivity implements View.OnCl
 
 
         View surround_view = LayoutInflater.from(this).inflate(R.layout.head_surround, null);
-        mGvMerchType = (MyGridView) surround_view.findViewById(R.id.mgv_merch_type);
-        tv_first_name_merch = (TextView) surround_view.findViewById(R.id.tv_first_name_merch);
-        tv_first_feature = (TextView) surround_view.findViewById(R.id.tv_first_feature);
-        iv_first_merch = (ImageView) surround_view.findViewById(R.id.iv_first_merch);
-        ll_merch_wonderful = (LinearLayout) surround_view.findViewById(R.id.ll_merch_wonderful);
-        tv_find_wonderful = (TextView) surround_view.findViewById(R.id.tv_find_wonderful);
-        iv_find_image_a = (ImageView) surround_view.findViewById(R.id.iv_find_image_a);
-        iv_find_image_b = (ImageView) surround_view.findViewById(R.id.iv_find_image_b);
+        mGvMerchType = surround_view.findViewById(R.id.mgv_merch_type);
+        tv_first_name_merch = surround_view.findViewById(R.id.tv_first_name_merch);
+        tv_first_feature = surround_view.findViewById(R.id.tv_first_feature);
+        iv_first_merch = surround_view.findViewById(R.id.iv_first_merch);
+        ll_merch_wonderful = surround_view.findViewById(R.id.ll_merch_wonderful);
+        tv_find_wonderful = surround_view.findViewById(R.id.tv_find_wonderful);
+        iv_find_image_a = surround_view.findViewById(R.id.iv_find_image_a);
+        iv_find_image_b = surround_view.findViewById(R.id.iv_find_image_b);
         lv_surround.addHeaderView(surround_view);
     }
 

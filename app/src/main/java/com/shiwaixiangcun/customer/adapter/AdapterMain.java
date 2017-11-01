@@ -40,7 +40,7 @@ public class AdapterMain extends BaseMultiItemQuickAdapter<AdapterMain.MultipleI
                 helper.setText(R.id.tv_title, data.getTitle());
                 helper.setText(R.id.tv_summary, data.getSummary());
                 helper.setText(R.id.tv_source, data.getSource());
-                helper.setText(R.id.tv_publishTime, DateUtil.getMillon(data.getPublishTime()));
+                helper.setText(R.id.tv_publishTime, DateUtil.getSecond(data.getPublishTime()));
                 ImageView imageView = helper.getView(R.id.iv_coverPath);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 ImageDisplayUtil.showImageView(mContext, data.getCoverPath(), imageView);
@@ -48,7 +48,7 @@ public class AdapterMain extends BaseMultiItemQuickAdapter<AdapterMain.MultipleI
             case MultipleItem.IMAGE_BOTTOM:
                 helper.setText(R.id.tv_title, data.getTitle());
                 helper.setText(R.id.tv_source, data.getSource());
-                helper.setText(R.id.tv_publishTime, DateUtil.getMillon(data.getPublishTime()));
+                helper.setText(R.id.tv_publishTime, DateUtil.getSecond(data.getPublishTime()));
                 ImageView image = helper.getView(R.id.iv_coverPath);
                 image.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 ImageDisplayUtil.showImageView(mContext, data.getCoverPath(), image);
@@ -57,7 +57,7 @@ public class AdapterMain extends BaseMultiItemQuickAdapter<AdapterMain.MultipleI
                 helper.setText(R.id.tv_title, data.getTitle());
                 helper.setText(R.id.tv_summary, data.getSummary());
                 helper.setText(R.id.tv_source, data.getSource());
-                helper.setText(R.id.tv_publishTime, DateUtil.getMillon(data.getPublishTime()));
+                helper.setText(R.id.tv_publishTime, DateUtil.getSecond(data.getPublishTime()));
                 break;
             default:
                 break;

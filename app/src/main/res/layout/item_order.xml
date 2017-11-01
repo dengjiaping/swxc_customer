@@ -1,166 +1,240 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@color/bg_white"
-              android:orientation="vertical">
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bg_white"
+    android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/bg_white">
 
-        <TextView
-            android:id="@+id/tv_order_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="16dp"
-            android:text="订单号 8425600001235"
-            android:textColor="#992d3230"
-            android:textSize="14sp"/>
+    <TextView
+        android:id="@+id/tv_order_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        android:text="订单号 8425600001235"
+        android:textColor="#992d3230"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-        <TextView
-            android:id="@+id/tv_order_stature"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="16dp"
-            android:text="等待付款"
-            android:textColor="#FFF6A623"
-            android:textSize="14sp"/>
+    <TextView
+        android:id="@+id/tv_order_stature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="16dp"
+        android:text="等待付款"
+        android:textColor="#FFF6A623"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-    </RelativeLayout>
 
     <View
+        android:id="@+id/view_divider"
         android:layout_width="match_parent"
-        android:layout_height="0.3dp"
-        android:layout_marginLeft="16dp"
-        android:background="@color/color_divider_0.1"/>
+        android:layout_height="1dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/color_divider_0.1"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_order_number"/>
 
     <LinearLayout
+        android:id="@+id/llayout_good_info"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:background="@color/bg_white"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@color/white"
+        android:minHeight="135dp"
+        android:paddingTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_divider">
 
         <ImageView
-            android:id="@+id/iv_cover"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:id="@+id/iv_good_cover"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/m"/>
+            android:scaleType="centerCrop"/>
 
-        <LinearLayout
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:minHeight="20dp"
-                android:textColor="#FF2D3230"
-                android:textSize="16sp"
-                tools:text="欧姆龙（OMRON）电子血压计...">
-
-            </TextView>
 
             <TextView
-                android:id="@+id/tv_desc"
-                android:layout_width="match_parent"
+                android:id="@+id/tv_good_title"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:ellipsize="end"
+                android:gravity="center_vertical"
                 android:maxLines="2"
-                android:minHeight="20dp"
-                android:textColor="#992d3230"
-                android:textSize="14sp"
-                tools:text="红色红色，2017年新款红色，2017年新款，2017年新款红色，2017年新款红色，2017年新款红色，2017年新款"
-                />
+                android:textColor="#FF2D3230"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="欧姆龙（OMRON）电子血压计..红色，2017年新款红色，2017年新款红色，2017年新款."/>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/tv_good_desc"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="2"
+                android:textColor="@color/gray"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_good_title"
+                tools:text="红色，2017年新款红色，2017年新款红色，2017年新款"/>
 
-                <TextView
-                    android:id="@+id/tv_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:textColor="#FF2D3230"
-                    android:textSize="14sp"
-                    tools:text="¥399.00">
 
-                </TextView>
+            <TextView
 
-                <TextView
-                    android:id="@+id/tv_order_amount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginTop="8dp"
-                    android:maxLines="2"
-                    android:textColor="#992d3230"
-                    android:textSize="14sp"
-                    tools:text="x 1"
-                    />
-            </RelativeLayout>
+                android:id="@+id/tv_good_item_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical"
+                android:textColor="#FFFF1717"
+                android:textSize="18sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_good_desc"
+                tools:ignore="MissingConstraints"
+                tools:text="¥399.00"/>
 
-        </LinearLayout>
+            <TextView
+                android:id="@+id/tv_good_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:textColor="#FF2D3230"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@+id/btn_refund"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_good_desc"
+                tools:text="x1"/>
+
+
+            <TextView
+                android:id="@+id/tv_refunding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:text="退款中"
+                android:textColor="#FF2D3230"
+                android:textSize="14sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_good_item_price"/>
+
+
+        </android.support.constraint.ConstraintLayout>
 
     </LinearLayout>
 
     <View
+        android:id="@+id/divider"
         android:layout_width="match_parent"
-        android:layout_height="0.3dp"
-        android:layout_marginLeft="16dp"
-        android:background="@color/color_divider_0.1"/>
+        android:layout_height="1dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:background="@color/color_divider_0.1"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llayout_good_info"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+
+    <TextView
+        android:id="@+id/tv_description"
+        android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:orientation="vertical">
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:textColor="#FF2D3230"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llayout_good_info"
+        tools:text="共1件商品 合计 ￥409.00 (含运费￥10.00)"/>
 
-        <TextView
-            android:id="@+id/tv_description"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical|right"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:text="共1件商品 合计 ￥409.00 (含运费￥10.00)"
-            android:textColor="#FF2D3230"
-            android:textSize="14sp"
-            />
-
-    </LinearLayout>
 
     <LinearLayout
 
         android:id="@+id/llayout_stature"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="45dp"
+
         android:layout_marginBottom="16dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="8dp"
+
         android:background="@color/bg_white"
         android:gravity="right|center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_description"
+        tools:ignore="RtlHardcoded">
 
 
         <Button
@@ -183,4 +257,4 @@
     </LinearLayout>
 
 
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

@@ -114,7 +114,7 @@ public class GoodDetail {
          */
 
         private long adSellTime;
-        private long advanceSellTime;
+        private String advanceSellTime;
         private String advanceStatus;
         private int badTotal;
         private String categoryFullName;
@@ -154,7 +154,7 @@ public class GoodDetail {
 
         protected DataBean(Parcel in) {
             this.adSellTime = in.readLong();
-            this.advanceSellTime = in.readLong();
+            this.advanceSellTime = in.readString();
             this.advanceStatus = in.readString();
             this.badTotal = in.readInt();
             this.categoryFullName = in.readString();
@@ -198,11 +198,11 @@ public class GoodDetail {
             this.adSellTime = adSellTime;
         }
 
-        public long getAdvanceSellTime() {
+        public String getAdvanceSellTime() {
             return advanceSellTime;
         }
 
-        public void setAdvanceSellTime(long advanceSellTime) {
+        public void setAdvanceSellTime(String advanceSellTime) {
             this.advanceSellTime = advanceSellTime;
         }
 
@@ -478,7 +478,7 @@ public class GoodDetail {
         @Override
         public void writeToParcel(Parcel dest, int flags) {
             dest.writeLong(this.adSellTime);
-            dest.writeLong(this.advanceSellTime);
+            dest.writeString(this.advanceSellTime);
             dest.writeString(this.advanceStatus);
             dest.writeInt(this.badTotal);
             dest.writeString(this.categoryFullName);

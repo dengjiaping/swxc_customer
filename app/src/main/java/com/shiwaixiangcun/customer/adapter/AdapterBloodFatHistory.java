@@ -25,7 +25,7 @@ public class AdapterBloodFatHistory extends BaseQuickAdapter<BloodFatBean.Elemen
 
     @Override
     protected void convert(BaseViewHolder helper, BloodFatBean.ElementsBean item) {
-        helper.setText(R.id.tv_fat_data_time, DateUtil.getMillon(item.getCreateTime()));
+        helper.setText(R.id.tv_fat_data_time, DateUtil.getSecond(item.getCreateTime()));
         helper.setText(R.id.tv_item_totalCholesterol, item.getTotalCholesterol() + "");
         helper.setText(R.id.tv_item_triglyceride, item.getTriglyceride() + "");
         helper.setText(R.id.tv_item_topLipo, item.getTopLipo() + "");

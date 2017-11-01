@@ -92,6 +92,7 @@ public class OrderBean {
          */
 
 
+        private int afterSaleId;
         private boolean evaluated;
         private boolean afterSaled;
         private String afterSaleStatus;
@@ -102,11 +103,10 @@ public class OrderBean {
         private double realyPay;
         private double transportMoney;
         private List<OrderDetailDtoListBean> orderDetailDtoList;
-
         public ElementsBean() {
         }
-
         protected ElementsBean(Parcel in) {
+            this.afterSaleId = in.readInt();
             this.evaluated = in.readByte() != 0;
             this.afterSaled = in.readByte() != 0;
             this.afterSaleStatus = in.readString();
@@ -118,6 +118,14 @@ public class OrderBean {
             this.transportMoney = in.readDouble();
             this.orderDetailDtoList = new ArrayList<OrderDetailDtoListBean>();
             in.readList(this.orderDetailDtoList, OrderDetailDtoListBean.class.getClassLoader());
+        }
+
+        public int getAfterSaleId() {
+            return afterSaleId;
+        }
+
+        public void setAfterSaleId(int afterSaleId) {
+            this.afterSaleId = afterSaleId;
         }
 
         public boolean isEvaluated() {
@@ -214,6 +222,7 @@ public class OrderBean {
             dest.writeByte(this.evaluated ? (byte) 1 : (byte) 0);
             dest.writeByte(this.afterSaled ? (byte) 1 : (byte) 0);
             dest.writeString(this.afterSaleStatus);
+            dest.writeInt(this.afterSaleId);
             dest.writeInt(this.goodsTotal);
             dest.writeInt(this.orderId);
             dest.writeString(this.orderNumber);

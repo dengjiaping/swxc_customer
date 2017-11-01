@@ -32,6 +32,7 @@ import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.OrderDetailBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.pay.PayUtil;
+import com.shiwaixiangcun.customer.ui.activity.AfterDetailActivity;
 import com.shiwaixiangcun.customer.ui.dialog.DialogInfo;
 import com.shiwaixiangcun.customer.ui.dialog.DialogPay;
 import com.shiwaixiangcun.customer.utils.ArithmeticUtils;
@@ -125,21 +126,25 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     RelativeLayout mTopBarWrite;
     @BindView(R.id.btn_refund)
     Button mBtnRefund;
-    private int goodsId = 0;
+
     private DialogInfo mDialogDelete;
     private DialogInfo mDialogCancel;
     private DialogPay mDialogPay;
-    private int orderId = 0;
     private String tokenString;
     private String refreshToken;
     private OrderDetailBean mOrderDetail;
     private OrderDetailBean.OrderInfoBean orderInfo;
 
+
+    private int goodsId = 0;
+    private int orderId = 0;
+    private int afterSellId = 0;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         orderId = getIntent().getIntExtra("orderId", 0);
-        Log.e(BUG_TAG, orderId + "");
+        afterSellId = getIntent().getIntExtra("afterSellId", 0);
         setContentView(R.layout.layout_order_detail);
         EventCenter.getInstance().register(this);
         ButterKnife.bind(this);
@@ -321,7 +326,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
         //更新订单信息
         orderInfo = orderDetail.getOrderInfo();
         mTvOrderId.setText(orderInfo.getOrderNumber());
-        mTvOrderDate.setText(DateUtil.getMillon(orderInfo.getOrderTime()));
+        mTvOrderDate.setText(DateUtil.getSecond(orderInfo.getOrderTime()));
         mTvOrderTotal.setText("¥ " + ArithmeticUtils.format(orderInfo.getRealPay()));
         mTvFare.setText("¥ " + ArithmeticUtils.format(orderInfo.getTransportMoney()));
         mTvTotal.setText("¥ " + ArithmeticUtils.format(orderInfo.getShouldPay()));
@@ -364,6 +369,8 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
+
+        Bundle bundle = new Bundle();
         switch (view.getId()) {
             case R.id.back_left:
                 finish();
@@ -437,7 +444,6 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                 break;
 
             case R.id.llayout_good_info:
-                Bundle bundle = new Bundle();
                 bundle.putInt("goodId", goodsId);
                 readyGo(GoodDetailActivity.class, bundle);
                 break;
@@ -452,7 +458,8 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                         refundOrder();
                         break;
                     case "退款中":
-                        showToastShort("退款正在处理，请耐心等待");
+                        bundle.putInt("id", afterSellId);
+                        readyGo(AfterDetailActivity.class, bundle);
                         break;
                     default:
                         break;

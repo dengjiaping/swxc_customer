@@ -24,7 +24,7 @@ public class AdapterSugarHistory extends BaseQuickAdapter<BloodSugarBean.Element
 
     @Override
     protected void convert(BaseViewHolder helper, BloodSugarBean.ElementsBean item) {
-        helper.setText(R.id.tv_sugar_data_time, DateUtil.getMillon(item.getCreateTime()));
+        helper.setText(R.id.tv_sugar_data_time, DateUtil.getSecond(item.getCreateTime()));
         if (item.getSugarStatus().equals("KF")) {
             helper.setText(R.id.tv_kf, "空腹");
         } else if (item.getSugarStatus().equals("FH")) {

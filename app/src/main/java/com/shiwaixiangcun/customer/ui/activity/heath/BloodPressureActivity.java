@@ -285,7 +285,7 @@ public class BloodPressureActivity extends BaseActivity implements View.OnClickL
         mTvShrinkBlood.setText(elementsBean.getShrinkBlood() + "");
         mTvRelaxBlood.setText(elementsBean.getRelaxationBlood() + "");
         mTvPressureIntroduce.setText(elementsBean.getSuggestion());
-        mTvBloodPressureTime.setText(DateUtil.getMillon(elementsBean.getCreateTime()));
+        mTvBloodPressureTime.setText(DateUtil.getSecond(elementsBean.getCreateTime()));
         Log.e(BUG_TAG, elementsBean.getSuggestion());
 
     }

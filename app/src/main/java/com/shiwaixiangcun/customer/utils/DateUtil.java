@@ -26,7 +26,17 @@ import java.util.Locale;
 public class DateUtil {
     private static final long INTERVAL_IN_MILLISECONDS = 30 * 1000;
     private static final String FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private static final int SS = 1000;
+    private static final int MI = SS * 60;
+    private static final int HH = MI * 60;
+    private static final int DD = HH * 24;
 
+    /**
+     * 将String 日期转化成为 Date类型
+     *
+     * @param str
+     * @return
+     */
     public static Date str2Date(String str) {
         return str2Date(str, null);
     }
@@ -113,8 +123,13 @@ public class DateUtil {
         return date2Str(c, format);
     }
 
-    // 格式到秒
-    public static String getMillon(long time) {
+    /**
+     * 将时间格式到秒
+     *
+     * @param time
+     * @return
+     */
+    public static String getSecond(long time) {
 
         return new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss").format(time);
 
@@ -130,6 +145,17 @@ public class DateUtil {
     // 格式到毫秒
     public static String getSMillon(long time) {
         return new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS").format(time);
+    }
+
+    /**
+     * 获取自定义的时间格式
+     *
+     * @param time   时间
+     * @param format 格式
+     * @return string
+     */
+    public static String getCustomFormat(long time, String format) {
+        return new SimpleDateFormat(format).format(time);
     }
 
     /**
@@ -401,6 +427,7 @@ public class DateUtil {
         }
         return str;
     }
+
 
     /**
      * 时间信息类

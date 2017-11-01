@@ -348,7 +348,7 @@
             android:name=".ui.activity.MerchantDetailToImagesActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.activity.BigIamgeMerchatImageActivity"
+            android:name=".ui.activity.ImageGalleryActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.activity.SurroundDetailsActivity"

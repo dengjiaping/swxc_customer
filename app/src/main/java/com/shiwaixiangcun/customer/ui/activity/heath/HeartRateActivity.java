@@ -90,10 +90,10 @@ public class HeartRateActivity extends BaseActivity implements View.OnClickListe
     private void initView() {
         mBackLeft.setOnClickListener(this);
         headerView = LayoutInflater.from(mContext).inflate(R.layout.layout_heart_rate_header, null);
-        mTvHeartNormal = (TextView) headerView.findViewById(R.id.tv_heart_data);
-        mTvHeartCreateTime = (TextView) headerView.findViewById(R.id.tv_heart_create_time);
-        mTvHeartIntroduce = (TextView) headerView.findViewById(R.id.tv_heart_introduce);
-        mLlTopHeart = (LinearLayout) headerView.findViewById(R.id.ll_top_heart);
+        mTvHeartNormal = headerView.findViewById(R.id.tv_heart_data);
+        mTvHeartCreateTime = headerView.findViewById(R.id.tv_heart_create_time);
+        mTvHeartIntroduce = headerView.findViewById(R.id.tv_heart_introduce);
+        mLlTopHeart = headerView.findViewById(R.id.ll_top_heart);
         mBeanList = new ArrayList<>();
         mAdapter = new AdapterHeartRate(mBeanList);
         mAdapter.addHeaderView(headerView);
@@ -168,7 +168,7 @@ public class HeartRateActivity extends BaseActivity implements View.OnClickListe
         mTvHeartIntroduce.setText(elementsBean.getSuggestion());
         Log.e(BUG_TAG, elementsBean.getHeartRate() + "");
         mTvHeartNormal.setText("" + elementsBean.getHeartRate());
-        mTvHeartCreateTime.setText(DateUtil.getMillon(elementsBean.getCreateTime()));
+        mTvHeartCreateTime.setText(DateUtil.getSecond(elementsBean.getCreateTime()));
     }
 
     @Override

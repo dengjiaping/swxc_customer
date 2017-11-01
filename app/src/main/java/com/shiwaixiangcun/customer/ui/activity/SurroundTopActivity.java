@@ -22,6 +22,9 @@ import com.shiwaixiangcun.customer.widget.pullableview.PullableListView;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Administrator
+ */
 public class SurroundTopActivity extends AppCompatActivity implements View.OnClickListener, ISurroundTopView, ListView.OnItemClickListener {
 
     private ChangeLightImageView back_left;
@@ -47,12 +50,12 @@ public class SurroundTopActivity extends AppCompatActivity implements View.OnCli
 
     private void initLayout() {
 
-        back_left = (ChangeLightImageView) findViewById(R.id.back_left);
-        lv_surround_top = (PullableListView) findViewById(R.id.lv_surround_top);
-        tv_page_name = (TextView) findViewById(R.id.tv_page_name);
+        back_left = findViewById(R.id.back_left);
+        lv_surround_top = findViewById(R.id.lv_surround_top);
+        tv_page_name = findViewById(R.id.tv_page_name);
 
         MyListener myListener = new MyListener();
-        PullToRefreshLayout refresh_view = (PullToRefreshLayout) findViewById(R.id.refresh_view);
+        PullToRefreshLayout refresh_view = findViewById(R.id.refresh_view);
         refresh_view.setOnRefreshListener(myListener);
         myListener.setRefreshListener(new MyListener.onRefreshListener() {
             @Override

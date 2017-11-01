@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -35,39 +34,42 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Administrator
+ */
 public class SurroundDetailActivity extends AppCompatActivity implements View.OnClickListener, ISurroundDetailView, ScrollView.OnScrollChangeListener {
 
     List<MerchDetailBean.DataBean.CertificateBean> list_certificate = new ArrayList<>();
-    private ChangeLightImageView back_left;
-    private MyGridView gv_surround_detail;
-    private List<String> list_gv_surround_detail = new ArrayList<>();
-    private LinearLayout id_gallery;
-    private List<String> list_image_zz = new ArrayList<>();
-    private ScrollView sv_surround_detail;
-    private TextView tv_page_name;
-    private RelativeLayout rl_bottom_phone;
-    private TextView tv_phone_top;
-    private TextView tv_phone_number;
-    private TextView tv_phone_bottom;
+    private ChangeLightImageView backLeft;
+    private MyGridView gvSurroundDetail;
+    private List<String> listGvSurroundDetail = new ArrayList<>();
+    private LinearLayout idGallery;
+    private List<String> listImageZz = new ArrayList<>();
+    private ScrollView svSurroundDetail;
+    private TextView tvPageName;
+    private RelativeLayout rlBottomPhone;
+    private TextView tvPhoneTop;
+    private TextView tvPhoneNumber;
+    private TextView tvPhoneBottom;
     private String merchId = "";
-    private ImageView iv_merch_image;
-    private TextView tv_merch_detail_title;
-    private TextView tv_detail_future;
-    private TextView tv_merch_detail_location;
-    private TextView tv_merch_detail_introduce;
+    private ImageView ivMerchImage;
+    private TextView tvMerchDetailTitle;
+    private TextView tvDetailFuture;
+    private TextView tvMerchDetailLocation;
+    private TextView tvMerchDetailIntroduce;
     private List<MerchDetailBean.DataBean.AtlasBean> list_merch = new ArrayList<>();
     private SurroundDetailAdapter surroundDetailAdapter;
-    private ImageView iv_location_image;
-    private ImageView iv_phone_image;
-    private TextView tv_food_title;
-    private LinearLayout ll_food_title;
-    private LinearLayout ll_introduce_title;
-    private RelativeLayout rl_check_more;
-    private TextView tv_qualification;
-    private ImageView iv_food_icon;
+    private ImageView ivLocationImage;
+    private ImageView ivPhoneImage;
+    private TextView tvFoodTitle;
+    private LinearLayout llFoodTitle;
+    private LinearLayout llIntroduceTitle;
+    private RelativeLayout rlCheckMore;
+    private TextView tvQualification;
+    private ImageView ivFoodIcon;
     private MerchDetailBean.DataBean.BasicInformationBean basicInformation;
-    private TextView tv_introduce_a;
-    private TextView tv_introduce_b;
+    private TextView tvIntroduceA;
+    private TextView tvIntroduceB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,34 +80,34 @@ public class SurroundDetailActivity extends AppCompatActivity implements View.On
     }
 
     private void initLayout() {
-        back_left = findViewById(R.id.back_left);
-        gv_surround_detail = findViewById(R.id.gv_surround_detail);
-        id_gallery = findViewById(R.id.id_gallery);
-        sv_surround_detail = findViewById(R.id.sv_surround_detail);
-        tv_page_name = findViewById(R.id.tv_page_name);
-        rl_bottom_phone = findViewById(R.id.rl_bottom_phone);
-        tv_phone_top = findViewById(R.id.tv_phone_top);
-        tv_phone_number = findViewById(R.id.tv_phone_number);
-        tv_phone_bottom = findViewById(R.id.tv_phone_bottom);
-        iv_merch_image = findViewById(R.id.iv_merch_image);
-        tv_merch_detail_title = findViewById(R.id.tv_merch_detail_title);
-        tv_detail_future = findViewById(R.id.tv_detail_future);
-        tv_merch_detail_location = findViewById(R.id.tv_merch_detail_location);
-        tv_merch_detail_introduce = findViewById(R.id.tv_merch_detail_introduce);
-        iv_location_image = findViewById(R.id.iv_location_image);
-        iv_phone_image = findViewById(R.id.iv_phone_image);
-        tv_food_title = findViewById(R.id.tv_food_title);
-        ll_food_title = findViewById(R.id.ll_food_title);
-        ll_introduce_title = findViewById(R.id.ll_introduce_title);
-        rl_check_more = findViewById(R.id.rl_check_more);
-        tv_qualification = findViewById(R.id.tv_qualification);
-        iv_food_icon = findViewById(R.id.iv_food_icon);
-        tv_introduce_a = findViewById(R.id.tv_introduce_a);
-        tv_introduce_b = findViewById(R.id.tv_introduce_b);
+        backLeft = findViewById(R.id.back_left);
+        gvSurroundDetail = findViewById(R.id.gv_surround_detail);
+        idGallery = findViewById(R.id.id_gallery);
+        svSurroundDetail = findViewById(R.id.sv_surround_detail);
+        tvPageName = findViewById(R.id.tv_page_name);
+        rlBottomPhone = findViewById(R.id.rl_bottom_phone);
+        tvPhoneTop = findViewById(R.id.tv_phone_top);
+        tvPhoneNumber = findViewById(R.id.tv_phone_number);
+        tvPhoneBottom = findViewById(R.id.tv_phone_bottom);
+        ivMerchImage = findViewById(R.id.iv_merch_image);
+        tvMerchDetailTitle = findViewById(R.id.tv_merch_detail_title);
+        tvDetailFuture = findViewById(R.id.tv_detail_future);
+        tvMerchDetailLocation = findViewById(R.id.tv_merch_detail_location);
+        tvMerchDetailIntroduce = findViewById(R.id.tv_merch_detail_introduce);
+        ivLocationImage = findViewById(R.id.iv_location_image);
+        ivPhoneImage = findViewById(R.id.iv_phone_image);
+        tvFoodTitle = findViewById(R.id.tv_food_title);
+        llFoodTitle = findViewById(R.id.ll_food_title);
+        llIntroduceTitle = findViewById(R.id.ll_introduce_title);
+        rlCheckMore = findViewById(R.id.rl_check_more);
+        tvQualification = findViewById(R.id.tv_qualification);
+        ivFoodIcon = findViewById(R.id.iv_food_icon);
+        tvIntroduceA = findViewById(R.id.tv_introduce_a);
+        tvIntroduceB = findViewById(R.id.tv_introduce_b);
 
 
-        sv_surround_detail.smoothScrollTo(0, 20);
-        sv_surround_detail.setFocusable(true);
+        svSurroundDetail.smoothScrollTo(0, 20);
+        svSurroundDetail.setFocusable(true);
 
 
     }
@@ -117,44 +119,40 @@ public class SurroundDetailActivity extends AppCompatActivity implements View.On
         SurroundDetailImpl surroundDetail = new SurroundDetailImpl(this);
         surroundDetail.setBgaAdpaterAndClick(this, merchId);
         for (int i = 0; i < 5; i++) {
-            list_gv_surround_detail.add("ggg" + i);
+            listGvSurroundDetail.add("ggg" + i);
         }
         surroundDetailAdapter = new SurroundDetailAdapter(list_merch, this);
-        gv_surround_detail.setAdapter(surroundDetailAdapter);
+        gvSurroundDetail.setAdapter(surroundDetailAdapter);
 
         for (int i = 0; i < 6; i++) {
-            list_image_zz.add("ffff" + i);
+            listImageZz.add("ffff" + i);
         }
 
 
+        backLeft.setOnClickListener(this);
 
-
-        back_left.setOnClickListener(this);
-
-        gv_surround_detail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        gvSurroundDetail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.e("oooooooooo", i + "-------" + l);
-//                Intent intent = new Intent(SurroundDetailActivity.this, MerchantDetailToImagesActivity.class);
-//                intent.putExtra("serlist", (Serializable) list_merch);
-//                intent.putExtra("idDetail", i + "");
-////                intent.putExtra("phone",phone);
-//                startActivity(intent);
 
-                Log.i("vvvviiia", "----------aaa" + i);
                 List<MerchDetailBean.DataBean.AtlasBean.AtlasListBean> atlasList = list_merch.get(i).getAtlasList();
                 String title = list_merch.get(i).getTitle();
-                Intent intent = new Intent(SurroundDetailActivity.this,BigIamgeMerchatImageActivity.class);
-                intent.putExtra("bigimagelist",(Serializable) atlasList);
-                intent.putExtra("titleImage",title);
+                ArrayList<String> imageList = new ArrayList<>();
+                for (MerchDetailBean.DataBean.AtlasBean.AtlasListBean item : atlasList) {
+                    imageList.add(item.getAccessUrl());
+                }
+                Intent intent = new Intent();
+                intent.setClass(SurroundDetailActivity.this, ImageGalleryActivity.class);
+                intent.putExtra("imageList", imageList);
+                intent.putExtra("imageTitle", title);
                 startActivity(intent);
             }
         });
 
-        sv_surround_detail.setOnScrollChangeListener(this);
-        tv_phone_top.setOnClickListener(this);
-        tv_phone_bottom.setOnClickListener(this);
-        rl_check_more.setOnClickListener(this);
+        svSurroundDetail.setOnScrollChangeListener(this);
+        tvPhoneTop.setOnClickListener(this);
+        tvPhoneBottom.setOnClickListener(this);
+        rlCheckMore.setOnClickListener(this);
     }
 
     @Override
@@ -165,67 +163,69 @@ public class SurroundDetailActivity extends AppCompatActivity implements View.On
                 finish();
                 break;
             case R.id.tv_phone_top:
-                if (Utils.isNotEmpty(tv_phone_number.getText().toString().trim())) {
-                    CallPhoneDialog(tv_phone_number.getText().toString().trim());
+                if (Utils.isNotEmpty(tvPhoneNumber.getText().toString().trim())) {
+                    CallPhoneDialog(tvPhoneNumber.getText().toString().trim());
                 } else {
                     Toast.makeText(SurroundDetailActivity.this, "没有商家电话", Toast.LENGTH_LONG).show();
                 }
 
                 break;
             case R.id.tv_phone_bottom:
-                if (Utils.isNotEmpty(tv_phone_number.getText().toString().trim())) {
-                    CallPhoneDialog(tv_phone_number.getText().toString().trim());
+                if (Utils.isNotEmpty(tvPhoneNumber.getText().toString().trim())) {
+                    CallPhoneDialog(tvPhoneNumber.getText().toString().trim());
                 } else {
                     Toast.makeText(SurroundDetailActivity.this, "没有商家电话", Toast.LENGTH_LONG).show();
                 }
 
                 break;
             case R.id.rl_check_more:
-                Intent intent = new Intent(SurroundDetailActivity.this,ViewMoreActivity.class);
-                intent.putExtra("articleId",merchId);
+                Intent intent = new Intent(SurroundDetailActivity.this, ViewMoreActivity.class);
+                intent.putExtra("articleId", merchId);
                 startActivity(intent);
+                break;
+            default:
                 break;
         }
     }
 
     @Override
     public void setBgaAdpaterAndClickResult(MerchDetailBean result) {
-        iv_location_image.setVisibility(View.VISIBLE);
-        iv_phone_image.setVisibility(View.VISIBLE);
-        tv_phone_top.setVisibility(View.VISIBLE);
-        ll_food_title.setVisibility(View.VISIBLE);
-        ll_introduce_title.setVisibility(View.VISIBLE);
-        tv_merch_detail_introduce.setVisibility(View.VISIBLE);
-        rl_check_more.setVisibility(View.VISIBLE);
-        tv_qualification.setVisibility(View.VISIBLE);
+        ivLocationImage.setVisibility(View.VISIBLE);
+        ivPhoneImage.setVisibility(View.VISIBLE);
+        tvPhoneTop.setVisibility(View.VISIBLE);
+        llFoodTitle.setVisibility(View.VISIBLE);
+        llIntroduceTitle.setVisibility(View.VISIBLE);
+        tvMerchDetailIntroduce.setVisibility(View.VISIBLE);
+        rlCheckMore.setVisibility(View.VISIBLE);
+        tvQualification.setVisibility(View.VISIBLE);
 
         list_merch.clear();
         basicInformation = result.getData().getBasicInformation();
         if (Utils.isNotEmpty(basicInformation.getCover())) {
-            Glide.with(SurroundDetailActivity.this).load(basicInformation.getCover()).into(iv_merch_image);
+            Glide.with(SurroundDetailActivity.this).load(basicInformation.getCover()).into(ivMerchImage);
         }
 
-        tv_merch_detail_title.setText(basicInformation.getName());
-        tv_detail_future.setText(basicInformation.getFeature());
-        tv_merch_detail_location.setText(basicInformation.getPosition());
-        tv_phone_number.setText(basicInformation.getPhone());
+        tvMerchDetailTitle.setText(basicInformation.getName());
+        tvDetailFuture.setText(basicInformation.getFeature());
+        tvMerchDetailLocation.setText(basicInformation.getPosition());
+        tvPhoneNumber.setText(basicInformation.getPhone());
 
-        if (Utils.isNotEmpty(basicInformation.getDescription())){
-            ll_introduce_title.setVisibility(View.VISIBLE);
-            rl_check_more.setVisibility(View.VISIBLE);
-            tv_merch_detail_introduce.setText(basicInformation.getDescription());
-        }else {
-            ll_introduce_title.setVisibility(View.GONE);
-            rl_check_more.setVisibility(View.GONE);
-            tv_merch_detail_introduce.setText("");
+        if (Utils.isNotEmpty(basicInformation.getDescription())) {
+            llIntroduceTitle.setVisibility(View.VISIBLE);
+            rlCheckMore.setVisibility(View.VISIBLE);
+            tvMerchDetailIntroduce.setText(basicInformation.getDescription());
+        } else {
+            llIntroduceTitle.setVisibility(View.GONE);
+            rlCheckMore.setVisibility(View.GONE);
+            tvMerchDetailIntroduce.setText("");
         }
 
 
-        tv_phone_bottom.setText(basicInformation.getCallButton());
-        tv_food_title.setText(basicInformation.getRecommendStr());
-        tv_phone_top.setText(basicInformation.getCallButton());
-        if (Utils.isNotEmpty(basicInformation.getRecommendIcon())){
-            Glide.with(SurroundDetailActivity.this).load(basicInformation.getRecommendIcon()).into(iv_food_icon);
+        tvPhoneBottom.setText(basicInformation.getCallButton());
+        tvFoodTitle.setText(basicInformation.getRecommendStr());
+        tvPhoneTop.setText(basicInformation.getCallButton());
+        if (Utils.isNotEmpty(basicInformation.getRecommendIcon())) {
+            Glide.with(SurroundDetailActivity.this).load(basicInformation.getRecommendIcon()).into(ivFoodIcon);
         }
 
 
@@ -237,27 +237,27 @@ public class SurroundDetailActivity extends AppCompatActivity implements View.On
         }
         surroundDetailAdapter.notifyDataSetChanged();
 
-        if (atlas.size() != 0){
-            ll_food_title.setVisibility(View.VISIBLE);
-            tv_introduce_a.setVisibility(View.VISIBLE);
-        }else {
-            ll_food_title.setVisibility(View.GONE);
-            tv_introduce_a.setVisibility(View.GONE);
+        if (atlas.size() != 0) {
+            llFoodTitle.setVisibility(View.VISIBLE);
+            tvIntroduceA.setVisibility(View.VISIBLE);
+        } else {
+            llFoodTitle.setVisibility(View.GONE);
+            tvIntroduceA.setVisibility(View.GONE);
         }
 
 
         List<MerchDetailBean.DataBean.CertificateBean> certificate = result.getData().getCertificate();
-        if (certificate.size() > 0){
-            tv_qualification.setVisibility(View.VISIBLE);
+        if (certificate.size() > 0) {
+            tvQualification.setVisibility(View.VISIBLE);
             getlt(certificate);
-        }else {
-            tv_qualification.setVisibility(View.GONE);
+        } else {
+            tvQualification.setVisibility(View.GONE);
         }
         boolean notEmpty = Utils.isNotEmpty(basicInformation.getDescription());
-        if (notEmpty == false && certificate.size() == 0){
-            tv_introduce_b.setVisibility(View.GONE);
-        }else {
-            tv_introduce_b.setVisibility(View.VISIBLE);
+        if (notEmpty == false && certificate.size() == 0) {
+            tvIntroduceB.setVisibility(View.GONE);
+        } else {
+            tvIntroduceB.setVisibility(View.VISIBLE);
         }
 
 
@@ -269,7 +269,7 @@ public class SurroundDetailActivity extends AppCompatActivity implements View.On
 
         for (int i = 0; i < certificates.size(); i++) {
 
-            View view = LayoutInflater.from(this).inflate(R.layout.item_surround_detail_image, id_gallery, false);
+            View view = LayoutInflater.from(this).inflate(R.layout.item_surround_detail_image, idGallery, false);
             ImageView iv_certificates = view.findViewById(R.id.iv_certificates);
             if (Utils.isNotEmpty(certificates.get(i).getThumbImageURL())) {
 
@@ -280,33 +280,31 @@ public class SurroundDetailActivity extends AppCompatActivity implements View.On
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.i("vvvviiia", "----------aaa" + finalI);
-                    Intent intent = new Intent(SurroundDetailActivity.this,BigIamgeMerchanActivity.class);
-                    intent.putExtra("bigimagelist",(Serializable) certificates);
-                    intent.putExtra("serid",finalI);
+                    Intent intent = new Intent(SurroundDetailActivity.this, BigIamgeMerchanActivity.class);
+                    intent.putExtra("bigimagelist", (Serializable) certificates);
+                    intent.putExtra("serid", finalI);
                     startActivity(intent);
                 }
             });
-            id_gallery.addView(view);
+            idGallery.addView(view);
         }
     }
 
     @Override
     public void onScrollChange(View view, int i, int i1, int i2, int i3) {
-        Log.e("bbbbbbbmmb", i + "---" + i1 + "---" + i2 + "----" + i3);
         if (i1 >= 370) {
-            if (i3 != 1197 && i3 != 0){
-                tv_page_name.setText(basicInformation.getName());
+            if (i3 != 1197 && i3 != 0) {
+                tvPageName.setText(basicInformation.getName());
             }
 
         } else {
-            tv_page_name.setText("");
+            tvPageName.setText("");
         }
 
         if (i1 >= 950) {
-            rl_bottom_phone.setVisibility(View.VISIBLE);
+            rlBottomPhone.setVisibility(View.VISIBLE);
         } else {
-            rl_bottom_phone.setVisibility(View.GONE);
+            rlBottomPhone.setVisibility(View.GONE);
         }
     }
 
@@ -315,20 +313,13 @@ public class SurroundDetailActivity extends AppCompatActivity implements View.On
         final DialogLoginOut dialogLoginOut = new DialogLoginOut(SurroundDetailActivity.this, R.layout.item_dialog_call_phone);
         dialogLoginOut.setTitle("是否要拨打此电话？");
         dialogLoginOut.setMessage(phone);
-//        dialogLoginOut.setColor();
         dialogLoginOut.setYesOnclickListener("是", new DialogLoginOut.onYesOnclickListener() {
             @Override
             public void onYesClick() {
                 dialogLoginOut.dismiss();
                 Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phone));
                 if (ActivityCompat.checkSelfPermission(SurroundDetailActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
+
                     return;
                 }
                 startActivity(intent);

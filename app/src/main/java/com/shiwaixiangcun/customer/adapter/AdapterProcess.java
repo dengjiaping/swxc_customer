@@ -53,7 +53,7 @@ public class AdapterProcess extends RecyclerView.Adapter<AdapterProcess.RecordVi
     @Override
     public void onBindViewHolder(AdapterProcess.RecordViewHolder holder, int position) {
         RightDetailBean.DataBean.ProcessBean recordsBean = mRecordsList.get(position);
-        holder.mTvDate.setText(DateUtil.getMillon(recordsBean.getTime()));
+        holder.mTvDate.setText(DateUtil.getSecond(recordsBean.getTime()));
         holder.mTvRecord.setText(recordsBean.getMess());
 
     }

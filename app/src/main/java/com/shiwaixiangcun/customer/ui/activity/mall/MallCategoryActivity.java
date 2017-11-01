@@ -33,6 +33,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * @author Administrator
+ */
 public class MallCategoryActivity extends BaseActivity implements View.OnClickListener, CheckListener {
 
     @BindView(R.id.back_left)
@@ -67,7 +70,7 @@ public class MallCategoryActivity extends BaseActivity implements View.OnClickLi
     /**
      * 获取数据
      */
-    private void requestData() { //获取asset目录下的资源文件
+    private void requestData() {
         OkGo.<String>get(GlobalAPI.getCategory)
                 .execute(new StringCallback() {
                     @Override
@@ -124,7 +127,7 @@ public class MallCategoryActivity extends BaseActivity implements View.OnClickLi
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         mDetailFragment = CategoryDetailFragment.newInstance();
         Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("addRight", (ArrayList<? extends Parcelable>) mCategory.getData());
+        bundle.putParcelableArrayList("right", (ArrayList<? extends Parcelable>) mCategory.getData());
         mDetailFragment.setArguments(bundle);
         mDetailFragment.setListener(this);
         fragmentTransaction.add(R.id.flayout_pin, mDetailFragment);

@@ -93,6 +93,8 @@ public class FragmentOrder extends LazyFragment {
     private DialogPay mDialogPay;
     private DialogInfo mDialogConfirm;
 
+    private String isEvaluated = "";
+
 
     private int mCurrentPage = GlobalConfig.first_page;
     private int mPageSize = GlobalConfig.page_size;
@@ -197,7 +199,9 @@ public class FragmentOrder extends LazyFragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 OrderBean.ElementsBean elementsBean = mOrderList.get(position);
-                gotoDetail(elementsBean.getOrderId());
+
+
+                gotoDetail(elementsBean.getOrderId(), elementsBean.getAfterSaleId());
             }
         });
         mAdapterOrder.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
@@ -293,6 +297,7 @@ public class FragmentOrder extends LazyFragment {
         HttpParams httpParams = new HttpParams();
         httpParams.put("page.pn", currentPage);
         httpParams.put("page.size", pageSize);
+        httpParams.put("evaluated", isEvaluated);
         httpParams.put("orderStatus", stature);
         httpParams.put("access_token", tokenString);
         OkGo.<String>get(GlobalAPI.getAllOrders)
@@ -374,7 +379,8 @@ public class FragmentOrder extends LazyFragment {
 
             case "待评价":
                 // TODO: 2017/10/31
-                stature = "";
+                stature = "Finished";
+                isEvaluated = "evaluated";
             default:
                 break;
         }
@@ -391,9 +397,11 @@ public class FragmentOrder extends LazyFragment {
     }
 
 
-    private void gotoDetail(int orderId) {
+    private void gotoDetail(int orderId, int afterSellId) {
         Intent intent = new Intent();
         intent.putExtra("orderId", orderId);
+
+        intent.putExtra("afterSellId", afterSellId);
         intent.setClass(mContext, OrderDetailActivity.class);
         startActivity(intent);
     }

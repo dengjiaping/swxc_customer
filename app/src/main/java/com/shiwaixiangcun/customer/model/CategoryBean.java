@@ -6,7 +6,9 @@ import android.os.Parcelable;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/9/8.
+ *
+ * @author Administrator
+ * @date 2017/9/8
  */
 
 public class CategoryBean implements Parcelable {

@@ -274,7 +274,7 @@ public class BloodFatActivity extends BaseActivity implements View.OnClickListen
         mTvTriglyceride.setText(elementsBean.getTriglyceride() + "");
         mTvTopLipo.setText(elementsBean.getTopLipo() + "");
         mTvLowLipo.setText(elementsBean.getLowLipo() + "");
-        mTvFatTime.setText(DateUtil.getMillon(elementsBean.getCreateTime()));
+        mTvFatTime.setText(DateUtil.getSecond(elementsBean.getCreateTime()));
         mTvBloodFatIntroduce.setText(elementsBean.getSuggestion());
 
     }

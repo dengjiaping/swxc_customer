@@ -107,12 +107,9 @@ public class EvaluatesListActivity extends BaseActivity implements View.OnClickL
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
-
                         mEvaluatesListBean = JsonUtil.fromJson(response.body(), EvaluatesListBean.class);
-
                         if (mEvaluatesListBean == null) {
                             return;
-
                         }
                         switch (mEvaluatesListBean.getResponseCode()) {
                             case CODE_SUCCESS:

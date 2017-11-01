@@ -45,6 +45,8 @@ import butterknife.ButterKnife;
 
 /**
  * 商品分类的Activity
+ *
+ * @author Administrator
  */
 public class CategoryActivity extends BaseActivity implements View.OnClickListener {
 
@@ -86,6 +88,9 @@ public class CategoryActivity extends BaseActivity implements View.OnClickListen
         setContentView(R.layout.activity_category);
         EventCenter.getInstance().register(this);
         Bundle bundle = getIntent().getExtras();
+        if (bundle == null) {
+            return;
+        }
         mCategoryId = bundle.getInt("categoryId");
         mCatrgotyName = bundle.getString("categoryName");
         ButterKnife.bind(this);
@@ -218,6 +223,9 @@ public class CategoryActivity extends BaseActivity implements View.OnClickListen
                 mAdapter.notifyDataSetChanged();
                 break;
 
+            default:
+                break;
+
 
         }
     }
@@ -234,6 +242,8 @@ public class CategoryActivity extends BaseActivity implements View.OnClickListen
         switch (view.getId()) {
             case R.id.back_left:
                 finish();
+                break;
+            default:
                 break;
         }
     }

@@ -59,6 +59,7 @@ public class RefundActivity extends BaseActivity implements View.OnClickListener
     private static final int MAX_IMAGE_NUMBER = 4;
     private static final int CODE_SUCCESS = 1001;
     private static final int CODE_1002 = 1002;
+    private static final int MAX_LENGTH = 100;
     @BindView(R.id.back_left)
     ChangeLightImageView mBackLeft;
     @BindView(R.id.tv_page_name)
@@ -248,17 +249,21 @@ public class RefundActivity extends BaseActivity implements View.OnClickListener
                 break;
             case R.id.btn_submit:
 
-                if (Double.valueOf(mTvMoney.getText().toString()) > maxAmount) {
-                    showToastShort("请确认你需要退款的金额");
-                } else if (Double.valueOf(mTvMoney.getText().toString()) >= 0) {
-                    showToastShort("退款金额需大于0");
-                } else if ("".equals(orderStatue)) {
-                    showToastShort("请选择货物状态");
+                if (mEdtContent.getText().toString().length() > MAX_LENGTH) {
+                    showToastShort("字数超过限制(100以内)");
                 } else {
-                    if (selectList.size() > 0) {
-                        submitPic(selectList);
+                    if (Double.valueOf(mTvMoney.getText().toString()) > maxAmount) {
+                        showToastShort("请确认你需要退款的金额");
+                    } else if (Double.valueOf(mTvMoney.getText().toString()) <= 0) {
+                        showToastShort("退款金额需大于0");
+                    } else if ("".equals(orderStatue)) {
+                        showToastShort("请选择货物状态");
                     } else {
-                        postData(null);
+                        if (selectList.size() > 0) {
+                            submitPic(selectList);
+                        } else {
+                            postData(null);
+                        }
                     }
                 }
             default:

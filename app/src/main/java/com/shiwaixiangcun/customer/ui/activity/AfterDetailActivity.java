@@ -46,6 +46,7 @@ import butterknife.ButterKnife;
 
 /**
  * 售后详情页面
+ * @author Administrator
  */
 
 public class AfterDetailActivity extends BaseActivity implements View.OnClickListener {
@@ -164,7 +165,7 @@ public class AfterDetailActivity extends BaseActivity implements View.OnClickLis
                 mTvNumber.setText(description.getNumber());
                 mTvReason.setText("退款原因:  " + description.getContent());
                 mTvSum.setText("退款金额:  ¥" + ArithmeticUtils.format(description.getPrice()));
-                mTvDate.setText(DateUtil.getMillon(description.getAfterSaleDate()));
+                mTvDate.setText(DateUtil.getSecond(description.getAfterSaleDate()));
 
 
                 switch (description.getStatus()) {
@@ -182,6 +183,8 @@ public class AfterDetailActivity extends BaseActivity implements View.OnClickLis
                     case "CancelServer":
                         mTvStature.setText("服务取消");
                         break;
+                    default:
+                        break;
                 }
 
                 switch (description.getGoodsStatus()) {
@@ -190,6 +193,8 @@ public class AfterDetailActivity extends BaseActivity implements View.OnClickLis
                         break;
                     case "NotReceived":
                         mTvGoodStature.setText("货物状态:  " + "未收货");
+                        break;
+                    default:
                         break;
                 }
                 if (description.getImages().size() == 0) {
@@ -214,6 +219,9 @@ public class AfterDetailActivity extends BaseActivity implements View.OnClickLis
 
                 mRecordsList.addAll(bean.getData().getRecords());
                 mAdapterRecord.notifyDataSetChanged();
+                break;
+            default:
+                break;
 
 
         }
