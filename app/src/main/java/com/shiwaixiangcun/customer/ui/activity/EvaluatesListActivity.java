@@ -105,6 +105,7 @@ public class EvaluatesListActivity extends BaseActivity implements View.OnClickL
                 .params("page.pn", mCurrentPage)
                 .params("page.size", mPageSize)
                 .execute(new StringCallback() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onSuccess(Response<String> response) {
                         mEvaluatesListBean = JsonUtil.fromJson(response.body(), EvaluatesListBean.class);
@@ -129,6 +130,12 @@ public class EvaluatesListActivity extends BaseActivity implements View.OnClickL
                                     mListEvaluate.clear();
                                     mRefreshLayout.finishRefresh();
                                 }
+
+                                EvaluatesListBean.DataBean data = mEvaluatesListBean.getData();
+                                mBtnGood.setText("好评" + "(" + data.getHighTotal() + ")");
+                                mBtnAll.setText("全部" + "(" + data.getTotalAmount() + ")");
+                                mBtnMid.setText("中评" + "(" + data.getBadTotal() + data.getMidTotal() + data.getHighTotal() + ")");
+                                mBtnBad.setText("差评" + "(" + data.getBadTotal() + ")");
                                 mListEvaluate.addAll(mEvaluatesListBean.getData().getElements());
                                 mAdapterEvaluate.notifyDataSetChanged();
 
@@ -174,6 +181,8 @@ public class EvaluatesListActivity extends BaseActivity implements View.OnClickL
                 .build();
         mRvEvaluate.addItemDecoration(divider);
 
+
+        mRefreshLayout.setEnableRefresh(false);
         mRefreshLayout.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {

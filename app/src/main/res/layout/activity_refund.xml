@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <FrameLayout
-
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -12,8 +10,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <include layout="@layout/top_bar_white"/>
 
@@ -21,309 +18,313 @@
             android:layout_width="match_parent"
             android:layout_height="0.1dp"
             android:background="@color/color_divider_0.1"/>
+
     </LinearLayout>
 
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/refreshLayout"
+    <com.shiwaixiangcun.customer.widget.CustomScrollView
+        android:id="@+id/sc_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="60dp"
         android:layout_marginTop="57dp"
-        app:srlEnableLoadmore="true"
-        app:srlEnablePureScrollMode="true">
+        android:orientation="vertical">
 
-        <ScrollView
-            android:id="@+id/sv_body"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
 
             <LinearLayout
+                android:id="@+id/llayout_good_info"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/bg_gray"
-                android:orientation="vertical"
-                android:paddingBottom="60dp">
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:minHeight="135dp">
 
-                <LinearLayout
-                    android:id="@+id/llayout_good_info"
+                <ImageView
+                    android:id="@+id/iv_good_cover"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:scaleType="centerCrop"/>
+
+                <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:minHeight="135dp">
-
-                    <ImageView
-                        android:id="@+id/iv_good_cover"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginTop="16dp"
-                        android:scaleType="centerCrop"/>
-
-                    <android.support.constraint.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginTop="16dp"
-                        android:orientation="vertical">
-
-
-                        <TextView
-                            android:id="@+id/tv_good_title"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginRight="8dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="0dp"
-                            android:ellipsize="end"
-                            android:gravity="center_vertical"
-                            android:maxLines="2"
-                            android:textColor="#FF2D3230"
-                            android:textSize="16sp"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:text="欧姆龙（OMRON）电子血压计..红色，2017年新款红色，2017年新款红色，2017年新款."/>
-
-                        <TextView
-                            android:id="@+id/tv_good_desc"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginRight="8dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="4dp"
-                            android:ellipsize="end"
-                            android:gravity="center_vertical"
-                            android:maxLines="2"
-                            android:textColor="@color/gray"
-                            android:textSize="14sp"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/tv_good_title"
-                            tools:text="红色，2017年新款红色，2017年新款红色，2017年新款"/>
-
-
-                        <TextView
-
-                            android:id="@+id/tv_good_item_price"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="4dp"
-                            android:gravity="center_vertical"
-                            android:textColor="@color/black_text_100"
-                            android:textSize="16sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/tv_good_desc"
-                            tools:text="¥399.00"/>
-
-                        <TextView
-                            android:id="@+id/tv_good_amount"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:layout_marginRight="8dp"
-                            android:layout_marginTop="4dp"
-                            android:textColor="#FF2D3230"
-                            android:textSize="16sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/tv_good_desc"
-                            tools:text="x1"/>
-
-
-                    </android.support.constraint.ConstraintLayout>
-
-                </LinearLayout>
-
-                <RelativeLayout
-                    android:id="@+id/llayout_good_statue"
-                    android:layout_width="match_parent"
-                    android:layout_height="54dp"
                     android:layout_marginBottom="8dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@color/bg_white"
-                    android:clickable="true"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp">
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="16dp"
+                    android:orientation="vertical">
+
 
                     <TextView
+                        android:id="@+id/tv_good_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="0dp"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="2"
+                        android:textColor="#FF2D3230"
+                        android:textSize="16sp"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="欧姆龙（OMRON）电子血压计..红色，2017年新款红色，2017年新款红色，2017年新款."/>
+
+                    <TextView
+                        android:id="@+id/tv_good_desc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="4dp"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="2"
+                        android:textColor="@color/gray"
+                        android:textSize="14sp"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_good_title"
+                        tools:text="红色，2017年新款红色，2017年新款红色，2017年新款"/>
+
+
+                    <TextView
+
+                        android:id="@+id/tv_good_item_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:gravity="center"
-                        android:text="货物状态"
-                        android:textColor="#FF2D3231"
-                        android:textSize="16sp"/>
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="4dp"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/black_text_100"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_good_desc"
+                        tools:text="¥399.00"/>
 
                     <TextView
-                        android:id="@+id/tv_stature"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="16dp"
-                        android:layout_toLeftOf="@+id/iv_arrow"
-                        android:text="请选择"
-                        android:textColor="#FF2D3230"
-                        android:textSize="16sp"/>
-
-                    <ImageView
-
-                        android:id="@+id/iv_arrow"
+                        android:id="@+id/tv_good_amount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:src="@mipmap/to_right"/>
-                </RelativeLayout>
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginTop="4dp"
+                        android:textColor="#FF2D3230"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_good_desc"
+                        tools:text="x1"/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+
+                </android.support.constraint.ConstraintLayout>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/llayout_good_statue"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/bg_white"
+                android:clickable="true"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/bg_white"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:orientation="vertical">
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="货物状态"
+                    android:textColor="#FF2D3231"
+                    android:textSize="16sp"/>
 
-                    <android.support.constraint.ConstraintLayout
-                        android:id="@+id/constraintLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tv_stature"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="16dp"
+                    android:layout_toLeftOf="@+id/iv_arrow"
+                    android:text="请选择"
+                    android:textColor="#FF2D3230"
+                    android:textSize="16sp"/>
 
-                        <TextView
-                            android:id="@+id/textView9"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="20dp"
-                            android:text="退款金额"
-                            android:textColor="#FF2D3231"
-                            android:textSize="16sp"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"/>
+                <ImageView
 
-                        <EditText
-                            android:id="@+id/tv_money"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
-                            android:layout_marginTop="20dp"
-                            android:background="@null"
-                            android:gravity="center_vertical"
-                            android:inputType="numberDecimal"
-                            android:text="0.00"
-                            android:textColor="#FFFF1717"
-                            android:textSize="16sp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintLeft_toRightOf="@+id/textView11"
-                            app:layout_constraintTop_toTopOf="parent"/>
+                    android:id="@+id/iv_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/to_right"/>
+            </RelativeLayout>
 
-                        <TextView
-                            android:id="@+id/textView11"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="16dp"
-                            android:layout_marginTop="20dp"
-                            android:background="@null"
-                            android:gravity="center_vertical"
-                            android:text="￥"
-                            android:textColor="#FFFF1717"
-                            android:textSize="16sp"
-                            app:layout_constraintLeft_toRightOf="@+id/textView9"
-                            app:layout_constraintTop_toTopOf="parent"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bg_white"
 
-                        <TextView
-                            android:id="@+id/tv_refund_message"
-                            android:layout_width="0dp"
-                            android:layout_height="17dp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginRight="8dp"
-                            android:layout_marginTop="16dp"
-                            android:background="@null"
+                android:orientation="vertical">
 
-                            android:gravity="center_vertical"
-                            android:textColor="@color/black_text_60"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView9"
-                            tools:text="最多￥409.00，包含发货邮费￥10.00"/>
-                    </android.support.constraint.ConstraintLayout>
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/constraintLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.1dp"
+                    <TextView
+                        android:id="@+id/textView9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
-                        android:background="@color/color_divider_0.5"/>
+                        android:layout_marginTop="20dp"
+                        android:text="退款金额"
+                        android:textColor="#FF2D3231"
+                        android:textSize="16sp"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
 
                     <EditText
-                        android:id="@+id/edt_content"
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:layout_marginBottom="16dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginTop="8dp"
+                        android:id="@+id/tv_money"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginTop="20dp"
                         android:background="@null"
-                        android:ellipsize="end"
-                        android:gravity="top"
-                        android:hint="在这里说说你要退款的原因..."
-                        android:lineSpacingMultiplier="1.2"
-                        android:maxLines="4"
-                        android:textColor="@color/black_text_80"
-                        android:textColorHint="@color/black_text_60"
-                        android:textSize="16sp"/>
-                </LinearLayout>
+                        android:gravity="center_vertical"
+                        android:inputType="numberDecimal"
+                        android:text="0.00"
+                        android:textColor="#FFFF1717"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintLeft_toRightOf="@+id/textView11"
+                        app:layout_constraintTop_toTopOf="parent"/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="110dp"
-                    android:background="@color/bg_white"
-                    android:orientation="horizontal">
-
-                    <android.support.v7.widget.RecyclerView
-
-                        android:id="@+id/rv_images"
+                    <TextView
+                        android:id="@+id/textView11"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_vertical"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        android:text="￥"
+                        android:textColor="#FFFF1717"
+                        android:textSize="16sp"
+                        app:layout_constraintLeft_toRightOf="@+id/textView9"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/tv_refund_message"
+                        android:layout_width="0dp"
+                        android:layout_height="17dp"
+                        android:layout_marginBottom="10dp"
                         android:layout_marginLeft="20dp"
-                        android:visibility="visible">
+                        android:layout_marginRight="8dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@null"
 
-                    </android.support.v7.widget.RecyclerView>
+                        android:gravity="center_vertical"
+                        android:textColor="@color/black_text_60"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView9"
+                        tools:text="最多￥409.00，包含发货邮费￥10.00"/>
+                </android.support.constraint.ConstraintLayout>
 
-                    <ImageView
-                        android:id="@+id/iv_choose_image"
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/phone_lpw"
-                        android:visibility="visible"/>
 
-                </LinearLayout>
             </LinearLayout>
-        </ScrollView>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bg_white"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.1dp"
+                    android:layout_marginLeft="20dp"
+                    android:background="@color/color_divider_0.5"/>
+
+                <EditText
+                    android:id="@+id/edt_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@null"
+                    android:gravity="top"
+                    android:hint="在这里说说你要退款的原因..."
+                    android:lineSpacingMultiplier="1.2"
+                    android:textColor="@color/black_text_80"
+                    android:textColorHint="@color/black_text_60"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+                android:background="@color/bg_white"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.RecyclerView
+
+                    android:id="@+id/rv_images"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:visibility="visible">
+
+                </android.support.v7.widget.RecyclerView>
+
+                <ImageView
+                    android:id="@+id/iv_choose_image"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/phone_lpw"
+                    android:visibility="visible"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </com.shiwaixiangcun.customer.widget.CustomScrollView>
+
 
     <RelativeLayout
         android:layout_width="match_parent"

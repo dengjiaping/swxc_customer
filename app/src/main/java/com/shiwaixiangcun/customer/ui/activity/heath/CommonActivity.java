@@ -33,6 +33,8 @@ import cn.sharesdk.framework.PlatformActionListener;
 
 /**
  * 通用的Activity  处理评测内容
+ *
+ * @author Administrator
  */
 
 public class CommonActivity extends BaseActivity implements View.OnClickListener {
@@ -121,6 +123,9 @@ public class CommonActivity extends BaseActivity implements View.OnClickListener
                 break;
             case 11:
                 type = "Woman_System";
+                break;
+
+            default:
                 break;
         }
     }

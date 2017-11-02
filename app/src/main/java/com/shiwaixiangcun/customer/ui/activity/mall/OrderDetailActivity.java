@@ -136,9 +136,9 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     private OrderDetailBean.OrderInfoBean orderInfo;
 
 
-    private int goodsId = 0;
-    private int orderId = 0;
-    private int afterSellId = 0;
+    private int goodsId;
+    private int orderId;
+    private int afterSellId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -159,11 +159,12 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onRestart() {
+        super.onRestart();
         initToken();
         initData();
     }
+
 
     private void initData() {
         String loginInfo = SharePreference.getStringSpParams(mContext, Common.IS_SAVE_LOGIN, Common.SISAVELOGIN);
@@ -323,26 +324,6 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
         }
 
 
-        //更新订单信息
-        orderInfo = orderDetail.getOrderInfo();
-        mTvOrderId.setText(orderInfo.getOrderNumber());
-        mTvOrderDate.setText(DateUtil.getSecond(orderInfo.getOrderTime()));
-        mTvOrderTotal.setText("¥ " + ArithmeticUtils.format(orderInfo.getRealPay()));
-        mTvFare.setText("¥ " + ArithmeticUtils.format(orderInfo.getTransportMoney()));
-        mTvTotal.setText("¥ " + ArithmeticUtils.format(orderInfo.getShouldPay()));
-        switch (orderInfo.getPayWay()) {
-            case "WeiXin":
-                mTvOrderPayWay.setText("微信支付");
-                break;
-            case "ZhiFuBao":
-                mTvOrderPayWay.setText("支付宝支付");
-                break;
-            default:
-                mTvOrderPayWay.setText("未付款");
-                break;
-        }
-
-
         //更新商品的信息
         OrderDetailBean.GoodsDetailBean goodsDetailBean = orderDetail.getGoodsDetail().get(0);
 
@@ -357,12 +338,33 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
 
         OrderDetailBean.OrderStatusBean orderStatus = orderDetail.getOrderStatus();
 
+
         if ("Pending".equals(orderStatus.getAfterSaleStatus())) {
             mBtnRefund.setText("退款中");
         } else if ("RefundSuccess".equals(orderStatus.getAfterSaleStatus())) {
             mBtnRefund.setText("退款成功");
-        } else if ("CancelServer".equals(orderStatus.getAfterSaleStatus())) {
-            mBtnRefund.setText("服务取消");
+        } else {
+            mBtnRefund.setText("退款");
+        }
+
+
+        //更新订单信息
+        orderInfo = orderDetail.getOrderInfo();
+        mTvOrderId.setText(orderInfo.getOrderNumber());
+        mTvOrderDate.setText(DateUtil.getSecond(orderInfo.getOrderTime()));
+        mTvOrderTotal.setText("¥ " + ArithmeticUtils.format(ArithmeticUtils.mul(goodsDetailBean.getPrice(), goodsDetailBean.getAmount())));
+        mTvFare.setText("¥ " + ArithmeticUtils.format(orderInfo.getTransportMoney()));
+        mTvTotal.setText("¥ " + ArithmeticUtils.format(orderInfo.getShouldPay()));
+        switch (orderInfo.getPayWay()) {
+            case "WeiXin":
+                mTvOrderPayWay.setText("微信支付");
+                break;
+            case "ZhiFuBao":
+                mTvOrderPayWay.setText("支付宝支付");
+                break;
+            default:
+                mTvOrderPayWay.setText("未付款");
+                break;
         }
     }
 
@@ -451,10 +453,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
             case R.id.btn_refund:
                 switch (mBtnRefund.getText().toString()) {
                     case "退款":
-                        Bundle refundBundle = new Bundle();
-                        refundBundle.putParcelable("orderDetail", mOrderDetail);
-                        refundBundle.putInt("orderID", orderId);
-                        readyGo(RefundActivity.class, refundBundle);
+
                         refundOrder();
                         break;
                     case "退款中":
@@ -474,6 +473,10 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void refundOrder() {
+        Bundle refundBundle = new Bundle();
+        refundBundle.putParcelable("orderDetail", mOrderDetail);
+        refundBundle.putInt("orderID", orderId);
+        readyGoThenKill(RefundActivity.class, refundBundle);
 
     }
 

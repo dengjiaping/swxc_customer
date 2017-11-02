@@ -46,6 +46,7 @@ import butterknife.ButterKnife;
 
 /**
  * 售后详情页面
+ *
  * @author Administrator
  */
 
@@ -163,7 +164,12 @@ public class AfterDetailActivity extends BaseActivity implements View.OnClickLis
                 AfterServiceDetail.DataBean.DescriptionBean description = bean.getData().getDescription();
 
                 mTvNumber.setText(description.getNumber());
-                mTvReason.setText("退款原因:  " + description.getContent());
+
+                if ("null".equals(description.getContent())) {
+                    mTvReason.setText("退款原因:  用户没有填写原因");
+                } else {
+                    mTvReason.setText("退款原因:  " + description.getContent());
+                }
                 mTvSum.setText("退款金额:  ¥" + ArithmeticUtils.format(description.getPrice()));
                 mTvDate.setText(DateUtil.getSecond(description.getAfterSaleDate()));
 
@@ -244,6 +250,8 @@ public class AfterDetailActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.btn_cancel_apply:
                 cancelApply();
+                break;
+            default:
                 break;
         }
     }

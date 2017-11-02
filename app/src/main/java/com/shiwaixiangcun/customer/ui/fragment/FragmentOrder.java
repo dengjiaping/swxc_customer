@@ -106,13 +106,6 @@ public class FragmentOrder extends LazyFragment {
         return fragment;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        initToken();
-        requestData(mCurrentPage, mPageSize, false);
-
-    }
 
 
     @Override
@@ -142,7 +135,21 @@ public class FragmentOrder extends LazyFragment {
      */
     @Override
     protected void onUserVisible() {
+        initToken();
         requestData(mCurrentPage, mPageSize, false);
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        initToken();
+        requestData(mCurrentPage, mPageSize, false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
 
     }
 
@@ -199,8 +206,6 @@ public class FragmentOrder extends LazyFragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 OrderBean.ElementsBean elementsBean = mOrderList.get(position);
-
-
                 gotoDetail(elementsBean.getOrderId(), elementsBean.getAfterSaleId());
             }
         });
@@ -215,7 +220,6 @@ public class FragmentOrder extends LazyFragment {
                     case "付款":
                         payOrder(elementsBean);
                         break;
-
                     case "评价":
                         Bundle bundle = new Bundle();
                         bundle.putParcelable("order", elementsBean);

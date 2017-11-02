@@ -21,6 +21,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jaeger.recyclerviewdivider.RecyclerViewDivider;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -185,6 +186,11 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
         iniEvent();
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        iniData();
+    }
 
     @SuppressLint({"SetTextI18n", "SetJavaScriptEnabled"})
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -290,7 +296,7 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
                     mTvPrimePrice.setVisibility(View.GONE);
                     mTvPrimePrice.setText("¥ " + ArithmeticUtils.format(goodBean.getMinPrice()));
                     mTvPrimePrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-                    mTvLatestDeliveryTime.setText("最晚 " + DateUtil.getCustomFormat(goodBean.getAdSellTime(), "MM月dd日 HH:mm") + " 前发货");
+                    mTvLatestDeliveryTime.setText("最晚 " + DateUtil.getCustomFormat(goodBean.getLastDeliveryTime(), "MM月dd日 HH:mm") + " 前发货");
                     mAdSellTime.setText(dateInterval(goodBean.getAdSellTime()));
                     adSellTime = goodBean.getAdSellTime();
                     if (PRESALE_END.equals(mAdSellTime.getText())) {
@@ -379,6 +385,7 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
         OkGo.<String>get(GlobalAPI.getGoodDetail)
                 .params("id", mGoodId)
                 .execute(new StringCallback() {
+
                     @Override
                     public void onSuccess(Response<String> response) {
                         GoodDetail goodDetail = JsonUtil.fromJson(response.body(), GoodDetail.class);
@@ -464,6 +471,19 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
                 .setMarginRight(0)
                 .setDrawableRes(R.drawable.divider)
                 .build();
+        mAdapterEvaluate.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("goodID", mGoodId);
+                bundle.putInt("allTotal", allTotal);
+                bundle.putInt("highTotal", highTotal);
+                bundle.putInt("midTotal", midTotal);
+                bundle.putInt("badTotal", badTotal);
+                readyGo(EvaluatesListActivity.class, bundle);
+            }
+        });
+
         mRvEvaluate.addItemDecoration(divider);
         mAdapterEvaluate.addHeaderView(viewBanner);
         mAdapterEvaluate.addHeaderView(viewGoodInfo);

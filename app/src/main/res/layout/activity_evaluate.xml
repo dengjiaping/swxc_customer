@@ -29,8 +29,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="57dp"
         app:srlEnableLoadmore="true"
-        app:srlEnablePureScrollMode="true"
-        >
+        app:srlEnablePureScrollMode="true">
 
         <ScrollView
             android:layout_width="match_parent"

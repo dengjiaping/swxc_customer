@@ -17,6 +17,8 @@ import butterknife.Unbinder;
 
 /**
  * 懒加载Fragment
+ *
+ * @author Administrator
  */
 
 public abstract class LazyFragment extends Fragment {
@@ -94,6 +96,7 @@ public abstract class LazyFragment extends Fragment {
 
     private void onFirstUserInvisible() {
     }
+
 
     /**
      * 用户不可见

@@ -527,7 +527,11 @@
         </activity>
         <activity android:name=".ui.activity.mall.EvaluateActivity">
         </activity>
-        <activity android:name=".ui.activity.mall.RefundActivity">
+        <activity
+            android:name=".ui.activity.mall.RefundActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden">
+
         </activity>
 
         <!-- Service -->

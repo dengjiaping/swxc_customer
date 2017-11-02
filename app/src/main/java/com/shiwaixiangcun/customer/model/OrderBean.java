@@ -13,13 +13,24 @@ import java.util.List;
  * desc 订单Item
  */
 
-public class OrderBean {
+public class OrderBean implements Parcelable {
 
+    public static final Parcelable.Creator<OrderBean> CREATOR = new Parcelable.Creator<OrderBean>() {
+        @Override
+        public OrderBean createFromParcel(Parcel source) {
+            return new OrderBean(source);
+        }
+
+        @Override
+        public OrderBean[] newArray(int size) {
+            return new OrderBean[size];
+        }
+    };
     /**
-     * elements : [{"goodsTotal":1,"orderDetailDtoList":[{"accessURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/59/rBKx51m7Si6ANfF7AACzkL_KqTk408.jpg","fileId":4553,"goodsAmount":1,"goodsAttrDescription":"10斤装","goodsId":129,"goodsName":"越南火龙果","orderDetailId":160,"price":0.02,"shopName":"世外生活旗舰店","thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/59/rBKx51m7Si6ANfF7AACzkL_KqTk408.jpg"}],"orderId":224,"orderNumber":"1000000057","orderStatus":"Closed","realyPay":10.02,"transportMoney":10},{"goodsTotal":1,"orderDetailDtoList":[{"accessURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/59/rBKx51m7SjCAWeQsAAC79wqpqtk314.jpg","fileId":4554,"goodsAmount":1,"goodsAttrDescription":"1斤装","goodsId":129,"goodsName":"越南火龙果","orderDetailId":146,"price":20,"shopName":"世外生活旗舰店","thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/59/rBKx51m7SjCAWeQsAAC79wqpqtk314.jpg"}],"orderId":210,"orderNumber":"1000000043","orderStatus":"Closed","realyPay":30,"transportMoney":10}]
+     * elements : [{"afterSaleId":null,"afterSaleStatus":null,"afterSaled":false,"evaluated":false,"goodsTotal":1,"orderDetailDtoList":[{"accessURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg","fileId":null,"goodsAmount":1,"goodsAttrDescription":"重量:1kg，颜色:红心","goodsId":20,"goodsName":"零食","orderDetailId":67,"price":0.01,"shopName":"世外健康旗舰店","thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg"}],"orderId":67,"orderNumber":"0000000067","orderStatus":"WaitDeliver","realyPay":0.02,"transportMoney":0.01},{"afterSaleId":65,"afterSaleStatus":"Pending","afterSaled":true,"evaluated":false,"goodsTotal":1,"orderDetailDtoList":[{"accessURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg","fileId":null,"goodsAmount":1,"goodsAttrDescription":"重量:1kg,颜色:红心","goodsId":20,"goodsName":"零食","orderDetailId":59,"price":0.01,"shopName":"世外健康旗舰店","thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg"}],"orderId":59,"orderNumber":"0000000059","orderStatus":"WaitDeliver","realyPay":0.01,"transportMoney":0},{"afterSaleId":55,"afterSaleStatus":"Pending","afterSaled":true,"evaluated":false,"goodsTotal":1,"orderDetailDtoList":[{"accessURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg","fileId":null,"goodsAmount":1,"goodsAttrDescription":"重量:1kg,颜色:红心","goodsId":20,"goodsName":"零食","orderDetailId":57,"price":0.01,"shopName":"世外健康旗舰店","thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg"}],"orderId":57,"orderNumber":"0000000057","orderStatus":"WaitDeliver","realyPay":0.01,"transportMoney":0},{"afterSaleId":54,"afterSaleStatus":"Pending","afterSaled":true,"evaluated":false,"goodsTotal":1,"orderDetailDtoList":[{"accessURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg","fileId":null,"goodsAmount":1,"goodsAttrDescription":"重量:1kg,颜色:白心","goodsId":20,"goodsName":"零食","orderDetailId":51,"price":0.01,"shopName":"世外健康旗舰店","thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg"}],"orderId":51,"orderNumber":"0000000051","orderStatus":"WaitDeliver","realyPay":0.01,"transportMoney":0},{"afterSaleId":51,"afterSaleStatus":"RefundSuccess","afterSaled":true,"evaluated":false,"goodsTotal":1,"orderDetailDtoList":[{"accessURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg","fileId":null,"goodsAmount":1,"goodsAttrDescription":"重量:1kg,颜色:白心","goodsId":20,"goodsName":"零食","orderDetailId":48,"price":0.01,"shopName":"世外健康旗舰店","thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg"}],"orderId":48,"orderNumber":"0000000048","orderStatus":"Closed","realyPay":0.01,"transportMoney":0},{"afterSaleId":null,"afterSaleStatus":null,"afterSaled":false,"evaluated":false,"goodsTotal":1,"orderDetailDtoList":[{"accessURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/42/rBKx5VnE0iqAHDSWAAMKqMVCRV4996.jpg","fileId":null,"goodsAmount":1,"goodsAttrDescription":null,"goodsId":19,"goodsName":"爱牵挂血压计","orderDetailId":43,"price":398,"shopName":"世外健康旗舰店","thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/42/rBKx5VnE0iqAHDSWAAMKqMVCRV4996.jpg"}],"orderId":43,"orderNumber":"0000000043","orderStatus":"Closed","realyPay":408,"transportMoney":10},{"afterSaleId":null,"afterSaleStatus":null,"afterSaled":false,"evaluated":false,"goodsTotal":1,"orderDetailDtoList":[{"accessURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg","fileId":null,"goodsAmount":1,"goodsAttrDescription":"重量:1kg,颜色:白心","goodsId":20,"goodsName":"零食","orderDetailId":42,"price":0.01,"shopName":"世外健康旗舰店","thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg"}],"orderId":42,"orderNumber":"0000000042","orderStatus":"WaitDeliver","realyPay":0.01,"transportMoney":0},{"afterSaleId":null,"afterSaleStatus":null,"afterSaled":false,"evaluated":false,"goodsTotal":1,"orderDetailDtoList":[{"accessURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg","fileId":null,"goodsAmount":1,"goodsAttrDescription":"重量:1kg,颜色:红心","goodsId":20,"goodsName":"零食","orderDetailId":38,"price":0.01,"shopName":"世外健康旗舰店","thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg"}],"orderId":38,"orderNumber":"0000000038","orderStatus":"Finished","realyPay":0.01,"transportMoney":0},{"afterSaleId":34,"afterSaleStatus":"Pending","afterSaled":true,"evaluated":false,"goodsTotal":1,"orderDetailDtoList":[{"accessURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg","fileId":null,"goodsAmount":1,"goodsAttrDescription":"重量:1kg,颜色:白心","goodsId":20,"goodsName":"零食","orderDetailId":28,"price":0.01,"shopName":"世外健康旗舰店","thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg"}],"orderId":28,"orderNumber":"0000000028","orderStatus":"WaitDeliver","realyPay":0.01,"transportMoney":0},{"afterSaleId":null,"afterSaleStatus":null,"afterSaled":false,"evaluated":true,"goodsTotal":1,"orderDetailDtoList":[{"accessURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg","fileId":null,"goodsAmount":1,"goodsAttrDescription":"重量:1kg，颜色:红心","goodsId":20,"goodsName":"零食","orderDetailId":26,"price":0.01,"shopName":"世外健康旗舰店","thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg"}],"orderId":26,"orderNumber":"0000000026","orderStatus":"Finished","realyPay":0.01,"transportMoney":0},{"afterSaleId":33,"afterSaleStatus":"Pending","afterSaled":true,"evaluated":false,"goodsTotal":1,"orderDetailDtoList":[{"accessURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg","fileId":null,"goodsAmount":1,"goodsAttrDescription":"重量:2kg,颜色:红心","goodsId":20,"goodsName":"零食","orderDetailId":23,"price":0.01,"shopName":"世外健康旗舰店","thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg"}],"orderId":23,"orderNumber":"0000000023","orderStatus":"WaitDeliver","realyPay":0.01,"transportMoney":0},{"afterSaleId":32,"afterSaleStatus":"CancelServer","afterSaled":true,"evaluated":false,"goodsTotal":1,"orderDetailDtoList":[{"accessURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg","fileId":null,"goodsAmount":1,"goodsAttrDescription":"重量:1kg,颜色:白心","goodsId":20,"goodsName":"零食","orderDetailId":21,"price":0.01,"shopName":"世外健康旗舰店","thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg"}],"orderId":21,"orderNumber":"0000000021","orderStatus":"WaitDeliver","realyPay":0.01,"transportMoney":0},{"afterSaleId":31,"afterSaleStatus":"Pending","afterSaled":true,"evaluated":false,"goodsTotal":1,"orderDetailDtoList":[{"accessURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg","fileId":null,"goodsAmount":1,"goodsAttrDescription":"重量:1kg,颜色:白心","goodsId":20,"goodsName":"零食","orderDetailId":22,"price":0.01,"shopName":"世外健康旗舰店","thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg"}],"orderId":22,"orderNumber":"0000000022","orderStatus":"WaitDeliver","realyPay":0.01,"transportMoney":0},{"afterSaleId":30,"afterSaleStatus":"CancelServer","afterSaled":true,"evaluated":false,"goodsTotal":1,"orderDetailDtoList":[{"accessURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg","fileId":null,"goodsAmount":1,"goodsAttrDescription":"重量:1kg,颜色:白心","goodsId":20,"goodsName":"零食","orderDetailId":20,"price":0.01,"shopName":"世外健康旗舰店","thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg"}],"orderId":20,"orderNumber":"0000000020","orderStatus":"WaitDeliver","realyPay":0.01,"transportMoney":0},{"afterSaleId":null,"afterSaleStatus":null,"afterSaled":false,"evaluated":true,"goodsTotal":1,"orderDetailDtoList":[{"accessURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg","fileId":null,"goodsAmount":1,"goodsAttrDescription":"重量:1kg,颜色:白心","goodsId":20,"goodsName":"零食","orderDetailId":14,"price":0.01,"shopName":"世外健康旗舰店","thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg"}],"orderId":14,"orderNumber":"0000000014","orderStatus":"Finished","realyPay":0.01,"transportMoney":0},{"afterSaleId":null,"afterSaleStatus":null,"afterSaled":false,"evaluated":true,"goodsTotal":1,"orderDetailDtoList":[{"accessURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg","fileId":null,"goodsAmount":1,"goodsAttrDescription":"重量:2kg","goodsId":20,"goodsName":"零食","orderDetailId":12,"price":0.01,"shopName":"世外健康旗舰店","thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg"}],"orderId":12,"orderNumber":"0000000012","orderStatus":"Finished","realyPay":0.01,"transportMoney":0},{"afterSaleId":null,"afterSaleStatus":null,"afterSaled":false,"evaluated":true,"goodsTotal":1,"orderDetailDtoList":[{"accessURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg","fileId":null,"goodsAmount":1,"goodsAttrDescription":"重量:1kg","goodsId":20,"goodsName":"零食","orderDetailId":11,"price":0.01,"shopName":"世外健康旗舰店","thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg"}],"orderId":11,"orderNumber":"0000000011","orderStatus":"Finished","realyPay":0.01,"transportMoney":0}]
      * page : 1
-     * size : 10
-     * totalAmount : 2
+     * size : 20
+     * totalAmount : 17
      * totalPages : 1
      */
 
@@ -28,6 +39,17 @@ public class OrderBean {
     private int totalAmount;
     private int totalPages;
     private List<ElementsBean> elements;
+
+    public OrderBean() {
+    }
+
+    protected OrderBean(Parcel in) {
+        this.page = in.readInt();
+        this.size = in.readInt();
+        this.totalAmount = in.readInt();
+        this.totalPages = in.readInt();
+        this.elements = in.createTypedArrayList(ElementsBean.CREATOR);
+    }
 
     public int getPage() {
         return page;
@@ -69,6 +91,20 @@ public class OrderBean {
         this.elements = elements;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.page);
+        dest.writeInt(this.size);
+        dest.writeInt(this.totalAmount);
+        dest.writeInt(this.totalPages);
+        dest.writeTypedList(this.elements);
+    }
+
     public static class ElementsBean implements Parcelable {
         public static final Parcelable.Creator<ElementsBean> CREATOR = new Parcelable.Creator<ElementsBean>() {
             @Override
@@ -82,20 +118,23 @@ public class OrderBean {
             }
         };
         /**
+         * afterSaleId : null
+         * afterSaleStatus : null
+         * afterSaled : false
+         * evaluated : false
          * goodsTotal : 1
-         * orderDetailDtoList : [{"accessURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/59/rBKx51m7Si6ANfF7AACzkL_KqTk408.jpg","fileId":4553,"goodsAmount":1,"goodsAttrDescription":"10斤装","goodsId":129,"goodsName":"越南火龙果","orderDetailId":160,"price":0.02,"shopName":"世外生活旗舰店","thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/59/rBKx51m7Si6ANfF7AACzkL_KqTk408.jpg"}]
-         * orderId : 224
-         * orderNumber : 1000000057
-         * orderStatus : Closed
-         * realyPay : 10.02
-         * transportMoney : 10
+         * orderDetailDtoList : [{"accessURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg","fileId":null,"goodsAmount":1,"goodsAttrDescription":"重量:1kg，颜色:红心","goodsId":20,"goodsName":"零食","orderDetailId":67,"price":0.01,"shopName":"世外健康旗舰店","thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg"}]
+         * orderId : 67
+         * orderNumber : 0000000067
+         * orderStatus : WaitDeliver
+         * realyPay : 0.02
+         * transportMoney : 0.01
          */
 
-
         private int afterSaleId;
-        private boolean evaluated;
-        private boolean afterSaled;
         private String afterSaleStatus;
+        private boolean afterSaled;
+        private boolean evaluated;
         private int goodsTotal;
         private int orderId;
         private String orderNumber;
@@ -103,13 +142,15 @@ public class OrderBean {
         private double realyPay;
         private double transportMoney;
         private List<OrderDetailDtoListBean> orderDetailDtoList;
+
         public ElementsBean() {
         }
+
         protected ElementsBean(Parcel in) {
             this.afterSaleId = in.readInt();
-            this.evaluated = in.readByte() != 0;
-            this.afterSaled = in.readByte() != 0;
             this.afterSaleStatus = in.readString();
+            this.afterSaled = in.readByte() != 0;
+            this.evaluated = in.readByte() != 0;
             this.goodsTotal = in.readInt();
             this.orderId = in.readInt();
             this.orderNumber = in.readString();
@@ -128,12 +169,12 @@ public class OrderBean {
             this.afterSaleId = afterSaleId;
         }
 
-        public boolean isEvaluated() {
-            return evaluated;
+        public String getAfterSaleStatus() {
+            return afterSaleStatus;
         }
 
-        public void setEvaluated(boolean evaluated) {
-            this.evaluated = evaluated;
+        public void setAfterSaleStatus(String afterSaleStatus) {
+            this.afterSaleStatus = afterSaleStatus;
         }
 
         public boolean isAfterSaled() {
@@ -144,16 +185,12 @@ public class OrderBean {
             this.afterSaled = afterSaled;
         }
 
-        public String getAfterSaleStatus() {
-            return afterSaleStatus;
+        public boolean isEvaluated() {
+            return evaluated;
         }
 
-        public void setAfterSaleStatus(String afterSaleStatus) {
-            this.afterSaleStatus = afterSaleStatus;
-        }
-
-        public void setTransportMoney(double transportMoney) {
-            this.transportMoney = transportMoney;
+        public void setEvaluated(boolean evaluated) {
+            this.evaluated = evaluated;
         }
 
         public int getGoodsTotal() {
@@ -200,7 +237,7 @@ public class OrderBean {
             return transportMoney;
         }
 
-        public void setTransportMoney(int transportMoney) {
+        public void setTransportMoney(double transportMoney) {
             this.transportMoney = transportMoney;
         }
 
@@ -219,10 +256,10 @@ public class OrderBean {
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
-            dest.writeByte(this.evaluated ? (byte) 1 : (byte) 0);
-            dest.writeByte(this.afterSaled ? (byte) 1 : (byte) 0);
-            dest.writeString(this.afterSaleStatus);
             dest.writeInt(this.afterSaleId);
+            dest.writeString(this.afterSaleStatus);
+            dest.writeByte(this.afterSaled ? (byte) 1 : (byte) 0);
+            dest.writeByte(this.evaluated ? (byte) 1 : (byte) 0);
             dest.writeInt(this.goodsTotal);
             dest.writeInt(this.orderId);
             dest.writeString(this.orderNumber);
@@ -245,16 +282,16 @@ public class OrderBean {
                 }
             };
             /**
-             * accessURL : http://resource.shiwaixiangcun.cn/group1/M00/00/59/rBKx51m7Si6ANfF7AACzkL_KqTk408.jpg
-             * fileId : 4553
+             * accessURL : http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg
+             * fileId : null
              * goodsAmount : 1
-             * goodsAttrDescription : 10斤装
-             * goodsId : 129
-             * goodsName : 越南火龙果
-             * orderDetailId : 160
-             * price : 0.02
-             * shopName : 世外生活旗舰店
-             * thumbImageURL : http://resource.shiwaixiangcun.cn/group1/M00/00/59/rBKx51m7Si6ANfF7AACzkL_KqTk408.jpg
+             * goodsAttrDescription : 重量:1kg，颜色:红心
+             * goodsId : 20
+             * goodsName : 零食
+             * orderDetailId : 67
+             * price : 0.01
+             * shopName : 世外健康旗舰店
+             * thumbImageURL : http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg
              */
 
             private String accessURL;

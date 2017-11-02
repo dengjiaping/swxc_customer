@@ -6,12 +6,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,7 +19,6 @@ import com.google.gson.reflect.TypeToken;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.Common;
 import com.shiwaixiangcun.customer.ContextSession;
@@ -35,7 +34,6 @@ import com.shiwaixiangcun.customer.photo.core.PhotoFinal;
 import com.shiwaixiangcun.customer.photo.model.PhotoInfo;
 import com.shiwaixiangcun.customer.ui.dialog.DialogLoginOut;
 import com.shiwaixiangcun.customer.utils.ArithmeticUtils;
-import com.shiwaixiangcun.customer.utils.DisplayUtil;
 import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
@@ -81,8 +79,7 @@ public class RefundActivity extends BaseActivity implements View.OnClickListener
     @BindView(R.id.iv_choose_image)
     ImageView mIvChooseImage;
 
-    @BindView(R.id.refreshLayout)
-    SmartRefreshLayout mRefreshLayout;
+
     @BindView(R.id.btn_submit)
     Button mBtnSubmit;
     @BindView(R.id.tv_money)
@@ -91,14 +88,14 @@ public class RefundActivity extends BaseActivity implements View.OnClickListener
     RelativeLayout mLlayoutGoodStatue;
     @BindView(R.id.tv_refund_message)
     TextView mTvRefundMessage;
-    @BindView(R.id.sv_body)
-    ScrollView mSvBody;
+
     @BindView(R.id.tv_stature)
     TextView mTvStature;
     @BindView(R.id.iv_arrow)
     ImageView mIvArrow;
     @BindView(R.id.rv_images)
     RecyclerView mRvImages;
+    StringBuilder strMessage = new StringBuilder();
     private String strToken;
     private String strRefreshToken;
     private String goodName;
@@ -109,9 +106,7 @@ public class RefundActivity extends BaseActivity implements View.OnClickListener
     private ArrayList<String> selectList = new ArrayList<>();
     private AdapterImages mAdapterImages;
     private StringBuilder mStrImgID;
-
     private double maxAmount;
-
     /**
      * 相册回调
      */
@@ -149,6 +144,7 @@ public class RefundActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_refund);
         ButterKnife.bind(this);
 
@@ -180,7 +176,7 @@ public class RefundActivity extends BaseActivity implements View.OnClickListener
         strRefreshToken = ContextSession.getRefreshToken();
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "ClickableViewAccessibility"})
     private void initViewAndEvent() {
         mTvPageName.setText("申请退款");
         mBackLeft.setOnClickListener(this);
@@ -195,17 +191,26 @@ public class RefundActivity extends BaseActivity implements View.OnClickListener
         mTvGoodTitle.setText(goodsDetailBean.getGoodName());
         mTvGoodDesc.setText(goodsDetailBean.getAttrDescription());
         mTvGoodItemPrice.setText("¥ " + ArithmeticUtils.format(goodsDetailBean.getPrice()));
-        maxAmount = goodsDetailBean.getPrice();
+
         mTvGoodAmount.setText("x" + goodsDetailBean.getAmount());
         ImageDisplayUtil.showImageView(mContext, goodsDetailBean.getImgPath(), mIvGoodCover);
-        mTvMoney.setText(ArithmeticUtils.format(goodsDetailBean.getPrice()));
-        mTvRefundMessage.setText("最多退款 ￥" + ArithmeticUtils.format(goodsDetailBean.getPrice()));
+        mTvMoney.setText(ArithmeticUtils.format(mOrderDetail.getOrderInfo().getRealPay()));
+
+        maxAmount = mOrderDetail.getOrderInfo().getRealPay();
+        strMessage.append("最多退款 ￥")
+                .append(ArithmeticUtils.format(mOrderDetail.getOrderInfo().getRealPay()));
+        if (mOrderDetail.getOrderInfo().getTransportMoney() > 0) {
+            strMessage.append(", 包含运费 ￥")
+                    .append(ArithmeticUtils.format(mOrderDetail.getOrderInfo().getTransportMoney()));
+        }
+        mTvRefundMessage.setText(strMessage.toString());
 
         mAdapterImages = new AdapterImages(selectList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         mRvImages.setLayoutManager(linearLayoutManager);
         mRvImages.setAdapter(mAdapterImages);
+
 
     }
 
@@ -217,7 +222,6 @@ public class RefundActivity extends BaseActivity implements View.OnClickListener
                 break;
             case R.id.tv_money:
                 mTvMoney.setText("");
-                mSvBody.scrollBy(0, DisplayUtil.dip2px(mContext, 200));
                 break;
             case R.id.iv_choose_image:
                 final FunctionConfig functionConfig = initPhotoConfig();
@@ -359,7 +363,7 @@ public class RefundActivity extends BaseActivity implements View.OnClickListener
                                 finish();
                                 break;
                             case CODE_1002:
-                                showToastShort("退款申请正在处理，请勿重复提交");
+                                showToastShort(responseEntity.getMessage());
                                 break;
                             default:
                                 showToastShort("申请失败，请重试");

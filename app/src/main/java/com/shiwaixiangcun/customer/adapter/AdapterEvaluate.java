@@ -35,7 +35,7 @@ public class AdapterEvaluate extends BaseQuickAdapter<GoodDetail.DataBean.Evalua
 
     @Override
     protected void convert(BaseViewHolder helper, final GoodDetail.DataBean.EvaluatesBean item) {
-        if (StringUtil.isEmpty(item.getContent())) {
+        if (StringUtil.isEmpty(item.getContent()) && item.getImages().size() == 0) {
             helper.setText(R.id.tv_content, "买家只打了分,没有图文评价");
         } else {
             helper.setText(R.id.tv_content, item.getContent());

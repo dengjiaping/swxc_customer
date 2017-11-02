@@ -63,11 +63,26 @@ public class EvaluatesListBean {
          * totalPages : 1
          */
 
+        private int badTotal;
+        private int highTotal;
+        private int midTotal;
         private int page;
         private int size;
         private int totalAmount;
         private int totalPages;
         private List<GoodDetail.DataBean.EvaluatesBean> elements;
+
+        public int getBadTotal() {
+            return badTotal;
+        }
+
+        public int getHighTotal() {
+            return highTotal;
+        }
+
+        public int getMidTotal() {
+            return midTotal;
+        }
 
         public int getPage() {
             return page;

@@ -3,7 +3,6 @@ package com.shiwaixiangcun.customer.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,9 +12,8 @@ import java.util.List;
 
 public class GoodDetail {
 
-
     /**
-     * data : {"adSellTime":null,"advanceSellTime":null,"advanceStatus":"NoAdvance","badTotal":0,"categoryFullName":"地方特产-特色食品-零食","categoryId":10,"cityName":"赤水","evaluateTotal":2,"evaluates":[{"attrDescription":"重量:2kg","avatar":"http://resource.shiwaixiangcun.cn/group1/M00/00/00/rBKx5VkZZlOAIivEAAAcGHPVROQ697.png","content":"垃圾商品","evaluateTime":"2017-10-30","id":1,"images":[{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n-eAeprFADb-QImlinU709.jpg","fileId":3958,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n-eAeprFADb-QImlinU709.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n-2AZgiIACm1-ZELSxQ766.jpg","fileId":3959,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n-2AZgiIACm1-ZELSxQ766.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n_SAUQ9KADQ9oFFyyDg811.jpg","fileId":3960,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n_SAUQ9KADQ9oFFyyDg811.jpg"}],"nick":"1***6","score":3},{"attrDescription":"重量:1kg","avatar":"http://resource.shiwaixiangcun.cn/group1/M00/00/00/rBKx5VkZZlOAIivEAAAcGHPVROQ697.png","content":"商品质量差得令人窒息","evaluateTime":"2017-10-30","id":2,"images":[],"nick":"1***6","score":2}],"feature":"好吃","goodsCode":null,"goodsDetail":"<p>撒娇回复我改为覆盖物if贵司发布该会所的覅USD浩丰科技收到货覅&nbsp;&nbsp;<\/p>\n\n<p>ksafkljdskfhidsf<\/p>\n\n<p>&nbsp;<\/p>\n","goodsName":"零食","goodsNumber":100020,"goodsPriceStores":[{"attributeIds":null,"attributes":"1kg_3","goodsCode":null,"price":0.01,"sellerNumber":null,"storeAmount":1231243},{"attributeIds":null,"attributes":"2kg_3","goodsCode":null,"price":0.01,"sellerNumber":null,"storeAmount":23241}],"goodsStatus":"ENABLE","highTotal":0,"id":20,"images":[{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg","fileId":3954,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2iveAKFyQAAAl6egL2YI348.jpg","fileId":3955,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2iveAKFyQAAAl6egL2YI348.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivuAXF8nAACEsbNYTTk159.jpg","fileId":3956,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivuAXF8nAACEsbNYTTk159.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2iv-AdqF7AACW98spLrw343.jpg","fileId":3957,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2iv-AdqF7AACW98spLrw343.jpg"}],"lastDeliveryTime":null,"latestDeliveryTime":null,"limitBuyAmount":0,"midTotal":2,"minPrice":0.01,"publishTime":null,"publishWay":"Now","published":true,"salesVolume":2,"sellerId":1,"sellerNumber":null,"services":[{"id":226,"name":"7天退换","remark":"商家承诺7天无理由退换货"},{"id":227,"name":"假一赔十","remark":"若收到的商品是假买品牌，可获得加倍赔偿"},{"id":228,"name":"48小时快速退款","remark":"收到退货包裹并确认无误后，将在48小时内办理退款，退款将原路返回，不同银行处理时间不同，预计1-5个工作日到账"}],"shopName":"世外健康旗舰店","specifications":[{"attributes":[{"id":12,"selected":false,"value":"1kg"},{"id":13,"selected":false,"value":"2kg"}],"id":3,"name":"重量"}],"stock":1254484,"transportMoney":0}
+     * data : {"adSellTime":1509615000000,"advanceSellTime":"2017-11-02 17:30:00","advanceStatus":"AllAdvance","badTotal":1,"categoryFullName":"地方特产-特色食品-零食","categoryId":10,"cityName":"赤水","evaluateTotal":11,"evaluates":[{"attrDescription":"重量:1kg,颜色:红心","avatar":"http://resource.shiwaixiangcun.cn/group1/M00/00/00/rBKx5VkZZlOAIivEAAAcGHPVROQ697.png","content":"很多蚊子文字评价加上图片评价，哈哈哈哈哈哈哈还好还好哈哈哈哈哈哈哈哈","evaluateTime":"2017-11-01","id":9,"images":[{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5JiCAQ6McAAA7KL4H19g256.jpg","fileId":3994,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5JiCAQ6McAAA7KL4H19g256.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5JiCAf9otAAAyC-45NHU540.jpg","fileId":3995,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5JiCAf9otAAAyC-45NHU540.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5JiCALdPlAABACLwag38293.jpg","fileId":3996,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5JiCALdPlAABACLwag38293.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5JiCAc1bGAAAzIRa9Klc975.jpg","fileId":3997,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5JiCAc1bGAAAzIRa9Klc975.jpg"}],"nick":"风***车","score":3},{"attrDescription":"重量:1kg,颜色:红心","avatar":"http://resource.shiwaixiangcun.cn/group1/M00/00/00/rBKx5VkZZlOAIivEAAAcGHPVROQ697.png","content":null,"evaluateTime":"2017-11-01","id":11,"images":[{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5iQeALYVCAARduQ-Ze0w29.jpeg","fileId":4021,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5iQeALYVCAARduQ-Ze0w29.jpeg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5iQeATcLlAAEhVfk9WLQ54.jpeg","fileId":4022,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5iQeATcLlAAEhVfk9WLQ54.jpeg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5iQeACi0oAALNKGD4CWk38.jpeg","fileId":4023,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5iQeACi0oAALNKGD4CWk38.jpeg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5iQiAIOUaAAJ5wqUr2Vc42.jpeg","fileId":4024,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5iQiAIOUaAAJ5wqUr2Vc42.jpeg"}],"nick":"风***车","score":5},{"attrDescription":"重量:1kg,颜色:红心","avatar":"http://resource.shiwaixiangcun.cn/group1/M00/00/00/rBKx5VkZZlOAIivEAAAcGHPVROQ697.png","content":"两个字的名字","evaluateTime":"2017-11-01","id":12,"images":[{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/6B/rBKx51n5lciAel65AARCfYii7E434.jpeg","fileId":4031,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/6B/rBKx51n5lciAel65AARCfYii7E434.jpeg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/6B/rBKx51n5lcmAabuEAAOEtFSbnBc88.jpeg","fileId":4032,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/6B/rBKx51n5lcmAabuEAAOEtFSbnBc88.jpeg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/6B/rBKx51n5lcqAF9SPAAVZbHnFtPc48.jpeg","fileId":4033,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/6B/rBKx51n5lcqAF9SPAAVZbHnFtPc48.jpeg"}],"nick":"风***车","score":5}],"feature":"好吃","goodsCode":null,"goodsDetail":"<p>撒娇回复我改为覆盖物if贵司发布该会所的覅USD浩丰科技收到货覅&nbsp;&nbsp;<\/p>\n\n<p>ksafkljdskfhidsf<\/p>\n\n<p><img alt=\"\" height=\"260\" src=\"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5KcCAY0FzAACmv3Q6YqM792.jpg\" width=\"350\" /><\/p>\n\n<p><img alt=\"\" height=\"300\" src=\"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5KcuAZqfLAAA3oXG9UBw313.jpg\" width=\"452\" /><\/p>\n","goodsName":"零食","goodsNumber":100020,"goodsPriceStores":[{"attributeIds":null,"attributes":"1kg_3,红心_1","goodsCode":null,"price":0.01,"sellerNumber":null,"storeAmount":1210},{"attributeIds":null,"attributes":"1kg_3,白心_1","goodsCode":"","price":0.01,"sellerNumber":"","storeAmount":2315},{"attributeIds":null,"attributes":"2kg_3,红心_1","goodsCode":"","price":0.01,"sellerNumber":"","storeAmount":118},{"attributeIds":null,"attributes":"2kg_3,白心_1","goodsCode":null,"price":0.02,"sellerNumber":null,"storeAmount":12},{"attributeIds":null,"attributes":"3kg_3,红心_1","goodsCode":"","price":0.04,"sellerNumber":"","storeAmount":3},{"attributeIds":null,"attributes":"3kg_3,白心_1","goodsCode":"","price":0.05,"sellerNumber":"","storeAmount":34}],"goodsStatus":"ENABLE","highTotal":7,"id":20,"images":[{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg","fileId":3954,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2iveAKFyQAAAl6egL2YI348.jpg","fileId":3955,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2iveAKFyQAAAl6egL2YI348.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivuAXF8nAACEsbNYTTk159.jpg","fileId":3956,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivuAXF8nAACEsbNYTTk159.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2iv-AdqF7AACW98spLrw343.jpg","fileId":3957,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2iv-AdqF7AACW98spLrw343.jpg"}],"lastDeliveryTime":1509960600000,"latestDeliveryTime":"2017-11-06 17:30:00","limitBuyAmount":0,"midTotal":3,"minPrice":0.01,"publishTime":null,"publishWay":"Now","published":true,"salesVolume":35,"sellerId":1,"sellerNumber":null,"services":[{"id":226,"name":"7天退换","remark":"商家承诺7天无理由退换货"},{"id":227,"name":"假一赔十","remark":"若收到的商品是假买品牌，可获得加倍赔偿"},{"id":228,"name":"48小时快速退款","remark":"收到退货包裹并确认无误后，将在48小时内办理退款，退款将原路返回，不同银行处理时间不同，预计1-5个工作日到账"}],"shopName":"世外健康旗舰店","specifications":[{"attributes":[{"id":12,"selected":false,"value":"1kg"},{"id":13,"selected":false,"value":"2kg"},{"id":16,"selected":false,"value":"3kg"}],"id":3,"name":"重量"},{"attributes":[{"id":14,"selected":false,"value":"红心"},{"id":15,"selected":false,"value":"白心"}],"id":1,"name":"颜色"}],"stock":3692,"transportMoney":0.01}
      * message : 鎿嶄綔鎴愬姛
      * responseCode : 1001
      * success : true
@@ -71,46 +69,48 @@ public class GoodDetail {
             }
         };
         /**
-         * adSellTime : null
-         * advanceSellTime : null
-         * advanceStatus : NoAdvance
-         * badTotal : 0
+         * adSellTime : 1509615000000
+         * advanceSellTime : 2017-11-02 17:30:00
+         * advanceStatus : AllAdvance
+         * badTotal : 1
          * categoryFullName : 地方特产-特色食品-零食
          * categoryId : 10
          * cityName : 赤水
-         * evaluateTotal : 2
-         * evaluates : [{"attrDescription":"重量:2kg","avatar":"http://resource.shiwaixiangcun.cn/group1/M00/00/00/rBKx5VkZZlOAIivEAAAcGHPVROQ697.png","content":"垃圾商品","evaluateTime":"2017-10-30","id":1,"images":[{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n-eAeprFADb-QImlinU709.jpg","fileId":3958,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n-eAeprFADb-QImlinU709.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n-2AZgiIACm1-ZELSxQ766.jpg","fileId":3959,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n-2AZgiIACm1-ZELSxQ766.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n_SAUQ9KADQ9oFFyyDg811.jpg","fileId":3960,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n_SAUQ9KADQ9oFFyyDg811.jpg"}],"nick":"1***6","score":3},{"attrDescription":"重量:1kg","avatar":"http://resource.shiwaixiangcun.cn/group1/M00/00/00/rBKx5VkZZlOAIivEAAAcGHPVROQ697.png","content":"商品质量差得令人窒息","evaluateTime":"2017-10-30","id":2,"images":[],"nick":"1***6","score":2}]
+         * evaluateTotal : 11
+         * evaluates : [{"attrDescription":"重量:1kg,颜色:红心","avatar":"http://resource.shiwaixiangcun.cn/group1/M00/00/00/rBKx5VkZZlOAIivEAAAcGHPVROQ697.png","content":"很多蚊子文字评价加上图片评价，哈哈哈哈哈哈哈还好还好哈哈哈哈哈哈哈哈","evaluateTime":"2017-11-01","id":9,"images":[{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5JiCAQ6McAAA7KL4H19g256.jpg","fileId":3994,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5JiCAQ6McAAA7KL4H19g256.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5JiCAf9otAAAyC-45NHU540.jpg","fileId":3995,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5JiCAf9otAAAyC-45NHU540.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5JiCALdPlAABACLwag38293.jpg","fileId":3996,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5JiCALdPlAABACLwag38293.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5JiCAc1bGAAAzIRa9Klc975.jpg","fileId":3997,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5JiCAc1bGAAAzIRa9Klc975.jpg"}],"nick":"风***车","score":3},{"attrDescription":"重量:1kg,颜色:红心","avatar":"http://resource.shiwaixiangcun.cn/group1/M00/00/00/rBKx5VkZZlOAIivEAAAcGHPVROQ697.png","content":null,"evaluateTime":"2017-11-01","id":11,"images":[{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5iQeALYVCAARduQ-Ze0w29.jpeg","fileId":4021,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5iQeALYVCAARduQ-Ze0w29.jpeg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5iQeATcLlAAEhVfk9WLQ54.jpeg","fileId":4022,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5iQeATcLlAAEhVfk9WLQ54.jpeg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5iQeACi0oAALNKGD4CWk38.jpeg","fileId":4023,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5iQeACi0oAALNKGD4CWk38.jpeg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5iQiAIOUaAAJ5wqUr2Vc42.jpeg","fileId":4024,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5iQiAIOUaAAJ5wqUr2Vc42.jpeg"}],"nick":"风***车","score":5},{"attrDescription":"重量:1kg,颜色:红心","avatar":"http://resource.shiwaixiangcun.cn/group1/M00/00/00/rBKx5VkZZlOAIivEAAAcGHPVROQ697.png","content":"两个字的名字","evaluateTime":"2017-11-01","id":12,"images":[{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/6B/rBKx51n5lciAel65AARCfYii7E434.jpeg","fileId":4031,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/6B/rBKx51n5lciAel65AARCfYii7E434.jpeg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/6B/rBKx51n5lcmAabuEAAOEtFSbnBc88.jpeg","fileId":4032,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/6B/rBKx51n5lcmAabuEAAOEtFSbnBc88.jpeg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/6B/rBKx51n5lcqAF9SPAAVZbHnFtPc48.jpeg","fileId":4033,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/6B/rBKx51n5lcqAF9SPAAVZbHnFtPc48.jpeg"}],"nick":"风***车","score":5}]
          * feature : 好吃
          * goodsCode : null
          * goodsDetail : <p>撒娇回复我改为覆盖物if贵司发布该会所的覅USD浩丰科技收到货覅&nbsp;&nbsp;</p>
-
-         <p>ksafkljdskfhidsf</p>
-
-         <p>&nbsp;</p>
-
+         * <p>
+         * <p>ksafkljdskfhidsf</p>
+         * <p>
+         * <p><img alt="" height="260" src="http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5KcCAY0FzAACmv3Q6YqM792.jpg" width="350" /></p>
+         * <p>
+         * <p><img alt="" height="300" src="http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5KcuAZqfLAAA3oXG9UBw313.jpg" width="452" /></p>
+         * <p>
          * goodsName : 零食
          * goodsNumber : 100020
-         * goodsPriceStores : [{"attributeIds":null,"attributes":"1kg_3","goodsCode":null,"price":0.01,"sellerNumber":null,"storeAmount":1231243},{"attributeIds":null,"attributes":"2kg_3","goodsCode":null,"price":0.01,"sellerNumber":null,"storeAmount":23241}]
+         * goodsPriceStores : [{"attributeIds":null,"attributes":"1kg_3,红心_1","goodsCode":null,"price":0.01,"sellerNumber":null,"storeAmount":1210},{"attributeIds":null,"attributes":"1kg_3,白心_1","goodsCode":"","price":0.01,"sellerNumber":"","storeAmount":2315},{"attributeIds":null,"attributes":"2kg_3,红心_1","goodsCode":"","price":0.01,"sellerNumber":"","storeAmount":118},{"attributeIds":null,"attributes":"2kg_3,白心_1","goodsCode":null,"price":0.02,"sellerNumber":null,"storeAmount":12},{"attributeIds":null,"attributes":"3kg_3,红心_1","goodsCode":"","price":0.04,"sellerNumber":"","storeAmount":3},{"attributeIds":null,"attributes":"3kg_3,白心_1","goodsCode":"","price":0.05,"sellerNumber":"","storeAmount":34}]
          * goodsStatus : ENABLE
-         * highTotal : 0
+         * highTotal : 7
          * id : 20
          * images : [{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg","fileId":3954,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivWAdyZJAABnL3EQYZs639.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2iveAKFyQAAAl6egL2YI348.jpg","fileId":3955,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2iveAKFyQAAAl6egL2YI348.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivuAXF8nAACEsbNYTTk159.jpg","fileId":3956,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2ivuAXF8nAACEsbNYTTk159.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2iv-AdqF7AACW98spLrw343.jpg","fileId":3957,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2iv-AdqF7AACW98spLrw343.jpg"}]
-         * lastDeliveryTime : null
-         * latestDeliveryTime : null
+         * lastDeliveryTime : 1509960600000
+         * latestDeliveryTime : 2017-11-06 17:30:00
          * limitBuyAmount : 0
-         * midTotal : 2
+         * midTotal : 3
          * minPrice : 0.01
          * publishTime : null
          * publishWay : Now
          * published : true
-         * salesVolume : 2
+         * salesVolume : 35
          * sellerId : 1
          * sellerNumber : null
          * services : [{"id":226,"name":"7天退换","remark":"商家承诺7天无理由退换货"},{"id":227,"name":"假一赔十","remark":"若收到的商品是假买品牌，可获得加倍赔偿"},{"id":228,"name":"48小时快速退款","remark":"收到退货包裹并确认无误后，将在48小时内办理退款，退款将原路返回，不同银行处理时间不同，预计1-5个工作日到账"}]
          * shopName : 世外健康旗舰店
-         * specifications : [{"attributes":[{"id":12,"selected":false,"value":"1kg"},{"id":13,"selected":false,"value":"2kg"}],"id":3,"name":"重量"}]
-         * stock : 1254484
-         * transportMoney : 0
+         * specifications : [{"attributes":[{"id":12,"selected":false,"value":"1kg"},{"id":13,"selected":false,"value":"2kg"},{"id":16,"selected":false,"value":"3kg"}],"id":3,"name":"重量"},{"attributes":[{"id":14,"selected":false,"value":"红心"},{"id":15,"selected":false,"value":"白心"}],"id":1,"name":"颜色"}]
+         * stock : 3692
+         * transportMoney : 0.01
          */
 
         private long adSellTime;
@@ -142,7 +142,7 @@ public class GoodDetail {
         private String sellerNumber;
         private String shopName;
         private int stock;
-        private int transportMoney;
+        private double transportMoney;
         private List<EvaluatesBean> evaluates;
         private List<GoodsPriceStoresBean> goodsPriceStores;
         private List<ImagesBeanX> images;
@@ -182,7 +182,7 @@ public class GoodDetail {
             this.sellerNumber = in.readString();
             this.shopName = in.readString();
             this.stock = in.readInt();
-            this.transportMoney = in.readInt();
+            this.transportMoney = in.readDouble();
             this.evaluates = in.createTypedArrayList(EvaluatesBean.CREATOR);
             this.goodsPriceStores = in.createTypedArrayList(GoodsPriceStoresBean.CREATOR);
             this.images = in.createTypedArrayList(ImagesBeanX.CREATOR);
@@ -422,11 +422,11 @@ public class GoodDetail {
             this.stock = stock;
         }
 
-        public int getTransportMoney() {
+        public double getTransportMoney() {
             return transportMoney;
         }
 
-        public void setTransportMoney(int transportMoney) {
+        public void setTransportMoney(double transportMoney) {
             this.transportMoney = transportMoney;
         }
 
@@ -506,7 +506,7 @@ public class GoodDetail {
             dest.writeString(this.sellerNumber);
             dest.writeString(this.shopName);
             dest.writeInt(this.stock);
-            dest.writeInt(this.transportMoney);
+            dest.writeDouble(this.transportMoney);
             dest.writeTypedList(this.evaluates);
             dest.writeTypedList(this.goodsPriceStores);
             dest.writeTypedList(this.images);
@@ -527,13 +527,13 @@ public class GoodDetail {
                 }
             };
             /**
-             * attrDescription : 重量:2kg
+             * attrDescription : 重量:1kg,颜色:红心
              * avatar : http://resource.shiwaixiangcun.cn/group1/M00/00/00/rBKx5VkZZlOAIivEAAAcGHPVROQ697.png
-             * content : 垃圾商品
-             * evaluateTime : 2017-10-30
-             * id : 1
-             * images : [{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n-eAeprFADb-QImlinU709.jpg","fileId":3958,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n-eAeprFADb-QImlinU709.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n-2AZgiIACm1-ZELSxQ766.jpg","fileId":3959,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n-2AZgiIACm1-ZELSxQ766.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n_SAUQ9KADQ9oFFyyDg811.jpg","fileId":3960,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n_SAUQ9KADQ9oFFyyDg811.jpg"}]
-             * nick : 1***6
+             * content : 很多蚊子文字评价加上图片评价，哈哈哈哈哈哈哈还好还好哈哈哈哈哈哈哈哈
+             * evaluateTime : 2017-11-01
+             * id : 9
+             * images : [{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5JiCAQ6McAAA7KL4H19g256.jpg","fileId":3994,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5JiCAQ6McAAA7KL4H19g256.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5JiCAf9otAAAyC-45NHU540.jpg","fileId":3995,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5JiCAf9otAAAyC-45NHU540.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5JiCALdPlAABACLwag38293.jpg","fileId":3996,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5JiCALdPlAABACLwag38293.jpg"},{"accessUrl":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5JiCAc1bGAAAzIRa9Klc975.jpg","fileId":3997,"thumbImageURL":"http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5JiCAc1bGAAAzIRa9Klc975.jpg"}]
+             * nick : 风***车
              * score : 3
              */
 
@@ -557,8 +557,7 @@ public class GoodDetail {
                 this.id = in.readInt();
                 this.nick = in.readString();
                 this.score = in.readInt();
-                this.images = new ArrayList<ImagesBean>();
-                in.readList(this.images, ImagesBean.class.getClassLoader());
+                this.images = in.createTypedArrayList(ImagesBean.CREATOR);
             }
 
             public String getAttrDescription() {
@@ -639,11 +638,11 @@ public class GoodDetail {
                 dest.writeInt(this.id);
                 dest.writeString(this.nick);
                 dest.writeInt(this.score);
-                dest.writeList(this.images);
+                dest.writeTypedList(this.images);
             }
 
             public static class ImagesBean implements Parcelable {
-                public static final Creator<ImagesBean> CREATOR = new Creator<ImagesBean>() {
+                public static final Parcelable.Creator<ImagesBean> CREATOR = new Parcelable.Creator<ImagesBean>() {
                     @Override
                     public ImagesBean createFromParcel(Parcel source) {
                         return new ImagesBean(source);
@@ -655,9 +654,9 @@ public class GoodDetail {
                     }
                 };
                 /**
-                 * accessUrl : http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n-eAeprFADb-QImlinU709.jpg
-                 * fileId : 3958
-                 * thumbImageURL : http://resource.shiwaixiangcun.cn/group1/M00/00/69/rBKx51n2n-eAeprFADb-QImlinU709.jpg
+                 * accessUrl : http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5JiCAQ6McAAA7KL4H19g256.jpg
+                 * fileId : 3994
+                 * thumbImageURL : http://resource.shiwaixiangcun.cn/group1/M00/00/6A/rBKx51n5JiCAQ6McAAA7KL4H19g256.jpg
                  */
 
                 private String accessUrl;
@@ -725,11 +724,11 @@ public class GoodDetail {
             };
             /**
              * attributeIds : null
-             * attributes : 1kg_3
+             * attributes : 1kg_3,红心_1
              * goodsCode : null
              * price : 0.01
              * sellerNumber : null
-             * storeAmount : 1231243
+             * storeAmount : 1210
              */
 
             private String attributeIds;
@@ -767,7 +766,7 @@ public class GoodDetail {
                 this.attributes = attributes;
             }
 
-            public String getGoodsCode() {
+            public Object getGoodsCode() {
                 return goodsCode;
             }
 
@@ -783,7 +782,7 @@ public class GoodDetail {
                 this.price = price;
             }
 
-            public String getSellerNumber() {
+            public Object getSellerNumber() {
                 return sellerNumber;
             }
 
@@ -964,7 +963,7 @@ public class GoodDetail {
                 }
             };
             /**
-             * attributes : [{"id":12,"selected":false,"value":"1kg"},{"id":13,"selected":false,"value":"2kg"}]
+             * attributes : [{"id":12,"selected":false,"value":"1kg"},{"id":13,"selected":false,"value":"2kg"},{"id":16,"selected":false,"value":"3kg"}]
              * id : 3
              * name : 重量
              */
@@ -979,8 +978,7 @@ public class GoodDetail {
             protected SpecificationsBean(Parcel in) {
                 this.id = in.readInt();
                 this.name = in.readString();
-                this.attributes = new ArrayList<AttributesBean>();
-                in.readList(this.attributes, AttributesBean.class.getClassLoader());
+                this.attributes = in.createTypedArrayList(AttributesBean.CREATOR);
             }
 
             public int getId() {
@@ -1016,11 +1014,11 @@ public class GoodDetail {
             public void writeToParcel(Parcel dest, int flags) {
                 dest.writeInt(this.id);
                 dest.writeString(this.name);
-                dest.writeList(this.attributes);
+                dest.writeTypedList(this.attributes);
             }
 
             public static class AttributesBean implements Parcelable {
-                public static final Creator<AttributesBean> CREATOR = new Creator<AttributesBean>() {
+                public static final Parcelable.Creator<AttributesBean> CREATOR = new Parcelable.Creator<AttributesBean>() {
                     @Override
                     public AttributesBean createFromParcel(Parcel source) {
                         return new AttributesBean(source);
