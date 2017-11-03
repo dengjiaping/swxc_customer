@@ -132,9 +132,11 @@ public class EvaluatesListActivity extends BaseActivity implements View.OnClickL
                                 }
 
                                 EvaluatesListBean.DataBean data = mEvaluatesListBean.getData();
+
+                                int all = data.getBadTotal() + data.getMidTotal() + data.getHighTotal();
                                 mBtnGood.setText("好评" + "(" + data.getHighTotal() + ")");
-                                mBtnAll.setText("全部" + "(" + data.getTotalAmount() + ")");
-                                mBtnMid.setText("中评" + "(" + data.getBadTotal() + data.getMidTotal() + data.getHighTotal() + ")");
+                                mBtnAll.setText("全部" + "(" + all + ")");
+                                mBtnMid.setText("中评" + "(" + data.getMidTotal() + ")");
                                 mBtnBad.setText("差评" + "(" + data.getBadTotal() + ")");
                                 mListEvaluate.addAll(mEvaluatesListBean.getData().getElements());
                                 mAdapterEvaluate.notifyDataSetChanged();

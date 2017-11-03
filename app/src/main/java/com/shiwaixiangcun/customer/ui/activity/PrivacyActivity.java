@@ -18,6 +18,8 @@ import butterknife.ButterKnife;
 
 /**
  * 隐私政策页面
+ *
+ * @author Administrator
  */
 public class PrivacyActivity extends BaseActivity implements View.OnClickListener {
 
@@ -78,6 +80,8 @@ public class PrivacyActivity extends BaseActivity implements View.OnClickListene
         switch (v.getId()) {
             case R.id.back_left:
                 finish();
+                break;
+            default:
                 break;
         }
     }

@@ -25,6 +25,7 @@ import java.util.List;
 
 /**
  * 活动页面
+ * @author Administrator
  */
 public class AwardActivity extends AppCompatActivity implements View.OnClickListener, IAwardView, ListView.OnItemClickListener {
 

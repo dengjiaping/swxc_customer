@@ -32,6 +32,8 @@ public class AdapterRight extends BaseQuickAdapter<RightsRecordBean.ElementsBean
             case "FINISHED":
                 helper.setBackgroundRes(R.id.tv_stature, R.drawable.shape_stature_gray);
                 helper.setText(R.id.tv_stature, "已完成");
+            default:
+                break;
         }
         helper.setText(R.id.tv_date, DateUtil.getSecond(item.getTime()));
 

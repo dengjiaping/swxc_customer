@@ -2,6 +2,7 @@ package com.shiwaixiangcun.customer;
 
 /**
  * 全局变量
+ * @author Administrator
  */
 
 public class GlobalConfig {

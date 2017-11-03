@@ -165,7 +165,7 @@ public class AfterDetailActivity extends BaseActivity implements View.OnClickLis
 
                 mTvNumber.setText(description.getNumber());
 
-                if ("null".equals(description.getContent())) {
+                if ("".equals(description.getContent()) || description.getContent() == null) {
                     mTvReason.setText("退款原因:  用户没有填写原因");
                 } else {
                     mTvReason.setText("退款原因:  " + description.getContent());

@@ -8,6 +8,7 @@ import com.shiwaixiangcun.customer.Common;
 import com.shiwaixiangcun.customer.ContextSession;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.model.ToolCategoryBean;
+import com.shiwaixiangcun.customer.ui.activity.AwardActivity;
 import com.shiwaixiangcun.customer.ui.activity.ChunyuDoctorActivity;
 import com.shiwaixiangcun.customer.ui.activity.HouseRentingActivity;
 import com.shiwaixiangcun.customer.ui.activity.LoginActivity;
@@ -25,7 +26,8 @@ import com.shiwaixiangcun.customer.ui.activity.heath.PhysicalActivity;
 import com.shiwaixiangcun.customer.ui.activity.heath.WebActivity;
 
 /**
- * Created by Administrator on 2017/10/19.
+ * @author Administrator
+ * @date 2017/10/19
  * <p>
  * 主页gridView 跳转工具
  */
@@ -273,6 +275,8 @@ public class GridUtils {
                     break;
                 //文化生活
                 case "CULTURAL_LIFE":
+
+
                     break;
 
                 //文化课堂
@@ -301,10 +305,7 @@ public class GridUtils {
 
                 //活动报名
                 case "ACTIVE_REGISTRATION":
-                    bundle.putString("name", "活动报名");
-                    bundle.putInt("image", R.drawable.enroll);
-                    bundle.putString("message", "你所在的社区暂未开通活动报名功能");
-                    readyGo(context, NotOpenActivity.class, bundle);
+                    readyGo(context, AwardActivity.class);
                     break;
 
                 case "ONLINE_PAYMENT":
@@ -317,6 +318,8 @@ public class GridUtils {
                     break;
                 //智能关爱
                 case "INTELLIGENT_CARE":
+                    break;
+                default:
                     break;
             }
         }

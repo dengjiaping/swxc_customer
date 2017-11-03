@@ -18,7 +18,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by Administrator on 2017/10/13.
+ *
+ * @author Administrator
+ * @date 2017/10/13
  */
 
 public class AdapterRecord extends RecyclerView.Adapter<AdapterRecord.RecordViewHolder> {
@@ -93,8 +95,10 @@ public class AdapterRecord extends RecyclerView.Adapter<AdapterRecord.RecordView
             if (type == ItemType.ATOM) {
                 mItemTimeLineMark.setBeginLine(null);
                 mItemTimeLineMark.setEndLine(null);
+
             } else if (type == ItemType.START) {
                 mItemTimeLineMark.setBeginLine(null);
+                mItemTimeLineMark.setMarkerDrawable(mContext.getResources().getDrawable(R.drawable.shape_green_circle));
             } else if (type == ItemType.END) {
                 mItemTimeLineMark.setEndLine(null);
             }

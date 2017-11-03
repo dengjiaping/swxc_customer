@@ -37,6 +37,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * @author Administrator
+ *         维权记录
+ */
 public class RightsRecordActivity extends BaseActivity {
 
     @BindView(R.id.back_left)
@@ -82,8 +86,8 @@ public class RightsRecordActivity extends BaseActivity {
 
         OkGo.<String>get(GlobalAPI.rightRecord)
                 .params("access_token", tokenString)
-                .params("mCurrentPage.pn", page)
-                .params("mCurrentPage.size", pageSize)
+                .params("page.pn", page)
+                .params("page.size", pageSize)
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Response<String> response) {
@@ -106,8 +110,9 @@ public class RightsRecordActivity extends BaseActivity {
                         }
                         switch (responseEntity.getResponseCode()) {
                             case 1001:
-                                if (responseEntity.getData().getElements().size() == 0 || responseEntity.getData().getElements() == null) {
+                                if (!isLoadMore && responseEntity.getData().getElements().size() == 0) {
                                     mRlayoutNoData.setVisibility(View.VISIBLE);
+
                                 } else {
                                     if (isLoadMore) {
                                         mCurrentPage++;
@@ -175,15 +180,17 @@ public class RightsRecordActivity extends BaseActivity {
             public void onRefresh(RefreshLayout refreshlayout) {
 
                 refreshlayout.finishLoadmore();
-                if (mCurrentPage == 1) {
-                    mCurrentPage++;
-                }
+
+                mCurrentPage = 1;
                 requestData(mCurrentPage, mPageSize, false);
             }
 
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 refreshlayout.finishRefresh();
+                if (mCurrentPage == 1) {
+                    mCurrentPage++;
+                }
                 requestData(mCurrentPage, mPageSize, true);
 
             }

@@ -1,5 +1,6 @@
 package com.shiwaixiangcun.customer;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -13,8 +14,10 @@ import com.shiwaixiangcun.customer.ui.fragment.CubeFragmentActivity;
 
 /**
  * Activity 基类
+ * @author Administrator
  */
 
+@SuppressLint("Registered")
 public class BaseActivity extends CubeFragmentActivity {
     /**
      * 日志输出标志

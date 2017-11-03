@@ -42,6 +42,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * @author Administrator
+ */
 public class RightDetailActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.back_left)

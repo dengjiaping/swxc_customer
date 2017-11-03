@@ -18,7 +18,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by Administrator on 2017/10/16.
+ * @author Administrator
+ * @date 2017/10/16
  */
 
 public class AdapterProcess extends RecyclerView.Adapter<AdapterProcess.RecordViewHolder> {
@@ -35,13 +36,15 @@ public class AdapterProcess extends RecyclerView.Adapter<AdapterProcess.RecordVi
     @Override
     public int getItemViewType(int position) {
         final int size = mRecordsList.size() - 1;
-        if (size == 0)
-            return AdapterProcess.ItemType.ATOM;
-        else if (position == 0)
-            return AdapterProcess.ItemType.START;
-        else if (position == size)
-            return AdapterProcess.ItemType.END;
-        else return AdapterProcess.ItemType.NORMAL;
+        if (size == 0) {
+            return ItemType.ATOM;
+        } else if (position == 0) {
+            return ItemType.START;
+        } else if (position == size) {
+            return ItemType.END;
+        } else {
+            return ItemType.NORMAL;
+        }
     }
 
     @Override
@@ -94,6 +97,7 @@ public class AdapterProcess extends RecyclerView.Adapter<AdapterProcess.RecordVi
                 mItemTimeLineMark.setBeginLine(null);
                 mItemTimeLineMark.setEndLine(null);
             } else if (type == AdapterProcess.ItemType.START) {
+                mItemTimeLineMark.setMarkerDrawable(mContext.getResources().getDrawable(R.drawable.shape_green_circle));
                 mItemTimeLineMark.setBeginLine(null);
             } else if (type == AdapterProcess.ItemType.END) {
                 mItemTimeLineMark.setEndLine(null);

@@ -231,12 +231,11 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
                 if (goodBean.isPublished()) {
                     mRlayoutChoice.setVisibility(View.VISIBLE);
                     mRlayoutPurchase.setVisibility(View.VISIBLE);
-
                     mTvHint.setVisibility(View.GONE);
                 } else {
-                    mRlayoutPurchase.setVisibility(View.GONE);
                     mTvHint.setVisibility(View.VISIBLE);
                     mRlayoutChoice.setVisibility(View.GONE);
+                    mRlayoutPurchase.setVisibility(View.GONE);
                 }
 
 
@@ -264,7 +263,7 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
                 //设置 用户需要选择的规格
 
                 mListSpecifications = goodBean.getSpecifications();
-                if (mListSpecifications.size() == 0) {
+                if (mListSpecifications.size() == 0 || !goodBean.isPublished()) {
                     mRlayoutChoice.setVisibility(View.GONE);
                 } else {
                     for (GoodDetail.DataBean.SpecificationsBean specificationsBean : mListSpecifications) {
@@ -302,6 +301,7 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
                     if (PRESALE_END.equals(mAdSellTime.getText())) {
                         mBtnPurchase.setVisibility(View.GONE);
                         mTvHint.setVisibility(View.VISIBLE);
+                        mRlayoutChoice.setVisibility(View.GONE);
                     }
                     handler.sendEmptyMessage(1);
 

@@ -3,7 +3,9 @@ package com.shiwaixiangcun.customer;
 import java.io.Serializable;
 
 /**
- * Created by Administrator on 2017/5/24.
+ *
+ * @author Administrator
+ * @date 2017/5/24
  */
 
 public class Common implements Serializable {
