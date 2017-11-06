@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.shiwaixiangcun.customer.ui.activity.mall.GoodDetailActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/ui_gray"
+        android:orientation="vertical">
+
+        <include layout="@layout/top_bar_white"/>
+
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/refreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="60dp"
+            app:srlEnableLoadmore="true"
+            app:srlEnablePureScrollMode="true">
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_evaluate"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/bg_white">
+
+            </android.support.v7.widget.RecyclerView>
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlayout_purchase"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom"
+        android:background="#f0ffffff"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:layout_alignParentTop="true"
+            android:background="@color/color_divider"/>
+
+        <Button
+            android:id="@+id/btn_purchase"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/selector_button_red"
+            android:text="立即购买"
+            android:textColor="@color/white"/>
+    </RelativeLayout>
+
+    <TextView
+
+        android:id="@+id/tv_hint"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom"
+        android:background="#f11ccc8c"
+        android:gravity="center"
+        android:text="很抱歉，该商品已下架"
+        android:textColor="@color/white"/>
+</FrameLayout>

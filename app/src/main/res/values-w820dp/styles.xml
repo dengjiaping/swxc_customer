@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Button.Evaluate" parent="Base.Widget.AppCompat.Button">
+        <item name="android:layout_height">@dimen/button_height</item>
+        <item name="background">@drawable/shape_red_corner_gradient</item>
+    </style>
+
+
+</resources>

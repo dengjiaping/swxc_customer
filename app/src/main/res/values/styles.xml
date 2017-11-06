@@ -10,7 +10,6 @@
     </style>
 
 
-
     <!--对话框弹出window背景变暗-->
     <style name="dialog" parent="Base.Animation.AppCompat.Dialog">
         <item name="android:backgroundDimEnabled">true</item>
@@ -47,12 +46,17 @@
         <item name="android:windowExitAnimation">@anim/dia_out</item>
     </style>
 
-    <style name="custom_checkbox">
-        parent="@android:style/Widget.CompoundButton.CheckBox">
+    <style name="custom_checkbox" parent="@android:style/Widget.CompoundButton.CheckBox">
         <item name="android:button">@drawable/checkbox_selector</item>
         <item name="android:layout_width">16dp</item>
         <item name="android:layout_height">16dp</item>
     </style>
 
+    <style name="Button.Evaluate" parent="Base.Widget.AppCompat.Button">
+        <item name="android:layout_height">@dimen/button_height</item>
+        <item name="background">@drawable/shape_red_corner_gradient</item>
+    </style>
 
+
+    <dimen name="button_height">32dp</dimen>
 </resources>

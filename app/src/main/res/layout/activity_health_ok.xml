@@ -1,0 +1,567 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_health_ok"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ui_white"
+    tools:context="com.shiwaixiangcun.customer.ui.activity.HealthOkActivity">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/top_bar_white" />
+
+    <com.shiwaixiangcun.customer.widget.pullableview.PullToRefreshLayout
+        android:id="@+id/refresh_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/include">
+
+        <include layout="@layout/refresh_black_head" />
+        <!-- 支持所有实现Pullable接口的View -->
+
+        <com.shiwaixiangcun.customer.widget.pullableview.PullableScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/include">
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="204dp"
+
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/iv_health_status"
+                        android:layout_width="44dp"
+                        android:layout_height="38dp"
+                        android:layout_marginTop="19dp"
+                     />
+
+                    <TextView
+                        android:id="@+id/tv_center_health"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="25dp"
+                        android:text=""
+                        android:textColor="@color/word_black"
+                        android:textSize="22sp" />
+
+                    <TextView
+                        android:id="@+id/tv_bottom_health"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center"
+                        android:text=""
+                        android:textColor="@color/word_black"
+                        android:textSize="22sp" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_blood_pressure"
+                    android:layout_width="match_parent"
+                    android:layout_height="97dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="20dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="血压"
+                            android:textColor="@color/word_white"
+                            android:textSize="22sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="（mmHg）"
+                            android:textColor="@color/word_white"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp">
+
+
+                        <TextView
+                            android:id="@+id/tv_blood_pressure_data"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="16dp"
+                            android:text="120/90"
+                            android:textColor="@color/word_white"
+                            android:textSize="36sp" />
+
+                        <TextView
+                            android:id="@+id/tv_blood_pressure_ok_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="62dp"
+                            android:text="今天 16:30"
+                            android:textColor="@color/word_little_white"
+                            android:textSize="14sp" />
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_health_heart_rate"
+                    android:layout_width="match_parent"
+                    android:layout_height="97dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="15dp"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="20dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="心率"
+                            android:textColor="@color/word_white"
+                            android:textSize="22sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="（bpm）"
+                            android:textColor="@color/word_white"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <RelativeLayout
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp">
+
+
+                        <TextView
+                            android:id="@+id/tv_heart_ok_data"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="16dp"
+                            android:text="110"
+                            android:textColor="@color/word_white"
+                            android:textSize="36sp" />
+
+                        <TextView
+                            android:id="@+id/tv_heart_ok_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="62dp"
+                            android:text="今天 16:30"
+                            android:textColor="@color/word_little_white"
+                            android:textSize="14sp" />
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_blood_sugar"
+                    android:layout_width="match_parent"
+                    android:layout_height="97dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="15dp"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="20dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="血糖"
+                            android:textColor="@color/word_white"
+                            android:textSize="22sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="（mmol/L）"
+                            android:textColor="@color/word_white"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp">
+
+
+                        <TextView
+                            android:id="@+id/tv_blood_sugar_ok_data"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="16dp"
+                            android:text="1"
+                            android:textColor="@color/word_white"
+                            android:textSize="36sp" />
+
+                        <TextView
+                            android:id="@+id/tv_blood_sugar_ok_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="62dp"
+                            android:text="今天 16:30"
+                            android:textColor="@color/word_little_white"
+                            android:textSize="14sp" />
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_weight_person"
+                    android:layout_width="match_parent"
+                    android:layout_height="97dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="15dp"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="20dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="体重"
+                            android:textColor="@color/word_white"
+                            android:textSize="22sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="（kg）"
+                            android:textColor="@color/word_white"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <RelativeLayout
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp">
+
+
+                        <TextView
+                            android:id="@+id/tv_weight_ok_data"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="16dp"
+                            android:text="60"
+                            android:textColor="@color/word_white"
+                            android:textSize="36sp" />
+
+                        <TextView
+                            android:id="@+id/tv_weight_ok_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="62dp"
+                            android:text="今天 16:30"
+                            android:textColor="@color/word_little_white"
+                            android:textSize="14sp" />
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_blood_fat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="15dp"
+
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="20dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="血脂"
+                            android:textColor="@color/word_white"
+                            android:textSize="22sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="（mmol/L）"
+                            android:textColor="@color/word_white"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="27dp">
+
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="总胆固醇"
+                            android:textColor="@color/word_white"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/tv_ok_totalCholesterol"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="20dp"
+                            android:text="4.9"
+                            android:textColor="@color/word_white"
+                            android:textSize="36sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="16dp">
+
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="甘油三酯"
+                            android:textColor="@color/word_white"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/tv_ok_triglyceride"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="20dp"
+                            android:text="4.9"
+                            android:textColor="@color/word_white"
+                            android:textSize="36sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="高密度脂蛋白"
+                            android:textColor="@color/word_white"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/tv_ok_topLipo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="20dp"
+                            android:text="4.9"
+                            android:textColor="@color/word_white"
+                            android:textSize="36sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="低密度脂蛋白"
+                            android:textColor="@color/word_white"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/tv_ok_lowLipo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="20dp"
+                            android:text="4.9"
+                            android:textColor="@color/word_white"
+                            android:textSize="36sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginTop="20dp">
+
+                        <TextView
+                            android:id="@+id/tv_blood_fat_ok_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="20dp"
+                            android:text="8/10 9:26"
+                            android:textColor="@color/word_little_white"
+                            android:textSize="14sp" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_botton_not_all"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:text="您的健康数据还\n不完善"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </com.shiwaixiangcun.customer.widget.pullableview.PullableScrollView>
+
+
+        <include layout="@layout/load_more" />
+    </com.shiwaixiangcun.customer.widget.pullableview.PullToRefreshLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_top_health"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/include"
+        android:background="@color/ui_base_color"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="42dp"
+            android:src="@mipmap/health_not_data" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="39dp"
+            android:text="暂无数据"
+            android:textColor="@color/word_black"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/tv_top_datacomplete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="系统还没有您的健康信息\n请到恒信天鹅堡登记"
+            android:textColor="@color/word_grad_sub"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_low_health"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/include"
+        android:background="@color/ui_base_color"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="42dp"
+            android:src="@mipmap/health_not_data" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="39dp"
+            android:text="暂无数据"
+            android:textColor="@color/word_black"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/tv_low_datacomplete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="系统还没有您的健康信息\n请到恒信天鹅堡健康管理中心登记"
+            android:textColor="@color/word_grad_sub"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+
+</RelativeLayout>

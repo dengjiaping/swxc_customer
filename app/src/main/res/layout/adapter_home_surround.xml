@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="122dp">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:background="@color/ui_white"
+            android:layout_width="match_parent"
+            android:layout_height="122dp">
+            <ImageView
+                android:scaleType="fitXY"
+                android:id="@+id/iv_merch"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/word_little_grad"
+                android:layout_width="110dp"
+                android:layout_height="80dp" />
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="12dp"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+                <TextView
+
+                    android:id="@+id/tv_merch_name"
+                    android:layout_marginRight="20dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/word_black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="红光可乐"/>
+
+                <TextView
+                    android:layout_marginRight="20dp"
+                    android:lines="2"
+                    android:ellipsize="end"
+                    android:id="@+id/tv_merch_content"
+                    android:layout_marginTop="10dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/word_grad"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="撒大声地撒多撒大所大所大所大所大所大所大所大所"/>
+            </LinearLayout>
+        </LinearLayout>
+        <TextView
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/ui_base_color"/>
+    </RelativeLayout>
+
+</RelativeLayout>

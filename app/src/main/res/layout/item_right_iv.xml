@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/ui_white">
+
+        <LinearLayout
+            android:id="@+id/ll_left_word"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_toLeftOf="@+id/iv_coverPath"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="2017年健康生活从这些细节做起aaaaaaa"
+                android:textColor="@color/black_text_100"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/tv_summary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:ellipsize="end"
+                android:minLines="2"
+                android:text="2017年健康生活从这些细节做起aaaaaaa"
+                android:textColor="@color/black_text_60"
+                android:textSize="14sp"/>
+
+            <LinearLayout
+                android:layout_width="230dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_source"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2017年健康生活从这些"
+                    android:textColor="@color/black_text_60"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:id="@+id/tv_publishTime"
+                    android:layout_width="wrap_content"
+
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="17:30"
+                    android:textColor="@color/black_text_60"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageView
+
+            android:id="@+id/iv_coverPath"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/ui_grad_back"
+            android:scaleType="fitXY"/>
+    </RelativeLayout>
+</LinearLayout>

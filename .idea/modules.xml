@@ -3,9 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/awesomelistview/awesomelistview.iml" filepath="$PROJECT_DIR$/awesomelistview/awesomelistview.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mypicker/mypicker.iml" filepath="$PROJECT_DIR$/mypicker/mypicker.iml" />
-      <module fileurl="file://$PROJECT_DIR$/smallchart/smallchart.iml" filepath="$PROJECT_DIR$/smallchart/smallchart.iml" />
+      <module fileurl="file://$PROJECT_DIR$/awesomelistview/listview.iml" filepath="$PROJECT_DIR$/awesomelistview/listview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mypicker/picker.iml" filepath="$PROJECT_DIR$/mypicker/picker.iml" />
       <module fileurl="file://$PROJECT_DIR$/swxc_customer.iml" filepath="$PROJECT_DIR$/swxc_customer.iml" />
     </modules>
   </component>

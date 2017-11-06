@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_blood_pressure"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srlEnableLoadmore="true"
+        app:srlEnablePureScrollMode="true">
+
+        <com.shiwaixiangcun.customer.widget.pullableview.PullableScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/ui_white"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/ll_blood_fat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:paddingTop="50dp">
+
+                    <TextView
+                        android:id="@+id/tv_blood_fat_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="血脂正常"
+                        android:textColor="@color/word_white"
+                        android:textSize="28dp"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="28dp"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="113dp"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/tv_total_cholesterol"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:text="总胆固醇"
+                                android:textColor="@color/word_white"
+                                android:textSize="14sp"/>
+
+                            <TextView
+                                android:id="@+id/tv_total_value"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_below="@+id/tv_total_cholesterol"
+                                android:layout_marginTop="4dp"
+                                android:text="4.9"
+                                android:textColor="@color/word_white"
+                                android:textSize="36sp"/>
+
+                            <TextView
+                                android:id="@+id/tv_hdl_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_below="@+id/tv_total_value"
+                                android:layout_marginTop="12dp"
+                                android:text="高密度脂蛋白"
+                                android:textColor="@color/word_white"
+                                android:textSize="14sp"/>
+
+                            <TextView
+                                android:id="@+id/tv_topLipo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_below="@+id/tv_hdl_name"
+                                android:layout_marginTop="4dp"
+                                android:text="0.96"
+                                android:textColor="@color/word_white"
+                                android:textSize="36sp"/>
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="49dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="甘油三酯"
+                                android:textColor="@color/word_white"
+                                android:textSize="14sp"/>
+
+                            <TextView
+                                android:id="@+id/tv_triglyceride"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="0.85"
+                                android:textColor="@color/word_white"
+                                android:textSize="36sp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:text="低密度脂蛋白"
+                                android:textColor="@color/word_white"
+                                android:textSize="14sp"/>
+
+                            <TextView
+                                android:id="@+id/tv_lowLipo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="2.5"
+                                android:textColor="@color/word_white"
+                                android:textSize="36sp"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="mmol/L"
+                        android:textColor="@color/word_white"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:id="@+id/tv_fat_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginTop="26dp"
+                        android:text="2017/01/01 16:00"
+                        android:textColor="@color/word_little_white"
+                        android:textSize="14sp"/>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_fat_tx"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp"
+                    android:textColor="@color/word_green"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/tv_blood_fat_introduce"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/word_grad"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/ui_base_color"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="13dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="14dp"
+                        android:text="理想血脂"
+                        android:textColor="@color/word_black"
+                        android:textSize="14sp"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="25dp"
+                        android:gravity="center_vertical">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:lines="1"
+                                android:text="总胆固醇 2.8-5.17"
+                                android:textColor="@color/word_grad"
+                                android:textSize="14sp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:lines="1"
+                                android:text="甘油三酯 0.56-1.7"
+                                android:textColor="@color/word_grad"
+                                android:textSize="14sp"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="10dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:lines="1"
+                                android:text="低密度脂蛋白 0-3.1"
+                                android:textColor="@color/word_grad"
+                                android:textSize="14sp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:lines="1"
+                                android:text="高密度脂蛋白 >= 1.04"
+                                android:textColor="@color/word_grad"
+                                android:textSize="14sp"/>
+                        </LinearLayout>
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="@color/ui_base_color"/>
+
+                <LinearLayout
+                    android:id="@+id/llayout_chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="54dp">
+
+                        <TextView
+                            android:layout_width="4dp"
+                            android:layout_height="20dp"
+                            android:layout_centerVertical="true"
+                            android:background="@color/ui_green"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="20dp"
+                            android:text="血脂趋势"
+                            android:textColor="@color/word_black_heart"
+                            android:textSize="16sp"/>
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/ui_base_color"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="19dp"
+                            android:layout_marginTop="20dp"
+                            android:text="总胆固醇"
+                            android:textColor="@color/word_black"
+                            android:textSize="14sp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="10dp"
+                            android:text="mmol/L"
+                            android:textColor="@color/word_little_grad"
+                            android:textSize="12sp"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <lecho.lib.hellocharts.view.LineChartView
+
+                                android:id="@+id/curveChart_t"
+                                android:layout_width="match_parent"
+                                android:layout_height="150dp"
+                                android:layout_margin="8dp"/>
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_margin="16dp"
+                            android:background="@color/ui_base_color"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="19dp"
+                            android:layout_marginTop="20dp"
+                            android:text="甘油三酯"
+                            android:textColor="@color/word_black"
+                            android:textSize="14sp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="10dp"
+                            android:text="mmol/L"
+                            android:textColor="@color/word_little_grad"
+                            android:textSize="12sp"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <lecho.lib.hellocharts.view.LineChartView
+                                android:id="@+id/curveChart_a"
+                                android:layout_width="match_parent"
+                                android:layout_height="150dp"
+                                android:layout_margin="8dp"/>
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginLeft="19dp"
+                            android:background="@color/ui_base_color"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="19dp"
+                            android:layout_marginTop="20dp"
+                            android:text="高密度脂蛋白"
+                            android:textColor="@color/word_black"
+                            android:textSize="14sp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="10dp"
+                            android:text="mmol/L"
+                            android:textColor="@color/word_little_grad"
+                            android:textSize="12sp"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <lecho.lib.hellocharts.view.LineChartView
+                                android:id="@+id/curveChart_b"
+                                android:layout_width="match_parent"
+                                android:layout_height="150dp"
+                                android:layout_margin="8dp"/>
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginLeft="19dp"
+                            android:background="@color/ui_base_color"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="19dp"
+                            android:layout_marginTop="20dp"
+                            android:text="低密度脂蛋白"
+                            android:textColor="@color/word_black"
+                            android:textSize="14sp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="10dp"
+                            android:text="mmol/L"
+                            android:textColor="@color/word_little_grad"
+                            android:textSize="12sp"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <lecho.lib.hellocharts.view.LineChartView
+                                android:id="@+id/curveChart_c"
+                                android:layout_width="match_parent"
+                                android:layout_height="150dp"
+                                android:layout_margin="8dp"/>
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginLeft="19dp"
+                            android:background="@color/ui_base_color"/>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="@color/ui_base_color"/>
+
+                <RelativeLayout
+                    android:id="@+id/rl_history_blood"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginLeft="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="历史数据"
+                        android:textColor="@color/word_black"
+                        android:textSize="16sp"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="历史数据"
+                            android:textColor="@color/word_grad"
+                            android:textSize="16sp"/>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="20dp"
+                            android:src="@mipmap/to_right"/>
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="@color/ui_base_color"/>
+            </LinearLayout>
+        </com.shiwaixiangcun.customer.widget.pullableview.PullableScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
+    <include
+
+        layout="@layout/top_bar_transparent"/>
+
+</RelativeLayout>

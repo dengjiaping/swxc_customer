@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray"
+    android:orientation="vertical"
+    tools:context="com.shiwaixiangcun.customer.ui.activity.ProtectRightActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top">
+
+        <include layout="@layout/top_bar_white"/>
+    </LinearLayout>
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/toobar_height"
+        app:srlEnableLoadmore="true"
+        app:srlEnablePureScrollMode="true">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/bg_white"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/shape_protect_right"
+                        android:gravity="center_vertical"
+
+                        android:lineSpacingMultiplier="1.2"
+                        android:text="您遇到的消费问题都可以在这里反馈，我们将联合当地市场监管部门尽快帮您解决。"
+                        android:textColor="@color/black_text_40"
+                        android:textSize="14sp">
+                    </TextView>
+
+                    <EditText
+                        android:id="@+id/edt_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@null"
+                        android:gravity="top"
+                        android:hint="说说您的遇到的问题..."
+                        android:lineSpacingMultiplier="1.2"
+                        android:textColor="@color/black_text_80"
+                        android:textColorHint="@color/black_text_60"
+                        android:textSize="16sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/bg_white">
+
+                    <android.support.v7.widget.RecyclerView
+
+                        android:id="@+id/rv_images"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="8dp"
+                        android:visibility="visible">
+
+                    </android.support.v7.widget.RecyclerView>
+
+                    <ImageView
+                        android:id="@+id/iv_choose_image"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/phone_lpw"
+                        android:visibility="visible"/>
+
+
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom"
+        android:background="@color/bg_white"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:background="@drawable/divider"/>
+
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/selector_button_green"
+            android:text="提 交"
+            android:textColor="@color/bg_white"
+            android:textSize="16sp"/>
+    </RelativeLayout>
+
+
+</FrameLayout>
+

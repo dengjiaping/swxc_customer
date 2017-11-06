@@ -29,7 +29,7 @@
     <color name="word_black">#2D3230</color>
     <color name="word_grad">#662D3230</color>
     <color name="word_little_grad">#332D3230</color>
-    <color name="word_green">#1CCC8C</color>
+    <color name="word_green">#FF1CCC8C</color>
     <color name="word_white">#FFFFFF</color>
     <color name="word_little_white">#99FFFFFF</color>
     <color name="word_grad_sub">#CC2D3230</color>
@@ -63,6 +63,8 @@
     <color name="black_text_60">#992d3230</color>
     <color name="main_text_selected">#FF1CCC8C</color>
     <color name="main_text_default">#FF2D3230</color>
-    <color name="indicator_selected">#FF1CCC8C</color>>
+    <color name="indicator_selected">#FF1CCC8C</color>
     <color name="indicator_unselected">#77000000</color>
+    <color name="stature_gray">#262d3231</color>
+    <color name="red_flag">#FFFF4449</color>
 </resources>

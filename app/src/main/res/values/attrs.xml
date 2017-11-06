@@ -4,33 +4,33 @@
     <!--WheelView 属性-->
     <declare-styleable name="WheelView">
         <!--set number of item displayed, default is 3-->
-        <attr name="npv_ShowCount" format="reference|integer" />
+        <attr name="npv_ShowCount" format="reference|integer"/>
         <!--set if show divider, default is true-->
-        <attr name="npv_ShowDivider" format="reference|boolean" />
-        <attr name="npv_DividerColor" format="reference|color" />
-        <attr name="npv_DividerMarginLeft" format="reference|dimension" />
-        <attr name="npv_DividerMarginRight" format="reference|dimension" />
-        <attr name="npv_DividerHeight" format="reference|dimension" />
-        <attr name="npv_TextColorNormal" format="reference|color" />
-        <attr name="npv_TextColorSelected" format="reference|color" />
-        <attr name="npv_TextColorHint" format="reference|color" />
-        <attr name="npv_TextSizeNormal" format="reference|dimension" />
-        <attr name="npv_TextSizeSelected" format="reference|dimension" />
-        <attr name="npv_TextSizeHint" format="reference|dimension" />
-        <attr name="npv_TextArray" format="reference" />
-        <attr name="npv_MinValue" format="reference|integer" />
-        <attr name="npv_MaxValue" format="reference|integer" />
-        <attr name="npv_WrapSelectorWheel" format="reference|boolean" />
-        <attr name="npv_HintText" format="reference|string" />
-        <attr name="npv_EmptyItemHint" format="reference|string" />
-        <attr name="npv_MarginStartOfHint" format="reference|dimension" />
-        <attr name="npv_MarginEndOfHint" format="reference|dimension" />
-        <attr name="npv_ItemPaddingHorizental" format="reference|dimension" />
-        <attr name="npv_ItemPaddingVertical" format="reference|dimension" />
+        <attr name="npv_ShowDivider" format="reference|boolean"/>
+        <attr name="npv_DividerColor" format="reference|color"/>
+        <attr name="npv_DividerMarginLeft" format="reference|dimension"/>
+        <attr name="npv_DividerMarginRight" format="reference|dimension"/>
+        <attr name="npv_DividerHeight" format="reference|dimension"/>
+        <attr name="npv_TextColorNormal" format="reference|color"/>
+        <attr name="npv_TextColorSelected" format="reference|color"/>
+        <attr name="npv_TextColorHint" format="reference|color"/>
+        <attr name="npv_TextSizeNormal" format="reference|dimension"/>
+        <attr name="npv_TextSizeSelected" format="reference|dimension"/>
+        <attr name="npv_TextSizeHint" format="reference|dimension"/>
+        <attr name="npv_TextArray" format="reference"/>
+        <attr name="npv_MinValue" format="reference|integer"/>
+        <attr name="npv_MaxValue" format="reference|integer"/>
+        <attr name="npv_WrapSelectorWheel" format="reference|boolean"/>
+        <attr name="npv_HintText" format="reference|string"/>
+        <attr name="npv_EmptyItemHint" format="reference|string"/>
+        <attr name="npv_MarginStartOfHint" format="reference|dimension"/>
+        <attr name="npv_MarginEndOfHint" format="reference|dimension"/>
+        <attr name="npv_ItemPaddingHorizental" format="reference|dimension"/>
+        <attr name="npv_ItemPaddingVertical" format="reference|dimension"/>
 
-        <attr name="npv_AlternativeTextArrayWithMeasureHint" format="reference" />
-        <attr name="npv_AlternativeTextArrayWithoutMeasureHint" format="reference" />
-        <attr name="npv_AlternativeHint" format="reference|string" />
+        <attr name="npv_AlternativeTextArrayWithMeasureHint" format="reference"/>
+        <attr name="npv_AlternativeTextArrayWithoutMeasureHint" format="reference"/>
+        <attr name="npv_AlternativeHint" format="reference|string"/>
     </declare-styleable>
     <declare-styleable name="AutoLabel">
         <attr name="lineSpacing" format="dimension"/>
@@ -169,14 +169,65 @@
         <!-- 圆角矩形宽高相等,取较宽高中大值-->
         <attr name="mv_isWidthHeightEqual" format="boolean"/>
     </declare-styleable>
-
     <declare-styleable name="CircleImageView">
         <attr name="civ_border_width" format="dimension"/>
         <attr name="civ_border_color" format="color"/>
         <attr name="civ_border_overlay" format="boolean"/>
         <attr name="civ_fill_color" format="color"/>
     </declare-styleable>
+    <declare-styleable name="TimeLineMarker">
+        <attr name="markerSize" format="dimension"/>
+        <attr name="marker" format="color|reference"/>
+        <attr name="beginLine" format="color|reference"/>
+        <attr name="endLine" format="color|reference"/>
+        <attr name="lineSize" format="dimension"/>
+    </declare-styleable>
+    <declare-styleable name="RatingBarAttributes">
+        <attr name="numStars" format="integer"/>
+        <attr name="rating" format="float"/>
+        <attr name="starPadding" format="dimension"/>
+        <attr name="drawableEmpty" format="reference"/>
+        <attr name="drawableFilled" format="reference"/>
+        <attr name="touchable" format="boolean"/>
+        <attr name="clearRatingEnabled" format="boolean"/>
+        <attr name="starWidth" format="dimension"/>
+        <attr name="starHeight" format="dimension"/>
+        <attr name="stepSize" format="float"/>
+    </declare-styleable>
+    <declare-styleable name="NumberProgressBar">
+        <attr name="progress_current" format="integer"/>
+        <attr name="progress_max" format="integer"/>
+        <attr name="progress_unreached_color" format="color"/>
+        <attr name="progress_reached_color" format="color"/>
+        <attr name="progress_reached_bar_height" format="dimension"/>
+        <attr name="progress_unreached_bar_height" format="dimension"/>
+        <attr name="progress_text_size" format="dimension"/>
+        <attr name="progress_text_color" format="color"/>
+        <attr name="progress_text_offset" format="dimension"/>
+        <attr name="progress_text_visibility" format="enum">
+            <enum name="visible" value="0"/>
+            <enum name="invisible" value="1"/>
+        </attr>
+    </declare-styleable>
+
+
+    <!--知乎图片选择框架-->
+    <attr name="toolbar" format="reference"/>
+    <attr name="album.dropdown.title.color" format="reference|color"/>
+    <attr name="album.dropdown.count.color" format="reference|color"/>
+    <attr name="album.element.color" format="reference|color"/>
+    <attr name="album.thumbnail.placeholder" format="reference|color"/>
+    <attr name="album.emptyView" format="reference"/>
+    <attr name="album.emptyView.textColor" format="reference|color"/>
+    <attr name="listPopupWindowStyle" format="reference"/>
+    <attr name="page.bg" format="reference|color"/>
+    <attr name="bottomToolbar.bg" format="reference|color"/>
+    <attr name="bottomToolbar.preview.textColor" format="reference|color"/>
+    <attr name="bottomToolbar.apply.textColor" format="reference|color"/>
+    <attr name="preview.bottomToolbar.back.textColor" format="reference|color"/>
+    <attr name="preview.bottomToolbar.apply.textColor" format="reference|color"/>
+    <attr name="item.placeholder" format="reference|color"/>
+    <attr name="item.checkCircle.backgroundColor" format="reference|color"/>
+    <attr name="item.checkCircle.borderColor" format="reference|color"/>
+    <attr name="capture.textColor" format="reference|color"/>
 </resources>
-
-
-

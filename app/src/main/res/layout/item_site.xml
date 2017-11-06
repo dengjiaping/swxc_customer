@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/bg_white"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_site"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dp"
+        android:text="恒信天鹅堡森林公园"
+        android:textColor="#FF2D3231"
+        android:textSize="16sp"
+        />
+</LinearLayout>

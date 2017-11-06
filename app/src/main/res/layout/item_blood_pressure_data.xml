@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/ui_white"
+              android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/ui_white">
+        <TextView
+            android:id="@+id/tv_pressure_data_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/word_grad_sub"
+            android:textSize="14sp"
+            tools:text="2017-5-28 17:30"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_pressure_data_shrinkBlood"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="151"
+                android:textColor="@color/word_black"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="/"
+                android:textColor="@color/word_black"
+                android:textSize="16sp"/>
+            <TextView
+                android:id="@+id/tv_pressure_data_relaxationBlood"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100"
+                android:textColor="@color/word_black"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" mmHg"
+                android:textColor="@color/word_black"
+                android:textSize="16sp"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="20dp"
+        android:background="@color/ui_base_color"/>
+</LinearLayout>

@@ -1,1 +1,3 @@
-include ':app', ':smallchart', ':mypicker', ':awesomelistview'
+include ':app', ':listview', ':picker'
+project(':listview').projectDir = new File('awesomelistview')
+project(':picker').projectDir = new File('mypicker')
