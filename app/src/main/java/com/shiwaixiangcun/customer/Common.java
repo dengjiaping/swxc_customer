@@ -3,14 +3,13 @@ package com.shiwaixiangcun.customer;
 import java.io.Serializable;
 
 /**
- *
  * @author Administrator
  * @date 2017/5/24
  */
 
 public class Common implements Serializable {
 
-    //保存地址
+
     public static final String ADDRESS = "address";
     public static final String DEFAULT_ADDRESS = "defaultAddress";
     public static final String TOKEN = "token";

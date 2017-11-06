@@ -37,6 +37,9 @@ import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 
+/**
+ * @author Administrator
+ */
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
     private TimeCount time;
     private TextView tv_get_verification;
@@ -66,11 +69,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private void initView(Bundle savedInstanceState) {
-        tv_get_verification = (TextView) findViewById(R.id.tv_get_verification);
-        btn_login = (Button) findViewById(R.id.btn_login);
-        et_get_psw = (EditText) findViewById(R.id.et_get_psw);
-        et_username = (EditText) findViewById(R.id.et_username);
-        back_left = (ChangeLightImageView) findViewById(R.id.back_left);
+        tv_get_verification = findViewById(R.id.tv_get_verification);
+        btn_login = findViewById(R.id.btn_login);
+        et_get_psw = findViewById(R.id.et_get_psw);
+        et_username = findViewById(R.id.et_username);
+        back_left = findViewById(R.id.back_left);
         if (savedInstanceState != null) {
             et_username.setText(savedInstanceState.getString("account"));
         }
@@ -106,6 +109,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.back_left:
                 finish();
+                break;
+            default:
                 break;
         }
     }
@@ -241,6 +246,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                 break;
                             case 1019:
                                 LoginOutUtil.sendLoginOutUtil(mContext);
+                                break;
+                            default:
                                 break;
                         }
                     }
