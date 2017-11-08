@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import com.shiwaixiangcun.customer.Common;
 import com.shiwaixiangcun.customer.ContextSession;
+import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.model.ToolCategoryBean;
 import com.shiwaixiangcun.customer.ui.activity.AwardActivity;
@@ -21,8 +22,10 @@ import com.shiwaixiangcun.customer.ui.activity.RecipeActivity;
 import com.shiwaixiangcun.customer.ui.activity.RescueWayActivity;
 import com.shiwaixiangcun.customer.ui.activity.ResidentCertificationActivity;
 import com.shiwaixiangcun.customer.ui.activity.TelephoneActivity;
+import com.shiwaixiangcun.customer.ui.activity.heath.BindWatchActivity;
 import com.shiwaixiangcun.customer.ui.activity.heath.HealthEvaluationActivity;
 import com.shiwaixiangcun.customer.ui.activity.heath.PhysicalActivity;
+import com.shiwaixiangcun.customer.ui.activity.heath.WatchInfoActivity;
 import com.shiwaixiangcun.customer.ui.activity.heath.WebActivity;
 
 /**
@@ -199,10 +202,15 @@ public class GridUtils {
 
                     break;
                 case "SMART_WATCH":
-                    bundle.putString("name", "智能手表");
-                    bundle.putInt("image", R.drawable.intelligent_watch);
-                    bundle.putString("message", "智能手表正在筹建中，敬请期待");
-                    readyGo(context, NotOpenActivity.class, bundle);
+//
+
+                    boolean isBind = (boolean) AppSharePreferenceMgr.get(context, GlobalConfig.IS_BIND_WATCH, false);
+
+                    if (isBind) {
+                        readyGo(context, WatchInfoActivity.class);
+                    } else {
+                        readyGo(context, BindWatchActivity.class);
+                    }
 
                     break;
 

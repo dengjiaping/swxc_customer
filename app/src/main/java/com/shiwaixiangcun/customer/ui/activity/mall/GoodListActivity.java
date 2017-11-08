@@ -43,6 +43,8 @@ import butterknife.ButterKnife;
 
 /**
  * 商品列表
+ *
+ * @author Administrator
  */
 public class GoodListActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.back_left)
@@ -94,6 +96,8 @@ public class GoodListActivity extends BaseActivity implements View.OnClickListen
                 break;
             case 3:
                 mTvPageName.setText("新品特卖");
+                break;
+            default:
                 break;
         }
 

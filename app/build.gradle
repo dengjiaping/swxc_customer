@@ -22,7 +22,7 @@ android {
         ndk {
             // 设置支持的SO库架构
             abiFilters 'armeabi' //, 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
-    }
+        }
     }
 
     buildTypes {
@@ -110,12 +110,15 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     implementation 'com.android.support:design:26.1.0'
 
-
-
+    //Bugly  崩溃信息收集
     compile 'com.tencent.bugly:crashreport:latest.release'
     compile 'com.tencent.bugly:crashreport:latest.release'
     compile 'com.tencent.bugly:nativecrashreport:latest.release'
 
+    //二维码
+    compile 'com.google.zxing:core:3.3.0'
+    compile 'cn.bingoogolapple:bga-qrcodecore:1.1.9@aar'
+    compile 'cn.bingoogolapple:bga-zxing:1.1.9@aar'
 
 
 }

@@ -68,6 +68,7 @@ import butterknife.Unbinder;
 
 /**
  * 商城 Fragment
+ *
  * @author Administrator
  */
 
@@ -330,6 +331,9 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
                                 case 1001:
                                     EventBus.getDefault().post(new SimpleEvent(SimpleEvent.UPDATE_MALL, 6, mallBean.getData()));
                                     break;
+
+                                default:
+                                    break;
                             }
 
                         }
@@ -495,6 +499,9 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
 
                 break;
 
+            default:
+                break;
+
         }
     }
 
@@ -573,6 +580,9 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
             case R.id.llayout_pingzhi:
                 bundle.putInt("goodId", pinzhiGoodID);
                 readyGo(GoodDetailActivity.class, bundle);
+                break;
+
+            default:
                 break;
 
         }

@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.shiwaixiangcun.customer.ui.activity.heath.OfflineReasonActivity">
+
+
+    <include layout="@layout/top_bar_white"/>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_white"
+            android:paddingBottom="40dp">
+
+            <TextView
+                android:id="@+id/tv_titel_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="40dp"
+                android:layout_weight="1"
+                android:text="您的手表是否正确插入开通流量的且未停机的移动或联通SIM卡"
+                android:textColor="#FF2D3231"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_number_1"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="20dp"
+                android:text="首先用包装盒里的螺丝刀拧开后壳盖上的4个螺丝。"
+                android:textColor="@color/black_text_80"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_titel_1"/>
+
+            <ImageView
+
+                android:id="@+id/iv_off_1"
+                android:layout_width="260dp"
+                android:layout_height="200dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/off_5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView16"/>
+
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="20dp"
+                android:text="将Micro SIM卡按正确方向插入腕表SIM卡槽内。"
+                android:textColor="@color/black_text_80"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_off_1"/>
+
+            <ImageView
+
+                android:id="@+id/iv_off_2"
+                android:layout_width="260dp"
+                android:layout_height="200dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/off_2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView18"/>
+
+            <TextView
+                android:id="@+id/textView19"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="20dp"
+                android:text="将腕表后壳与腕表主体USB口对齐后，盖上后盖，拧上4个螺丝。"
+                android:textColor="@color/black_text_80"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_off_2"/>
+
+            <TextView
+                android:id="@+id/tv_number_2"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="42dp"
+                android:background="@drawable/shape_fresh_green_circle"
+                android:gravity="center"
+                android:text="2"
+                android:textColor="@color/word_green"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView19"/>
+
+            <TextView
+                android:id="@+id/tv_title_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="40dp"
+                android:layout_weight="1"
+                android:text="设备是否有电，是否正常开机"
+                android:textColor="#FF2D3231"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_number_2"
+                app:layout_constraintTop_toBottomOf="@id/textView19"/>
+
+            <TextView
+                android:id="@+id/textView21"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="20dp"
+                android:text="可以通过短按设备任何按钮判断是否开机，如果设备没有响应，尝试长按SOS键开机。"
+                android:textColor="@color/black_text_80"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_title_2"/>
+
+            <ImageView
+
+                android:id="@+id/iv_off_3"
+                android:layout_width="260dp"
+                android:layout_height="200dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/off_1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView21"/>
+
+            <TextView
+                android:id="@+id/textView22"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="20dp"
+                android:text="如果无法开机，请使用原装数据线进行充电，并确认数据线USB接口接触良好，待充满后尝试开机。"
+                android:textColor="@color/black_text_80"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_off_3"/>
+
+            <ImageView
+
+                android:id="@+id/iv_off_4"
+                android:layout_width="260dp"
+                android:layout_height="200dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/off_3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView22"/>
+
+
+            <TextView
+                android:id="@+id/tv_number_3"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="42dp"
+                android:background="@drawable/shape_fresh_green_circle"
+                android:gravity="center"
+                android:text="3"
+                android:textColor="@color/word_green"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_off_4"/>
+
+            <TextView
+                android:id="@+id/tv_title_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="40dp"
+                android:text="设备所在地区信号是否良好，可以正常接收到网络信号。"
+                android:textColor="@color/black_text_100"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_number_3"
+                app:layout_constraintTop_toBottomOf="@+id/iv_off_4"/>
+
+            <ImageView
+
+                android:id="@+id/iv_off_5"
+                android:layout_width="260dp"
+                android:layout_height="200dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/off_4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_title_3"/>
+
+            <TextView
+                android:id="@+id/tv_title_4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="40dp"
+                android:text="更多使用方式请见智能手表操作手册。"
+                android:textColor="@color/black_text_100"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_number_4"
+                app:layout_constraintTop_toBottomOf="@+id/iv_off_5"/>
+
+            <TextView
+                android:id="@+id/tv_number_1"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="42dp"
+                android:background="@drawable/shape_fresh_green_circle"
+                android:gravity="center"
+                android:text="1"
+                android:textColor="@color/word_green"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/tv_number_4"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="42dp"
+                android:background="@drawable/shape_fresh_green_circle"
+                android:gravity="center"
+                android:text="4"
+                android:textColor="@color/word_green"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_off_5"/>
+        </android.support.constraint.ConstraintLayout>
+
+    </ScrollView>
+
+</LinearLayout>

@@ -5,4 +5,12 @@
     <string name="introduce">"智慧康养服务平台"</string>
 
     <string name="after_service_detail">服务详情</string>
+    <string name="binding_watch">绑定智能手表</string>
+    <string name="confirm_bind">确认绑定</string>
+    <string name="bind_success">设置亲情号码</string>
+    <string name="add_family_name">添加亲情号码</string>
+    <string name="save">保存</string>
+    <string name="watch_type">智能手表S2 PRO</string>
+    <string name="family_number">亲情号码</string>
+    <string name="off_line_reason">离线可能原因</string>
 </resources>

@@ -2,6 +2,7 @@ package com.shiwaixiangcun.customer;
 
 /**
  * 全局变量
+ *
  * @author Administrator
  */
 
@@ -10,6 +11,7 @@ public class GlobalConfig {
     public static final String Refresh_token = "refreshtokentest";
     public static final String FIRST_USE = "first_use";
     public static final String SITE_NAME = "site_name";
+    public static final String IS_BIND_WATCH = "bind_watch";
     //全局常量
 
     public static String clientId = "97d7c8d7418b49de8da45cac01615f3e";

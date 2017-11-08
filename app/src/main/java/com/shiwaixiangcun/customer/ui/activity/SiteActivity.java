@@ -33,6 +33,7 @@ import butterknife.ButterKnife;
 
 /**
  * 切换站点Activity
+ * @author Administrator
  */
 public class SiteActivity extends BaseActivity implements View.OnClickListener {
 

@@ -1,7 +1,6 @@
 package com.shiwaixiangcun.customer;
 
 /**
- *
  * @author Administrator
  * @date 2017/9/15
  * 全局网络请求地址
@@ -81,6 +80,14 @@ public class GlobalAPI {
     public static String getRecipeType = HM_DOMAIN + "/mi/health/dietType.json";
     public static String getRecipeList = HM_DOMAIN + "/mi/health/dietList.json";
     public static String getMessage = HM_DOMAIN + "/mc/message/core/list.json";
+    public static String watch_bind = HM_DOMAIN + "/mc/bind.json";
+    public static String getWatchInfo = HM_DOMAIN + "/mc/watchData.json";
+    public static String unBindWatch = HM_DOMAIN + "/mc/remove/watch.json";
+    public static String addFamilyNumber = HM_DOMAIN + "/mc/save/sosPhone.json";
+    public static String sosList = HM_DOMAIN + "/mc/sosList.json";
+    public static String modifyFamilyNumber = HM_DOMAIN + "/mc/update/sosPhone.json";
+    public static String deleteNumber = HM_DOMAIN + "/mc/delete/sosPhone.json";
+    public static String modifyWatchInfo = HM_DOMAIN + "/mc/update/watchSetUp.json";
     //春雨医生正式服务器
     private static String DC_DOMAIN_RELEASE = "https://www.chunyuyisheng.com";
     private static String HM_DOMAIN_RELEASE = "http://hm.hxteb.com";

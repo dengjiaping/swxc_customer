@@ -654,6 +654,8 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
                 intent = new Intent(mContext, CommunityAnnouncementActivity.class);
                 startActivity(intent);
                 break;
+            default:
+                break;
         }
 
     }

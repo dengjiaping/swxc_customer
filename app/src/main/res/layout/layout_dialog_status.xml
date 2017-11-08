@@ -7,7 +7,7 @@
     android:background="@color/ui_white">
 
     <LinearLayout
-        android:id="@+id/top_bar"
+        android:id="@+id/llayout_topbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top">
@@ -19,7 +19,7 @@
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/top_bar"
+        android:layout_below="@+id/llayout_topbar"
         android:orientation="vertical">
 
         <ImageView

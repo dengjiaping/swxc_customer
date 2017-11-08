@@ -5,7 +5,9 @@ package com.shiwaixiangcun.customer.event;/**
  */
 
 /**
- * Created by Administrator on 2017/9/13.
+ *
+ * @author Administrator
+ * @date 2017/9/13
  */
 
 public class SimpleEvent {
@@ -34,6 +36,8 @@ public class SimpleEvent {
     public static final int GET_RECIPE_TYPE = 19;
     public static final int UPDATE_MAIN = 20;
     public static final int UPDATE_DETAIL_DECORATE = 21;
+    public static final int GET_WATCH_INFO = 22;
+    public static final int UPDATE_FAMILY_NUMBER = 23;
 
     /**
      * 操作类型

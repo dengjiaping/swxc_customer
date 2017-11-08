@@ -1,0 +1,145 @@
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayout"
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <android.support.design.widget.AppBarLayout
+
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:fitsSystemWindows="true">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:contentScrim="#6AB0FF"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            app:statusBarScrim="@android:color/transparent">
+
+            <!--封面图片-->
+            <ImageView
+                android:id="@+id/iv_bg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg_on_watch"
+                app:layout_collapseParallaxMultiplier="0.7"
+                app:layout_scrollFlags="scroll|snap"/>
+
+            <LinearLayout
+                android:id="@+id/llayout_watch_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                app:layout_collapseParallaxMultiplier="0.7"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <TextView
+                    android:id="@+id/tv_watch_stature"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="14sp"
+                    tools:text="在线"/>
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:text="剩余电量"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="14sp"
+                    />
+
+
+                <TextView
+                    android:id="@+id/tv_watch_power"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="40sp"
+                    tools:text="70%"/>
+            </LinearLayout>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:contentInsetStart="0dp"
+                app:layout_collapseMode="pin"
+                app:layout_scrollFlags="scroll|snap">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.shiwaixiangcun.customer.widget.ChangeLightImageView
+                        android:id="@+id/back_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="20dp"
+                        android:src="@drawable/back_white"/>
+
+                    <TextView
+                        android:id="@+id/tv_page_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="50dp"
+                        android:layout_marginRight="50dp"
+                        android:textColor="@color/word_black"
+                        android:textSize="17sp"/>
+
+                </RelativeLayout>
+
+
+            </android.support.v7.widget.Toolbar>
+
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nested_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_gray"
+        android:paddingBottom="60dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+        <include layout="@layout/content_watch"/>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <Button
+        android:id="@+id/btn_unbind"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/shape_button_white"
+        android:text="解除绑定"
+        android:textColor="#FFE94F4F"
+        android:textSize="16sp"/>
+</android.support.design.widget.CoordinatorLayout>
