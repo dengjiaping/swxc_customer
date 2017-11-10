@@ -120,7 +120,7 @@ public class FragmentHealth extends BaseFragment implements View.OnClickListener
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
+
         View view = inflater.inflate(R.layout.fragment_health, container, false);
         Bundle bundle = getArguments();//从activity传过来的Bundle
         if (bundle != null) {

@@ -77,6 +77,12 @@ public class AfterServiceActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
         initToken();
         mCurrentPage = 1;
         requestData(false);

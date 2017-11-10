@@ -46,6 +46,7 @@ import com.shiwaixiangcun.customer.ui.activity.mall.GoodDetailActivity;
 import com.shiwaixiangcun.customer.ui.activity.mall.GoodListActivity;
 import com.shiwaixiangcun.customer.ui.activity.mall.MallCategoryActivity;
 import com.shiwaixiangcun.customer.ui.activity.mall.SearchActivity;
+import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.ArithmeticUtils;
 import com.shiwaixiangcun.customer.utils.GlideImageLoader;
 import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
@@ -117,6 +118,7 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
     private int pinzhiGoodID = 0;
     private int currentPage = GlobalConfig.first_page;
     private int pageSize = GlobalConfig.page_size;
+    private int siteID;
 
 
     @Override
@@ -191,7 +193,7 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
         params.put("goodsSubjectValue", type);
         params.put("page.pn", start);
         params.put("page.size", size);
-        params.put("siteId", GlobalConfig.siteID);
+        params.put("siteId", siteID);
         OkGo.<String>get(GlobalAPI.getGuessLike)
                 .params(params)
                 .execute(new StringCallback() {
@@ -241,7 +243,7 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
     private void requestBanner() {
         HttpParams params = new HttpParams();
         params.put("position", GlobalConfig.market_01);
-        params.put("siteId", GlobalConfig.siteID);
+        params.put("siteId", siteID);
         OkGo.<String>get(GlobalAPI.getBanner)
                 .params(params)
                 .execute(new StringCallback() {
@@ -347,6 +349,8 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
      * 初始化视图
      */
     private void initView() {
+
+        siteID = (int) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_ID, GlobalConfig.DEFAULT_SITE_ID);
         mAdapterMall = new AdapterMall(mGuessList);
         mAdapterMall.addHeaderView(mBannerView);
         mAdapterMall.addHeaderView(mJingxuanView);

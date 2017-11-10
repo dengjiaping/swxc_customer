@@ -180,19 +180,19 @@ public class FragmentHome extends BaseFragment implements IHomeView, View.OnClic
 
     private void layoutView(View view) {
         mLlayoutSite = (LinearLayout) findViewById(R.id.llayout_site);
-        lv_details = (PullableListView) view.findViewById(R.id.lv_details);
-        rl_net_not = (RelativeLayout) view.findViewById(R.id.rl_net_not);
-        mTvLocation = (TextView) view.findViewById(R.id.tv_location);
-        mIvLocation = (ImageView) view.findViewById(R.id.back_left);
+        lv_details = view.findViewById(R.id.lv_details);
+        rl_net_not = view.findViewById(R.id.rl_net_not);
+        mTvLocation = view.findViewById(R.id.tv_location);
+        mIvLocation = view.findViewById(R.id.back_left);
         ivMessage = (ImageView) findViewById(R.id.iv_message);
-        siteName = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.SITE_NAME, "天鹅堡森林公园");
+        siteName = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_NAME, "天鹅堡森林公园");
 
         ivMessage.setOnClickListener(this);
         mLlayoutSite.setOnClickListener(this);
         mTvLocation.setText(siteName);
         mBannerListSecond = new ArrayList<>();
         MyListener myListener = new MyListener();
-        PullToRefreshLayout refresh_view = (PullToRefreshLayout) view.findViewById(R.id.refresh_view);
+        PullToRefreshLayout refresh_view = view.findViewById(R.id.refresh_view);
         refresh_view.setOnRefreshListener(myListener);
         myListener.setRefreshListener(new MyListener.onRefreshListener() {
             @Override
@@ -217,21 +217,21 @@ public class FragmentHome extends BaseFragment implements IHomeView, View.OnClic
      */
     private void initHeader(View view) {
         home_head_view = LayoutInflater.from(mContext).inflate(R.layout.home_head_view, null);
-        tv_online_service = (TextView) home_head_view.findViewById(R.id.tv_online_service);
-        tv_house_renting = (TextView) home_head_view.findViewById(R.id.tv_house_renting);
-        tv_look_decorating = (TextView) home_head_view.findViewById(R.id.tv_look_decorating);
-        tv_health = (TextView) home_head_view.findViewById(R.id.tv_health);
-        tv_announcement = (TextView) home_head_view.findViewById(R.id.tv_announcement);
-        tv_more_more = (TextView) home_head_view.findViewById(R.id.tv_more_more);
-        viewAnimator = (ViewAnimator) home_head_view.findViewById(R.id.animator);
-        tv_surrounding_life = (TextView) home_head_view.findViewById(R.id.tv_surrounding_life);
-        tv_awards = (TextView) home_head_view.findViewById(R.id.tv_awards);
-        rl_weather = (RelativeLayout) home_head_view.findViewById(R.id.rl_weather);
-        tv_weather_home = (TextView) home_head_view.findViewById(R.id.tv_weather_home);
-        mBannerSecond = (Banner) home_head_view.findViewById(R.id.banner_second);
-        mBannerFirst = (Banner) home_head_view.findViewById(R.id.banner_first);
-        mTabTools = (SlidingTabLayout) home_head_view.findViewById(R.id.tablayout_tools);
-        mVpTools = (ViewPager) home_head_view.findViewById(R.id.vp_tools);
+        tv_online_service = home_head_view.findViewById(R.id.tv_online_service);
+        tv_house_renting = home_head_view.findViewById(R.id.tv_house_renting);
+        tv_look_decorating = home_head_view.findViewById(R.id.tv_look_decorating);
+        tv_health = home_head_view.findViewById(R.id.tv_health);
+        tv_announcement = home_head_view.findViewById(R.id.tv_announcement);
+        tv_more_more = home_head_view.findViewById(R.id.tv_more_more);
+        viewAnimator = home_head_view.findViewById(R.id.animator);
+        tv_surrounding_life = home_head_view.findViewById(R.id.tv_surrounding_life);
+        tv_awards = home_head_view.findViewById(R.id.tv_awards);
+        rl_weather = home_head_view.findViewById(R.id.rl_weather);
+        tv_weather_home = home_head_view.findViewById(R.id.tv_weather_home);
+        mBannerSecond = home_head_view.findViewById(R.id.banner_second);
+        mBannerFirst = home_head_view.findViewById(R.id.banner_first);
+        mTabTools = home_head_view.findViewById(R.id.tablayout_tools);
+        mVpTools = home_head_view.findViewById(R.id.vp_tools);
         for (String title : mToolsTitle) {
             mFragments.add(ToolFragment.getInstance(title));
         }

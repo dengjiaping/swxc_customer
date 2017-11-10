@@ -31,6 +31,7 @@ import com.shiwaixiangcun.customer.event.EventCenter;
 import com.shiwaixiangcun.customer.event.SimpleEvent;
 import com.shiwaixiangcun.customer.model.ElementBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
+import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -82,6 +83,8 @@ public class CategoryActivity extends BaseActivity implements View.OnClickListen
 
     private int pgCount = 1;
 
+    private int siteId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,12 +94,20 @@ public class CategoryActivity extends BaseActivity implements View.OnClickListen
         if (bundle == null) {
             return;
         }
+        siteId = (int) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_ID, GlobalConfig.DEFAULT_SITE_ID);
         mCategoryId = bundle.getInt("categoryId");
         mCatrgotyName = bundle.getString("categoryName");
         ButterKnife.bind(this);
         initView();
         initData();
 
+    }
+
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        initData();
     }
 
     private void initData() {
@@ -117,7 +128,7 @@ public class CategoryActivity extends BaseActivity implements View.OnClickListen
         httpParams.put("categoryId", categoryId);
         httpParams.put("page.pn", pg);
         httpParams.put("page.size", size);
-        httpParams.put("siteId", GlobalConfig.siteID);
+        httpParams.put("siteId", siteId);
         OkGo.<String>get(GlobalAPI.searchCategory)
                 .params(httpParams)
                 .execute(new StringCallback() {

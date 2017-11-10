@@ -10,7 +10,8 @@ import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.model.ToolCategoryBean;
 
 /**
- * Created by Administrator on 2017/9/25.
+ * @author Administrator
+ * @date 2017/9/25
  */
 
 public class AdapterTool extends BaseQuickAdapter<ToolCategoryBean.ChildrenBeanX, BaseViewHolder> {
@@ -28,6 +29,11 @@ public class AdapterTool extends BaseQuickAdapter<ToolCategoryBean.ChildrenBeanX
             Glide.with(mContext).load(item.getImageLink()).into((ImageView) helper.getView(R.id.iv_tool));
         }
 
+    }
+
+    public void clearData() {
+        mData.clear();
+        notifyDataSetChanged();
     }
 
 

@@ -35,7 +35,7 @@ public class AdapterFamilyNumber extends BaseQuickAdapter<FamilyNumberBean.SosPh
         helper.setText(R.id.tv_number, item.getPhone());
         SwitchButton switchButton = helper.getView(R.id.switch_sos);
         if (item.isDialFlag() && !switchButton.isChecked()) {
-            switchButton.toggleNoEvent();
+            switchButton.toggleImmediatelyNoEvent();
         }
         switchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

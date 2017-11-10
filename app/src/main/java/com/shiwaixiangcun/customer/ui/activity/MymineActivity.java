@@ -63,8 +63,7 @@ public class MymineActivity extends AppCompatActivity implements View.OnClickLis
 
         @Override
         public void onClick(View v) {
-            // TODO Auto-generated method stub
-            Log.i("aaaaaaaaabbvva", "点击了版本更新");
+
             new checkNewestVersionAsyncTask().execute();
         }
     };
@@ -98,17 +97,17 @@ public class MymineActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void layoutView() {
-        back_left = (ChangeLightImageView) findViewById(R.id.back_left);
-        rl_head_mine = (RelativeLayout) findViewById(R.id.rl_head_mine);
-        rl_feed_back = (RelativeLayout) findViewById(R.id.rl_feed_back);
-        tv_user_name = (TextView) findViewById(R.id.tv_user_name);
-        iv_head_my_image = (CircleImageView) findViewById(R.id.iv_head_my_image);
-        tv_wy_phone = (TextView) findViewById(R.id.tv_wy_phone);
-        rl_wy_lay = (RelativeLayout) findViewById(R.id.rl_wy_lay);
-        rl_for_life = (RelativeLayout) findViewById(R.id.rl_for_life);
-        rl_app_updata = (RelativeLayout) findViewById(R.id.rl_app_updata);
-        rl_app_address = (RelativeLayout) findViewById(R.id.rl_app_address);
-        rl_app_order = (RelativeLayout) findViewById(R.id.rl_app_order);
+        back_left = findViewById(R.id.back_left);
+        rl_head_mine = findViewById(R.id.rl_head_mine);
+        rl_feed_back = findViewById(R.id.rl_feed_back);
+        tv_user_name = findViewById(R.id.tv_user_name);
+        iv_head_my_image = findViewById(R.id.iv_head_my_image);
+        tv_wy_phone = findViewById(R.id.tv_wy_phone);
+        rl_wy_lay = findViewById(R.id.rl_wy_lay);
+        rl_for_life = findViewById(R.id.rl_for_life);
+        rl_app_updata = findViewById(R.id.rl_app_updata);
+        rl_app_address = findViewById(R.id.rl_app_address);
+        rl_app_order = findViewById(R.id.rl_app_order);
 
         //初始化相关变量
         initVariable();
@@ -237,7 +236,7 @@ public class MymineActivity extends AppCompatActivity implements View.OnClickLis
                 dialogLoginOut.dismiss();
                 Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phone));
                 if (ActivityCompat.checkSelfPermission(MymineActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
+
                     //    ActivityCompat#requestPermissions
                     // here to request the missing permissions, and then overriding
                     //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
@@ -435,7 +434,6 @@ public class MymineActivity extends AppCompatActivity implements View.OnClickLis
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO Auto-generated method stub
             if (postCheckNewestVersionCommand2Server()) {
                 int vercode = VersionUpdateUtil.getVerCode(getApplicationContext()); // 用到前面第一节写的方法
                 return m_newVerCode > vercode;
@@ -445,7 +443,6 @@ public class MymineActivity extends AppCompatActivity implements View.OnClickLis
 
         @Override
         protected void onPostExecute(Boolean result) {
-            // TODO Auto-generated method stub
             Log.i("aaaaaaaaabbvva", "请求版本更新接口");
 //            sendAppUpdateInvatation();
             myMine = new MyMineImpl(MymineActivity.this, "");
@@ -456,7 +453,6 @@ public class MymineActivity extends AppCompatActivity implements View.OnClickLis
 
         @Override
         protected void onPreExecute() {
-            // TODO Auto-generated method stub
             super.onPreExecute();
         }
     }

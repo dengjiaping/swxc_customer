@@ -63,12 +63,10 @@ public class FamilyNumberActivity extends BaseActivity implements View.OnClickLi
 
     private List<FamilyNumberBean.SosPhoneDtosBean> mList;
     private AdapterFamilyNumber mAdapterFamilyNumber;
-
     private TextView mTvAddFamily;
     private int intelligenceWatchId;
     private String strToken;
     private String strRefreshToken;
-
     private SwitchButton mSwitchButtonBan;
     private SwitchButton mSwitchButtonLoop;
 
@@ -112,12 +110,16 @@ public class FamilyNumberActivity extends BaseActivity implements View.OnClickLi
                         switch (responseEntity.getResponseCode()) {
                             case 1001:
 
+                                if (responseEntity.getData().isIncomingRestriction() && !mSwitchBan.isChecked()) {
+                                    mSwitchBan.toggleImmediatelyNoEvent();
+                                }
+
 
                                 if (responseEntity.getData().isIncomingRestriction() && !mSwitchButtonBan.isChecked()) {
-                                    mSwitchButtonBan.toggleNoEvent();
+                                    mSwitchButtonBan.toggleImmediatelyNoEvent();
                                 }
-                                if (responseEntity.getData().isSosDialCycleTimes() && !mSwitchButtonBan.isChecked()) {
-                                    mSwitchButtonLoop.toggleNoEvent();
+                                if (responseEntity.getData().isSosDialCycleTimes() && !mSwitchButtonLoop.isChecked()) {
+                                    mSwitchButtonLoop.toggleImmediatelyNoEvent();
                                 }
                                 EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_FAMILY_NUMBER, 1, responseEntity.getData()));
 
@@ -174,13 +176,13 @@ public class FamilyNumberActivity extends BaseActivity implements View.OnClickLi
         mAdapterFamilyNumber.addFooterView(footerView);
         mRvFamilyNumber.addItemDecoration(divider);
 
-        mSwitchButtonLoop.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        mSwitchButtonBan.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 modifyWatchInfo("incomingRestriction", isChecked);
             }
         });
-        mSwitchButtonBan.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        mSwitchButtonLoop.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 modifyWatchInfo("sosDialCycleTimes", isChecked);

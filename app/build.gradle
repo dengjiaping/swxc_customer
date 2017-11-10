@@ -120,5 +120,7 @@ dependencies {
     compile 'cn.bingoogolapple:bga-qrcodecore:1.1.9@aar'
     compile 'cn.bingoogolapple:bga-zxing:1.1.9@aar'
 
+    compile 'com.github.lzyzsd:jsbridge:1.0.4'
+
 
 }

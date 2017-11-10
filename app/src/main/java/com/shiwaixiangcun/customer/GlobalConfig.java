@@ -10,7 +10,14 @@ public class GlobalConfig {
     public static final String TOKEN = "tokentest";
     public static final String Refresh_token = "refreshtokentest";
     public static final String FIRST_USE = "first_use";
-    public static final String SITE_NAME = "site_name";
+    /**
+     * 当前站点名字
+     */
+    public static final String CURRENT_SITE_NAME = "site_name";
+    /**
+     * 当前站点ID
+     */
+    public static final String CURRENT_SITE_ID = "site_id";
     public static final String IS_BIND_WATCH = "bind_watch";
     //全局常量
 
@@ -27,8 +34,10 @@ public class GlobalConfig {
     public static String isLogin = "isLogin";
     public static String propertyAuth = "propertyAuth";
 
-    //app的一些常量
-    public static int siteID = 20;
+    /**
+     * 默认站点id
+     */
+    public static int DEFAULT_SITE_ID = 20;
     public static int first_page = 1;
     public static int page_size = 20;
 }

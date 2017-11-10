@@ -119,7 +119,6 @@ public class FamilyDetailActivity extends BaseActivity implements View.OnClickLi
 
         String strToken = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
         Log.e(BUG_TAG, strToken);
-        // TODO: 2017/10/10 验证Token
         OkGo.<String>delete(GlobalAPI.deleteFamily)
                 .params("access_token", strToken)
                 .params("customerId", mMyFamilyBean.getCustomerId())

@@ -570,7 +570,6 @@ public class MDMUtils {
                 }
             }
         } catch (Exception e) {
-            // TODO: handle exception
         }
         return false;
     }
@@ -600,7 +599,6 @@ public class MDMUtils {
 
             return cn.getClassName().equals(className);
         } catch (Exception e) {
-            // TODO: handle exception
         }
         return false;
     }
@@ -613,7 +611,6 @@ public class MDMUtils {
             String localPackageName = AppContext.mMainContext.getPackageName();
             return localPackageName.endsWith(switchPackageName);
         } catch (Exception e) {
-            // TODO: handle exception
         }
         return false;
     }
@@ -628,7 +625,6 @@ public class MDMUtils {
             cursor.moveToFirst();
             return cursor.getString(column_index);
         } catch (Exception e) {
-            // TODO: handle exception
         }
         return null;
     }
@@ -829,7 +825,6 @@ public class MDMUtils {
                 }
             }
         } catch (Exception e) {
-            // TODO: handle exception
         }
         return url;
     }

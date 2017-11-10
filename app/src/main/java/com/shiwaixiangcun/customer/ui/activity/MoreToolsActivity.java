@@ -15,10 +15,12 @@ import com.lzy.okgo.model.Response;
 import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.Common;
 import com.shiwaixiangcun.customer.GlobalAPI;
+import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterService;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.model.ToolCategoryBean;
+import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.GridUtils;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
@@ -34,6 +36,8 @@ import butterknife.ButterKnife;
 
 /**
  * 全部服务Activity
+ *
+ * @author Administrator
  */
 public class MoreToolsActivity extends BaseActivity implements View.OnClickListener {
 
@@ -50,6 +54,7 @@ public class MoreToolsActivity extends BaseActivity implements View.OnClickListe
     private List<AdapterService.MySection> mList;
     private AdapterService mAdapterService;
     private String isLogin = "";
+    private int siteID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +65,15 @@ public class MoreToolsActivity extends BaseActivity implements View.OnClickListe
         initData();
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        initData();
+    }
+
     private void initData() {
         OkGo.<String>get(GlobalAPI.getToolCategory)
-                .params("siteId", 20)
+                .params("siteId", siteID)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -76,7 +87,6 @@ public class MoreToolsActivity extends BaseActivity implements View.OnClickListe
                             case 1001:
 
                                 List<ToolCategoryBean.ChildrenBeanX> titleList = responseEntity.getData().getChildren();
-//                                ToolCategoryBean.ChildrenBeanX titleList = (ToolCategoryBean.ChildrenBeanX) responseEntity.getData().getChildren();
                                 for (ToolCategoryBean.ChildrenBeanX headItem : titleList) {
 
                                     AdapterService.MySection title = new AdapterService.MySection(true, headItem.getName());
@@ -99,6 +109,8 @@ public class MoreToolsActivity extends BaseActivity implements View.OnClickListe
 
                                 mAdapterService.notifyDataSetChanged();
                                 break;
+                            default:
+                                break;
 
                         }
 
@@ -109,6 +121,8 @@ public class MoreToolsActivity extends BaseActivity implements View.OnClickListe
 
 
     private void initViewAndEvent() {
+
+        siteID = (int) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_ID, GlobalConfig.DEFAULT_SITE_ID);
         mTvPageName.setText("全部服务");
         isLogin = SharePreference.getStringSpParams(mContext, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
         mList = new ArrayList<>();

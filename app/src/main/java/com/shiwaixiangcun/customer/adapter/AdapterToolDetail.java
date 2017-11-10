@@ -10,7 +10,9 @@ import com.shiwaixiangcun.customer.model.ToolCategoryBean;
 import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 
 /**
- * Created by Administrator on 2017/10/19.
+ *
+ * @author Administrator
+ * @date 2017/10/19
  */
 
 public class AdapterToolDetail extends BaseQuickAdapter<ToolCategoryBean.ChildrenBeanX.ChildrenBean, BaseViewHolder> {

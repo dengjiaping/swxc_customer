@@ -283,7 +283,6 @@ public class DeviceUtil {
                     str = input.readLine();
                 }
             } catch (IOException e1) {
-                // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
             String path = "/sys/block/mmcblk" + maxId + "/device/cid";

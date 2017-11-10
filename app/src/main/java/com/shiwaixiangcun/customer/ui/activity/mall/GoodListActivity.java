@@ -28,6 +28,7 @@ import com.shiwaixiangcun.customer.event.EventCenter;
 import com.shiwaixiangcun.customer.event.SimpleEvent;
 import com.shiwaixiangcun.customer.model.ElementBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
+import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -66,6 +67,7 @@ public class GoodListActivity extends BaseActivity implements View.OnClickListen
 
     //每页显示数目
     private int mPageSize = GlobalConfig.page_size;
+    private int siteID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,12 @@ public class GoodListActivity extends BaseActivity implements View.OnClickListen
     protected void onDestroy() {
         super.onDestroy();
         EventCenter.getInstance().unregister(this);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        requestData(type, flag, mCurrentPage, mPageSize, false);
     }
 
     private void initView() {
@@ -100,6 +108,8 @@ public class GoodListActivity extends BaseActivity implements View.OnClickListen
             default:
                 break;
         }
+
+        siteID = (int) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_ID, GlobalConfig.DEFAULT_SITE_ID);
 
         mAdapterGoodList = new AdapterGoodList(mGoodList);
         mBackLeft.setOnClickListener(this);
@@ -167,7 +177,7 @@ public class GoodListActivity extends BaseActivity implements View.OnClickListen
         params.put("goodsSubjectValue", type);
         params.put("page.pn", start);
         params.put("page.size", size);
-        params.put("siteId", GlobalConfig.siteID);
+        params.put("siteId", siteID);
         OkGo.<String>get(GlobalAPI.getGuessLike)
                 .params(params)
                 .execute(new StringCallback() {

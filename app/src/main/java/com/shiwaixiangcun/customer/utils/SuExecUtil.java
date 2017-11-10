@@ -25,7 +25,6 @@ public class SuExecUtil {
     Runnable mRunGetSu = new Runnable() {
         @Override
         public void run() {
-            // TODO Auto-generated method stub
             if (mProcess == null || mDataOutputStream == null) {
                 boolean bRootOk = false;
                 // String cmd = getCmdPath("su");

@@ -39,12 +39,11 @@ public class IgetBuyActivity extends AppCompatActivity implements View.OnClickLi
 
         @Override
         public void afterTextChanged(Editable s) {
-            // TODO Auto-generated method stub
         }
 
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            // TODO Auto-generated method stub
+
         }
 
         @Override
@@ -91,15 +90,15 @@ public class IgetBuyActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void layoutView() {
-        back_left = (ChangeLightImageView) findViewById(R.id.back_left);
-        tv_page_name = (TextView) findViewById(R.id.tv_page_name);
-        btn_get_buy_house = (Button) findViewById(R.id.btn_get_buy_house);
-        rl_success_submit = (RelativeLayout) findViewById(R.id.rl_success_submit);
-        btn_ok = (Button) findViewById(R.id.btn_ok);
-        et_buy_house = (EditText) findViewById(R.id.et_buy_house);
-        et_buy_house_size = (EditText) findViewById(R.id.et_buy_house_size);
-        post_content = (EditText) findViewById(R.id.post_content);
-        tv_et_getbuy = (TextView) findViewById(R.id.tv_et_getbuy);
+        back_left = findViewById(R.id.back_left);
+        tv_page_name = findViewById(R.id.tv_page_name);
+        btn_get_buy_house = findViewById(R.id.btn_get_buy_house);
+        rl_success_submit = findViewById(R.id.rl_success_submit);
+        btn_ok = findViewById(R.id.btn_ok);
+        et_buy_house = findViewById(R.id.et_buy_house);
+        et_buy_house_size = findViewById(R.id.et_buy_house_size);
+        post_content = findViewById(R.id.post_content);
+        tv_et_getbuy = findViewById(R.id.tv_et_getbuy);
 
         et_buy_house.addTextChangedListener(watcher);
 

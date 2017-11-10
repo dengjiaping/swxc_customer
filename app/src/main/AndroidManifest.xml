@@ -590,6 +590,18 @@
         </activity>
         <activity android:name=".ui.activity.heath.ManageNumberActivity">
         </activity>
+        <activity android:name=".ui.activity.heath.IntelligentCareActivity">
+        </activity>
+        <activity android:name=".ui.activity.heath.LocationActivity">
+        </activity>
+        <activity android:name=".ui.activity.RegisterActivity">
+        </activity>
+        <activity android:name=".ui.activity.DoctorActivity">
+        </activity>
+        <activity android:name=".ui.activity.DoctorDetailActivity">
+        </activity>
+        <activity android:name=".ui.activity.RegisterDetailActivity">
+        </activity>
     </application>
 
 </manifest>

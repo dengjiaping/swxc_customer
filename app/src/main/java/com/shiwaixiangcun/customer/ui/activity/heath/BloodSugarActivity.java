@@ -180,7 +180,6 @@ public class BloodSugarActivity extends BaseActivity implements View.OnClickList
         }
 
         if (bloodSugarList.size() < 2) {
-            // TODO: 2017/9/29 绘制一个点
             mLlayoutChart.setVisibility(View.GONE);
         }
         int size = bloodSugarList.size();

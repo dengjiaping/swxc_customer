@@ -28,6 +28,9 @@ import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * @author Administrator
+ */
 public class WebActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.back_left)
@@ -63,7 +66,7 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
      *
      * @param context
      */
-    public static void removeCookie(Context context) {
+    private static void removeCookie(Context context) {
         CookieSyncManager.createInstance(context);
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.removeAllCookie();
@@ -117,10 +120,10 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
 
         removeCookie(mContext);
 
-//        mWebView.loadUrl("https://open.zhongan.com/standard/insure/productShowPageMobile.htm?productCode=PRD160600129006&promotionCode=INST170970022019&payChannel=wxpay,alipay,alipay_app&accessChannel=mobile");
-        mWebView.loadUrl(urlBuilder.toString());
+
         mWebView.setWebChromeClient(new MyWebChromeViewClient());
         mWebView.setWebViewClient(new MyWebViewClient());
+        mWebView.loadUrl(urlBuilder.toString());
 
     }
 

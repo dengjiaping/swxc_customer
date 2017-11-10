@@ -28,6 +28,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * @author Administrator
+ */
 public class ToolsDetailActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.back_left)
@@ -67,7 +70,7 @@ public class ToolsDetailActivity extends BaseActivity implements View.OnClickLis
 
         }
         bottomView = LayoutInflater.from(mContext).inflate(R.layout.layout_footer_tools, null, false);
-        tvBottom = (TextView) bottomView.findViewById(R.id.tv_bottom);
+        tvBottom = bottomView.findViewById(R.id.tv_bottom);
         tvBottom.setText(data.getRemark());
         mTvPageName.setText(data.getName());
         mBackLeft.setOnClickListener(this);
@@ -139,6 +142,9 @@ public class ToolsDetailActivity extends BaseActivity implements View.OnClickLis
                 bundle.putInt("image", R.drawable.data_empty);
                 bundle.putString("message", "缴费记录为空");
                 readyGo(NotOpenActivity.class, bundle);
+                break;
+
+            default:
                 break;
 
         }

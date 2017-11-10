@@ -57,6 +57,7 @@ import com.shiwaixiangcun.customer.ui.activity.RecipeActivity;
 import com.shiwaixiangcun.customer.ui.activity.SiteActivity;
 import com.shiwaixiangcun.customer.ui.activity.SurroundLifeActivity;
 import com.shiwaixiangcun.customer.ui.activity.ToolsDetailActivity;
+import com.shiwaixiangcun.customer.ui.activity.heath.IntelligentCareActivity;
 import com.shiwaixiangcun.customer.ui.activity.mall.GoodDetailActivity;
 import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.DisplayUtil;
@@ -83,7 +84,8 @@ import butterknife.Unbinder;
 import static com.chad.library.adapter.base.BaseQuickAdapter.ALPHAIN;
 
 /**
- * Created by Administrator on 2017/10/17.
+ * @author Administrator
+ * @date 2017/10/17
  */
 
 public class FragmentMain extends BaseFragment implements View.OnClickListener {
@@ -114,7 +116,7 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
     private List<ToolCategoryBean.ChildrenBeanX> mToolList = new ArrayList<>();
     private AdapterMain mAdapterMain;
     private List<AdapterMain.MultipleItem> mMainList;
-    private String siteName = "";
+
     private Context mContext;
     private List<String> imageList = new ArrayList<>();
     private Intent intent;
@@ -134,22 +136,32 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
         }
     };
 
+    private String siteName = "";
+    private int siteId;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        siteName = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_NAME, "");
+        siteId = (int) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_ID, 20);
+    }
+
     protected void initViewsAndEvents(View view) {
 
         initHeader(view);
-        siteName = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.SITE_NAME, "天鹅堡森林公园");
+        siteName = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_NAME, "天鹅堡森林公园");
+        siteId = (int) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_ID, 20);
         mIvMessage.setOnClickListener(this);
         mLlayoutSite.setOnClickListener(this);
         mTvLocation.setText(siteName);
         mMainList = new ArrayList<>();
         mAdapterMain = new AdapterMain(mMainList);
+        mRvMain.setLayoutManager(new LinearLayoutManager(mContext));
+        mRvMain.setAdapter(mAdapterMain);
         mAdapterMain.addHeaderView(viewHeader);
         mAdapterMain.addHeaderView(viewTools);
         mAdapterMain.addHeaderView(viewAnnouncement);
         mAdapterMain.addHeaderView(viewBanner);
-        mRvMain.setLayoutManager(new LinearLayoutManager(mContext));
-        mRvMain.setAdapter(mAdapterMain);
-
         RecyclerViewDivider divider = new RecyclerViewDivider.Builder(this.getActivity())
                 .setOrientation(RecyclerViewDivider.VERTICAL)
                 .setStyle(RecyclerViewDivider.Style.END)
@@ -180,6 +192,7 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
                 refreshlayout.finishLoadmore();
                 currentPage = 1;
                 initData();
+
 
             }
         });
@@ -220,39 +233,54 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 ToolCategoryBean.ChildrenBeanX item = (ToolCategoryBean.ChildrenBeanX) adapter.getData().get(position);
                 String jsonItem = JsonUtil.toJson(item);
-
+                Bundle bundle = new Bundle();
 
                 //如果点击全部服务
                 if (position == adapter.getData().size() - 1) {
                     readyGo(MoreToolsActivity.class);
-                } else if (item.getSign().equals("VICINITY_LIFE")) {
-                    readyGo(SurroundLifeActivity.class);
-                } else if (item.getSign().equals("HEALTH_RECIPES")) {
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("current", 0);
-                    readyGo(RecipeActivity.class, bundle);
-                } else if (item.getSign().equals("ONLINE_PAYMENT")) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("item", jsonItem);
-                    bundle.putBoolean("show", true);
-                    readyGo(ToolsDetailActivity.class, bundle);
                 } else {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("item", jsonItem);
-                    bundle.putBoolean("show", false);
-                    readyGo(ToolsDetailActivity.class, bundle);
+
+
+                    switch (item.getSign()) {
+                        //周边生活
+                        case "VICINITY_LIFE":
+                            readyGo(SurroundLifeActivity.class);
+                            break;
+                        //养生食谱
+                        case "HEALTH_RECIPES":
+                            bundle.putInt("current", 0);
+                            readyGo(RecipeActivity.class, bundle);
+                            break;
+                        //生活缴费
+                        case "ONLINE_PAYMENT":
+                            bundle.putString("item", jsonItem);
+                            bundle.putBoolean("show", true);
+                            readyGo(ToolsDetailActivity.class, bundle);
+                            break;
+
+                        //智能关爱
+                        case "INTELLIGENT_CARE":
+                            bundle.putString("item", jsonItem);
+                            readyGo(IntelligentCareActivity.class, bundle);
+                            break;
+                        default:
+                            bundle.putString("item", jsonItem);
+                            bundle.putBoolean("show", false);
+                            readyGo(ToolsDetailActivity.class, bundle);
+                            break;
+
+                    }
 
                 }
 
             }
         });
-        initToolsData();
     }
 
     private void initToolsData() {
 
         OkGo.<String>get(GlobalAPI.getToolCategory)
-                .params("siteId", GlobalConfig.siteID)
+                .params("siteId", siteId)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -282,10 +310,14 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
         viewAnimator.showNext();
     }
 
+    /**
+     * 设置Banner
+     */
+
     private void initBanner() {
         OkGo.<String>get(Common.listpage)
                 .params("position", GlobalConfig.home_02)
-                .params("siteId", GlobalConfig.siteID)
+                .params("siteId", siteId)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -305,6 +337,10 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
 
 
     }
+
+    /**
+     * 设置社区公告
+     */
 
     private void initAnnouncement() {
         OkGo.<String>get(Common.articleListpage)
@@ -409,9 +445,9 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
 
             case 6:
                 Site site = (Site) simpleEvent.getData();
-                mTvLocation.setText(site.getName());
 
-//               AppSharePreferenceMgr.put(mContext, GlobalConfig.SITE_NAME, site.getName());
+
+//                mTvLocation.setText(site.getName());
                 break;
             default:
                 break;
@@ -422,16 +458,18 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
     }
 
     public void setTools(SimpleEvent simpleEvent) {
-
+        mAdapterTool.clearData();
+        mToolList.clear();
         ToolCategoryBean toolCategoryBean = (ToolCategoryBean) simpleEvent.getData();
         List<ToolCategoryBean.ChildrenBeanX> firstTool = toolCategoryBean.getChildren();
 
         ToolCategoryBean.ChildrenBeanX allItem = new ToolCategoryBean.ChildrenBeanX();
         allItem.setName("更多服务");
         firstTool.add(allItem);
-        mToolList.clear();
+
         mToolList.addAll(firstTool);
-        mAdapterTool.addData(firstTool);
+
+        mAdapterTool.addData(mToolList);
         mAdapterTool.notifyDataSetChanged();
     }
 
@@ -582,6 +620,7 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
         initBanner();
         initAnnouncement();
         initSite();
+        initToolsData();
 
     }
 

@@ -11,6 +11,7 @@ import com.lzy.okgo.cache.CacheEntity;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.cookie.CookieJarImpl;
 import com.lzy.okgo.cookie.store.DBCookieStore;
+import com.lzy.okgo.cookie.store.SPCookieStore;
 import com.lzy.okgo.https.HttpsUtils;
 import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
 import com.lzy.okgo.model.HttpHeaders;
@@ -153,7 +154,7 @@ public class App extends MultiDexApplication {
         headers.put("User-Agent", "android");
         HttpParams params = new HttpParams();
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
-
+        builder.cookieJar(new CookieJarImpl(new SPCookieStore(this)));
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor("OkGo");
         loggingInterceptor.setPrintLevel(HttpLoggingInterceptor.Level.BODY);        //log打印级别，决定了log显示的详细程度
         loggingInterceptor.setColorLevel(Level.INFO);

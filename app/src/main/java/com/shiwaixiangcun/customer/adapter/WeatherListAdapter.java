@@ -1,7 +1,6 @@
 package com.shiwaixiangcun.customer.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +29,15 @@ public class WeatherListAdapter extends BaseAdapter {
         this.context = context;
     }
 
+    public static boolean isNumeric(String str) {
+        for (int i = str.length(); --i >= 0; ) {
+            if (!Character.isDigit(str.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     @Override
     public int getCount() {
         return list.size();
@@ -51,9 +59,9 @@ public class WeatherListAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.adapter_weather_list, null);
             mViewHolder = new ViewHolder();
-            mViewHolder.tv_week = (TextView) convertView.findViewById(R.id.tv_week);
-            mViewHolder.tv_Temperature_range = (TextView) convertView.findViewById(R.id.tv_Temperature_range);
-            mViewHolder.tv_weather_conditions = (TextView)convertView.findViewById(R.id.tv_weather_conditions);
+            mViewHolder.tv_week = convertView.findViewById(R.id.tv_week);
+            mViewHolder.tv_Temperature_range = convertView.findViewById(R.id.tv_Temperature_range);
+            mViewHolder.tv_weather_conditions = convertView.findViewById(R.id.tv_weather_conditions);
 
             convertView.setTag(mViewHolder);
         } else {
@@ -80,23 +88,6 @@ public class WeatherListAdapter extends BaseAdapter {
         return convertView;
     }
 
-    static class ViewHolder {
-        TextView tv_week;
-        TextView tv_Temperature_range;
-        TextView tv_weather_conditions;
-    }
-
-
-    public static boolean isNumeric(String str) {
-        for (int i = str.length(); --i >= 0; ) {
-            if (!Character.isDigit(str.charAt(i))) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-
     private String getWeek(String pTime) {
 
 
@@ -110,7 +101,6 @@ public class WeatherListAdapter extends BaseAdapter {
             c.setTime(format.parse(pTime));
 
         } catch (ParseException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         int i = c.get(Calendar.DAY_OF_WEEK);
@@ -141,6 +131,12 @@ public class WeatherListAdapter extends BaseAdapter {
 
 
         return Week;
+    }
+
+    static class ViewHolder {
+        TextView tv_week;
+        TextView tv_Temperature_range;
+        TextView tv_weather_conditions;
     }
 
 }

@@ -7,18 +7,20 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lzy.okgo.OkGo;
-import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.ContextSession;
 import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
+import com.shiwaixiangcun.customer.http.StringDialogCallBack;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
+import com.shiwaixiangcun.customer.utils.NoFastClickUtil;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
 import butterknife.BindView;
@@ -68,7 +70,11 @@ public class ConfirmBindActivity extends BaseActivity implements View.OnClickLis
                 finish();
                 break;
             case R.id.btn_bind:
-                validateIMEI(imei);
+                if (NoFastClickUtil.isFastClick()) {
+                    Toast.makeText(mContext, "点击太快，休息一会", Toast.LENGTH_SHORT).show();
+                } else {
+                    validateIMEI(imei);
+                }
                 break;
             default:
                 break;
@@ -82,9 +88,10 @@ public class ConfirmBindActivity extends BaseActivity implements View.OnClickLis
      */
     private void validateIMEI(final String result) {
         OkGo.<String>post(GlobalAPI.watch_bind)
+                .tag(this)
                 .params("access_token", ContextSession.getTokenString())
                 .params("imei", result)
-                .execute(new StringCallback() {
+                .execute(new StringDialogCallBack(this) {
                     @Override
                     public void onSuccess(Response<String> response) {
                         ResponseEntity responseEntity = JsonUtil.fromJson(response.body(), ResponseEntity.class);

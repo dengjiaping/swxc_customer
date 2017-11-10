@@ -39,7 +39,6 @@ public class SPUtils {
             ed.commit();
 
         } catch (Exception e) {
-            // TODO: handle exception
             return false;
         }
         return true;
@@ -49,7 +48,6 @@ public class SPUtils {
      * @param key
      * @param value
      * @return
-     * @Description: TODO
      * @author liliwei
      * @create 2013-8-20 下午4:55:51
      * @updateTime 2013-8-20 下午4:55:51
@@ -64,7 +62,6 @@ public class SPUtils {
             ed.commit();
 
         } catch (Exception e) {
-            // TODO: handle exception
             return false;
         }
         return true;
@@ -82,7 +79,6 @@ public class SPUtils {
             ed.putInt(key, value);
             ed.commit();
         } catch (Exception e) {
-            // TODO: handle exception
             return false;
         }
         return true;
@@ -99,7 +95,6 @@ public class SPUtils {
             ed.putFloat(key, value);
             ed.commit();
         } catch (Exception e) {
-            // TODO: handle exception
             return false;
         }
         return true;
@@ -116,7 +111,6 @@ public class SPUtils {
             ed.putString(key, value);
             ed.commit();
         } catch (Exception e) {
-            // TODO: handle exception
             return false;
         }
         return true;

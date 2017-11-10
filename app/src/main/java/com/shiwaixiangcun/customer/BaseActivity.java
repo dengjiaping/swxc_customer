@@ -53,10 +53,6 @@ public class BaseActivity extends CubeFragmentActivity {
         StatService.onPause(this);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 
     protected void readyGo(Class<?> clazz, Bundle bundle) {
         Intent intent = new Intent(this, clazz);

@@ -37,6 +37,7 @@ import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.pay.PayUtil;
 import com.shiwaixiangcun.customer.ui.dialog.DialogPay;
+import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.ArithmeticUtils;
 import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
@@ -141,6 +142,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private double goodPrice;
     private String mOrderNumber;
     private int mOrderId;
+    private int siteId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,12 +185,19 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         mRLayoutHasAddress.setOnClickListener(this);
     }
 
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        initToken();
+    }
+
     @SuppressLint("SetTextI18n")
     private void initView() {
         mTvPageName.setText("确认订单");
 
         initToken();
-
+        siteId = (int) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_ID, GlobalConfig.DEFAULT_SITE_ID);
         //设置商品信息
         mDialogPay = new DialogPay(this);
         mTvGoodTitle.setText(data.getGoodsName());
@@ -225,11 +234,6 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        initToken();
-    }
 
     private void initToken() {
         refreshToken = ContextSession.getRefreshToken();
@@ -290,7 +294,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         params.put("leavingMessage", mStrMessage);
         params.put("sellerId", data.getSellerId());
         params.put("access_token", tokenString);
-        params.put("siteId", GlobalConfig.siteID);
+        params.put("siteId", siteId);
         OkGo.<String>post(GlobalAPI.putOrder)
                 .params(params)
                 .execute(new StringDialogCallBack(this) {

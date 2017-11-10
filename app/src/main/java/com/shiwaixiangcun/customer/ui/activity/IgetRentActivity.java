@@ -38,12 +38,11 @@ public class IgetRentActivity extends AppCompatActivity implements View.OnClickL
 
         @Override
         public void afterTextChanged(Editable s) {
-            // TODO Auto-generated method stub
         }
 
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            // TODO Auto-generated method stub
+
         }
 
         @Override
@@ -90,15 +89,15 @@ public class IgetRentActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void layoutView() {
-        back_left = (ChangeLightImageView) findViewById(R.id.back_left);
-        tv_page_name = (TextView) findViewById(R.id.tv_page_name);
-        btn_submit_get_rent = (Button) findViewById(R.id.btn_submit_get_rent);
-        rl_success_submit = (RelativeLayout) findViewById(R.id.rl_success_submit);
-        btn_ok = (Button) findViewById(R.id.btn_ok);
-        et_get_rent_money = (EditText) findViewById(R.id.et_get_rent_money);
-        et_house_size = (EditText) findViewById(R.id.et_house_size);
-        post_content = (EditText) findViewById(R.id.post_content);
-        tv_et_getrent = (TextView) findViewById(R.id.tv_et_getrent);
+        back_left = findViewById(R.id.back_left);
+        tv_page_name = findViewById(R.id.tv_page_name);
+        btn_submit_get_rent = findViewById(R.id.btn_submit_get_rent);
+        rl_success_submit = findViewById(R.id.rl_success_submit);
+        btn_ok = findViewById(R.id.btn_ok);
+        et_get_rent_money = findViewById(R.id.et_get_rent_money);
+        et_house_size = findViewById(R.id.et_house_size);
+        post_content = findViewById(R.id.post_content);
+        tv_et_getrent = findViewById(R.id.tv_et_getrent);
 
         et_get_rent_money.addTextChangedListener(watcher);
 

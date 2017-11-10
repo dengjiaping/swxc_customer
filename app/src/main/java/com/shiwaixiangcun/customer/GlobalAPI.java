@@ -15,6 +15,8 @@ public class GlobalAPI {
     public static String rightDetail = PM_DOMAIN + "/mc/online/rights/detail.json";
     public static String getMerchant = PM_DOMAIN + "/mi/merchant/listpage/type.json";
     public static String getPrivacy = PM_DOMAIN + "/mi/privacyPolicy.htm";
+    public static String getRegister = PM_DOMAIN + "/mi/activity/listpage.json";
+    public static String activityDetail = PM_DOMAIN + "/mi/activity/detail.htm";
     private static String OT_DOMAIN = "http://ot.shiwaixiangcun.cn";
     //商城首页相关接口
     public static String getBanner = OT_DOMAIN + "/mi/banner/listdata.json";
@@ -29,6 +31,8 @@ public class GlobalAPI {
     public static String addEvaluate = MK_DOMAIN + "/mc/evaluate/add.json";
     public static String getEvaluateList = MK_DOMAIN + "/mi/evaluate/listpage.json";
     public static String refund = MK_DOMAIN + "/mc/after/sale/add.json";
+    public static String doctormaster = MK_DOMAIN + "/mc/doctor/list.json";
+    public static String docotorDetail = MK_DOMAIN + "/mc/doctor/detail.htm";
     private static String DOMAIN = MK_DOMAIN;
     public static String getCategory = DOMAIN + "/mi/goods/category/tree.json";
     //地址相关接口
@@ -88,6 +92,7 @@ public class GlobalAPI {
     public static String modifyFamilyNumber = HM_DOMAIN + "/mc/update/sosPhone.json";
     public static String deleteNumber = HM_DOMAIN + "/mc/delete/sosPhone.json";
     public static String modifyWatchInfo = HM_DOMAIN + "/mc/update/watchSetUp.json";
+    public static String getLocation = HM_DOMAIN + "/mc/map/view.htm";
     //春雨医生正式服务器
     private static String DC_DOMAIN_RELEASE = "https://www.chunyuyisheng.com";
     private static String HM_DOMAIN_RELEASE = "http://hm.hxteb.com";

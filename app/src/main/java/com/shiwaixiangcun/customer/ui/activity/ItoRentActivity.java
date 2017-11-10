@@ -64,12 +64,10 @@ public class ItoRentActivity extends AppCompatActivity implements View.OnClickLi
 
         @Override
         public void afterTextChanged(Editable s) {
-            // TODO Auto-generated method stub
         }
 
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            // TODO Auto-generated method stub
         }
 
         @Override
@@ -125,16 +123,16 @@ public class ItoRentActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void layoutView() {
-        back_left = (ChangeLightImageView) findViewById(R.id.back_left);
-        tv_page_name = (TextView) findViewById(R.id.tv_page_name);
-        rl_select_house_to = (RelativeLayout) findViewById(R.id.rl_select_house_to);
-        btn_submit_torent = (Button) findViewById(R.id.btn_submit_torent);
-        rl_success_submit = (RelativeLayout) findViewById(R.id.rl_success_submit);
-        btn_ok = (Button) findViewById(R.id.btn_ok);
-        et_rent_money = (EditText) findViewById(R.id.et_rent_money);
-        et_post_content = (EditText) findViewById(R.id.et_post_content);
-        tv_et_tv = (TextView) findViewById(R.id.tv_et_tv);
-        tv_ok_select_house = (TextView) findViewById(R.id.tv_ok_select_house);
+        back_left = findViewById(R.id.back_left);
+        tv_page_name = findViewById(R.id.tv_page_name);
+        rl_select_house_to = findViewById(R.id.rl_select_house_to);
+        btn_submit_torent = findViewById(R.id.btn_submit_torent);
+        rl_success_submit = findViewById(R.id.rl_success_submit);
+        btn_ok = findViewById(R.id.btn_ok);
+        et_rent_money = findViewById(R.id.et_rent_money);
+        et_post_content = findViewById(R.id.et_post_content);
+        tv_et_tv = findViewById(R.id.tv_et_tv);
+        tv_ok_select_house = findViewById(R.id.tv_ok_select_house);
 
 
         et_rent_money.addTextChangedListener(watcher);

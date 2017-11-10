@@ -1,6 +1,8 @@
 package com.shiwaixiangcun.customer.ui.activity.heath;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -87,8 +89,6 @@ public class WatchInfoActivity extends BaseActivity implements View.OnClickListe
     RelativeLayout mRlayoutFrequencyLocation;
     @BindView(R.id.btn_unbind)
     Button mBtnUnbind;
-
-
     @BindView(R.id.switch_heart_rate)
     SwitchButton mSwitchHeartRate;
     @BindView(R.id.switch_location)
@@ -138,7 +138,7 @@ public class WatchInfoActivity extends BaseActivity implements View.OnClickListe
                         }
                         switch (responseEntity.getResponseCode()) {
                             case 1001:
-                                EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.GET_WATCH_INFO, 1, responseEntity.getData()));
+                                EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.GET_WATCH_INFO, 1, responseEntity.getData().getWatchData()));
                                 break;
                             default:
                                 break;
@@ -155,7 +155,7 @@ public class WatchInfoActivity extends BaseActivity implements View.OnClickListe
         }
         switch (simpleEvent.mEventValue) {
             case 1:
-                WatchInfoBean watchInfoBean = (WatchInfoBean) simpleEvent.getData();
+                WatchInfoBean.WatchDataBean watchInfoBean = (WatchInfoBean.WatchDataBean) simpleEvent.getData();
                 mTvPageName.setText(watchInfoBean.getModelType());
                 if (ONLINE.equals(watchInfoBean.getDeviceStatus())) {
                     mTvWatchStature.setText("在线");
@@ -176,16 +176,16 @@ public class WatchInfoActivity extends BaseActivity implements View.OnClickListe
                 mTvFrequencyLocation.setText(watchInfoBean.getFrequencyLocation() + "分钟");
 
                 if (watchInfoBean.isBluetoothEnable()) {
-                    mSwitchBlueTooth.toggleNoEvent();
+                    mSwitchBlueTooth.toggleImmediatelyNoEvent();
                 }
                 if (watchInfoBean.isTrackEnable()) {
-                    mSwitchLocation.toggleNoEvent();
+                    mSwitchLocation.toggleImmediatelyNoEvent();
                 }
                 if (watchInfoBean.isHeartRateEnable()) {
-                    mSwitchHeartRate.toggleNoEvent();
+                    mSwitchHeartRate.toggleImmediatelyNoEvent();
                 }
                 if (watchInfoBean.isPedometerEnable()) {
-                    mSwitchPedometer.toggleNoEvent();
+                    mSwitchPedometer.toggleImmediatelyNoEvent();
                 }
 
                 watchID = watchInfoBean.getHardwareId();
@@ -207,6 +207,7 @@ public class WatchInfoActivity extends BaseActivity implements View.OnClickListe
         mLlayoutWatchInfo.setOnClickListener(this);
         mRlayoutFamilyNumber.setOnClickListener(this);
         mRlayoutFrequencyHeart.setOnClickListener(this);
+        mRlayoutFrequencyLocation.setOnClickListener(this);
         mRlayoutFamilyNumber.setOnClickListener(this);
         mBtnUnbind.setOnClickListener(this);
 
@@ -233,8 +234,10 @@ public class WatchInfoActivity extends BaseActivity implements View.OnClickListe
                 }
                 break;
             case R.id.rlayout_frequency_heart:
+                showTimeDialog("frequencyHeartRate");
                 break;
             case R.id.rlayout_frequency_location:
+                showTimeDialog("frequencyLocation");
                 break;
             case R.id.btn_unbind:
 
@@ -266,6 +269,24 @@ public class WatchInfoActivity extends BaseActivity implements View.OnClickListe
             default:
                 break;
         }
+
+    }
+
+    /**
+     * 显示频率选择框
+     */
+    private void showTimeDialog(final String type) {
+        final String[] frequency = new String[]{"1", "15", "30", "60"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("选择频率(分钟)");
+        builder.setItems(frequency, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                modifyWatchFrequency(type, frequency[which]);
+            }
+        });
+        builder.show();
 
     }
 
@@ -308,6 +329,47 @@ public class WatchInfoActivity extends BaseActivity implements View.OnClickListe
 
 
     /**
+     * 修改手机频率信息
+     *
+     * @param type      类别
+     * @param frequency 频率
+     */
+    private void modifyWatchFrequency(final String type, final String frequency) {
+        OkGo.<String>put(GlobalAPI.modifyWatchInfo)
+                .params("access_token", strToken)
+                .params(type, frequency)
+                .isSpliceUrl(true)
+                .execute(new StringDialogCallBack(this) {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        ResponseEntity responseEntity = JsonUtil.fromJson(response.body(), ResponseEntity.class);
+                        if (responseEntity == null) {
+                            return;
+                        } else {
+                            switch (responseEntity.getResponseCode()) {
+                                case 1001:
+
+
+                                    if (type.equals("frequencyLocation")) {
+
+                                        mTvFrequencyLocation.setText(frequency + "分钟");
+                                    } else {
+                                        mTvFrequencyHeart.setText(frequency + "分钟");
+                                    }
+                                    showToastShort("修改信息成功");
+                                    break;
+                                default:
+                                    showToastShort("修改信息失败");
+                                    break;
+                            }
+                        }
+
+                    }
+                });
+
+    }
+
+    /**
      * 修改设备信息
      *
      * @param type
@@ -328,7 +390,6 @@ public class WatchInfoActivity extends BaseActivity implements View.OnClickListe
                             switch (responseEntity.getResponseCode()) {
                                 case 1001:
                                     showToastShort("修改信息成功");
-
                                     break;
                                 default:
                                     showToastShort("修改信息失败");

@@ -470,7 +470,6 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, IM
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO Auto-generated method stub
             if (postCheckNewestVersionCommand2Server()) {
                 int vercode = VersionUpdateUtil.getVerCode(mContext); // 用到前面第一节写的方法
                 return m_newVerCode > vercode;
@@ -480,7 +479,6 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, IM
 
         @Override
         protected void onPostExecute(Boolean result) {
-            // TODO Auto-generated method stub
             myMine = new MyMineImpl(FragmentMe.this, "");
             myMine.setBgaAdpaterAndClick(mContext);
 
@@ -489,7 +487,6 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, IM
 
         @Override
         protected void onPreExecute() {
-            // TODO Auto-generated method stub
             super.onPreExecute();
         }
     }

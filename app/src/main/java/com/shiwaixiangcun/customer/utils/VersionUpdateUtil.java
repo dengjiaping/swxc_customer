@@ -53,18 +53,16 @@ public class VersionUpdateUtil{
                     builder.append(s);  
                 }  
             }  
-            return builder;  
-  
-        } catch (Exception e) {  
-            // TODO: handle exception  
+            return builder;
+
+        } catch (Exception e) {
             Log.e("msg",e.getMessage());  
             return null;  
         } finally {  
             try {
                 httpclient.getConnectionManager().shutdown();// 关闭连接  
                 // 这两种释放连接的方法都可以  
-            } catch (Exception e) {  
-                // TODO Auto-generated catch block  
+            } catch (Exception e) {
                 Log.e("msg",e.getMessage());  
             }  
         }  

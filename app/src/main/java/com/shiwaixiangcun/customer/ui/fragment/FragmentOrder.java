@@ -382,7 +382,6 @@ public class FragmentOrder extends LazyFragment {
                 break;
 
             case "待评价":
-                // TODO: 2017/10/31
                 stature = "Finished";
                 isEvaluated = "evaluated";
             default:

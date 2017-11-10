@@ -135,7 +135,6 @@ public class LogUtil {
                 }
             }
         } catch (Exception e) {
-            // TODO: handle exception
         }
     }
 }

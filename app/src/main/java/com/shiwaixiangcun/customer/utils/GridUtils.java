@@ -9,8 +9,8 @@ import com.shiwaixiangcun.customer.ContextSession;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.model.ToolCategoryBean;
-import com.shiwaixiangcun.customer.ui.activity.AwardActivity;
 import com.shiwaixiangcun.customer.ui.activity.ChunyuDoctorActivity;
+import com.shiwaixiangcun.customer.ui.activity.DoctorActivity;
 import com.shiwaixiangcun.customer.ui.activity.HouseRentingActivity;
 import com.shiwaixiangcun.customer.ui.activity.LoginActivity;
 import com.shiwaixiangcun.customer.ui.activity.LookDecoratingActivity;
@@ -19,6 +19,7 @@ import com.shiwaixiangcun.customer.ui.activity.NotOpenActivity;
 import com.shiwaixiangcun.customer.ui.activity.OnlineServiceActivity;
 import com.shiwaixiangcun.customer.ui.activity.ProtectRightActivity;
 import com.shiwaixiangcun.customer.ui.activity.RecipeActivity;
+import com.shiwaixiangcun.customer.ui.activity.RegisterActivity;
 import com.shiwaixiangcun.customer.ui.activity.RescueWayActivity;
 import com.shiwaixiangcun.customer.ui.activity.ResidentCertificationActivity;
 import com.shiwaixiangcun.customer.ui.activity.TelephoneActivity;
@@ -142,10 +143,7 @@ public class GridUtils {
                     break;
                 //全国专家库
                 case "EXPERT_LIBRARY":
-                    bundle.putString("name", "全国专家库");
-                    bundle.putInt("image", R.drawable.expert);
-                    bundle.putString("message", "全国专家库正在建设中...");
-                    readyGo(context, NotOpenActivity.class, bundle);
+                    readyGo(context, DoctorActivity.class);
                     break;
                 //养生食谱
                 case "HEALTH_RECIPES":
@@ -313,7 +311,7 @@ public class GridUtils {
 
                 //活动报名
                 case "ACTIVE_REGISTRATION":
-                    readyGo(context, AwardActivity.class);
+                    readyGo(context, RegisterActivity.class);
                     break;
 
                 case "ONLINE_PAYMENT":

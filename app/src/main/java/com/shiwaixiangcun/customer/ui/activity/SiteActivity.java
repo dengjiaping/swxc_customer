@@ -33,6 +33,7 @@ import butterknife.ButterKnife;
 
 /**
  * 切换站点Activity
+ *
  * @author Administrator
  */
 public class SiteActivity extends BaseActivity implements View.OnClickListener {
@@ -103,7 +104,8 @@ public class SiteActivity extends BaseActivity implements View.OnClickListener {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Site site = (Site) adapter.getData().get(position);
                 String name = site.getName();
-                AppSharePreferenceMgr.put(mContext, GlobalConfig.SITE_NAME, name);
+                AppSharePreferenceMgr.put(mContext, GlobalConfig.CURRENT_SITE_NAME, name);
+                AppSharePreferenceMgr.put(mContext, GlobalConfig.CURRENT_SITE_ID, site.getId());
                 Intent intent = new Intent();
                 intent.putExtra("site", name);
                 setResult(RESULT_OK, intent);

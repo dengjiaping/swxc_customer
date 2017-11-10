@@ -237,7 +237,6 @@ public class DateUtil {
                 return new SimpleDateFormat(format, Locale.US).format(messageDate);
             }
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             return null;
         }

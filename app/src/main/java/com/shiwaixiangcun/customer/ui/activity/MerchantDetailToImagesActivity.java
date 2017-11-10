@@ -52,16 +52,16 @@ public class MerchantDetailToImagesActivity extends AppCompatActivity implements
     }
 
     private void layoutView() {
-        back_left = (ChangeLightImageView) findViewById(R.id.back_left);
-        lv_image_detail = (ListView) findViewById(R.id.lv_image_detail);
+        back_left = findViewById(R.id.back_left);
+        lv_image_detail = findViewById(R.id.lv_image_detail);
 
 
         View image_head_view = LayoutInflater.from(this).inflate(R.layout.image_head_detial, null);
-        tv_title_compay = (TextView) image_head_view.findViewById(R.id.tv_title_compay);
+        tv_title_compay = image_head_view.findViewById(R.id.tv_title_compay);
         lv_image_detail.addHeaderView(image_head_view);
 
         View image_footer_view = LayoutInflater.from(this).inflate(R.layout.iamge_footer_detail, null);
-        btn_phone = (Button) image_footer_view.findViewById(R.id.btn_phone);
+        btn_phone = image_footer_view.findViewById(R.id.btn_phone);
         lv_image_detail.addFooterView(image_footer_view);
     }
 
@@ -104,7 +104,7 @@ public class MerchantDetailToImagesActivity extends AppCompatActivity implements
                 dialogLoginOut.dismiss();
                 Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phone));
                 if (ActivityCompat.checkSelfPermission(MerchantDetailToImagesActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
+
                     //    ActivityCompat#requestPermissions
                     // here to request the missing permissions, and then overriding
                     //   public void onRequestPermissionsResult(int requestCode, String[] permissions,

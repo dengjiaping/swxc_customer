@@ -19,7 +19,9 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 
 /**
- * Created by Administrator on 2017/5/9.
+ *
+ * @author Administrator
+ * @date 2017/5/9
  */
 
 public class RefreshTokenUtil implements Serializable {

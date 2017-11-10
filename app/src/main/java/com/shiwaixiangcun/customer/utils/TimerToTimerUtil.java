@@ -13,6 +13,9 @@ import java.util.Locale;
 
 public class TimerToTimerUtil implements Serializable {
     private static ThreadLocal<SimpleDateFormat> DateLocal = new ThreadLocal<SimpleDateFormat>();
+    private static boolean isToday = false;
+    private static boolean isYesterday = false;
+
     public static boolean IsToday(String day) throws ParseException {
 
         Calendar pre = Calendar.getInstance();
@@ -53,6 +56,7 @@ public class TimerToTimerUtil implements Serializable {
         }
         return false;
     }
+
     public static SimpleDateFormat getDateFormat() {
         if (null == DateLocal.get()) {
             DateLocal.set(new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA));
@@ -60,19 +64,12 @@ public class TimerToTimerUtil implements Serializable {
         return DateLocal.get();
     }
 
-
-    private static boolean isToday = false;
     public static boolean getJudgetoDay(String str) {
         try {
             boolean flag = IsToday(str);
-            if (flag == true) {//是今天
-                //TODO
-                isToday = true;
-
-            } else {//不是今天
-                //TODO
-                isToday = false;
-            }
+            //是今天
+//不是今天
+            isToday = flag == true;
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -80,17 +77,12 @@ public class TimerToTimerUtil implements Serializable {
 
     }
 
-    private static boolean isYesterday = false;
     public static boolean getJudgeYesterday(String str) {
         try {
             boolean flag = IsYesterday(str);
-            if (flag == true) {//是昨天
-                //TODO
-                isYesterday =  true;
-            } else {//不是昨天
-                //TODO
-                isYesterday =  false;
-            }
+            //是昨天
+//不是昨天
+            isYesterday = flag == true;
         } catch (ParseException e) {
             e.printStackTrace();
         }

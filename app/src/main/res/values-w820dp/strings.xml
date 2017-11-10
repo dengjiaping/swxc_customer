@@ -13,4 +13,6 @@
     <string name="watch_type">智能手表S2 PRO</string>
     <string name="family_number">亲情号码</string>
     <string name="off_line_reason">离线可能原因</string>
+    <string name="family_location">家人定位</string>
+    <string name="register">活动报名</string>
 </resources>

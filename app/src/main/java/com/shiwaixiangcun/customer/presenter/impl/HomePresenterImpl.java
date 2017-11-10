@@ -36,7 +36,7 @@ public class HomePresenterImpl implements IHomePresenter {
 
     private final String BUG_TAG = this.getClass().getSimpleName();
     private IHomeView iHomeView;
-
+    private int siteID;
     public HomePresenterImpl(IHomeView iHomeView) {
         this.iHomeView = iHomeView;
 
@@ -47,9 +47,10 @@ public class HomePresenterImpl implements IHomePresenter {
      * 请求位置2的Banner
      */
     private void requestBannerSecond() {
+
         OkGo.<String>get(Common.listpage)
                 .params("position", GlobalConfig.home_02)
-                .params("siteId", GlobalConfig.siteID)
+                .params("siteId", 20)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -100,7 +101,7 @@ public class HomePresenterImpl implements IHomePresenter {
     private void requestBannerFirst() {
         OkGo.<String>get(Common.listpage)
                 .params("position", GlobalConfig.home_01)
-                .params("siteId", GlobalConfig.siteID)
+                .params("siteId", GlobalConfig.DEFAULT_SITE_ID)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {

@@ -147,6 +147,7 @@ public class CommonActivity extends BaseActivity implements View.OnClickListener
 
     }
 
+    @Override
     protected void onDestroy() {
         if (mWebView != null) {
             mWebView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
@@ -170,6 +171,8 @@ public class CommonActivity extends BaseActivity implements View.OnClickListener
 
 
                 showShare();
+                break;
+            default:
                 break;
         }
 
