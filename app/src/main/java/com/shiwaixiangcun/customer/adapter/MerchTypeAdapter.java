@@ -16,7 +16,9 @@ import java.util.List;
 
 
 /**
- * Created by Administrator on 2016/7/13.
+ *
+ * @author Administrator
+ * @date 2016/7/13
  */
 public class MerchTypeAdapter extends BaseAdapter {
     private List<SurroundMerchantTypeBean.DataBean> list;
@@ -48,8 +50,8 @@ public class MerchTypeAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_home_surround_image, null);
             mViewHolder = new ViewHolder();
-            mViewHolder.tv_name_merch_type = (TextView) convertView.findViewById(R.id.tv_name_merch_type);
-            mViewHolder.iv_certificates = (ImageView) convertView.findViewById(R.id.iv_certificates);
+            mViewHolder.tv_name_merch_type = convertView.findViewById(R.id.tv_name_merch_type);
+            mViewHolder.iv_certificates = convertView.findViewById(R.id.iv_certificates);
             convertView.setTag(mViewHolder);
         } else {
             mViewHolder = (ViewHolder) convertView.getTag();
