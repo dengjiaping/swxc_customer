@@ -3,6 +3,7 @@ package com.shiwaixiangcun.customer.ui.activity.mall;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -66,6 +67,8 @@ public class ManageAddressActivity extends BaseActivity implements View.OnClickL
     Button mBtnAdd;
     @BindView(R.id.root_view)
     LinearLayout mRootView;
+    @BindView(R.id.cl_nodata)
+    ConstraintLayout mClNodata;
     private List<AddressBean> mAddressBeanList = new ArrayList<>();
     private AdapterManageAddress mManageAdapter;
     private String token = "";
@@ -86,6 +89,13 @@ public class ManageAddressActivity extends BaseActivity implements View.OnClickL
         initView();
         initEvent();
 
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        initToken();
+        initData();
     }
 
     /**
@@ -125,9 +135,16 @@ public class ManageAddressActivity extends BaseActivity implements View.OnClickL
                         }
                         switch (responseEntity.getResponseCode()) {
                             case 1001:
-                                mAddressBeanList.clear();
-                                mAddressBeanList.addAll(responseEntity.getData());
-                                mManageAdapter.notifyDataSetChanged();
+
+                                if (responseEntity.getData().size() == 0) {
+
+                                    mClNodata.setVisibility(View.VISIBLE);
+                                } else {
+                                    mClNodata.setVisibility(View.GONE);
+                                    mAddressBeanList.clear();
+                                    mAddressBeanList.addAll(responseEntity.getData());
+                                    mManageAdapter.notifyDataSetChanged();
+                                }
                                 break;
 
                             case 1018:

@@ -117,9 +117,10 @@ public class AddFamilyNumberActivity extends BaseActivity implements View.OnClic
                                 case 1001:
                                     showToastShort("添加亲情号码成功");
                                     if (isKill) {
-                                        readyGoThenKill(WatchInfoActivity.class);
-                                    } else {
                                         finish();
+                                    } else {
+                                        readyGoThenKill(WatchInfoActivity.class);
+
                                     }
                                     break;
                                 default:

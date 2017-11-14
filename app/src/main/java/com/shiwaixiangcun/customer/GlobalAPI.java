@@ -31,8 +31,8 @@ public class GlobalAPI {
     public static String addEvaluate = MK_DOMAIN + "/mc/evaluate/add.json";
     public static String getEvaluateList = MK_DOMAIN + "/mi/evaluate/listpage.json";
     public static String refund = MK_DOMAIN + "/mc/after/sale/add.json";
-    public static String doctormaster = MK_DOMAIN + "/mc/doctor/list.json";
-    public static String docotorDetail = MK_DOMAIN + "/mc/doctor/detail.htm";
+    public static String doctorMaster = MK_DOMAIN + "/mi/doctor/list.json";
+    public static String doctorDetail = MK_DOMAIN + "/mi/doctor/detail.htm";
     private static String DOMAIN = MK_DOMAIN;
     public static String getCategory = DOMAIN + "/mi/goods/category/tree.json";
     //地址相关接口

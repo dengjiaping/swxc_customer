@@ -17,11 +17,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jaeger.recyclerviewdivider.RecyclerViewDivider;
 import com.lzy.okgo.OkGo;
-import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
@@ -75,6 +73,11 @@ import butterknife.Unbinder;
 
 public class FragmentMall extends BaseFragment implements View.OnClickListener {
 
+
+    private static final int BANNER = 1;
+    private static final int DAILY_SELECTION = 2;
+    private static final int KEY_WORD = 3;
+    private static final int GUESS_LICK = 4;
     private static String BUG_TAG = "fragmentMall";
     @BindView(R.id.back_left)
     ChangeLightImageView mBackLeft;
@@ -128,12 +131,19 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
         EventBus.getDefault().register(this);
         initHeaders();
         initView();
+
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        siteID = (int) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_ID, 0);
         requestKeyword();
         requestBanner();
         requestData();
-        requestGood("GuessLike", 5, currentPage, pageSize, false);
+        requestGood("GuessLike", GUESS_LICK, currentPage, pageSize, false);
     }
-
 
     @Override
     protected View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -168,7 +178,7 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
                         }
                         switch (data.getResponseCode()) {
                             case 1001:
-                                EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_MALL, 2, data.getData()));
+                                EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_MALL, KEY_WORD, data.getData()));
                                 break;
                             default:
                                 Toast.makeText(mContext, "请求数据失败", Toast.LENGTH_SHORT).show();
@@ -205,8 +215,7 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
                         String jsonString = response.body();
                         Type type = new TypeToken<ResponseEntity<ElementBean>>() {
                         }.getType();
-                        Gson gson = new Gson();
-                        ResponseEntity<ElementBean> data = gson.fromJson(jsonString, type);
+                        ResponseEntity<ElementBean> data = JsonUtil.fromJson(jsonString, type);
                         if (data == null) {
                             return;
                         }
@@ -214,23 +223,25 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
 
                             case 1001:
                                 if (data.getData().getElements().size() == 0) {
-                                    mRefreshLayout.finishLoadmore(true);
+                                    mRefreshLayout.finishRefresh();
+                                    mRefreshLayout.finishLoadmore();
                                     return;
                                 }
 
                                 if (isPull) {
                                     currentPage++;
-                                    EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_MALL, flag, data.getData()));
-                                    mRefreshLayout.finishLoadmore(true);
+                                    EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_MALL, GUESS_LICK, data.getData()));
+                                    mRefreshLayout.finishLoadmore();
                                 } else {
                                     currentPage = 1;
-                                    EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_MALL, flag, data.getData()));
-                                    mRefreshLayout.finishRefresh(true);
+                                    EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_MALL, GUESS_LICK, data.getData()));
+                                    mRefreshLayout.finishRefresh();
                                 }
                                 break;
                             default:
                                 Toast.makeText(mContext, "获取数据失败", Toast.LENGTH_SHORT).show();
-                                mRefreshLayout.finishLoadmore(false);
+                                mRefreshLayout.finishLoadmore();
+                                mRefreshLayout.finishRefresh();
                                 break;
                         }
                     }
@@ -260,7 +271,7 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
                         }.getType();
                         ResponseEntity<List<BannerBean>> responseEntity = JsonUtil.fromJson(jsonString, type);
                         List<BannerBean> list = responseEntity.getData();
-                        EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_MALL, 1, list));
+                        EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_MALL, BANNER, list));
                     }
                 });
     }
@@ -317,13 +328,13 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
 
 
     /**
-     * 请求商城首页数据
+     * 请求每日精选
      */
     private void requestData() {
         Log.e(TAG, "请求数据");
         OkGo.<String>get(GlobalAPI.getMallHome)
-                .cacheKey("mall")            // 设置当前请求的缓存key,建议每个不同功能的请求设置一个
-                .cacheMode(CacheMode.DEFAULT)    // 缓存模式，详细请看缓存介绍
+                .params("siteId", siteID)
+                // 缓存模式，详细请看缓存介绍
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -331,7 +342,7 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
                         if (mallBean != null) {
                             switch (mallBean.getResponseCode()) {
                                 case 1001:
-                                    EventBus.getDefault().post(new SimpleEvent(SimpleEvent.UPDATE_MALL, 6, mallBean.getData()));
+                                    EventBus.getDefault().post(new SimpleEvent(SimpleEvent.UPDATE_MALL, DAILY_SELECTION, mallBean.getData()));
                                     break;
 
                                 default:
@@ -350,21 +361,21 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
      */
     private void initView() {
 
-        siteID = (int) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_ID, GlobalConfig.DEFAULT_SITE_ID);
+
         mAdapterMall = new AdapterMall(mGuessList);
         mAdapterMall.addHeaderView(mBannerView);
         mAdapterMall.addHeaderView(mJingxuanView);
         mAdapterMall.addHeaderView(mSuggestView);
         mAdapterMall.addHeaderView(mTitleView);
         mRvMall.setLayoutManager(new LinearLayoutManager(mContext));
-
+        siteID = (int) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_ID, 0);
         mRvMall.setAdapter(mAdapterMall);
         RecyclerViewDivider divider = new RecyclerViewDivider.Builder(this.getActivity())
                 .setOrientation(RecyclerViewDivider.VERTICAL)
                 .setStyle(RecyclerViewDivider.Style.END)
                 .setMarginLeft(16)
                 .setMarginRight(16)
-                .setDrawableRes(R.drawable.divider)
+                .setColorRes(R.color.color_divider_0_3)
                 .build();
         mRvMall.addItemDecoration(divider);
         mAdapterMall.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -381,8 +392,14 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                refreshlayout.finishLoadmore();
+                if (refreshlayout.isLoading()) {
+                    refreshlayout.finishLoadmore();
+                }
                 currentPage = 1;
+                mGuessList.clear();
+                mAdapterMall.notifyDataSetChanged();
+                requestKeyword();
+                requestBanner();
                 requestData();
                 requestGood("GuessLike", 5, currentPage, pageSize, false);
 
@@ -391,6 +408,9 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
         mRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
+                if (refreshlayout.isRefreshing()) {
+                    refreshlayout.finishRefresh();
+                }
                 if (currentPage == 1) {
                     currentPage++;
                 }
@@ -441,8 +461,9 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
             return;
         }
         switch (simpleEvent.mEventValue) {
-            case 1:
+            case BANNER:
                 final List<BannerBean> dataList = (List<BannerBean>) simpleEvent.getData();
+                imageList.clear();
                 for (BannerBean bean : dataList) {
                     imageList.add(bean.getImagePath());
                 }
@@ -462,20 +483,20 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
                     }
                 });
                 break;
-            case 2:
+            case KEY_WORD:
                 keyword = (Keyword) simpleEvent.getData();
                 mEdtSearch.setText(keyword.getGuide());
                 break;
 
             //精选商品下拉刷新
-            case 5:
+            case GUESS_LICK:
                 ElementBean guessData = (ElementBean) simpleEvent.getData();
                 mGuessList.clear();
                 mGuessList.addAll(guessData.getElements());
                 mAdapterMall.notifyDataSetChanged();
                 mRefreshLayout.finishRefresh(true);
                 break;
-            case 6:
+            case DAILY_SELECTION:
                 MallBean.DataBean mallData = (MallBean.DataBean) simpleEvent.getData();
                 MallBean.DataBean.QualityGoodsBean pinzhiData = mallData.getQualityGoods();
                 MallBean.DataBean.HotSellBean hotDataBean = mallData.getHotSell();

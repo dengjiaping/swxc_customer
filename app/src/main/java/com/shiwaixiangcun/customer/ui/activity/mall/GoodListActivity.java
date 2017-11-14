@@ -1,6 +1,7 @@
 package com.shiwaixiangcun.customer.ui.activity.mall;
 
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,8 +18,7 @@ import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.GlobalConfig;
@@ -57,7 +57,8 @@ public class GoodListActivity extends BaseActivity implements View.OnClickListen
     AdapterGoodList mAdapterGoodList;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
-    //用于标志当前页面类型
+    @BindView(R.id.cl_nodata)
+    ConstraintLayout mClNodata;
     private int flag = 0;
     private String type;
     private List<ElementBean.ElementsBean> mGoodList = new ArrayList<>();
@@ -75,6 +76,7 @@ public class GoodListActivity extends BaseActivity implements View.OnClickListen
         setContentView(R.layout.activity_good_list);
         EventCenter.getInstance().register(this);
         ButterKnife.bind(this);
+        siteID = (int) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_ID, 0);
         initData();
         initView();
     }
@@ -109,7 +111,6 @@ public class GoodListActivity extends BaseActivity implements View.OnClickListen
                 break;
         }
 
-        siteID = (int) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_ID, GlobalConfig.DEFAULT_SITE_ID);
 
         mAdapterGoodList = new AdapterGoodList(mGoodList);
         mBackLeft.setOnClickListener(this);
@@ -123,27 +124,26 @@ public class GoodListActivity extends BaseActivity implements View.OnClickListen
                 readyGo(GoodDetailActivity.class, bundle);
             }
         });
-        mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(final RefreshLayout refreshlayout) {
 
-                refreshlayout.finishLoadmore();
-                mCurrentPage = 1;
-                requestData(type, flag, mCurrentPage, mPageSize, false);
-
-            }
-        });
-        mRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+        mRefreshLayout.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-
                 if (mCurrentPage == 1) {
                     mCurrentPage++;
                 }
                 refreshlayout.finishRefresh();
                 requestData(type, flag, mCurrentPage, mPageSize, true);
             }
+
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                refreshlayout.finishLoadmore();
+                mCurrentPage = 1;
+                requestData(type, flag, mCurrentPage, mPageSize, false);
+
+            }
         });
+
         RecyclerViewDivider divider = new RecyclerViewDivider.Builder(this)
                 .setOrientation(RecyclerViewDivider.VERTICAL)
                 .setStyle(RecyclerViewDivider.Style.END)
@@ -196,23 +196,30 @@ public class GoodListActivity extends BaseActivity implements View.OnClickListen
                         switch (data.getResponseCode()) {
                             case 1001:
 
-                                if (data.getData().getElements().size() == 0) {
-                                    mRefreshLayout.finishLoadmore(true);
-                                    mRefreshLayout.finishRefresh(true);
-                                    return;
-
-                                }
 
                                 if (isLoadMore) {
+                                    if (data.getData().getElements().size() == 0) {
+                                        mRefreshLayout.finishLoadmore();
+                                    }
                                     mCurrentPage++;
                                     EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_GOOD_LIST, flag, data.getData()));
                                     mRefreshLayout.finishLoadmore(true);
                                 } else {
-                                    mCurrentPage = 1;
-                                    mGoodList.clear();
-                                    EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_GOOD_LIST, flag, data.getData()));
-                                    mRefreshLayout.finishRefresh(true);
+
+                                    if (data.getData().getElements().size() == 0) {
+                                        mClNodata.setVisibility(View.VISIBLE);
+                                        mRefreshLayout.finishRefresh(true);
+                                        return;
+
+                                    } else {
+                                        mCurrentPage = 1;
+                                        mGoodList.clear();
+                                        EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_GOOD_LIST, flag, data.getData()));
+                                        mRefreshLayout.finishRefresh(true);
+                                    }
                                 }
+                                break;
+                            default:
                                 break;
                         }
                     }
@@ -225,6 +232,8 @@ public class GoodListActivity extends BaseActivity implements View.OnClickListen
         switch (view.getId()) {
             case R.id.back_left:
                 finish();
+                break;
+            default:
                 break;
         }
     }
@@ -260,6 +269,8 @@ public class GoodListActivity extends BaseActivity implements View.OnClickListen
                 ElementBean jingxuanData = (ElementBean) simpleEvent.getData();
                 mGoodList.addAll(jingxuanData.getElements());
                 mAdapterGoodList.notifyDataSetChanged();
+                break;
+            default:
                 break;
 
         }

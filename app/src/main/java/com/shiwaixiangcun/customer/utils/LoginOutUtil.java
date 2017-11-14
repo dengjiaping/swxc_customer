@@ -22,7 +22,6 @@ import java.util.HashMap;
 
 
 /**
- *
  * @author Administrator
  * @date 2017/5/15
  */
@@ -51,6 +50,7 @@ public class LoginOutUtil implements Serializable {
                 if (user.getResponseCode() == 1001) {
                     SharePreference.saveStringToSpParams(context, Common.ISORNOLOGIN, Common.SIORNOLOGIN, "");
                     AppSharePreferenceMgr.put(context, GlobalConfig.isLogin, "");
+                    AppSharePreferenceMgr.put(context, GlobalConfig.TOKEN, "");
                     Intent intent = new Intent(context, LoginActivity.class);
                     context.startActivity(intent);
                 }

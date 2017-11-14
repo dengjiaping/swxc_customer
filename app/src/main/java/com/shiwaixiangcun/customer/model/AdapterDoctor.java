@@ -25,8 +25,8 @@ public class AdapterDoctor extends BaseQuickAdapter<DoctorBean.ElementsBean, Bas
         helper.setText(R.id.tv_name, item.getName());
         helper.setText(R.id.tv_title_of_doctor, item.getTitleOfDoctor());
         helper.setText(R.id.tv_department, item.getDepartment());
-        helper.setText(R.id.tv_good_filed, item.getGoodField());
-        helper.setText(R.id.tv_inaugural_ospital, "擅长:" + item.getInauguralHospital());
+        helper.setText(R.id.tv_good_filed, "擅长: " + item.getGoodField());
+        helper.setText(R.id.tv_inaugural_ospital, item.getInauguralHospital());
         CircleImageView civAvatar = helper.getView(R.id.civ_avatar);
         ImageDisplayUtil.showImageView(mContext, item.getAvatar(), civAvatar);
 

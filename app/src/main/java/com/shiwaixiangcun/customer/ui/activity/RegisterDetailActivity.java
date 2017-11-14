@@ -66,7 +66,7 @@ public class RegisterDetailActivity extends BaseActivity implements View.OnClick
         if (extras != null) {
             activityID = extras.getInt("activityID");
         }
-        siteID = (int) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_ID, GlobalConfig.DEFAULT_SITE_ID);
+        siteID = (int) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_ID, 0);
         initWebView();
         initViewAndEvent();
 
@@ -155,7 +155,11 @@ public class RegisterDetailActivity extends BaseActivity implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_left:
-                finish();
+                if (mWebView.canGoBack()) {
+                    mWebView.goBack();
+                } else {
+                    finish();
+                }
                 break;
             default:
                 break;
@@ -209,7 +213,7 @@ public class RegisterDetailActivity extends BaseActivity implements View.OnClick
         public void onPageFinished(WebView view, String url) {
 
 
-//            mTvPageName.setText(view.getTitle());
+            mTvPageName.setText(view.getTitle());
             Log.e("tag", "onPageFinished WebView title=" + view.getTitle());
 
         }

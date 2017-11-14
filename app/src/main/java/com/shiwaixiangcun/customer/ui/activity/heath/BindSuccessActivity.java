@@ -51,6 +51,7 @@ public class BindSuccessActivity extends BaseActivity implements View.OnClickLis
                 readyGoThenKill(AddFamilyNumberActivity.class);
                 break;
             case R.id.tv_ignore:
+                readyGoThenKill(WatchInfoActivity.class);
                 finish();
                 break;
             default:

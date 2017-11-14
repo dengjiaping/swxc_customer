@@ -1,46 +1,66 @@
 package com.shiwaixiangcun.customer.model;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
- * Created by Administrator on 2017/5/25.
+ * @author Administrator
+ * @date 2017/5/25
  */
 
-public class NoticeBean implements Serializable {
+public class NoticeBean implements Parcelable {
+    public static final Parcelable.Creator<NoticeBean> CREATOR = new Parcelable.Creator<NoticeBean>() {
+        @Override
+        public NoticeBean createFromParcel(Parcel source) {
+            return new NoticeBean(source);
+        }
 
-
+        @Override
+        public NoticeBean[] newArray(int size) {
+            return new NoticeBean[size];
+        }
+    };
     /**
-     * articleShowType : ACTIVE
-     * categoryId : 104
-     * categoryName : 活动
-     * coverPath : http://resource.shiwaixiangcun.cn/group1/M00/00/13/rBKx51kmQRWAOhxhABk27CHyoFU947.png
-     * id : 13
-     * publishTime : 1495679255000
-     * source : 来源123
-     * summary : huodong2
-
-     * title : 测试保存2
+     * categoryId : null
+     * categoryName : null
+     * coverId : 8946
+     * coverPath : http://resource.shiwaixiangcun.cn/group1/M00/00/9F/rBKx51oJM8WAODodAAA9WpZ8tQw888.png
+     * id : 25
+     * publishTime : 1510638840000
+     * showType : ACTIVITY
+     * source : PROPERTY
+     * summary : 辽宁省鞍山市傻大个睡觉啊过的痕迹撒
+     * title : 物业活动-限额3人
      * top : false
      */
 
-    private String articleShowType;
     private int categoryId;
     private String categoryName;
+    private int coverId;
     private String coverPath;
     private int id;
     private long publishTime;
+    private String showType;
     private String source;
     private String summary;
     private String title;
     private boolean top;
 
-
-    public String getArticleShowType() {
-        return articleShowType;
+    public NoticeBean() {
     }
 
-    public void setArticleShowType(String articleShowType) {
-        this.articleShowType = articleShowType;
+    protected NoticeBean(Parcel in) {
+        this.categoryId = in.readInt();
+        this.categoryName = in.readString();
+        this.coverId = in.readInt();
+        this.coverPath = in.readString();
+        this.id = in.readInt();
+        this.publishTime = in.readLong();
+        this.showType = in.readString();
+        this.source = in.readString();
+        this.summary = in.readString();
+        this.title = in.readString();
+        this.top = in.readByte() != 0;
     }
 
     public int getCategoryId() {
@@ -57,6 +77,14 @@ public class NoticeBean implements Serializable {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public int getCoverId() {
+        return coverId;
+    }
+
+    public void setCoverId(int coverId) {
+        this.coverId = coverId;
     }
 
     public String getCoverPath() {
@@ -81,6 +109,14 @@ public class NoticeBean implements Serializable {
 
     public void setPublishTime(long publishTime) {
         this.publishTime = publishTime;
+    }
+
+    public String getShowType() {
+        return showType;
+    }
+
+    public void setShowType(String showType) {
+        this.showType = showType;
     }
 
     public String getSource() {
@@ -114,4 +150,25 @@ public class NoticeBean implements Serializable {
     public void setTop(boolean top) {
         this.top = top;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.categoryId);
+        dest.writeString(this.categoryName);
+        dest.writeInt(this.coverId);
+        dest.writeString(this.coverPath);
+        dest.writeInt(this.id);
+        dest.writeLong(this.publishTime);
+        dest.writeString(this.showType);
+        dest.writeString(this.source);
+        dest.writeString(this.summary);
+        dest.writeString(this.title);
+        dest.writeByte(this.top ? (byte) 1 : (byte) 0);
+    }
 }
+

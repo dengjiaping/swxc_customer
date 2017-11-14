@@ -21,6 +21,7 @@ public class ComListAdapter extends BaseAdapter {
     public static final int TYPE_TITLE = 0;
     public static final int TYPE_COMPANY = 1;
     public static final int TYPE_DOWN = 2;
+    private static final int TYPE_ACTIVITY = 3;
     private Context context;
     private List<NoticeBean> list;
     private int index = -1;
@@ -49,12 +50,14 @@ public class ComListAdapter extends BaseAdapter {
     @Override
     public int getItemViewType(int position) {
 
-        if (list.get(position).getArticleShowType().equals("ARTICLE_IMAGE")) {
+        if (list.get(position).getShowType().equals("ARTICLE_IMAGE")) {
             return TYPE_TITLE;
-        } else if (list.get(position).getArticleShowType().equals("ACTIVE")) {
+        } else if (list.get(position).getShowType().equals("ACTIVE")) {
             return TYPE_COMPANY;
-        } else if (list.get(position).getArticleShowType().equals("ARTICLE_NO_IMAGE")) {
+        } else if (list.get(position).getShowType().equals("ARTICLE_NO_IMAGE")) {
             return TYPE_DOWN;
+        } else if (list.get(position).getShowType().equals("ACTIVITY")) {
+            return TYPE_ACTIVITY;
         }
         return 8;
     }
@@ -76,11 +79,11 @@ public class ComListAdapter extends BaseAdapter {
                 if (convertView == null) {
                     convertView = LayoutInflater.from(context).inflate(R.layout.item_right_iv, null);
                     titleHolder = new TitleViewHolder();
-                    titleHolder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
-                    titleHolder.tv_summary = (TextView) convertView.findViewById(R.id.tv_summary);
-                    titleHolder.tv_publishTime = (TextView) convertView.findViewById(R.id.tv_publishTime);
-                    titleHolder.tv_source = (TextView) convertView.findViewById(R.id.tv_source);
-                    titleHolder.iv_coverPath = (ImageView) convertView.findViewById(R.id.iv_coverPath);
+                    titleHolder.tv_title = convertView.findViewById(R.id.tv_title);
+                    titleHolder.tv_summary = convertView.findViewById(R.id.tv_summary);
+                    titleHolder.tv_publishTime = convertView.findViewById(R.id.tv_publishTime);
+                    titleHolder.tv_source = convertView.findViewById(R.id.tv_source);
+                    titleHolder.iv_coverPath = convertView.findViewById(R.id.iv_coverPath);
                     convertView.setTag(titleHolder);
                 } else {
                     titleHolder = (TitleViewHolder) convertView.getTag();
@@ -107,10 +110,10 @@ public class ComListAdapter extends BaseAdapter {
                 if (convertView == null) {
                     convertView = LayoutInflater.from(context).inflate(R.layout.item_bottom_iv, null);
                     comHolder = new ComViewHolder();
-                    comHolder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
-                    comHolder.tv_publishTime = (TextView) convertView.findViewById(R.id.tv_publishTime);
-                    comHolder.tv_source = (TextView) convertView.findViewById(R.id.tv_source);
-                    comHolder.iv_coverPath = (ImageView) convertView.findViewById(R.id.iv_coverPath);
+                    comHolder.tv_title = convertView.findViewById(R.id.tv_title);
+                    comHolder.tv_publishTime = convertView.findViewById(R.id.tv_publishTime);
+                    comHolder.tv_source = convertView.findViewById(R.id.tv_source);
+                    comHolder.iv_coverPath = convertView.findViewById(R.id.iv_coverPath);
                     convertView.setTag(comHolder);
                 } else {
                     comHolder = (ComViewHolder) convertView.getTag();
@@ -137,10 +140,10 @@ public class ComListAdapter extends BaseAdapter {
                 if (convertView == null) {
                     convertView = LayoutInflater.from(context).inflate(R.layout.item_no_iv, null);
                     downHolder = new DownHolder();
-                    downHolder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
-                    downHolder.tv_summary = (TextView) convertView.findViewById(R.id.tv_summary);
-                    downHolder.tv_publishTime = (TextView) convertView.findViewById(R.id.tv_publishTime);
-                    downHolder.tv_come_from = (TextView) convertView.findViewById(R.id.tv_source);
+                    downHolder.tv_title = convertView.findViewById(R.id.tv_title);
+                    downHolder.tv_summary = convertView.findViewById(R.id.tv_summary);
+                    downHolder.tv_publishTime = convertView.findViewById(R.id.tv_publishTime);
+                    downHolder.tv_come_from = convertView.findViewById(R.id.tv_source);
                     convertView.setTag(downHolder);
                 } else {
                     downHolder = (DownHolder) convertView.getTag();

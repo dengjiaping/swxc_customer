@@ -1,21 +1,11 @@
 package com.shiwaixiangcun.customer.presenter.impl;
 
 import android.content.Context;
-import android.util.Log;
 
-import com.google.gson.reflect.TypeToken;
-import com.shiwaixiangcun.customer.Common;
-import com.shiwaixiangcun.customer.http.HttpCallBack;
-import com.shiwaixiangcun.customer.http.HttpRequest;
-import com.shiwaixiangcun.customer.model.NoticeBean;
-import com.shiwaixiangcun.customer.model.PageBean;
-import com.shiwaixiangcun.customer.model.ResponseEntity;
+import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.presenter.ICommunityPresenter;
 import com.shiwaixiangcun.customer.ui.CommunityView;
-import com.shiwaixiangcun.customer.utils.JsonUtil;
-
-import java.lang.reflect.Type;
-import java.util.HashMap;
+import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 
 /**
  * Created by Administrator on 2017/5/25.
@@ -30,32 +20,13 @@ public class CommunityPresenterImpl implements ICommunityPresenter {
 
     @Override
     public void setBgaAdpaterAndClick(Context context) {
-        sendAnnouncementListpageHttp();
+        int siteId = (int) AppSharePreferenceMgr.get(context, GlobalConfig.CURRENT_SITE_ID, 0);
+        sendAnnouncementListpageHttp(siteId);
     }
 
     // 公告 public
-    private void sendAnnouncementListpageHttp() {
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("page.pn", 1);
-        hashMap.put("page.size", 1000);
-        hashMap.put("position", "COMMUNITY_ANNOUNCEMENT");
+    private void sendAnnouncementListpageHttp(int siteId) {
 
-        HttpRequest.get(Common.articleListpage, hashMap, new HttpCallBack() {
-            @Override
-            public void onSuccess(String responseJson) {
-                Log.i("oooooo---onSuccess---COMMUNITY_ANNOUNCEMENT", responseJson);
-                // 分页列表
-                Type type = new TypeToken<ResponseEntity<PageBean<NoticeBean>>>() {
-                }.getType();
-                ResponseEntity<PageBean<NoticeBean>> responseEntity_ann = JsonUtil.fromJson(responseJson, type);
-                communityView.setBgaAdpaterAndClickResult(responseEntity_ann);
 
-            }
-
-            @Override
-            public void onFailed(Exception e) {
-                Log.i("oooooo---onFailed---", e.toString());
-            }
-        });
     }
 }

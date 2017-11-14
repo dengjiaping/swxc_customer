@@ -54,6 +54,7 @@ import com.shiwaixiangcun.customer.ui.activity.LoginActivity;
 import com.shiwaixiangcun.customer.ui.activity.MessageActivity;
 import com.shiwaixiangcun.customer.ui.activity.MoreToolsActivity;
 import com.shiwaixiangcun.customer.ui.activity.RecipeActivity;
+import com.shiwaixiangcun.customer.ui.activity.RegisterDetailActivity;
 import com.shiwaixiangcun.customer.ui.activity.SiteActivity;
 import com.shiwaixiangcun.customer.ui.activity.SurroundLifeActivity;
 import com.shiwaixiangcun.customer.ui.activity.ToolsDetailActivity;
@@ -90,8 +91,11 @@ import static com.chad.library.adapter.base.BaseQuickAdapter.ALPHAIN;
 
 public class FragmentMain extends BaseFragment implements View.OnClickListener {
 
+    private static final int UPDATE_BANNER = 3;
+    private static final int UPDATE_ANNOUNCEMENT = 2;
+    private static final int UPDATE_TOOL = 4;
+    private static final long TIME_INTERVAL = 10000L;
     private static String BUG_TAG = "fragment_main";
-    private final long TIME_INTERVAL = 8000L;
     View viewHeader = null;
     View viewTools = null;
     View viewAnnouncement = null;
@@ -110,13 +114,13 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
     SmartRefreshLayout mRefreshLayout;
     Unbinder unbinder;
     AdapterTool mAdapterTool;
+    List<NoticeBean> elementList = new ArrayList<>();
     private RecyclerView mRvTools;
     private TextView tvMore;
     private Banner mBanner;
     private List<ToolCategoryBean.ChildrenBeanX> mToolList = new ArrayList<>();
     private AdapterMain mAdapterMain;
     private List<AdapterMain.MultipleItem> mMainList;
-
     private Context mContext;
     private List<String> imageList = new ArrayList<>();
     private Intent intent;
@@ -136,52 +140,67 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
         }
     };
 
-    private String siteName = "";
+    private String siteName;
     private int siteId;
 
     @Override
     public void onResume() {
         super.onResume();
+        siteId = (int) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_ID, 0);
         siteName = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_NAME, "");
-        siteId = (int) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_ID, 20);
+        initData();
     }
 
     protected void initViewsAndEvents(View view) {
-
+        siteId = (int) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_ID, 0);
+        siteName = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_NAME, "");
         initHeader(view);
-        siteName = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_NAME, "天鹅堡森林公园");
-        siteId = (int) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_ID, 20);
         mIvMessage.setOnClickListener(this);
         mLlayoutSite.setOnClickListener(this);
         mTvLocation.setText(siteName);
         mMainList = new ArrayList<>();
         mAdapterMain = new AdapterMain(mMainList);
         mRvMain.setLayoutManager(new LinearLayoutManager(mContext));
-        mRvMain.setAdapter(mAdapterMain);
+        mAdapterMain.openLoadAnimation(ALPHAIN);
+        mAdapterMain.isFirstOnly(true);
         mAdapterMain.addHeaderView(viewHeader);
         mAdapterMain.addHeaderView(viewTools);
         mAdapterMain.addHeaderView(viewAnnouncement);
         mAdapterMain.addHeaderView(viewBanner);
+        mRvMain.setAdapter(mAdapterMain);
         RecyclerViewDivider divider = new RecyclerViewDivider.Builder(this.getActivity())
                 .setOrientation(RecyclerViewDivider.VERTICAL)
                 .setStyle(RecyclerViewDivider.Style.END)
                 .setMarginLeft(16)
                 .setMarginRight(16)
-                .setDrawableRes(R.drawable.divider)
+                .setColorRes(R.color.color_divider_0_3)
                 .build();
         mRvMain.addItemDecoration(divider);
-        mAdapterMain.openLoadAnimation(ALPHAIN);
-        mAdapterMain.isFirstOnly(true);
+
+
         mAdapterMain.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 AdapterMain.MultipleItem item = (AdapterMain.MultipleItem) adapter.getData().get(position);
                 NoticeBean data = item.getData();
-                Intent intent = new Intent(mContext, DetailsActivity.class);
-                intent.putExtra("articleId", data.getId() + "");
-                intent.putExtra("detailTitle", data.getTitle() + "");
-                intent.putExtra("detailContent", data.getSummary());
-                startActivity(intent);
+
+                switch (data.getShowType()) {
+                    case "ACTIVITY":
+
+                        Bundle bundle = new Bundle();
+
+                        bundle.putInt("activityID", data.getId());
+                        readyGo(RegisterDetailActivity.class, bundle);
+                        break;
+                    default:
+                        Intent intent = new Intent(mContext, DetailsActivity.class);
+                        intent.putExtra("articleId", data.getId() + "");
+                        intent.putExtra("detailTitle", data.getTitle() + "");
+                        intent.putExtra("detailContent", data.getSummary());
+                        startActivity(intent);
+                        break;
+                }
+
 
             }
         });
@@ -292,7 +311,7 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
                         }
                         switch (responseEntity.getResponseCode()) {
                             case 1001:
-                                EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_MAIN, 4, responseEntity.getData()));
+                                EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_MAIN, UPDATE_TOOL, responseEntity.getData()));
                                 break;
                             default:
                                 break;
@@ -330,7 +349,7 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
                             return;
                         }
                         List<BannerBean> list = responseEntity.getData();
-                        EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_MAIN, 3, list));
+                        EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_MAIN, UPDATE_BANNER, list));
 
                     }
                 });
@@ -344,8 +363,9 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
 
     private void initAnnouncement() {
         OkGo.<String>get(Common.articleListpage)
-                .params("page.pn", 1)
+                .params("page.pn", currentPage)
                 .params("page.size", 3)
+                .params("siteId", siteId)
                 .params("position", "COMMUNITY_ANNOUNCEMENT")
                 .execute(new StringCallback() {
                     @Override
@@ -354,7 +374,7 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
                         Type type = new TypeToken<ResponseEntity<PageBean<NoticeBean>>>() {
                         }.getType();
                         ResponseEntity<PageBean<NoticeBean>> announcementData = JsonUtil.fromJson(response.body(), type);
-                        EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_MAIN, 2, announcementData));
+                        EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_MAIN, UPDATE_ANNOUNCEMENT, announcementData));
                     }
                 });
 
@@ -372,6 +392,7 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
         OkGo.<String>get(Common.articleListpage)
                 .params("page.pn", page)
                 .params("page.size", pageSize)
+                .params("siteId", siteId)
                 .params("position", "COMMUNITY_HEADLINES")
                 .execute(new StringCallback() {
                     @Override
@@ -431,23 +452,20 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
                 setDataHeadLine(simpleEvent, true);
                 break;
             //社区公告
-            case 2:
+            case UPDATE_ANNOUNCEMENT:
                 setNoticeData(simpleEvent);
                 break;
             //Banner
-            case 3:
+            case UPDATE_BANNER:
                 setBannerData(simpleEvent);
                 break;
 
-            case 4:
+            case UPDATE_TOOL:
                 setTools(simpleEvent);
                 break;
 
             case 6:
                 Site site = (Site) simpleEvent.getData();
-
-
-//                mTvLocation.setText(site.getName());
                 break;
             default:
                 break;
@@ -506,31 +524,44 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
 
     private void setNoticeData(SimpleEvent simpleEvent) {
         ResponseEntity<PageBean<NoticeBean>> NoticeData = (ResponseEntity<PageBean<NoticeBean>>) simpleEvent.getData();
-        final List<NoticeBean> elementList = NoticeData.getData().getElements();
-        for (int i = 0; i < elementList.size(); i++) {
+
+        if (NoticeData.getData().getElements().size() == 0) {
             TextView textView = new TextView(mContext);
-            textView.setText(elementList.get(i).getTitle());
+            textView.setText("站务公告");
             textView.setLines(1);
             textView.setSingleLine(true);
             textView.setTextSize(14);
-            textView.setId(i);
             textView.setTextColor(Color.parseColor("#2D3230"));
             textView.setEllipsize(TextUtils.TruncateAt.END);
             textView.setOnClickListener(this);
             viewAnimator.addView(textView);
-            final int finalI = i;
-            final int finalI1 = i;
-            textView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(mContext, DetailsActivity.class);
+        } else {
+            elementList.clear();
+            elementList.addAll(NoticeData.getData().getElements());
+            for (int i = 0; i < elementList.size(); i++) {
+                TextView textView = new TextView(mContext);
+                textView.setText(elementList.get(i).getTitle());
+                textView.setLines(1);
+                textView.setSingleLine(true);
+                textView.setTextSize(14);
+                textView.setId(i);
+                textView.setTextColor(Color.parseColor("#2D3230"));
+                textView.setEllipsize(TextUtils.TruncateAt.END);
+                textView.setOnClickListener(this);
+                viewAnimator.addView(textView);
+                final int finalI1 = i;
+                textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(mContext, DetailsActivity.class);
 
-                    intent.putExtra("articleId", elementList.get(finalI1).getId() + "");
-                    intent.putExtra("detailTitle", elementList.get(finalI1).getTitle());
-                    intent.putExtra("detailContent", elementList.get(finalI1).getSummary());
-                    startActivity(intent);
-                }
-            });
+                        intent.putExtra("articleId", elementList.get(finalI1).getId() + "");
+                        intent.putExtra("detailTitle", elementList.get(finalI1).getTitle());
+                        intent.putExtra("detailContent", elementList.get(finalI1).getSummary());
+                        startActivity(intent);
+                    }
+                });
+            }
         }
 
         handler.sendMessageDelayed(new Message(), TIME_INTERVAL);
@@ -551,13 +582,18 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
         }
         for (NoticeBean bean : elements) {
             AdapterMain.MultipleItem multipleItem;
-            switch (bean.getArticleShowType()) {
+            switch (bean.getShowType()) {
                 case "ARTICLE_IMAGE":
                     multipleItem = new AdapterMain.MultipleItem(1, bean);
                     break;
                 case "ACTIVE":
-                    multipleItem = new AdapterMain.MultipleItem(2, bean);
+                    multipleItem = new AdapterMain.MultipleItem(3, bean);
                     break;
+
+                case "ACTIVITY":
+                    multipleItem = new AdapterMain.MultipleItem(4, bean);
+                    break;
+
                 default:
                     multipleItem = new AdapterMain.MultipleItem(3, bean);
                     break;
@@ -612,7 +648,7 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
         unbinder = ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
         initViewsAndEvents(view);
-        initData();
+
     }
 
     private void initData() {

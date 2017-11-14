@@ -122,7 +122,7 @@ public class MoreToolsActivity extends BaseActivity implements View.OnClickListe
 
     private void initViewAndEvent() {
 
-        siteID = (int) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_ID, GlobalConfig.DEFAULT_SITE_ID);
+        siteID = (int) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_ID, 0);
         mTvPageName.setText("全部服务");
         isLogin = SharePreference.getStringSpParams(mContext, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
         mList = new ArrayList<>();
@@ -170,6 +170,8 @@ public class MoreToolsActivity extends BaseActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.back_left:
                 finish();
+                break;
+            default:
                 break;
 
         }

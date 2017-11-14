@@ -60,6 +60,7 @@ public class RightsRecordActivity extends BaseActivity {
     private String tokenString;
     private int mCurrentPage = GlobalConfig.first_page;
     private int mPageSize = GlobalConfig.page_size;
+    private int siteID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,9 +72,10 @@ public class RightsRecordActivity extends BaseActivity {
         requestData(mCurrentPage, mPageSize, false);
     }
 
+
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onRestart() {
+        super.onRestart();
         initToken();
     }
 
@@ -88,6 +90,7 @@ public class RightsRecordActivity extends BaseActivity {
                 .params("access_token", tokenString)
                 .params("page.pn", page)
                 .params("page.size", pageSize)
+                .params("siteId", siteID)
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Response<String> response) {
@@ -145,6 +148,7 @@ public class RightsRecordActivity extends BaseActivity {
     }
 
     private void initViewAndEvent() {
+        siteID = (int) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_ID, 0);
         mTvPageName.setText("维权记录");
         mBackLeft.setOnClickListener(new View.OnClickListener() {
             @Override

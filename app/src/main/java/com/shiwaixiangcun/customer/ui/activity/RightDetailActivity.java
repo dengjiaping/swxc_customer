@@ -74,6 +74,7 @@ public class RightDetailActivity extends BaseActivity implements View.OnClickLis
     private List<RightDetailBean.DataBean.ProcessBean> mProcessList;
 
     private AdapterProcess mAdapterRecord;
+    private int siteId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +102,7 @@ public class RightDetailActivity extends BaseActivity implements View.OnClickLis
         OkGo.<String>get(GlobalAPI.rightDetail)
                 .params("access_token", tokenString)
                 .params("id", id)
+                .params("siteId", siteId)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -132,6 +134,7 @@ public class RightDetailActivity extends BaseActivity implements View.OnClickLis
 
     private void initViewAndEvent() {
         mTvPageName.setText("维权记录详情");
+        siteId = (int) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_ID, 0);
         refreshToken = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.Refresh_token, "");
         tokenString = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
         mProcessList = new ArrayList<>();
@@ -164,6 +167,8 @@ public class RightDetailActivity extends BaseActivity implements View.OnClickLis
                     case "FINISHED":
                         mTvStature.setBackgroundResource(R.drawable.shape_stature_gray);
                         mTvStature.setText("已完成");
+                    default:
+                        break;
 
                 }
 
@@ -194,6 +199,9 @@ public class RightDetailActivity extends BaseActivity implements View.OnClickLis
 
                 mProcessList.addAll(bean.getData().getProcess());
                 mAdapterRecord.notifyDataSetChanged();
+                break;
+            default:
+                break;
 
 
         }
@@ -204,6 +212,8 @@ public class RightDetailActivity extends BaseActivity implements View.OnClickLis
         switch (v.getId()) {
             case R.id.back_left:
                 finish();
+                break;
+            default:
                 break;
         }
     }

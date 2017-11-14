@@ -127,7 +127,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private void initViewAndEvent() {
         mBackLeft.setOnClickListener(this);
         mTvPageName.setText(R.string.register);
-        siteID = (int) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_ID, GlobalConfig.DEFAULT_SITE_ID);
+        siteID = (int) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_ID, 0);
         mList = new ArrayList<>();
 
         mAdapterRegister = new AdapterRegister(mList);
@@ -160,6 +160,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 if (refreshlayout.isRefreshing()) {
                     refreshlayout.finishRefresh();
 
+
+                }
+                if (currentPage == 1) {
+                    currentPage++;
                 }
                 requestData(currentPage, pageSize, true);
             }

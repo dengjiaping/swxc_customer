@@ -34,12 +34,13 @@
                 app:layout_scrollFlags="scroll|snap"/>
 
             <LinearLayout
-                android:id="@+id/llayout_watch_info"
+                android:id="@+id/llayout_watch_info_on"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:orientation="vertical"
+                android:visibility="invisible"
                 app:layout_collapseParallaxMultiplier="0.7"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
@@ -53,6 +54,8 @@
                     tools:text="在线"/>
 
                 <TextView
+
+                    android:id="@+id/tv_elect"
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -73,6 +76,37 @@
                     android:textColor="#FFFFFFFF"
                     android:textSize="40sp"
                     tools:text="70%"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llayout_watch_info_off"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="invisible"
+                app:layout_collapseParallaxMultiplier="0.7"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:text="智能手表离线"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="20sp"/>
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="4dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/notice"/>
             </LinearLayout>
 
             <android.support.v7.widget.Toolbar

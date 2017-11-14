@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -48,6 +49,8 @@ public class FamilyActivity extends BaseActivity implements View.OnClickListener
     Button mBtnAddFamily;
     AdapterMyFamily mMyFamilyAdapter;
     List<MyFamilyBean.DataBean> mMyFamilyList;
+    @BindView(R.id.llayout_nodata)
+    LinearLayout mLlayoutNodata;
     private String token;
     private String refreshToken;
 
@@ -59,12 +62,12 @@ public class FamilyActivity extends BaseActivity implements View.OnClickListener
         initViewAndEvent();
     }
 
-
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onRestart() {
+        super.onRestart();
         initData();
     }
+
 
     /**
      * 初始化网络数据
@@ -85,9 +88,16 @@ public class FamilyActivity extends BaseActivity implements View.OnClickListener
                         }
                         switch (responseEntity.getResponseCode()) {
                             case 1001:
-                                mMyFamilyList.clear();
-                                mMyFamilyList.addAll(responseEntity.getData());
-                                mMyFamilyAdapter.notifyDataSetChanged();
+
+                                if (responseEntity.getData().size() == 0) {
+                                    mLlayoutNodata.setVisibility(View.VISIBLE);
+                                } else {
+                                    mLlayoutNodata.setVisibility(View.GONE);
+                                    mMyFamilyList.clear();
+                                    mMyFamilyList.addAll(responseEntity.getData());
+                                    mMyFamilyAdapter.notifyDataSetChanged();
+                                }
+
                                 break;
 
                             case 1018:

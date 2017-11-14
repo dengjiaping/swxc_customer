@@ -22,6 +22,9 @@ import com.shiwaixiangcun.customer.widget.MyListView;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Administrator
+ */
 public class RecordsActivity extends AppCompatActivity implements View.OnClickListener,IRecordView{
 
     private ChangeLightImageView back_left;
@@ -49,16 +52,16 @@ public class RecordsActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void layoutView() {
-        back_left = (ChangeLightImageView) findViewById(R.id.back_left);
-        tv_page_name = (TextView) findViewById(R.id.tv_page_name);
-        lv_accept = (ListView) findViewById(R.id.lv_accept);
+        back_left = findViewById(R.id.back_left);
+        tv_page_name = findViewById(R.id.tv_page_name);
+        lv_accept = findViewById(R.id.lv_accept);
 
         View footer_record = LayoutInflater.from(this).inflate(R.layout.footer_record, null);
-        lv_finish = (MyListView) footer_record.findViewById(R.id.lv_finish);
-        tv_tv = (TextView) footer_record.findViewById(R.id.tv_tv);
+        lv_finish = footer_record.findViewById(R.id.lv_finish);
+        tv_tv = footer_record.findViewById(R.id.tv_tv);
 
         View head_record = LayoutInflater.from(this).inflate(R.layout.head_record, null);
-        rl_title = (RelativeLayout) head_record.findViewById(R.id.rl_title);
+        rl_title = head_record.findViewById(R.id.rl_title);
 
         lv_accept.addHeaderView(head_record);
         lv_accept.addFooterView(footer_record);

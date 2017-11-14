@@ -19,10 +19,12 @@ import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
 import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.Common;
+import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.share.OnekeyShare;
 import com.shiwaixiangcun.customer.ui.IDetailView;
+import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.SdCordUtil;
 import com.shiwaixiangcun.customer.utils.Utils;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
@@ -33,20 +35,24 @@ import java.util.HashMap;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 
+/**
+ * @author Administrator
+ */
 public class DetailsActivity extends BaseActivity implements View.OnClickListener, IDetailView {
 
 
-    private ChangeLightImageView back_left;
-    private ImageView iv_share_right;
+    private ChangeLightImageView backLeft;
+    private ImageView ivShareRight;
     private ObservableWebView webView;
     private String articleId;
     private StringBuilder webUrl = new StringBuilder();
     private StringBuilder shareUrl = new StringBuilder();
     private String detailTitle;
-    private TextView tv_page_name;
-    private TextView tv_top;
+    private TextView tvPageName;
+    private TextView tvTop;
     private String detailContent;
     private String shareImage;
+    private int siteId;
 
 
     @Override
@@ -55,6 +61,7 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
         setContentView(R.layout.activity_details);
         Resources res = getResources();
 
+        siteId = (int) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_ID, 0);
         Bitmap bmp = BitmapFactory.decodeResource(res, R.drawable.start_page);
         shareImage = SdCordUtil.saveMyBitmap("shareImage", bmp);
         //        百度统计
@@ -72,7 +79,7 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
         initData();
 
 
-        webView = (ObservableWebView) findViewById(R.id.webview);
+        webView = findViewById(R.id.webview);
         //设置WebView属性，能够执行Javascript脚本
         webView.getSettings().setJavaScriptEnabled(true);
         //加载需要显示的网页
@@ -85,13 +92,13 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
                 int scrollY = webView.getScrollY();
                 if (scrollY > 300) {
                     if (Utils.isNotEmpty(detailTitle)) {
-                        tv_page_name.setText(detailTitle);
-                        tv_top.setVisibility(View.VISIBLE);
+                        tvPageName.setText(detailTitle);
+                        tvTop.setVisibility(View.VISIBLE);
                     }
 
                 } else {
-                    tv_page_name.setText("");
-                    tv_top.setVisibility(View.GONE);
+                    tvPageName.setText("");
+                    tvTop.setVisibility(View.GONE);
                 }
 
             }
@@ -101,23 +108,33 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void layoutView() {
-        back_left = (ChangeLightImageView) findViewById(R.id.back_left);
-        iv_share_right = (ImageView) findViewById(R.id.iv_share_right);
-        tv_top = (TextView) findViewById(R.id.tv_top);
-        tv_page_name = (TextView) findViewById(R.id.tv_page_name);
-        tv_page_name.setEllipsize(TextUtils.TruncateAt.END);
-        tv_page_name.setLines(1);
+        backLeft = findViewById(R.id.back_left);
+        ivShareRight = findViewById(R.id.iv_share_right);
+        tvTop = findViewById(R.id.tv_top);
+        tvPageName = findViewById(R.id.tv_page_name);
+        tvPageName.setEllipsize(TextUtils.TruncateAt.END);
+        tvPageName.setLines(1);
     }
 
     private void initData() {
 
 
-        webUrl.append(Common.domainPM).append("mi/article/detailView.htm").append("?articleId=").append(articleId).append("&app=true");
-        shareUrl.append(Common.domainPM).append("mi/article/detailView.htm").append("?articleId=").append(articleId);
+        webUrl.append(Common.domainPM).append("mi/article/detailView.htm")
+                .append("?articleId=")
+                .append(articleId)
+                .append("&siteId=")
+                .append(siteId)
+                .append("&app=true");
+        shareUrl.append(Common.domainPM)
+                .append("mi/article/detailView.htm")
+                .append("?articleId=")
+                .append(articleId)
+                .append("&siteId=")
+                .append(siteId);
         Log.e(BUG_TAG, webUrl.toString());
-        iv_share_right.setVisibility(View.VISIBLE);
-        back_left.setOnClickListener(this);
-        iv_share_right.setOnClickListener(this);
+        ivShareRight.setVisibility(View.VISIBLE);
+        backLeft.setOnClickListener(this);
+        ivShareRight.setOnClickListener(this);
     }
 
     @Override
@@ -129,6 +146,8 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.iv_share_right:
                 showShare();
+                break;
+            default:
                 break;
         }
     }

@@ -16,7 +16,6 @@ import com.baidu.mobstat.StatService;
 import com.shiwaixiangcun.customer.Common;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
-import com.shiwaixiangcun.customer.app.App;
 import com.shiwaixiangcun.customer.model.HousePhoneBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.presenter.impl.HousePhoneImpl;
@@ -29,21 +28,24 @@ import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
 import java.util.List;
 
+/**
+ * @author Administrator
+ */
 public class ToResidentCertificationActivity extends AppCompatActivity implements View.OnClickListener, IHousePhoneView {
 
-    private ChangeLightImageView back_left;
+    private ChangeLightImageView backLeft;
     private String houseId;
-    private TextView tv_little_phone;
-    private TextView tv_next_phone;
+    private TextView tvLittlePhone;
+    private TextView tvNextPhone;
     private List<HousePhoneBean> data;
-    private Button btn_submit_open;
-    private EditText et_little_phone;
-    private RelativeLayout rl_success_submit;
-    private Button btn_ok;
-    private ImageView iv_submit_expression;
-    private TextView tv_submit_succsse;
-    private TextView tv_content;
-    private int next_i = 0;
+    private Button btnSubmitOpen;
+    private EditText etLittlePhone;
+    private RelativeLayout rlSuccessSubmit;
+    private Button btnOk;
+    private ImageView ivSubmitExpression;
+    private TextView tvSubmitSuccsse;
+    private TextView tvContent;
+    private int nextI = 0;
     private String houseName;
 
     @Override
@@ -66,16 +68,16 @@ public class ToResidentCertificationActivity extends AppCompatActivity implement
     }
 
     private void layoutView() {
-        back_left = (ChangeLightImageView) findViewById(R.id.back_left);
-        tv_little_phone = (TextView) findViewById(R.id.tv_little_phone);
-        tv_next_phone = (TextView) findViewById(R.id.tv_next_phone);
-        btn_submit_open = (Button) findViewById(R.id.btn_submit_open);
-        et_little_phone = (EditText) findViewById(R.id.et_little_phone);
-        rl_success_submit = (RelativeLayout) findViewById(R.id.rl_success_submit);
-        btn_ok = (Button) findViewById(R.id.btn_ok);
-        iv_submit_expression = (ImageView) findViewById(R.id.iv_submit_expression);
-        tv_submit_succsse = (TextView) findViewById(R.id.tv_submit_succsse);
-        tv_content = (TextView) findViewById(R.id.tv_content);
+        backLeft = findViewById(R.id.back_left);
+        tvLittlePhone = findViewById(R.id.tv_little_phone);
+        tvNextPhone = findViewById(R.id.tv_next_phone);
+        btnSubmitOpen = findViewById(R.id.btn_submit_open);
+        etLittlePhone = findViewById(R.id.et_little_phone);
+        rlSuccessSubmit = findViewById(R.id.rl_success_submit);
+        btnOk = findViewById(R.id.btn_ok);
+        ivSubmitExpression = findViewById(R.id.iv_submit_expression);
+        tvSubmitSuccsse = findViewById(R.id.tv_submit_succsse);
+        tvContent = findViewById(R.id.tv_content);
     }
 
     private void initData() {
@@ -83,10 +85,10 @@ public class ToResidentCertificationActivity extends AppCompatActivity implement
             HousePhoneImpl housePhone = new HousePhoneImpl(this, houseId, "");
             housePhone.getHouseNumber(this);
         }
-        back_left.setOnClickListener(this);
-        tv_next_phone.setOnClickListener(this);
-        btn_submit_open.setOnClickListener(this);
-        btn_ok.setOnClickListener(this);
+        backLeft.setOnClickListener(this);
+        tvNextPhone.setOnClickListener(this);
+        btnSubmitOpen.setOnClickListener(this);
+        btnOk.setOnClickListener(this);
     }
 
     @Override
@@ -97,17 +99,17 @@ public class ToResidentCertificationActivity extends AppCompatActivity implement
                 finish();
                 break;
             case R.id.tv_next_phone:
-                next_i++;
-                if (next_i >= data.size()) {
-                    next_i = 0;
+                nextI++;
+                if (nextI >= data.size()) {
+                    nextI = 0;
                 }
                 if (data != null && data.size() != 0) {
-                    tv_little_phone.setText(data.get(next_i).getPhone());
+                    tvLittlePhone.setText(data.get(nextI).getPhone());
                 }
                 break;
             case R.id.btn_submit_open:
-                String s_phone = tv_little_phone.getText().toString().trim() + et_little_phone.getText().toString().trim();
-                if (!Utils.isNotEmpty(et_little_phone.getText().toString().trim())) {
+                String s_phone = tvLittlePhone.getText().toString().trim() + etLittlePhone.getText().toString().trim();
+                if (!Utils.isNotEmpty(etLittlePhone.getText().toString().trim())) {
                     Toast.makeText(this, "请补全电话号码后四位", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -137,6 +139,8 @@ public class ToResidentCertificationActivity extends AppCompatActivity implement
 
 
                 break;
+            default:
+                break;
         }
     }
 
@@ -144,7 +148,7 @@ public class ToResidentCertificationActivity extends AppCompatActivity implement
     public void setPhoneInfo(ResponseEntity<List<HousePhoneBean>> result) {
         data = result.getData();
         if (data != null && data.size() != 0) {
-            tv_little_phone.setText(data.get(0).getPhone());
+            tvLittlePhone.setText(data.get(0).getPhone());
         }
     }
 
@@ -152,17 +156,17 @@ public class ToResidentCertificationActivity extends AppCompatActivity implement
     public void setPhoneResult(ResponseEntity result) {
         if (null != result) {
             if (result.getResponseCode() == 1001) {
-                tv_content.setText("恭喜您认证成功");
-                iv_submit_expression.setImageResource(R.mipmap.submit_success);
-                tv_submit_succsse.setText("认证成功");
-                AppSharePreferenceMgr.get(App.getContext(), GlobalConfig.propertyAuth, true);
-                rl_success_submit.setVisibility(View.VISIBLE);
-                btn_submit_open.setVisibility(View.GONE);
+                tvContent.setText("恭喜您认证成功");
+                ivSubmitExpression.setImageResource(R.mipmap.submit_success);
+                tvSubmitSuccsse.setText("认证成功");
+                AppSharePreferenceMgr.put(this, GlobalConfig.propertyAuth, true);
+                rlSuccessSubmit.setVisibility(View.VISIBLE);
+                btnSubmitOpen.setVisibility(View.GONE);
             } else {
-                iv_submit_expression.setImageResource(R.mipmap.submit_default);
-                tv_submit_succsse.setText("认证失败");
-                rl_success_submit.setVisibility(View.VISIBLE);
-                btn_submit_open.setVisibility(View.GONE);
+                ivSubmitExpression.setImageResource(R.mipmap.submit_default);
+                tvSubmitSuccsse.setText("认证失败");
+                rlSuccessSubmit.setVisibility(View.VISIBLE);
+                btnSubmitOpen.setVisibility(View.GONE);
             }
         }
     }

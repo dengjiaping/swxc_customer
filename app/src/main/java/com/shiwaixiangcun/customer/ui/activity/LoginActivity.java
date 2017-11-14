@@ -42,11 +42,11 @@ import java.util.HashMap;
  */
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
     private TimeCount time;
-    private TextView tv_get_verification;
-    private Button btn_login;
-    private EditText et_get_psw;
-    private EditText et_username;
-    private ChangeLightImageView back_left;
+    private TextView tvGetVerification;
+    private Button btnLogin;
+    private EditText etGetPsw;
+    private EditText etUsername;
+    private ChangeLightImageView backLeft;
     private DialogLoading mDialogLoading;
     private String mineLogin;
 
@@ -65,28 +65,28 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("account", et_username.getText().toString());
+        outState.putString("account", etUsername.getText().toString());
     }
 
     private void initView(Bundle savedInstanceState) {
-        tv_get_verification = findViewById(R.id.tv_get_verification);
-        btn_login = findViewById(R.id.btn_login);
-        et_get_psw = findViewById(R.id.et_get_psw);
-        et_username = findViewById(R.id.et_username);
-        back_left = findViewById(R.id.back_left);
+        tvGetVerification = findViewById(R.id.tv_get_verification);
+        btnLogin = findViewById(R.id.btn_login);
+        etGetPsw = findViewById(R.id.et_get_psw);
+        etUsername = findViewById(R.id.et_username);
+        backLeft = findViewById(R.id.back_left);
         if (savedInstanceState != null) {
-            et_username.setText(savedInstanceState.getString("account"));
+            etUsername.setText(savedInstanceState.getString("account"));
         }
 
 
     }
 
     private void initData() {
-        time = new TimeCount(60000, 1000, tv_get_verification);
-        tv_get_verification.setOnClickListener(this);
-        et_username.setText((CharSequence) AppSharePreferenceMgr.get(this, Common.IS_SAVE_ACCOUNT, ""));
-        btn_login.setOnClickListener(this);
-        back_left.setOnClickListener(this);
+        time = new TimeCount(60000, 1000, tvGetVerification);
+        tvGetVerification.setOnClickListener(this);
+        etUsername.setText((CharSequence) AppSharePreferenceMgr.get(this, Common.IS_SAVE_ACCOUNT, ""));
+        btnLogin.setOnClickListener(this);
+        backLeft.setOnClickListener(this);
     }
 
     @Override
@@ -98,10 +98,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 sendGetVerificationHttp();
                 break;
             case R.id.btn_login:
-                if (!Utils.isNotEmpty(et_username.getText().toString().trim())) {
+                if (!Utils.isNotEmpty(etUsername.getText().toString().trim())) {
                     showToastShort("请输入用户账号");
                     return;
-                } else if (!Utils.isNotEmpty(et_get_psw.getText().toString().trim())) {
+                } else if (!Utils.isNotEmpty(etGetPsw.getText().toString().trim())) {
                     showToastShort("请输入验证码");
                     return;
                 }
@@ -120,7 +120,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
      */
     private void sendGetVerificationHttp() {
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("mobile", et_username.getText().toString().trim());
+        hashMap.put("mobile", etUsername.getText().toString().trim());
         HttpRequest.get(Common.getVerification, hashMap, new HttpCallBack() {
             @Override
             public void onSuccess(String responseJson) {
@@ -143,8 +143,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         hashMap.put("client_secret", GlobalConfig.clientSecret);
         hashMap.put("grant_type", "dynamic_password");
         hashMap.put("scope", "property_customer_app");
-        hashMap.put("username", et_username.getText().toString().trim());
-        hashMap.put("password", et_get_psw.getText().toString().trim());
+        hashMap.put("username", etUsername.getText().toString().trim());
+        hashMap.put("password", etGetPsw.getText().toString().trim());
         HttpRequest.post(Common.login, hashMap, new HttpCallBack() {
             @Override
             public void onSuccess(String responseJson) {
@@ -165,9 +165,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         //保存用户的Token值
                         AppSharePreferenceMgr.put(mContext, GlobalConfig.TOKEN, access_token);
                         Log.e(BUG_TAG, "登录的Token：" + access_token);
+                        AppSharePreferenceMgr.put(mContext, GlobalConfig.IS_BIND_WATCH, false);
                         AppSharePreferenceMgr.put(mContext, GlobalConfig.Refresh_token, refresh_token);
                         //保存用户登录的账号
-                        AppSharePreferenceMgr.put(mContext, Common.IS_SAVE_ACCOUNT, et_username.getText().toString().trim());
+                        AppSharePreferenceMgr.put(mContext, Common.IS_SAVE_ACCOUNT, etUsername.getText().toString().trim());
                         //保存用户的登录信息
                         SharePreference.saveStringToSpParams(mContext, Common.IS_SAVE_LOGIN, Common.SISAVELOGIN, responseJson);
                         requestInformation(access_token, refresh_token);

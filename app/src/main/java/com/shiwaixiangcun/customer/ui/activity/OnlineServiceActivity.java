@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,7 +23,7 @@ import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.model.InformationBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.photo.BasePhotoActivity;
-import com.shiwaixiangcun.customer.photo.adpater.PhotoShowListAdpater;
+import com.shiwaixiangcun.customer.photo.adpater.PhotoShowListAdapter;
 import com.shiwaixiangcun.customer.photo.core.FunctionConfig;
 import com.shiwaixiangcun.customer.photo.core.PhotoFinal;
 import com.shiwaixiangcun.customer.photo.model.PhotoInfo;
@@ -43,29 +42,32 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * @author Administrator
+ */
 public class OnlineServiceActivity extends BasePhotoActivity implements AdapterView.OnItemClickListener, View.OnClickListener, IOnlineServiceView {
 
-    private TextView tv_top_right;
-    private ChangeLightImageView back_left;
+    private TextView tvTopRight;
+    private ChangeLightImageView backLeft;
     private Intent intent = new Intent();
 
 
     /**
      * 存放选择的照片
      */
-    private ArrayList<String> sekectList = new ArrayList<String>();
+    private ArrayList<String> selectList = new ArrayList<String>();
 
     private GridView selectView;
-    private PhotoShowListAdpater listAdpater;
-    private EditText et_online_content;
-    private Button btn_submit_online;
+    private PhotoShowListAdapter listAdapter;
+    private EditText etOnlineContent;
+    private Button btnSubmitOnline;
     private OnlineServiceImpl onlineService;
-    private RelativeLayout rl_success_submit;
-    private Button btn_ok;
+    private RelativeLayout rlSuccessSubmit;
+    private Button btnOk;
     private boolean isnotImage = false;
 
-    private TextView tv_page_name;
-    private HashMap<String, File> hash_image = new HashMap<>();
+    private TextView tvPageName;
+    private HashMap<String, File> hashImage = new HashMap<>();
     /**
      * 回调
      */
@@ -74,25 +76,25 @@ public class OnlineServiceActivity extends BasePhotoActivity implements AdapterV
         public void onHandlerSuccess(int reqeustCode, List<PhotoInfo> resultList) {
             if (reqeustCode == PhotoFinal.REQUEST_CODE_MUTI) {
                 //是选择图片回来的照片
-                sekectList.clear();
+                selectList.clear();
                 for (PhotoInfo info : resultList) {
-                    sekectList.add(info.getPhotoPath());
+                    selectList.add(info.getPhotoPath());
                 }
-                listAdpater.notifyDataSetChanged();
+                listAdapter.notifyDataSetChanged();
                 // Toast.makeText(getApplicationContext(), "size:" + resultList.size(), Toast.LENGTH_LONG).show();
             } else if (reqeustCode == PhotoFinal.REQUEST_CODE_CAMERA) {
                 //是拍照带回来的照片
-                sekectList.add(resultList.get(0).getPhotoPath());
-                listAdpater.notifyDataSetChanged();
+                selectList.add(resultList.get(0).getPhotoPath());
+                listAdapter.notifyDataSetChanged();
             }
 
-            isnotImage = sekectList.size() > 0;
+            isnotImage = selectList.size() > 0;
 
-            for (int i = 0; i < sekectList.size(); i++) {
-                Bitmap bitmap = BitmapFactory.decodeFile(sekectList.get(i));
+            for (int i = 0; i < selectList.size(); i++) {
+                Bitmap bitmap = BitmapFactory.decodeFile(selectList.get(i));
                 try {
                     File file = saveFile(bitmap, "btm" + i);
-                    hash_image.put("btm" + i, file);
+                    hashImage.put("btm" + i, file);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -130,24 +132,24 @@ public class OnlineServiceActivity extends BasePhotoActivity implements AdapterV
 
 
         selectView = findViewById(R.id.gv_selected);
-        listAdpater = new PhotoShowListAdpater(this, sekectList, mScreenWidth);
+        listAdapter = new PhotoShowListAdapter(this, selectList, mScreenWidth);
 
 
-        selectView.setAdapter(listAdpater);
+        selectView.setAdapter(listAdapter);
         selectView.setOnItemClickListener(this);
         initData();
 
-        listAdpater.setImageListener(new PhotoShowListAdpater.onImageListener() {
+        listAdapter.setImageListener(new PhotoShowListAdapter.onImageListener() {
             @Override
             public void imageScence(List<String> json) {
-                for (int i = 0; i < hash_image.size(); i++) {
-                    hash_image.clear();
+                for (int i = 0; i < hashImage.size(); i++) {
+                    hashImage.clear();
                 }
                 for (int i = 0; i < json.size(); i++) {
                     Bitmap bitmap = BitmapFactory.decodeFile(json.get(i));
                     try {
                         File file = saveFile(bitmap, "btm" + i);
-                        hash_image.put("btm" + i, file);
+                        hashImage.put("btm" + i, file);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -158,29 +160,29 @@ public class OnlineServiceActivity extends BasePhotoActivity implements AdapterV
     }
 
     private void layoutView() {
-        tv_top_right = findViewById(R.id.tv_top_right);
-        back_left = findViewById(R.id.back_left);
-        et_online_content = findViewById(R.id.et_online_content);
-        btn_submit_online = findViewById(R.id.btn_submit_online);
-        rl_success_submit = findViewById(R.id.rl_success_submit);
-        btn_ok = findViewById(R.id.btn_ok);
-        tv_page_name = findViewById(R.id.tv_page_name);
+        tvTopRight = findViewById(R.id.tv_top_right);
+        backLeft = findViewById(R.id.back_left);
+        etOnlineContent = findViewById(R.id.et_online_content);
+        btnSubmitOnline = findViewById(R.id.btn_submit_online);
+        rlSuccessSubmit = findViewById(R.id.rl_success_submit);
+        btnOk = findViewById(R.id.btn_ok);
+        tvPageName = findViewById(R.id.tv_page_name);
 
 
     }
 
     private void initData() {
-        onlineService = new OnlineServiceImpl(this, "", hash_image);
+        onlineService = new OnlineServiceImpl(this, "", hashImage);
 //        onlineService.setInformation(this);
 
-        tv_top_right.setVisibility(View.VISIBLE);
-        tv_top_right.setText("报修记录");
-        tv_page_name.setText("在线报修");
-        tv_top_right.setTextColor(Color.parseColor("#1CCC8C"));
-        back_left.setOnClickListener(this);
-        tv_top_right.setOnClickListener(this);
-        btn_submit_online.setOnClickListener(this);
-        btn_ok.setOnClickListener(this);
+        tvTopRight.setVisibility(View.VISIBLE);
+        tvTopRight.setText("报修记录");
+        tvPageName.setText("在线报修");
+        tvTopRight.setTextColor(Color.parseColor("#1CCC8C"));
+        backLeft.setOnClickListener(this);
+        tvTopRight.setOnClickListener(this);
+        btnSubmitOnline.setOnClickListener(this);
+        btnOk.setOnClickListener(this);
     }
 
     @Override
@@ -202,8 +204,8 @@ public class OnlineServiceActivity extends BasePhotoActivity implements AdapterV
                         Toast.makeText(OnlineServiceActivity.this, "点击太快，休息一会", Toast.LENGTH_SHORT).show();
                     } else {
 
-                        if (Utils.isNotEmpty(et_online_content.getText().toString().trim())) {
-                            onlineService = new OnlineServiceImpl(this, et_online_content.getText().toString().trim(), hash_image);
+                        if (Utils.isNotEmpty(etOnlineContent.getText().toString().trim())) {
+                            onlineService = new OnlineServiceImpl(this, etOnlineContent.getText().toString().trim(), hashImage);
                             onlineService.setHaveImageClick(this);
                         } else {
                             Toast.makeText(this, "请填写内容后再提交！", Toast.LENGTH_LONG).show();
@@ -216,8 +218,8 @@ public class OnlineServiceActivity extends BasePhotoActivity implements AdapterV
                         //快速点击后的逻辑，可以提示用户点击太快，休息一会
                         Toast.makeText(OnlineServiceActivity.this, "点击太快，休息一会", Toast.LENGTH_SHORT).show();
                     } else {
-                        if (Utils.isNotEmpty(et_online_content.getText().toString().trim())) {
-                            onlineService = new OnlineServiceImpl(this, et_online_content.getText().toString().trim(), hash_image);
+                        if (Utils.isNotEmpty(etOnlineContent.getText().toString().trim())) {
+                            onlineService = new OnlineServiceImpl(this, etOnlineContent.getText().toString().trim(), hashImage);
                             onlineService.setBgaAdpaterAndClick(this);
                         } else {
                             Toast.makeText(this, "请填写内容后再提交！", Toast.LENGTH_LONG).show();
@@ -230,6 +232,8 @@ public class OnlineServiceActivity extends BasePhotoActivity implements AdapterV
                 break;
             case R.id.btn_ok:
                 finish();
+                break;
+            default:
                 break;
         }
     }
@@ -262,7 +266,7 @@ public class OnlineServiceActivity extends BasePhotoActivity implements AdapterV
     private FunctionConfig initConfig() {
         final FunctionConfig.Builder functionBuilder = new FunctionConfig.Builder();
         final FunctionConfig functionConfig = functionBuilder.setMaxSize(4)//设置最大选择数
-                .setSelected(sekectList)//设置选泽的照片集
+                .setSelected(selectList)//设置选泽的照片集
                 .setContext(this)//设置上下文对象
                 .setTakePhotoFolder(null)//设置拍照存放地址 默认为null
                 .build();
@@ -272,8 +276,8 @@ public class OnlineServiceActivity extends BasePhotoActivity implements AdapterV
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        PhotoShowListAdpater.PhotoViewHolder vh = (PhotoShowListAdpater.PhotoViewHolder) view.getTag();
-        if (position == sekectList.size() && vh.iv_thumb.getVisibility() != View.GONE) {
+        PhotoShowListAdapter.PhotoViewHolder vh = (PhotoShowListAdapter.PhotoViewHolder) view.getTag();
+        if (position == selectList.size() && vh.iv_thumb.getVisibility() != View.GONE) {
             final FunctionConfig functionConfig = initConfig();
             PhotoFinal.openMuti(functionConfig, mOnHandlerResultCallback);
         }
@@ -281,20 +285,18 @@ public class OnlineServiceActivity extends BasePhotoActivity implements AdapterV
 
     @Override
     public void setBgaAdpaterAndClickResult(ResponseEntity result) {
-        Log.e("bbbbbmmmm", result.getResponseCode() + "");
         if (result.getResponseCode() == 1001) {
-            rl_success_submit.setVisibility(View.VISIBLE);
-            tv_top_right.setVisibility(View.GONE);
+            rlSuccessSubmit.setVisibility(View.VISIBLE);
+            tvTopRight.setVisibility(View.GONE);
         }
 
     }
 
     @Override
     public void setHaveImageResult(ResponseEntity result) {
-        Log.e("bbbbbmmmmaaa", result.getResponseCode() + "");
         if (result.getResponseCode() == 1001) {
-            rl_success_submit.setVisibility(View.VISIBLE);
-            tv_top_right.setVisibility(View.GONE);
+            rlSuccessSubmit.setVisibility(View.VISIBLE);
+            tvTopRight.setVisibility(View.GONE);
         }
     }
 
@@ -338,12 +340,7 @@ public class OnlineServiceActivity extends BasePhotoActivity implements AdapterV
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == 1009){
-//            if (null != data){
-//                timer.schedule(task, 500, 1000);
-//
-//            }
-//        }
+
     }
 
     @Override

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.reflect.TypeToken;
 import com.lzy.okgo.OkGo;
+import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.shiwaixiangcun.customer.BaseActivity;
@@ -63,6 +64,7 @@ public class IntelligentCareActivity extends BaseActivity implements View.OnClic
     private TextView tvBottom;
 
     private String strToken;
+    private boolean isBindWatch = false;
 
     @Override
     protected void onRestart() {
@@ -87,6 +89,7 @@ public class IntelligentCareActivity extends BaseActivity implements View.OnClic
     private void requestData() {
 
         OkGo.<String>get(GlobalAPI.getWatchInfo)
+                .cacheMode(CacheMode.NO_CACHE)
                 .params("access_token", strToken)
                 .execute(new StringCallback() {
                     @Override
@@ -105,16 +108,26 @@ public class IntelligentCareActivity extends BaseActivity implements View.OnClic
                                     return;
                                 }
                                 if (watchData.getHardwareId() != 0) {
+
                                     AppSharePreferenceMgr.put(mContext, GlobalConfig.IS_BIND_WATCH, true);
                                     mAdapterIntelligentCare.getViewByPosition(mRvToolsDetail, 0, R.id.tv_setting).setVisibility(View.VISIBLE);
+                                    mAdapterIntelligentCare.getViewByPosition(mRvToolsDetail, 0, R.id.tv_detail_content).setVisibility(View.GONE);
                                     TextView textView = (TextView) mAdapterIntelligentCare.getViewByPosition(mRvToolsDetail, 0, R.id.tv_status);
+                                    TextView tvResidualPower = (TextView) mAdapterIntelligentCare.getViewByPosition(mRvToolsDetail, 0, R.id.tv_residual_power);
                                     textView.setText(responseEntity.getData().getWatchData().getModelType());
+                                    tvResidualPower.setText("剩余电量 " + responseEntity.getData().getWatchData().getRemainingPower() + "%");
+                                    isBindWatch = true;
 
                                 } else {
                                     AppSharePreferenceMgr.put(mContext, GlobalConfig.IS_BIND_WATCH, false);
                                     mAdapterIntelligentCare.getViewByPosition(mRvToolsDetail, 0, R.id.tv_setting).setVisibility(View.GONE);
+
+                                    mAdapterIntelligentCare.getViewByPosition(mRvToolsDetail, 0, R.id.tv_residual_power).setVisibility(View.GONE);
+                                    mAdapterIntelligentCare.getViewByPosition(mRvToolsDetail, 0, R.id.tv_detail_content).setVisibility(View.VISIBLE);
                                     TextView textView = (TextView) mAdapterIntelligentCare.getViewByPosition(mRvToolsDetail, 0, R.id.tv_status);
                                     textView.setText("未绑定");
+                                    isBindWatch = false;
+
 
                                 }
                                 if (watchData.getHardwareId() != 0 || watchData.isFamilyLocation()) {

@@ -80,7 +80,7 @@ public class DoctorActivity extends BaseActivity implements View.OnClickListener
                 .setStyle(RecyclerViewDivider.Style.END)
                 .setMarginLeft(16)
                 .setMarginRight(16)
-                .setDrawableRes(R.drawable.divider)
+                .setColorRes(R.color.color_divider_0_3)
                 .build();
         mRvDoctorMaster.setAdapter(mAdapterDoctor);
         mRvDoctorMaster.addItemDecoration(divider);
@@ -102,6 +102,9 @@ public class DoctorActivity extends BaseActivity implements View.OnClickListener
                 if (refreshlayout.isRefreshing()) {
                     refreshlayout.finishRefresh();
 
+                }
+                if (currentPage == 1) {
+                    currentPage += 1;
                 }
                 requestData(currentPage, pageSize, true);
             }
@@ -130,8 +133,7 @@ public class DoctorActivity extends BaseActivity implements View.OnClickListener
     }
 
     public void requestData(int start, int size, final boolean isLoadMore) {
-        OkGo.<String>get(GlobalAPI.doctormaster)
-                .params("access_token", strToken)
+        OkGo.<String>get(GlobalAPI.doctorMaster)
                 .params("page.pn", start)
                 .params("page.size", size)
                 .execute(new StringCallback() {

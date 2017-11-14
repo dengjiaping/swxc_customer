@@ -73,7 +73,8 @@ public class OnlineServiceImpl implements IOnlineServicePresenter {
     private void sendOnlineServiceHttp(final Context context) {
 
         String login_detail = SharePreference.getStringSpParams(context, Common.IS_SAVE_LOGIN, Common.SISAVELOGIN);
-        Log.i("eeeeeettt", login_detail);
+
+        int siteID = (int) AppSharePreferenceMgr.get(context, GlobalConfig.CURRENT_SITE_ID, 0);
         Type type = new TypeToken<ResponseEntity<LoginResultBean>>() {
         }.getType();
         ResponseEntity<LoginResultBean> responseEntity = JsonUtil.fromJson(login_detail, type);
@@ -82,12 +83,10 @@ public class OnlineServiceImpl implements IOnlineServicePresenter {
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("access_token", strToken);
         hashMap.put("content", content);
-//        hashMap.put("imageIds", "");
-        Log.i("dddddd", hashMap.toString() + "-----------" + Common.OnlineRepair);
+        hashMap.put("siteId", siteID);
         HttpRequest.post(Common.OnlineRepair, hashMap, new HttpCallBack() {
             @Override
             public void onSuccess(String responseJson) {
-                Log.i("oooooo---onSuccess---", responseJson);
                 Type type = new TypeToken<ResponseEntity>() {
                 }.getType();
                 ResponseEntity responseEntity = JsonUtil.fromJson(responseJson, ResponseEntity.class);
@@ -107,10 +106,11 @@ public class OnlineServiceImpl implements IOnlineServicePresenter {
                     case 1019:
                         LoginOutUtil.sendLoginOutUtil(context);
                         break;
+                    default:
+                        break;
 
 
                 }
-
 
 
             }

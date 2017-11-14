@@ -77,10 +77,8 @@ public class DoctorDetailActivity extends BaseActivity implements View.OnClickLi
     private void initViewAndEvent() {
         mBackLeft.setOnClickListener(this);
         mTvPageName.setText("名医主页");
-        urlBuilder.append(GlobalAPI.docotorDetail)
-                .append("?access_token=")
-                .append(strToken)
-                .append("&id=")
+        urlBuilder.append(GlobalAPI.doctorDetail)
+                .append("?id=")
                 .append(id);
         Log.e(BUG_TAG, "医生详情" + urlBuilder.toString());
         removeCookie(mContext);

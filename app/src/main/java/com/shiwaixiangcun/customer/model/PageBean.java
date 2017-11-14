@@ -3,7 +3,9 @@ package com.shiwaixiangcun.customer.model;
 import java.util.List;
 
 /**
- * Created by fyj on 2017/5/24.
+ *
+ * @author fyj
+ * @date 2017/5/24
  *  分页对象
  */
 public class PageBean<T> {

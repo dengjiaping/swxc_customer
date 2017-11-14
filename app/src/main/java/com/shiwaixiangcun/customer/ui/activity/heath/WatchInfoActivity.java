@@ -75,8 +75,6 @@ public class WatchInfoActivity extends BaseActivity implements View.OnClickListe
     TextView mTvWatchStature;
     @BindView(R.id.tv_watch_power)
     TextView mTvWatchPower;
-    @BindView(R.id.llayout_watch_info)
-    LinearLayout mLlayoutWatchInfo;
     @BindView(R.id.rlayout_family_number)
     RelativeLayout mRlayoutFamilyNumber;
     @BindView(R.id.tv_frequency_heart)
@@ -99,6 +97,12 @@ public class WatchInfoActivity extends BaseActivity implements View.OnClickListe
     SwitchButton mSwitchPedometer;
     @BindView(R.id.switch_blue_tooth)
     SwitchButton mSwitchBlueTooth;
+    @BindView(R.id.tv_elect)
+    TextView mTvElect;
+    @BindView(R.id.llayout_watch_info_on)
+    LinearLayout mLlayoutWatchInfoOn;
+    @BindView(R.id.llayout_watch_info_off)
+    LinearLayout mLlayoutWatchInfoOff;
 
 
     private int watchID;
@@ -123,7 +127,12 @@ public class WatchInfoActivity extends BaseActivity implements View.OnClickListe
     }
 
 
+    /**
+     * 初始化数据
+     */
     private void initData() {
+
+
         OkGo.<String>get(GlobalAPI.getWatchInfo)
                 .params("access_token", strToken)
                 .execute(new StringCallback() {
@@ -163,10 +172,14 @@ public class WatchInfoActivity extends BaseActivity implements View.OnClickListe
                     isOnline = true;
                     mToolbarLayout.setContentScrimColor(getResources().getColor(R.color.watch_on));
                     mIvBg.setImageDrawable(getResources().getDrawable(R.drawable.bg_on_watch));
+                    mLlayoutWatchInfoOn.setVisibility(View.VISIBLE);
+                    mLlayoutWatchInfoOff.setVisibility(View.INVISIBLE);
 
                 } else {
                     isOnline = false;
                     mTvWatchStature.setText("离线");
+                    mLlayoutWatchInfoOn.setVisibility(View.INVISIBLE);
+                    mLlayoutWatchInfoOff.setVisibility(View.VISIBLE);
                     mToolbarLayout.setContentScrimColor(getResources().getColor(R.color.watch_off));
                     mIvBg.setImageDrawable(getResources().getDrawable(R.drawable.bg_off_watch));
                 }
@@ -204,7 +217,8 @@ public class WatchInfoActivity extends BaseActivity implements View.OnClickListe
         mTvPageName.setText(R.string.watch_type);
         mTvPageName.setTextColor(Color.WHITE);
         mBackLeft.setOnClickListener(this);
-        mLlayoutWatchInfo.setOnClickListener(this);
+        mLlayoutWatchInfoOn.setOnClickListener(this);
+        mLlayoutWatchInfoOff.setOnClickListener(this);
         mRlayoutFamilyNumber.setOnClickListener(this);
         mRlayoutFrequencyHeart.setOnClickListener(this);
         mRlayoutFrequencyLocation.setOnClickListener(this);
@@ -228,10 +242,11 @@ public class WatchInfoActivity extends BaseActivity implements View.OnClickListe
                 finish();
                 break;
 
-            case R.id.llayout_watch_info:
-                if (!isOnline) {
-                    readyGo(OfflineReasonActivity.class);
-                }
+            case R.id.llayout_watch_info_on:
+
+                break;
+            case R.id.llayout_watch_info_off:
+                readyGo(OfflineReasonActivity.class);
                 break;
             case R.id.rlayout_frequency_heart:
                 showTimeDialog("frequencyHeartRate");

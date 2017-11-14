@@ -2,11 +2,14 @@ package com.shiwaixiangcun.customer.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.reflect.TypeToken;
@@ -32,6 +35,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by Administrator on 2017/10/11.
@@ -45,6 +50,9 @@ public class RecipeFragment extends LazyFragment {
     RecyclerView mRvRecipe;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
+    @BindView(R.id.cl_nodata)
+    ConstraintLayout mClNodata;
+    Unbinder unbinder;
 
 
     private String mTitle;
@@ -156,10 +164,15 @@ public class RecipeFragment extends LazyFragment {
                                     }
 
                                 } else {
-                                    currentPage = 1;
-                                    mRecipeList.clear();
-                                    mRecipeList.addAll(responseEntity.getData().getElements());
-                                    mRefreshLayout.finishRefresh(true);
+                                    if (responseEntity.getData().getElements().size() == 0) {
+                                        mClNodata.setVisibility(View.VISIBLE);
+                                        mRefreshLayout.finishRefresh();
+                                    } else {
+                                        currentPage = 1;
+                                        mRecipeList.clear();
+                                        mRecipeList.addAll(responseEntity.getData().getElements());
+                                        mRefreshLayout.finishRefresh(true);
+                                    }
                                 }
                                 mAdapterRecipe.notifyDataSetChanged();
                                 break;
@@ -213,4 +226,17 @@ public class RecipeFragment extends LazyFragment {
     }
 
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        unbinder = ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 }

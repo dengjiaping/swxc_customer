@@ -21,7 +21,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- *
  * @author Administrator
  * @date 2017/9/21
  * HOME   页面
@@ -86,6 +85,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 setSelect(mLlayoutMe, true);
                 setTabSelected(2);
                 break;
+            default:
+                break;
         }
     }
 
@@ -117,6 +118,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 } else {
                     transaction.show(mFragmentMe);
                 }
+                break;
+            default:
                 break;
         }
         transaction.commitAllowingStateLoss();

@@ -31,6 +31,9 @@ import com.shiwaixiangcun.customer.widget.WheelView;
 
 import java.util.List;
 
+/**
+ * @author Administrator
+ */
 public class ResidentCertificationActivity extends BaseActivity implements View.OnClickListener, WheelView.OnValueChangeListener, IResifdentView {
     private ChangeLightImageView back_left;
     private Button btn_to_other;
@@ -56,6 +59,9 @@ public class ResidentCertificationActivity extends BaseActivity implements View.
         mFourDataList = fourDataList;
     }
 
+    public ResidentCertificationActivity() {
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,14 +82,14 @@ public class ResidentCertificationActivity extends BaseActivity implements View.
      * 初始化视图
      */
     private void initViewAndEvent() {
-        back_left = (ChangeLightImageView) findViewById(R.id.back_left);
-        btn_to_other = (Button) findViewById(R.id.btn_to_other);
+        back_left = findViewById(R.id.back_left);
+        btn_to_other = findViewById(R.id.btn_to_other);
 
 
-        wheelViewFirst = (WheelView) findViewById(R.id.WheelView_first);
-        mWheelViewSecond = (WheelView) findViewById(R.id.WheelView_second);
-        mWheelViewThird = (WheelView) findViewById(R.id.WheelView_third);
-        mWheelViewFourth = (WheelView) findViewById(R.id.WheelView_fourth);
+        wheelViewFirst = findViewById(R.id.WheelView_first);
+        mWheelViewSecond = findViewById(R.id.WheelView_second);
+        mWheelViewThird = findViewById(R.id.WheelView_third);
+        mWheelViewFourth = findViewById(R.id.WheelView_fourth);
 
 
         wheelViewFirst.setWrapSelectorWheel(false);
@@ -140,6 +146,8 @@ public class ResidentCertificationActivity extends BaseActivity implements View.
                     Toast.makeText(this, "请选择房产", Toast.LENGTH_LONG).show();
                 }
 
+                break;
+            default:
                 break;
         }
     }
@@ -205,7 +213,6 @@ public class ResidentCertificationActivity extends BaseActivity implements View.
                 }
                 mWheelViewThird.refreshByNewDisplayedValues(strThird);
                 //设置是否可以上下无限滑动
-//                mWheelViewThird.setWrapSelectorWheel(false);
 
             }
         }
@@ -248,6 +255,8 @@ public class ResidentCertificationActivity extends BaseActivity implements View.
                 break;
             case R.id.WheelView_fourth:
                 scrollWheelFourth(newVal);
+                break;
+            default:
                 break;
         }
 
@@ -372,7 +381,6 @@ public class ResidentCertificationActivity extends BaseActivity implements View.
                 }
                 mWheelViewThird.refreshByNewDisplayedValues(strThird);
                 //设置是否可以上下无限滑动
-//                mWheelViewThird.setWrapSelectorWheel(false);
 
             }
         }

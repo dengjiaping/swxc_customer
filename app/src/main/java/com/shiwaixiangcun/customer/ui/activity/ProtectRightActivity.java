@@ -113,6 +113,7 @@ public class ProtectRightActivity extends BaseActivity implements View.OnClickLi
             Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show();
         }
     };
+    private int currentID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,12 +123,20 @@ public class ProtectRightActivity extends BaseActivity implements View.OnClickLi
         initViewAndEvent();
     }
 
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+    }
+
     private void initViewAndEvent() {
 
         mTvTopRight.setText("维权记录");
         mTvPageName.setText("消费维权");
         initToken();
 
+        currentID = (int) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_ID, 0);
         mTvTopRight.setVisibility(View.VISIBLE);
         mTvTopRight.setOnClickListener(this);
         mBackLeft.setOnClickListener(this);
@@ -277,7 +286,9 @@ public class ProtectRightActivity extends BaseActivity implements View.OnClickLi
         OkGo.<String>post(GlobalAPI.addRight)
                 .params("access_token", strToken)
                 .params("content", strContent)
+                .params("siteId", currentID)
                 .params("imageIds", imageIds)
+
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Response<String> response) {

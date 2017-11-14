@@ -122,6 +122,8 @@ public class SiteActivity extends BaseActivity implements View.OnClickListener {
             case R.id.back_left:
                 finish();
                 break;
+            default:
+                break;
         }
     }
 }

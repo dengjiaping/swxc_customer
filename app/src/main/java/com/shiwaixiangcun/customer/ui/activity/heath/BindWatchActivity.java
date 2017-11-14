@@ -129,6 +129,9 @@ public class BindWatchActivity extends BaseActivity implements View.OnClickListe
             readyGoThenKill(ConfirmBindActivity.class, bundle);
 
         }
+
+//        // TODO: 2017/11/14
+//        readyGoThenKill(ConfirmBindActivity.class, bundle);
         mZxingview.startSpotDelay(3000);
 
     }

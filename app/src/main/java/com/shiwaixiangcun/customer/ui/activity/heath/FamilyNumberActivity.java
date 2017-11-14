@@ -223,7 +223,6 @@ public class FamilyNumberActivity extends BaseActivity implements View.OnClickLi
                 .params("id", item.getId())
                 .params("phone", item.getPhone())
                 .params("dialFlag", isChecked)
-                .isSpliceUrl(true)
                 .execute(new StringDialogCallBack(this) {
                     @Override
                     public void onSuccess(Response<String> response) {

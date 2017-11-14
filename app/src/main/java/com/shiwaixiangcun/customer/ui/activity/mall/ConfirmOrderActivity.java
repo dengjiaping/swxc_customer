@@ -197,8 +197,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         mTvPageName.setText("确认订单");
 
         initToken();
-        siteId = (int) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_ID, GlobalConfig.DEFAULT_SITE_ID);
-        //设置商品信息
+        siteId = (int) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_ID, 0);//设置商品信息
         mDialogPay = new DialogPay(this);
         mTvGoodTitle.setText(data.getGoodsName());
         mTvInformation.setText("运费￥ " + data.getTransportMoney() + " ,由 " + data.getShopName() + "负责发货");

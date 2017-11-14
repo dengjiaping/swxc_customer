@@ -94,7 +94,7 @@ public class CategoryActivity extends BaseActivity implements View.OnClickListen
         if (bundle == null) {
             return;
         }
-        siteId = (int) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_ID, GlobalConfig.DEFAULT_SITE_ID);
+        siteId = (int) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_ID, 0);
         mCategoryId = bundle.getInt("categoryId");
         mCatrgotyName = bundle.getString("categoryName");
         ButterKnife.bind(this);

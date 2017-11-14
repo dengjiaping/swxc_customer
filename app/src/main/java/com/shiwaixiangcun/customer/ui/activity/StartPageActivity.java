@@ -20,10 +20,12 @@ import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.model.LoginResultBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
+import com.shiwaixiangcun.customer.model.Site;
 import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 
 import java.lang.reflect.Type;
+import java.util.List;
 
 /**
  * @author Administrator
@@ -31,9 +33,11 @@ import java.lang.reflect.Type;
 public class StartPageActivity extends BaseActivity {
 
     CountDownTimer cdt;
-    private TextView tv_center_word;
+    private TextView tvCenterWord;
     private String token;
     private String refreshToken;
+
+    private int siteId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,15 +48,70 @@ public class StartPageActivity extends BaseActivity {
         StatService.setSendLogStrategy(this, SendStrategyEnum.APP_START, 1, false);
         StatService.setSessionTimeOut(30);
         layoutView();
-        initData();
+
+        requestData();
+//        initData();
+    }
+
+    /**
+     * 请求站点数据
+     */
+    private void requestData() {
+        siteId = (int) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_ID, -1);
+        if (siteId == -1) {
+            OkGo.<String>get(GlobalAPI.getSite)
+                    .params("fields", "id,name,defaultShow")
+                    .execute(new StringCallback() {
+                        @Override
+                        public void onError(Response<String> response) {
+                            super.onError(response);
+                            initData();
+                        }
+
+                        @Override
+                        public void onSuccess(Response<String> response) {
+                            Type type = new TypeToken<ResponseEntity<List<Site>>>() {
+                            }.getType();
+                            ResponseEntity<List<Site>> responseEntity = JsonUtil.fromJson(response.body(), type);
+                            if (responseEntity == null) {
+                                return;
+                            }
+                            switch (responseEntity.getResponseCode()) {
+
+                                case 1001:
+                                    if (responseEntity.getData().size() > 0) {
+                                        for (Site site : responseEntity.getData()) {
+                                            if (site.isDefaultShow()) {
+                                                AppSharePreferenceMgr.put(mContext, GlobalConfig.DEFAULT_SITE_ID, site.getId());
+                                                AppSharePreferenceMgr.put(mContext, GlobalConfig.CURRENT_SITE_ID, site.getId());
+                                                AppSharePreferenceMgr.put(mContext, GlobalConfig.DEFAULT_SITE_NAME, site.getName());
+                                                AppSharePreferenceMgr.put(mContext, GlobalConfig.CURRENT_SITE_NAME, site.getName());
+
+
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    initData();
+                                    break;
+                                default:
+                                    initData();
+                                    break;
+                            }
+                        }
+                    });
+        } else {
+            initData();
+        }
+
     }
 
     private void layoutView() {
-        tv_center_word = findViewById(R.id.tv_center_word);
+        tvCenterWord = findViewById(R.id.tv_center_word);
         AlphaAnimation alpha = new AlphaAnimation(0.0f, 1.0f);
         alpha.setDuration(500);
         alpha.setFillAfter(true);
-        tv_center_word.setAnimation(alpha);
+        tvCenterWord.setAnimation(alpha);
         refreshToken = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.Refresh_token, "");
 //        isFirstUse = (boolean) AppSharePreferenceMgr.get(mContext, GlobalConfig.FIRST_USE, true);
 
@@ -123,7 +182,7 @@ public class StartPageActivity extends BaseActivity {
 
     }
 
-    //
+
     @Override
     protected void onResume() {
         super.onResume();

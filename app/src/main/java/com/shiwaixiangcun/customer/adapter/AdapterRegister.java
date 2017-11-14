@@ -37,10 +37,10 @@ public class AdapterRegister extends BaseQuickAdapter<RegisterBean.ElementsBean,
                 break;
             case "Enter":
                 tvStatue.setTextColor(mContext.getResources().getColor(R.color.word_green));
-                tvStatue.setText("报名中");
+                tvStatue.setText("活动报名中");
                 break;
             case "EnterEnd":
-                tvStatue.setTextColor(mContext.getResources().getColor(R.color.word_green));
+                tvStatue.setTextColor(mContext.getResources().getColor(R.color.black_text_60));
                 tvStatue.setText("报名已结束");
                 break;
             case "NoEnter":

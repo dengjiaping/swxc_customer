@@ -12,7 +12,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jaeger.recyclerviewdivider.RecyclerViewDivider;
 import com.lzy.okgo.OkGo;
@@ -29,6 +28,7 @@ import com.shiwaixiangcun.customer.http.StringDialogCallBack;
 import com.shiwaixiangcun.customer.model.ElementBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
+import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -95,6 +95,9 @@ public class SearchResultActivity extends BaseActivity implements View.OnClickLi
                 mAdapter.notifyDataSetChanged();
                 break;
 
+            default:
+                break;
+
 
         }
     }
@@ -119,8 +122,7 @@ public class SearchResultActivity extends BaseActivity implements View.OnClickLi
                         String jsonString = response.body();
                         Type type = new TypeToken<ResponseEntity<ElementBean>>() {
                         }.getType();
-                        Gson gson = new Gson();
-                        ResponseEntity<ElementBean> data = gson.fromJson(jsonString, type);
+                        ResponseEntity<ElementBean> data = JsonUtil.fromJson(jsonString, type);
                         if (data == null) {
                             return;
                         }
@@ -145,7 +147,7 @@ public class SearchResultActivity extends BaseActivity implements View.OnClickLi
     private void initView() {
 
         mEditSearch.setText(searchKey);
-        siteID = (int) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_ID, GlobalConfig.DEFAULT_SITE_ID);
+        siteID = (int) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_ID, 0);
         mRvSearchResult.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new AdapterSearchResult(mList);
         mRvSearchResult.setAdapter(mAdapter);
@@ -156,7 +158,8 @@ public class SearchResultActivity extends BaseActivity implements View.OnClickLi
                 .setStyle(RecyclerViewDivider.Style.BOTH)
                 .setMarginLeft(8)
                 .setMarginRight(8)
-                .setDrawableRes(R.drawable.divider)
+
+                .setColorRes(R.color.color_divider_0_3)
                 .build();
         mRvSearchResult.addItemDecoration(divider);
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {

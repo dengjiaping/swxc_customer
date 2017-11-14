@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.shiwaixiangcun.customer.Common;
-import com.shiwaixiangcun.customer.ContextSession;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
+import com.shiwaixiangcun.customer.app.App;
 import com.shiwaixiangcun.customer.model.ToolCategoryBean;
 import com.shiwaixiangcun.customer.ui.activity.ChunyuDoctorActivity;
 import com.shiwaixiangcun.customer.ui.activity.DoctorActivity;
@@ -96,8 +96,10 @@ public class GridUtils {
                     break;
                 //在线报修
                 case "ONLINE_REPAIR":
+
+                    boolean isProperty = (boolean) AppSharePreferenceMgr.get(App.getContext(), GlobalConfig.propertyAuth, false);
                     if (Utils.isNotEmpty(isLogin)) {
-                        if (!ContextSession.isPropertyAuth()) {
+                        if (!isProperty) {
                             readyGo(context, ResidentCertificationActivity.class);
                         } else {
                             readyGo(context, OnlineServiceActivity.class);

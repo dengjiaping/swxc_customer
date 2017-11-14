@@ -17,14 +17,14 @@ import java.util.List;
 /**
  * Created by Qinda on 2016/2/16.
  */
-public class PhotoShowListAdpater extends ViewHolderAdapter<PhotoShowListAdpater.PhotoViewHolder, String> {
+public class PhotoShowListAdapter extends ViewHolderAdapter<PhotoShowListAdapter.PhotoViewHolder, String> {
 
     private int mScreenWidth;
     private int mRowWidth;
     private List<String> mSelectList;
     private onImageListener onImageListener;
 
-    public PhotoShowListAdpater(Context context, List<String> list, int mScreenWidth) {
+    public PhotoShowListAdapter(Context context, List<String> list, int mScreenWidth) {
         super(context, list);
         this.mScreenWidth = mScreenWidth;
         this.mSelectList = list;
