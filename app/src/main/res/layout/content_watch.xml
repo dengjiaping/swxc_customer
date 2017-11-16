@@ -328,10 +328,11 @@
     </RelativeLayout>
 
     <TextView
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/bg_gray"
-        android:paddingBottom="8dp"
+        android:paddingBottom="60dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:paddingTop="8dp"
@@ -339,4 +340,18 @@
         android:textColor="@color/black_text_40"
         android:textSize="14sp"/>
 
+    <Button
+
+
+        android:id="@+id/btn_unbind"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shape_button_white"
+        android:text="解除绑定"
+        android:textColor="#FFE94F4F"
+        android:textSize="16sp"/>
 </LinearLayout>

@@ -394,7 +394,6 @@ public class WatchInfoActivity extends BaseActivity implements View.OnClickListe
         OkGo.<String>put(GlobalAPI.modifyWatchInfo)
                 .params("access_token", strToken)
                 .params(type, isChecked)
-                .isSpliceUrl(true)
                 .execute(new StringDialogCallBack(this) {
                     @Override
                     public void onSuccess(Response<String> response) {

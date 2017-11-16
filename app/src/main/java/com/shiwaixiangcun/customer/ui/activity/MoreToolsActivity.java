@@ -20,6 +20,7 @@ import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterService;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
 import com.shiwaixiangcun.customer.model.ToolCategoryBean;
+import com.shiwaixiangcun.customer.ui.activity.heath.IntelligentCareActivity;
 import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.GridUtils;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
@@ -56,6 +57,8 @@ public class MoreToolsActivity extends BaseActivity implements View.OnClickListe
     private String isLogin = "";
     private int siteID;
 
+    private List<String> mJsonList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,21 +90,23 @@ public class MoreToolsActivity extends BaseActivity implements View.OnClickListe
                             case 1001:
 
                                 List<ToolCategoryBean.ChildrenBeanX> titleList = responseEntity.getData().getChildren();
-                                for (ToolCategoryBean.ChildrenBeanX headItem : titleList) {
+                                mList.clear();
+                                for (ToolCategoryBean.ChildrenBeanX fatherItem : titleList) {
 
-                                    AdapterService.MySection title = new AdapterService.MySection(true, headItem.getName());
+                                    String typeJson = JsonUtil.toJson(fatherItem);
+                                    AdapterService.MySection title = new AdapterService.MySection(true, fatherItem.getName(), fatherItem.getSign(), typeJson);
                                     mList.add(title);
-                                    List<ToolCategoryBean.ChildrenBeanX.ChildrenBean> childrenList = headItem.getChildren();
-                                    for (ToolCategoryBean.ChildrenBeanX.ChildrenBean childrenBean : childrenList) {
+                                    List<ToolCategoryBean.ChildrenBeanX.ChildrenBean> childrenList = fatherItem.getChildren();
+                                    for (ToolCategoryBean.ChildrenBeanX.ChildrenBean childrenItem : childrenList) {
 
                                         ToolCategoryBean.ChildrenBeanX.ChildrenBean treeBean = new ToolCategoryBean.ChildrenBeanX.ChildrenBean();
-                                        treeBean.setName(childrenBean.getName());
-                                        treeBean.setAppCategoryStatus(childrenBean.getAppCategoryStatus());
-                                        treeBean.setLink(childrenBean.getLink());
-                                        treeBean.setImageLink(childrenBean.getImageLink());
-                                        treeBean.setSign(childrenBean.getSign());
-                                        treeBean.setAuthorization(childrenBean.isAuthorization());
-                                        AdapterService.MySection childItem = new AdapterService.MySection(treeBean);
+                                        treeBean.setName(childrenItem.getName());
+                                        treeBean.setAppCategoryStatus(childrenItem.getAppCategoryStatus());
+                                        treeBean.setLink(childrenItem.getLink());
+                                        treeBean.setImageLink(childrenItem.getImageLink());
+                                        treeBean.setSign(childrenItem.getSign());
+                                        treeBean.setAuthorization(childrenItem.isAuthorization());
+                                        AdapterService.MySection childItem = new AdapterService.MySection(treeBean, fatherItem.getSign(), typeJson);
                                         mList.add(childItem);
                                     }
                                 }
@@ -126,6 +131,7 @@ public class MoreToolsActivity extends BaseActivity implements View.OnClickListe
         mTvPageName.setText("全部服务");
         isLogin = SharePreference.getStringSpParams(mContext, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
         mList = new ArrayList<>();
+        mJsonList = new ArrayList<>();
         mBackLeft.setOnClickListener(this);
         mAdapterService = new AdapterService(mList);
         mRvCategory.setLayoutManager(new GridLayoutManager(this, 2));
@@ -136,21 +142,28 @@ public class MoreToolsActivity extends BaseActivity implements View.OnClickListe
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Log.e(BUG_TAG, "click");
                 AdapterService.MySection bean = (AdapterService.MySection) adapter.getData().get(position);
-                ToolCategoryBean.ChildrenBeanX.ChildrenBean treeBean = bean.getTreeBean();
-                if (bean.getTreeBean() == null) {
-                    return;
+                if (bean.getStrType().equals("INTELLIGENT_CARE")) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("item", bean.getTypeJson());
+                    readyGo(IntelligentCareActivity.class, bundle);
                 } else {
-                    if (treeBean.isAuthorization()) {
-                        if (StringUtil.isEmpty(isLogin)) {
-                            readyGo(LoginActivity.class);
-                        } else {
-                            GridUtils.readyGo(mContext, treeBean);
-                        }
+                    ToolCategoryBean.ChildrenBeanX.ChildrenBean treeBean = bean.getTreeBean();
+                    if (bean.getTreeBean() == null) {
+                        return;
                     } else {
-                        GridUtils.readyGo(mContext, treeBean);
+                        if (treeBean.isAuthorization()) {
+                            if (StringUtil.isEmpty(isLogin)) {
+                                readyGo(LoginActivity.class);
+                            } else {
+                                GridUtils.readyGo(mContext, treeBean, true);
+                            }
+                        } else {
+
+                            GridUtils.readyGo(mContext, treeBean, true);
+
+                        }
 
                     }
-
                 }
 
             }

@@ -88,7 +88,7 @@ public class ConfirmBindActivity extends BaseActivity implements View.OnClickLis
      */
     private void validateIMEI(final String result) {
 
-        // TODO: 2017/11/14
+
         OkGo.<String>post(GlobalAPI.watch_bind)
 
                 .params("access_token", ContextSession.getTokenString())

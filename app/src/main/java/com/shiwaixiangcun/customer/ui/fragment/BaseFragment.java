@@ -10,7 +10,9 @@ import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.event.EventCenter;
 
 /**
- * Created by Administrator on 2017/9/15.
+ *
+ * @author Administrator
+ * @date 2017/9/15
  */
 
 public abstract class BaseFragment extends CubeFragment implements View.OnClickListener {

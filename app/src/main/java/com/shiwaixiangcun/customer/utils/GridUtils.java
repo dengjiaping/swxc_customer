@@ -25,6 +25,7 @@ import com.shiwaixiangcun.customer.ui.activity.ResidentCertificationActivity;
 import com.shiwaixiangcun.customer.ui.activity.TelephoneActivity;
 import com.shiwaixiangcun.customer.ui.activity.heath.BindWatchActivity;
 import com.shiwaixiangcun.customer.ui.activity.heath.HealthEvaluationActivity;
+import com.shiwaixiangcun.customer.ui.activity.heath.IntelligentCareActivity;
 import com.shiwaixiangcun.customer.ui.activity.heath.PhysicalActivity;
 import com.shiwaixiangcun.customer.ui.activity.heath.WatchInfoActivity;
 import com.shiwaixiangcun.customer.ui.activity.heath.WebActivity;
@@ -36,6 +37,7 @@ import com.shiwaixiangcun.customer.ui.activity.heath.WebActivity;
  * 主页gridView 跳转工具
  */
 public class GridUtils {
+
     /**
      * 页面跳转
      *
@@ -43,7 +45,7 @@ public class GridUtils {
      * @param bean    数据
      */
 
-    public static void readyGo(Context context, ToolCategoryBean.ChildrenBeanX.ChildrenBean bean) {
+    public static void readyGo(Context context, ToolCategoryBean.ChildrenBeanX.ChildrenBean bean, boolean isFromAll) {
         String isLogin = SharePreference.getStringSpParams(context, Common.ISORNOLOGIN, Common.SIORNOLOGIN);
         Bundle bundle = new Bundle();
 
@@ -57,8 +59,6 @@ public class GridUtils {
             readyGo(context, WebActivity.class, bundle);
         } else {
             switch (bean.getSign()) {
-
-
                 //食谱
                 case "HYPERLIPIDEMIA_RECIPE":
                     bundle.putInt("current", 2);
@@ -188,17 +188,26 @@ public class GridUtils {
                     readyGo(context, NotOpenActivity.class, bundle);
                     break;
                 case "BLOOD_PRESSURE_METER":
-                    bundle.putString("name", "智能血压仪");
-                    bundle.putInt("image", R.drawable.intelligent_blood_presure);
-                    bundle.putString("message", "智能血压仪正在筹建中，敬请期待");
-                    readyGo(context, NotOpenActivity.class, bundle);
+                    if (isFromAll) {
+                        readyGo(context, IntelligentCareActivity.class);
+                    } else {
+                        bundle.putString("name", "智能血压仪");
+                        bundle.putInt("image", R.drawable.intelligent_blood_presure);
+                        bundle.putString("message", "智能血压仪正在筹建中，敬请期待");
+                        readyGo(context, NotOpenActivity.class, bundle);
+                    }
 
                     break;
                 case "BLOOD_GLUCOSE_METER":
-                    bundle.putString("name", "智能血糖仪");
-                    bundle.putInt("image", R.drawable.intelligent_blood);
-                    bundle.putString("message", "智能血糖仪正在筹建中，敬请期待");
-                    readyGo(context, NotOpenActivity.class, bundle);
+
+                    if (isFromAll) {
+                        readyGo(context, IntelligentCareActivity.class);
+                    } else {
+                        bundle.putString("name", "智能血糖仪");
+                        bundle.putInt("image", R.drawable.intelligent_blood);
+                        bundle.putString("message", "智能血糖仪正在筹建中，敬请期待");
+                        readyGo(context, NotOpenActivity.class, bundle);
+                    }
 
                     break;
                 case "SMART_WATCH":
@@ -206,10 +215,14 @@ public class GridUtils {
 
                     boolean isBind = (boolean) AppSharePreferenceMgr.get(context, GlobalConfig.IS_BIND_WATCH, false);
 
-                    if (isBind) {
-                        readyGo(context, WatchInfoActivity.class);
+                    if (isFromAll) {
+                        readyGo(context, IntelligentCareActivity.class);
                     } else {
-                        readyGo(context, BindWatchActivity.class);
+                        if (isBind) {
+                            readyGo(context, WatchInfoActivity.class);
+                        } else {
+                            readyGo(context, BindWatchActivity.class);
+                        }
                     }
 
                     break;
@@ -299,7 +312,13 @@ public class GridUtils {
 
                 //春雨医生
                 case "ORDINARY_TREAT":
-                    readyGo(context, ChunyuDoctorActivity.class, bundle);
+
+                    if (Utils.isNotEmpty(isLogin)) {
+                        readyGo(context, ChunyuDoctorActivity.class, bundle);
+                    } else {
+                        readyGo(context, LoginActivity.class);
+                    }
+
                     break;
 
 

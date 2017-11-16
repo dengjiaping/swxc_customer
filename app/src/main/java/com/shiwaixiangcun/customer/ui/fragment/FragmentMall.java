@@ -119,8 +119,8 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
     private Activity mContext;
 
     private int pinzhiGoodID = 0;
-    private int currentPage = GlobalConfig.first_page;
-    private int pageSize = GlobalConfig.page_size;
+    private int currentPage;
+    private int pageSize;
     private int siteID;
 
 
@@ -138,6 +138,8 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
+        currentPage = GlobalConfig.first_page;
+        pageSize = GlobalConfig.page_size;
         siteID = (int) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_ID, 0);
         requestKeyword();
         requestBanner();
@@ -207,6 +209,14 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
         OkGo.<String>get(GlobalAPI.getGuessLike)
                 .params(params)
                 .execute(new StringCallback() {
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        mRefreshLayout.finishLoadmore();
+                        mRefreshLayout.finishRefresh();
+                    }
+
                     @Override
                     public void onSuccess(Response<String> response) {
 
@@ -222,20 +232,28 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
                         switch (data.getResponseCode()) {
 
                             case 1001:
-                                if (data.getData().getElements().size() == 0) {
-                                    mRefreshLayout.finishRefresh();
-                                    mRefreshLayout.finishLoadmore();
-                                    return;
-                                }
+
 
                                 if (isPull) {
+                                    if (data.getData().getElements().size() == 0) {
+                                        mRefreshLayout.finishRefresh();
+                                        mRefreshLayout.finishLoadmore();
+
+                                        return;
+                                    }
                                     currentPage++;
                                     EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_MALL, GUESS_LICK, data.getData()));
                                     mRefreshLayout.finishLoadmore();
                                 } else {
                                     currentPage = 1;
-                                    EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_MALL, GUESS_LICK, data.getData()));
                                     mRefreshLayout.finishRefresh();
+                                    if (data.getData().getElements().size() == 0) {
+                                        mAdapterMall.getData().clear();
+                                        mAdapterMall.notifyDataSetChanged();
+                                    }
+                                    EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_MALL, GUESS_LICK, data.getData()));
+
+
                                 }
                                 break;
                             default:
@@ -261,6 +279,8 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
+                        mRefreshLayout.finishLoadmore();
+                        mRefreshLayout.finishRefresh();
                     }
 
                     @Override
@@ -336,6 +356,13 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
                 .params("siteId", siteID)
                 // 缓存模式，详细请看缓存介绍
                 .execute(new StringCallback() {
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        mRefreshLayout.finishLoadmore();
+                        mRefreshLayout.finishRefresh();
+                    }
+
                     @Override
                     public void onSuccess(Response<String> response) {
                         MallBean mallBean = JsonUtil.fromJson(response.body(), MallBean.class);
@@ -463,25 +490,31 @@ public class FragmentMall extends BaseFragment implements View.OnClickListener {
         switch (simpleEvent.mEventValue) {
             case BANNER:
                 final List<BannerBean> dataList = (List<BannerBean>) simpleEvent.getData();
-                imageList.clear();
-                for (BannerBean bean : dataList) {
-                    imageList.add(bean.getImagePath());
-                }
-                mBannerMall.setImages(imageList)
-                        .setImageLoader(new GlideImageLoader())
-                        .setDelayTime(3000)
-                        .start();
-                mBannerMall.setOnBannerListener(new OnBannerListener() {
-                    @Override
-                    public void OnBannerClick(int position) {
-
-                        BannerBean bannerBean = dataList.get(position);
-                        String link = bannerBean.getLink();
-                        judgeUrl(link);
-
-
+                if (dataList.size() == 0) {
+                    imageList.clear();
+                    mBannerMall.setVisibility(View.GONE);
+                } else {
+                    mBannerMall.setVisibility(View.VISIBLE);
+                    imageList.clear();
+                    for (BannerBean bean : dataList) {
+                        imageList.add(bean.getImagePath());
                     }
-                });
+                    mBannerMall.setImages(imageList)
+                            .setImageLoader(new GlideImageLoader())
+                            .setDelayTime(3000)
+                            .start();
+                    mBannerMall.setOnBannerListener(new OnBannerListener() {
+                        @Override
+                        public void OnBannerClick(int position) {
+
+                            BannerBean bannerBean = dataList.get(position);
+                            String link = bannerBean.getLink();
+                            judgeUrl(link);
+
+
+                        }
+                    });
+                }
                 break;
             case KEY_WORD:
                 keyword = (Keyword) simpleEvent.getData();

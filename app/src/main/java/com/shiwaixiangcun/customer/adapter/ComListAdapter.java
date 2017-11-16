@@ -50,13 +50,13 @@ public class ComListAdapter extends BaseAdapter {
     @Override
     public int getItemViewType(int position) {
 
-        if (list.get(position).getShowType().equals("ARTICLE_IMAGE")) {
+        if (list.get(position).getArticleShowType().equals("ARTICLE_IMAGE")) {
             return TYPE_TITLE;
-        } else if (list.get(position).getShowType().equals("ACTIVE")) {
+        } else if (list.get(position).getArticleShowType().equals("ACTIVE")) {
             return TYPE_COMPANY;
-        } else if (list.get(position).getShowType().equals("ARTICLE_NO_IMAGE")) {
+        } else if (list.get(position).getArticleShowType().equals("ARTICLE_NO_IMAGE")) {
             return TYPE_DOWN;
-        } else if (list.get(position).getShowType().equals("ACTIVITY")) {
+        } else if (list.get(position).getArticleShowType().equals("ACTIVITY")) {
             return TYPE_ACTIVITY;
         }
         return 8;

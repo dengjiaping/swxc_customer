@@ -102,7 +102,7 @@ public class CommunityAnnouncementActivity extends BaseActivity implements View.
                 AdapterMain.MultipleItem item = (AdapterMain.MultipleItem) adapter.getData().get(position);
                 NoticeBean data = item.getData();
 
-                switch (data.getShowType()) {
+                switch (data.getArticleShowType()) {
                     case "ACTIVITY":
 
                         Bundle bundle = new Bundle();
@@ -177,7 +177,7 @@ public class CommunityAnnouncementActivity extends BaseActivity implements View.
                             List<NoticeBean> list = responseEntity.getData().getElements();
                             for (NoticeBean bean : list) {
                                 AdapterMain.MultipleItem multipleItem;
-                                switch (bean.getShowType()) {
+                                switch (bean.getArticleShowType()) {
                                     case "ARTICLE_IMAGE":
                                         multipleItem = new AdapterMain.MultipleItem(1, bean);
                                         break;
@@ -202,7 +202,7 @@ public class CommunityAnnouncementActivity extends BaseActivity implements View.
                                 List<NoticeBean> list = responseEntity.getData().getElements();
                                 for (NoticeBean bean : list) {
                                     AdapterMain.MultipleItem multipleItem;
-                                    switch (bean.getShowType()) {
+                                    switch (bean.getArticleShowType()) {
                                         case "ARTICLE_IMAGE":
                                             multipleItem = new AdapterMain.MultipleItem(1, bean);
                                             break;

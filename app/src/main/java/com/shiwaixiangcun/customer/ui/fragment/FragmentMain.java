@@ -1,18 +1,15 @@
 package com.shiwaixiangcun.customer.ui.fragment;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ViewAnimator;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.reflect.TypeToken;
@@ -66,6 +62,7 @@ import com.shiwaixiangcun.customer.utils.GlideImageLoader;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.utils.Utils;
+import com.shiwaixiangcun.customer.widget.AutoScrollView;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
@@ -94,7 +91,6 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
     private static final int UPDATE_BANNER = 3;
     private static final int UPDATE_ANNOUNCEMENT = 2;
     private static final int UPDATE_TOOL = 4;
-    private static final long TIME_INTERVAL = 10000L;
     private static String BUG_TAG = "fragment_main";
     View viewHeader = null;
     View viewTools = null;
@@ -115,6 +111,8 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
     Unbinder unbinder;
     AdapterTool mAdapterTool;
     List<NoticeBean> elementList = new ArrayList<>();
+    List<ToolCategoryBean.ChildrenBeanX> firstTool = new ArrayList<>();
+    List<View> views = new ArrayList<>();
     private RecyclerView mRvTools;
     private TextView tvMore;
     private Banner mBanner;
@@ -122,30 +120,18 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
     private AdapterMain mAdapterMain;
     private List<AdapterMain.MultipleItem> mMainList;
     private Context mContext;
-    private List<String> imageList = new ArrayList<>();
     private Intent intent;
-    private ViewAnimator viewAnimator;
-    private int currentPage = GlobalConfig.first_page;
-    private int pageSize = GlobalConfig.page_size;
-    private boolean autoPlayFlag = false;
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if (autoPlayFlag) {
-
-                showNext();
-            }
-            handler.sendMessageDelayed(new Message(), TIME_INTERVAL);
-        }
-    };
-
+    private AutoScrollView mAutoScrollView;
+    private int currentPage;
+    private int pageSize;
     private String siteName;
     private int siteId;
 
     @Override
     public void onResume() {
         super.onResume();
+        currentPage = GlobalConfig.first_page;
+        pageSize = GlobalConfig.page_size;
         siteId = (int) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_ID, 0);
         siteName = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_NAME, "");
         initData();
@@ -184,7 +170,7 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
                 AdapterMain.MultipleItem item = (AdapterMain.MultipleItem) adapter.getData().get(position);
                 NoticeBean data = item.getData();
 
-                switch (data.getShowType()) {
+                switch (data.getArticleShowType()) {
                     case "ACTIVITY":
 
                         Bundle bundle = new Bundle();
@@ -209,6 +195,7 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 refreshlayout.finishLoadmore();
+                refreshlayout.finishRefresh();
                 currentPage = 1;
                 initData();
 
@@ -219,10 +206,10 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 if (currentPage == 1) {
-                    currentPage++;
+                    currentPage += 1;
                 }
                 refreshlayout.finishRefresh();
-                initHeadLineData(currentPage, pageSize, true);
+                requestHeadLineData(currentPage, pageSize, true);
 
             }
         });
@@ -230,6 +217,7 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
 
     }
 
+    @SuppressLint("WrongViewCast")
     private void initHeader(View view) {
         viewHeader = LayoutInflater.from(mContext).inflate(R.layout.layout_header_main, null);
         viewTools = LayoutInflater.from(mContext).inflate(R.layout.layout_header_tools, null);
@@ -239,8 +227,7 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
         mBanner = viewBanner.findViewById(R.id.banner_second);
 
         tvMore = viewAnnouncement.findViewById(R.id.tv_more);
-        viewAnimator = viewAnnouncement.findViewById(R.id.animator);
-
+        mAutoScrollView = viewAnnouncement.findViewById(R.id.up_view);
         tvMore.setOnClickListener(this);
         mAdapterTool = new AdapterTool(R.layout.layout_tool);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this.getActivity(), 4);
@@ -282,6 +269,8 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
                             bundle.putString("item", jsonItem);
                             readyGo(IntelligentCareActivity.class, bundle);
                             break;
+
+
                         default:
                             bundle.putString("item", jsonItem);
                             bundle.putBoolean("show", false);
@@ -296,7 +285,7 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
         });
     }
 
-    private void initToolsData() {
+    private void requestToolsData() {
 
         OkGo.<String>get(GlobalAPI.getToolCategory)
                 .params("siteId", siteId)
@@ -323,17 +312,12 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
                 });
     }
 
-    public void showNext() {
-        viewAnimator.setOutAnimation(mContext, R.anim.slide_out_up);
-        viewAnimator.setInAnimation(mContext, R.anim.slide_in_down);
-        viewAnimator.showNext();
-    }
 
     /**
      * 设置Banner
      */
 
-    private void initBanner() {
+    private void requestBanner() {
         OkGo.<String>get(Common.listpage)
                 .params("position", GlobalConfig.home_02)
                 .params("siteId", siteId)
@@ -361,7 +345,7 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
      * 设置社区公告
      */
 
-    private void initAnnouncement() {
+    private void requestAnnouncement() {
         OkGo.<String>get(Common.articleListpage)
                 .params("page.pn", currentPage)
                 .params("page.size", 3)
@@ -388,13 +372,22 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
      * @param pageSize 每页数据量
      * @param loadMore 是否加载更多
      */
-    private void initHeadLineData(int page, int pageSize, final boolean loadMore) {
+    private void requestHeadLineData(int page, int pageSize, final boolean loadMore) {
         OkGo.<String>get(Common.articleListpage)
                 .params("page.pn", page)
                 .params("page.size", pageSize)
                 .params("siteId", siteId)
                 .params("position", "COMMUNITY_HEADLINES")
                 .execute(new StringCallback() {
+
+                    @Override
+                    public void onError(Response<String> response) {
+
+                        mRefreshLayout.finishLoadmore();
+                        mRefreshLayout.finishRefresh();
+
+                    }
+
                     @Override
                     public void onSuccess(Response<String> response) {
                         // 分页列表
@@ -414,8 +407,11 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
                                     mRefreshLayout.finishLoadmore(true);
                                 } else {
                                     currentPage = 1;
-                                    EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_MAIN, 1, headLine));
                                     mRefreshLayout.finishRefresh(true);
+                                    mAdapterMain.getData().clear();
+                                    mAdapterMain.notifyDataSetChanged();
+                                    EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_MAIN, 1, headLine));
+
                                 }
 
 
@@ -478,8 +474,10 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
     public void setTools(SimpleEvent simpleEvent) {
         mAdapterTool.clearData();
         mToolList.clear();
+        firstTool.clear();
+
         ToolCategoryBean toolCategoryBean = (ToolCategoryBean) simpleEvent.getData();
-        List<ToolCategoryBean.ChildrenBeanX> firstTool = toolCategoryBean.getChildren();
+        firstTool = toolCategoryBean.getChildren();
 
         ToolCategoryBean.ChildrenBeanX allItem = new ToolCategoryBean.ChildrenBeanX();
         allItem.setName("更多服务");
@@ -498,22 +496,39 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
      */
     private void setBannerData(SimpleEvent simpleEvent) {
         final List<BannerBean> dataList = (List<BannerBean>) simpleEvent.getData();
-        imageList.clear();
-        for (BannerBean bean : dataList) {
-            imageList.add(bean.getImagePath());
-        }
-        mBanner.setImages(imageList)
-                .setImageLoader(new GlideImageLoader())
-                .setDelayTime(3000)
-                .start();
-        mBanner.setOnBannerListener(new OnBannerListener() {
-            @Override
-            public void OnBannerClick(int position) {
-                BannerBean bannerBean = dataList.get(position);
-                String link = bannerBean.getLink();
-                judgeUrl(link);
+        List<String> imageList = new ArrayList<>();
+        if (dataList.size() == 0) {
+            imageList.clear();
+            mBanner.setVisibility(View.GONE);
+
+
+        } else {
+            imageList.clear();
+            mBanner.setVisibility(View.VISIBLE);
+            for (BannerBean bean : dataList) {
+                imageList.add(bean.getImagePath());
             }
-        });
+            mBanner.setImages(imageList)
+                    .setImageLoader(new GlideImageLoader())
+                    .setDelayTime(3000)
+                    .start();
+            mBanner.setOnBannerListener(new OnBannerListener() {
+                @Override
+                public void OnBannerClick(int position) {
+                    BannerBean bannerBean = dataList.get(position);
+                    String link = bannerBean.getLink();
+                    judgeUrl(link);
+                }
+            });
+        }
+
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mBanner.stopAutoPlay();
     }
 
     /**
@@ -522,50 +537,46 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
      * @param simpleEvent
      */
 
+
     private void setNoticeData(SimpleEvent simpleEvent) {
         ResponseEntity<PageBean<NoticeBean>> NoticeData = (ResponseEntity<PageBean<NoticeBean>>) simpleEvent.getData();
 
-        if (NoticeData.getData().getElements().size() == 0) {
-            TextView textView = new TextView(mContext);
-            textView.setText("站务公告");
-            textView.setLines(1);
-            textView.setSingleLine(true);
-            textView.setTextSize(14);
-            textView.setTextColor(Color.parseColor("#2D3230"));
-            textView.setEllipsize(TextUtils.TruncateAt.END);
-            textView.setOnClickListener(this);
-            viewAnimator.addView(textView);
+        views.clear();
+        elementList.clear();
+        elementList.addAll(NoticeData.getData().getElements());
+        if (elementList.size() == 0) {
+            mAutoScrollView.setAutoScroll(false);
+            LinearLayout moreView = (LinearLayout) LayoutInflater.from(mContext).inflate(R.layout.item_view, null);
+            //初始化布局的控件
+            TextView textView = moreView.findViewById(R.id.tv_text);
+            textView.setText("暂无公告");
+            views.add(moreView);
         } else {
-            elementList.clear();
-            elementList.addAll(NoticeData.getData().getElements());
+
+            mAutoScrollView.setAutoScroll(true);
             for (int i = 0; i < elementList.size(); i++) {
-                TextView textView = new TextView(mContext);
+                //设置滚动的单个布局
+                LinearLayout moreView = (LinearLayout) LayoutInflater.from(mContext).inflate(R.layout.item_view, null);
+                //初始化布局的控件
+                final TextView textView = moreView.findViewById(R.id.tv_text);
                 textView.setText(elementList.get(i).getTitle());
-                textView.setLines(1);
-                textView.setSingleLine(true);
-                textView.setTextSize(14);
-                textView.setId(i);
-                textView.setTextColor(Color.parseColor("#2D3230"));
-                textView.setEllipsize(TextUtils.TruncateAt.END);
-                textView.setOnClickListener(this);
-                viewAnimator.addView(textView);
-                final int finalI1 = i;
-                textView.setOnClickListener(new View.OnClickListener() {
+                final int finalI = i;
+                moreView.findViewById(R.id.tv_text).setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View view) {
+                    public void onClick(View v) {
                         Intent intent = new Intent(mContext, DetailsActivity.class);
 
-                        intent.putExtra("articleId", elementList.get(finalI1).getId() + "");
-                        intent.putExtra("detailTitle", elementList.get(finalI1).getTitle());
-                        intent.putExtra("detailContent", elementList.get(finalI1).getSummary());
+                        intent.putExtra("articleId", elementList.get(finalI).getId() + "");
+                        intent.putExtra("detailTitle", elementList.get(finalI).getTitle());
+                        intent.putExtra("detailContent", elementList.get(finalI).getSummary());
                         startActivity(intent);
                     }
                 });
+                views.add(moreView);
+
             }
         }
-
-        handler.sendMessageDelayed(new Message(), TIME_INTERVAL);
-        autoPlayFlag = true;
+        mAutoScrollView.setViews(views);
     }
 
     /**
@@ -577,12 +588,34 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
     private void setDataHeadLine(SimpleEvent simpleEvent, boolean loadMore) {
         ResponseEntity<PageBean<NoticeBean>> data = (ResponseEntity<PageBean<NoticeBean>>) simpleEvent.getData();
         List<NoticeBean> elements = data.getData().getElements();
-        if (!loadMore) {
-            mMainList.clear();
+
+
+        if (elements.size() == 0) {
+            return;
+
+        } else {
+            if (!loadMore) {
+                mMainList.clear();
+                addData(elements);
+                mAdapterMain.notifyDataSetChanged();
+            } else {
+                addData(elements);
+                mAdapterMain.notifyLoadMoreToLoading();
+            }
+
+
         }
+    }
+
+    /**
+     * 将数据转换化成需要数据
+     *
+     * @param elements
+     */
+    private void addData(List<NoticeBean> elements) {
         for (NoticeBean bean : elements) {
             AdapterMain.MultipleItem multipleItem;
-            switch (bean.getShowType()) {
+            switch (bean.getArticleShowType()) {
                 case "ARTICLE_IMAGE":
                     multipleItem = new AdapterMain.MultipleItem(1, bean);
                     break;
@@ -601,8 +634,6 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
 
             mMainList.add(multipleItem);
         }
-
-        mAdapterMain.notifyDataSetChanged();
     }
 
     /**
@@ -639,8 +670,8 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View fragment_home = inflater.inflate(R.layout.fragment_home, container, false);
-        return fragment_home;
+
+        return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
     @Override
@@ -652,11 +683,11 @@ public class FragmentMain extends BaseFragment implements View.OnClickListener {
     }
 
     private void initData() {
-        initHeadLineData(currentPage, pageSize, false);
-        initBanner();
-        initAnnouncement();
+        requestHeadLineData(currentPage, pageSize, false);
+        requestBanner();
+        requestAnnouncement();
         initSite();
-        initToolsData();
+        requestToolsData();
 
     }
 

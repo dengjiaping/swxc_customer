@@ -168,7 +168,6 @@ public class ManageNumberActivity extends BaseActivity implements View.OnClickLi
                 .params("id", data.getId())
                 .params("phone", strNumber)
                 .params("dialFlag", isSOS)
-                .isSpliceUrl(true)
                 .execute(new StringDialogCallBack(this) {
                     @Override
                     public void onSuccess(Response<String> response) {

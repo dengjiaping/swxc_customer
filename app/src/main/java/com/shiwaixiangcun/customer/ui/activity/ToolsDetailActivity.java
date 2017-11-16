@@ -101,10 +101,10 @@ public class ToolsDetailActivity extends BaseActivity implements View.OnClickLis
                     if (StringUtil.isEmpty(isLogin)) {
                         readyGo(LoginActivity.class);
                     } else {
-                        GridUtils.readyGo(mContext, bean);
+                        GridUtils.readyGo(mContext, bean, false);
                     }
                 } else {
-                    GridUtils.readyGo(mContext, bean);
+                    GridUtils.readyGo(mContext, bean, false);
 
                 }
             }

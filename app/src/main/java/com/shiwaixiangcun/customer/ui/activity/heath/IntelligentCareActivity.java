@@ -107,6 +107,7 @@ public class IntelligentCareActivity extends BaseActivity implements View.OnClic
                                 if (watchData == null) {
                                     return;
                                 }
+
                                 if (watchData.getHardwareId() != 0) {
 
                                     AppSharePreferenceMgr.put(mContext, GlobalConfig.IS_BIND_WATCH, true);
@@ -117,6 +118,11 @@ public class IntelligentCareActivity extends BaseActivity implements View.OnClic
                                     textView.setText(responseEntity.getData().getWatchData().getModelType());
                                     tvResidualPower.setText("剩余电量 " + responseEntity.getData().getWatchData().getRemainingPower() + "%");
                                     isBindWatch = true;
+
+                                    if (watchData.getDeviceStatus().equals("OFFLINE")) {
+                                        textView.setText(" 世外生活手表 离线");
+                                        tvResidualPower.setVisibility(View.GONE);
+                                    }
 
                                 } else {
                                     AppSharePreferenceMgr.put(mContext, GlobalConfig.IS_BIND_WATCH, false);
@@ -140,6 +146,8 @@ public class IntelligentCareActivity extends BaseActivity implements View.OnClic
 
 
                                 }
+
+//
                                 break;
                             default:
                                 break;
@@ -184,10 +192,10 @@ public class IntelligentCareActivity extends BaseActivity implements View.OnClic
                     if (StringUtil.isEmpty(isLogin)) {
                         readyGo(LoginActivity.class);
                     } else {
-                        GridUtils.readyGo(mContext, bean);
+                        GridUtils.readyGo(mContext, bean, false);
                     }
                 } else {
-                    GridUtils.readyGo(mContext, bean);
+                    GridUtils.readyGo(mContext, bean, false);
 
                 }
             }

@@ -27,7 +27,7 @@ public class NoticeBean implements Parcelable {
      * coverPath : http://resource.shiwaixiangcun.cn/group1/M00/00/9F/rBKx51oJM8WAODodAAA9WpZ8tQw888.png
      * id : 25
      * publishTime : 1510638840000
-     * showType : ACTIVITY
+     * articleShowType : ACTIVITY
      * source : PROPERTY
      * summary : 辽宁省鞍山市傻大个睡觉啊过的痕迹撒
      * title : 物业活动-限额3人
@@ -40,7 +40,7 @@ public class NoticeBean implements Parcelable {
     private String coverPath;
     private int id;
     private long publishTime;
-    private String showType;
+    private String articleShowType;
     private String source;
     private String summary;
     private String title;
@@ -56,7 +56,7 @@ public class NoticeBean implements Parcelable {
         this.coverPath = in.readString();
         this.id = in.readInt();
         this.publishTime = in.readLong();
-        this.showType = in.readString();
+        this.articleShowType = in.readString();
         this.source = in.readString();
         this.summary = in.readString();
         this.title = in.readString();
@@ -111,12 +111,12 @@ public class NoticeBean implements Parcelable {
         this.publishTime = publishTime;
     }
 
-    public String getShowType() {
-        return showType;
+    public String getArticleShowType() {
+        return articleShowType;
     }
 
-    public void setShowType(String showType) {
-        this.showType = showType;
+    public void setArticleShowType(String articleShowType) {
+        this.articleShowType = articleShowType;
     }
 
     public String getSource() {
@@ -164,7 +164,7 @@ public class NoticeBean implements Parcelable {
         dest.writeString(this.coverPath);
         dest.writeInt(this.id);
         dest.writeLong(this.publishTime);
-        dest.writeString(this.showType);
+        dest.writeString(this.articleShowType);
         dest.writeString(this.source);
         dest.writeString(this.summary);
         dest.writeString(this.title);

@@ -2,6 +2,7 @@ package com.shiwaixiangcun.customer.ui.activity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,11 +22,16 @@ import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
+import com.shiwaixiangcun.customer.share.OnekeyShare;
 import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
+import java.util.HashMap;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
 
 /**
  * 报名活动详情
@@ -41,9 +48,14 @@ public class RegisterDetailActivity extends BaseActivity implements View.OnClick
     WebView mWebView;
     @BindView(R.id.myProgressBar)
     ProgressBar mMyProgressBar;
+    @BindView(R.id.iv_share_right)
+    ImageView mIvShareRight;
     private StringBuilder urlBuilder = new StringBuilder();
+    private StringBuilder urlShare = new StringBuilder();
     private int activityID;
     private int siteID;
+    private String title;
+    private String cover;
 
     /**
      * 清除Cookie
@@ -65,6 +77,8 @@ public class RegisterDetailActivity extends BaseActivity implements View.OnClick
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             activityID = extras.getInt("activityID");
+            title = extras.getString("activityTitle");
+            cover = extras.getString("cover");
         }
         siteID = (int) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_ID, 0);
         initWebView();
@@ -75,13 +89,21 @@ public class RegisterDetailActivity extends BaseActivity implements View.OnClick
     private void initViewAndEvent() {
         mBackLeft.setOnClickListener(this);
         mTvPageName.setText("活动详情");
+        mIvShareRight.setVisibility(View.VISIBLE);
+        mTvPageName.setMaxLines(1);
+        mTvPageName.setEllipsize(TextUtils.TruncateAt.END);
         urlBuilder.append(GlobalAPI.activityDetail)
                 .append("?activityId=")
                 .append(activityID)
                 .append("&siteId=")
                 .append(siteID);
-        Log.e(BUG_TAG, "活动详情" + urlBuilder.toString());
+        urlShare.append(GlobalAPI.activityDetail)
+                .append("?activityId=")
+                .append(activityID)
+                .append("&siteId=")
+                .append(siteID);
         removeCookie(mContext);
+        mIvShareRight.setOnClickListener(this);
         mWebView.setWebChromeClient(new MyWebChromeViewClient());
         mWebView.setWebViewClient(new MyWebViewClient());
         mWebView.loadUrl(urlBuilder.toString());
@@ -161,16 +183,65 @@ public class RegisterDetailActivity extends BaseActivity implements View.OnClick
                     finish();
                 }
                 break;
+            case R.id.iv_share_right:
+                showShare();
+
             default:
                 break;
         }
 
     }
 
+
+    private void showShare() {
+        OnekeyShare oks = new OnekeyShare();
+        //关闭sso授权
+        oks.disableSSOWhenAuthorize();
+        // title标题，印象笔记、邮箱、信息、微信、人人网、QQ和QQ空间使用
+        oks.setTitle(title);
+        // titleUrl是标题的网络链接，仅在Linked-in,QQ和QQ空间使用
+        oks.setTitleUrl(urlShare.toString());
+        // text是分享文本，所有平台都需要这个字段
+        oks.setText(title);
+        //分享网络图片，新浪微博分享网络图片需要通过审核后申请高级写入接口，否则请注释掉测试新浪微博
+        oks.setImageUrl(cover);
+        // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
+        // url仅在微信（包括好友和朋友圈）中使用
+        oks.setUrl(urlShare.toString());
+
+        oks.setSite(getResources().getResourceName(R.string.app_name));
+        // siteUrl是分享此内容的网站地址，仅在QQ空间使用
+        oks.setSiteUrl(urlShare.toString());
+        oks.setCallback(new PlatformActionListener() {
+            @Override
+            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+                Toast.makeText(mContext, "分享成功", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onError(Platform platform, int i, Throwable throwable) {
+                Toast.makeText(mContext, "分享失败", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onCancel(Platform platform, int i) {
+                Toast.makeText(mContext, "取消分享", Toast.LENGTH_LONG).show();
+            }
+        });
+        // 启动分享GUI
+        oks.show(this);
+    }
+
     /**
      * 处理Javascript的对话框，网站图标，网站title，加载进度等
      */
     private final class MyWebChromeViewClient extends WebChromeClient {
+        @Override
+        public void onReceivedTitle(WebView view, String title) {
+            super.onReceivedTitle(view, title);
+            Log.d("ANDROID_LAB", "TITLE=" + title);
+            mTvPageName.setText(title);
+        }
 
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
@@ -190,6 +261,7 @@ public class RegisterDetailActivity extends BaseActivity implements View.OnClick
     }
 
     private class MyWebViewClient extends WebViewClient {
+
 
         @Override
         public void onLoadResource(WebView view, String url) {
@@ -213,9 +285,6 @@ public class RegisterDetailActivity extends BaseActivity implements View.OnClick
         public void onPageFinished(WebView view, String url) {
 
 
-            mTvPageName.setText(view.getTitle());
-            Log.e("tag", "onPageFinished WebView title=" + view.getTitle());
-
         }
 
         @Override
@@ -225,6 +294,7 @@ public class RegisterDetailActivity extends BaseActivity implements View.OnClick
             Toast.makeText(getApplicationContext(), "加载错误",
                     Toast.LENGTH_LONG).show();
         }
+
     }
 
 

@@ -10,24 +10,29 @@ import java.io.Serializable;
 public class Common implements Serializable {
 
 
+    /**
+     * other
+     */
     public static final String ADDRESS = "address";
     public static final String DEFAULT_ADDRESS = "defaultAddress";
     public static final String TOKEN = "token";
     public static final String REFRESH_TOKEN = "refresh";
+
+    /**
+     * 测试服务器
+     */
+//    public static String domain = "http://shiwaixiangcun.cn/";
+//    public static String domainPM = "http://pm.shiwaixiangcun.cn/";
+//    public static String domainHM = "http://hm.shiwaixiangcun.cn";
+//    public static String domainOT = "http://ot.shiwaixiangcun.cn/";
     public static final String isLogin = "isLogin";
-
-
-    //正式服务器
-//    public static String domain = "http://hxteb.com/";
-//    public static String domainPM = "http://pm.hxteb.com/";
-//    public static String domainHM = "http://hm.hxteb.com/";
-//    public static String domainOT = "http://ot.hxteb.com/";
-
-    //测试服务器
-    public static String domain = "http://shiwaixiangcun.cn/";
-    public static String domainPM = "http://pm.shiwaixiangcun.cn/";
-    public static String domainHM = "http://hm.shiwaixiangcun.cn";
-    public static String domainOT = "http://ot.shiwaixiangcun.cn/";
+    /**
+     * 正式服务器
+     */
+    public static String domain = "http://hxteb.com/";
+    public static String domainPM = "http://pm.hxteb.com/";
+    public static String domainHM = "http://hm.hxteb.com/";
+    public static String domainOT = "http://ot.hxteb.com/";
     /**
      * 登录
      */

@@ -12,7 +12,9 @@ import android.widget.TextView;
 
 import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.Common;
+import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
+import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
 import butterknife.BindView;
@@ -32,6 +34,7 @@ public class RecipeArticleActivity extends BaseActivity {
 
     private String strTitle;
     private int strId;
+    private int siteId;
 
     private StringBuilder strUrl = new StringBuilder();
 
@@ -86,6 +89,7 @@ public class RecipeArticleActivity extends BaseActivity {
         Bundle extras = getIntent().getExtras();
         strTitle = extras.getString("articleTitle");
         strId = extras.getInt("articleId", 0);
+        siteId = (int) AppSharePreferenceMgr.get(mContext, GlobalConfig.CURRENT_SITE_ID, 0);
     }
 
     private void initViewAndEvent() {
@@ -101,7 +105,7 @@ public class RecipeArticleActivity extends BaseActivity {
         });
         mTvPageName.setText(strTitle);
 
-        strUrl.append(Common.getArticle).append("?articleId=").append(strId).append("&app=true");
+        strUrl.append(Common.getArticle).append("?articleId=").append(strId).append("&siteId=").append(siteId).append("&app=true");
         removeCookie(mContext);
         mWebView.loadUrl(strUrl.toString());
         mWebView.setWebViewClient(new MyWebViewClient());

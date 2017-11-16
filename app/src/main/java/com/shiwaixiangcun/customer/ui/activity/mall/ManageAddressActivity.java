@@ -49,6 +49,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * @author Administrator
+ *         收货地址
+ */
 public class ManageAddressActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.back_left)

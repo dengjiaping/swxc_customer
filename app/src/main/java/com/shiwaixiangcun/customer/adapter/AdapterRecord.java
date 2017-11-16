@@ -18,7 +18,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- *
  * @author Administrator
  * @date 2017/10/13
  */
@@ -37,13 +36,15 @@ public class AdapterRecord extends RecyclerView.Adapter<AdapterRecord.RecordView
     @Override
     public int getItemViewType(int position) {
         final int size = mRecordsList.size() - 1;
-        if (size == 0)
+        if (size == 0) {
             return ItemType.ATOM;
-        else if (position == 0)
+        } else if (position == 0) {
             return ItemType.START;
-        else if (position == size)
+        } else if (position == size) {
             return ItemType.END;
-        else return ItemType.NORMAL;
+        } else {
+            return ItemType.NORMAL;
+        }
     }
 
     @Override

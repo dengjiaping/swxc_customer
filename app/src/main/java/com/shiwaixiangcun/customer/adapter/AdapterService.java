@@ -13,7 +13,8 @@ import com.shiwaixiangcun.customer.utils.ImageDisplayUtil;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/10/18.
+ * @author Administrator
+ * @date 2017/10/18
  */
 
 public class AdapterService extends BaseSectionQuickAdapter<AdapterService.MySection, BaseViewHolder> {
@@ -52,15 +53,37 @@ public class AdapterService extends BaseSectionQuickAdapter<AdapterService.MySec
     public static class MySection extends SectionEntity<ToolCategoryBean.ChildrenBeanX.ChildrenBean> {
         ToolCategoryBean.ChildrenBeanX.ChildrenBean mTreeBean;
         String strSection;
+        String strType;
+        String typeJson;
 
-        public MySection(boolean isHeader, String header) {
+        public MySection(boolean isHeader, String header, String strType, String typeJson) {
             super(isHeader, header);
             this.strSection = header;
+            this.strType = strType;
+            this.typeJson = typeJson;
         }
 
-        public MySection(ToolCategoryBean.ChildrenBeanX.ChildrenBean treeBean) {
+        public MySection(ToolCategoryBean.ChildrenBeanX.ChildrenBean treeBean, String strType, String typeJson) {
             super(treeBean);
             this.mTreeBean = treeBean;
+            this.strType = strType;
+            this.typeJson = typeJson;
+        }
+
+        public String getStrType() {
+            return strType;
+        }
+
+        public void setStrType(String strType) {
+            this.strType = strType;
+        }
+
+        public String getTypeJson() {
+            return typeJson;
+        }
+
+        public void setTypeJson(String typeJson) {
+            this.typeJson = typeJson;
         }
 
         public ToolCategoryBean.ChildrenBeanX.ChildrenBean getTreeBean() {

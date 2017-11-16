@@ -154,7 +154,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/bg_gray"
-        android:paddingBottom="60dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
@@ -163,16 +162,5 @@
 
     </android.support.v4.widget.NestedScrollView>
 
-    <Button
-        android:id="@+id/btn_unbind"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/shape_button_white"
-        android:text="解除绑定"
-        android:textColor="#FFE94F4F"
-        android:textSize="16sp"/>
+
 </android.support.design.widget.CoordinatorLayout>

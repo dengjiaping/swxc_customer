@@ -16,8 +16,6 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.lzy.okgo.OkGo;
-import com.lzy.okgo.cookie.store.CookieStore;
 import com.shiwaixiangcun.customer.BaseActivity;
 import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.GlobalConfig;
@@ -25,12 +23,11 @@ import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import okhttp3.Cookie;
-import okhttp3.HttpUrl;
 
 /**
  * @author Administrator
@@ -83,27 +80,6 @@ public class LocationActivity extends BaseActivity implements View.OnClickListen
 
     }
 
-    private void getCookie(final String url) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                //http连接需要放到子线程中进行请求
-                CookieStore cookieStore = OkGo.getInstance().getCookieJar().getCookieStore();
-                HttpUrl httpUrl = HttpUrl.parse(url);
-                List<Cookie> cookies = cookieStore.getCookie(httpUrl);
-                synCookies(url, cookies.toString());
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mWebView.loadUrl(url);//webview控件调用需要在主线程中进行
-                    }
-                });
-
-
-            }
-        }).start();
-    }
 
     /**
      * 同步一下cookie
@@ -129,44 +105,22 @@ public class LocationActivity extends BaseActivity implements View.OnClickListen
         String url = mStringBuilder.toString();
         Log.e(BUG_TAG, "webview加载" + mStringBuilder.toString());
 
+        String userAgentString = mWebView.getSettings().getUserAgentString();
+        //设置user_agent(以asyncHttprequest为例)
+//        client.setUserAgent(defaultUserAgent);
 
-        //webview Cookie
-        CookieStore cookieStore = OkGo.getInstance().getCookieJar().getCookieStore();
-        HttpUrl httpUrl = HttpUrl.parse(url);
-        List<Cookie> cookies = cookieStore.getCookie(httpUrl);
-        List<Cookie> allCookie = cookieStore.getAllCookie();
-        Log.e(BUG_TAG, "所有cookie如下：" + allCookie.toString());
-        Log.e(BUG_TAG, httpUrl.host() + " 对应的cookie如下：" + cookies.toString());
-
-//        syncCookieToWebView(url, "uid=95899aa3-b22f-49cc-a207-ddd5cf4c1ac0; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/");
-
+        Map<String, String> header = new HashMap<>();
+        header.put("user-agent", userAgentString);
         removeCookie(this);
         mWebView.setWebChromeClient(new MyWebChromeViewClient());
         mWebView.setWebViewClient(new MyWebViewClient());
-        mWebView.loadUrl(url);
+        mWebView.loadUrl(url, header);
+
 
     }
 
 
-    /**
-     * cookie 同步
-     *
-     * @param url
-     * @return
-     */
-    private void syncCookieToWebView(String url, String cookies) {
-        CookieSyncManager.createInstance(this);
-        CookieManager cm = CookieManager.getInstance();
-        cm.removeAllCookie();
-        cm.setAcceptCookie(true);
 
-        cm.setCookie(url, cookies);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-            CookieManager.getInstance().flush();
-        } else {
-            CookieSyncManager.getInstance().sync();
-        }
-    }
 
     @Override
     public void onClick(View v) {

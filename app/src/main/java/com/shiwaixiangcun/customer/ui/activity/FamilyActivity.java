@@ -60,19 +60,20 @@ public class FamilyActivity extends BaseActivity implements View.OnClickListener
         setContentView(R.layout.activity_family);
         ButterKnife.bind(this);
         initViewAndEvent();
+        requestData();
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        initData();
+        requestData();
     }
 
 
     /**
      * 初始化网络数据
      */
-    private void initData() {
+    private void requestData() {
         OkGo.<String>get(GlobalAPI.getFamily)
                 .params("access_token", token)
                 .params("isTrue", false)

@@ -37,6 +37,7 @@ public class RefreshTokenUtil implements Serializable {
 
         Log.e(BUG_TAG, hashMap.toString() + "---" + Common.login);
         HttpRequest.post(Common.login, hashMap, new HttpCallBack() {
+
             @Override
             public void onSuccess(String responseJson) {
                 Log.e(BUG_TAG, responseJson);

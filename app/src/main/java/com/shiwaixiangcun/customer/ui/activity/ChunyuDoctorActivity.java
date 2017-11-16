@@ -42,6 +42,8 @@ import butterknife.OnClick;
 
 /**
  * 春雨医生
+ *
+ * @author Administrator
  */
 public class ChunyuDoctorActivity extends BaseActivity {
 
@@ -82,11 +84,18 @@ public class ChunyuDoctorActivity extends BaseActivity {
         initViewAndEvent();
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        strToken = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
+    }
+
     private void initWebView() {
         //声明WebSettings子类
         WebSettings webSettings = mWebView.getSettings();
         //如果访问的页面中要与Javascript交互，则webview必须设置支持Javascript
         webSettings.setJavaScriptEnabled(true);
+        webSettings.setDomStorageEnabled(true);
         //设置自适应屏幕，两者合用
         webSettings.setUseWideViewPort(true); //将图片调整到适合webview的大小
         webSettings.setLoadWithOverviewMode(true); // 缩放至屏幕的大小
@@ -114,11 +123,24 @@ public class ChunyuDoctorActivity extends BaseActivity {
                     @Override
                     public void onSuccess(Response<String> response) {
                         Log.e(BUG_TAG, response.body());
+
                         ChunyuDoctorActivity.DoctorBean doctorBean = JsonUtil.fromJson(response.body(), ChunyuDoctorActivity.DoctorBean.class);
                         if (doctorBean == null) {
                             return;
                         }
-                        EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_DOCTOR, 1, doctorBean.getData()));
+                        switch (doctorBean.getResponseCode()) {
+                            case 1001:
+                                EventCenter.getInstance().post(new SimpleEvent(SimpleEvent.UPDATE_DOCTOR, 1, doctorBean.getData()));
+
+                                break;
+                            case 1018:
+                                readyGo(LoginActivity.class);
+                                break;
+                            default:
+                                break;
+
+
+                        }
                     }
                 });
     }

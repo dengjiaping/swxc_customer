@@ -2,6 +2,7 @@ package com.shiwaixiangcun.customer.ui.activity;
 
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,19 +12,19 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.reflect.TypeToken;
 import com.lzy.okgo.OkGo;
-import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 import com.shiwaixiangcun.customer.BaseActivity;
-import com.shiwaixiangcun.customer.ContextSession;
 import com.shiwaixiangcun.customer.GlobalAPI;
 import com.shiwaixiangcun.customer.GlobalConfig;
 import com.shiwaixiangcun.customer.R;
 import com.shiwaixiangcun.customer.adapter.AdapterAfterService;
+import com.shiwaixiangcun.customer.http.StringDialogCallBack;
 import com.shiwaixiangcun.customer.model.AfterServiceBean;
 import com.shiwaixiangcun.customer.model.ResponseEntity;
+import com.shiwaixiangcun.customer.utils.AppSharePreferenceMgr;
 import com.shiwaixiangcun.customer.utils.DisplayUtil;
 import com.shiwaixiangcun.customer.utils.JsonUtil;
 import com.shiwaixiangcun.customer.utils.RefreshTokenUtil;
@@ -53,6 +54,8 @@ public class AfterServiceActivity extends BaseActivity {
     RecyclerView mRvAfterService;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
+    @BindView(R.id.cl_nodata)
+    ConstraintLayout mClNodata;
     private AdapterAfterService mAdapterAfterService;
     private List<AfterServiceBean.ElementsBean> mAfterServiceList;
     private String tokenString;
@@ -89,8 +92,8 @@ public class AfterServiceActivity extends BaseActivity {
     }
 
     private void initToken() {
-        refreshToken = ContextSession.getRefreshToken();
-        tokenString = ContextSession.getTokenString();
+        refreshToken = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.Refresh_token, "");
+        tokenString = (String) AppSharePreferenceMgr.get(mContext, GlobalConfig.TOKEN, "");
     }
 
     private void requestData(final boolean isLoadMore) {
@@ -100,7 +103,15 @@ public class AfterServiceActivity extends BaseActivity {
                 .params("access_token", tokenString)
                 .params("page.pn", mCurrentPage)
                 .params("page.size", mPageSize)
-                .execute(new StringCallback() {
+                .execute(new StringDialogCallBack(this) {
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        mRefreshLayout.finishRefresh();
+                        mRefreshLayout.finishLoadmore();
+                    }
+
                     @Override
                     public void onSuccess(Response<String> response) {
                         Type type = new TypeToken<ResponseEntity<AfterServiceBean>>() {
@@ -118,6 +129,11 @@ public class AfterServiceActivity extends BaseActivity {
                                     mRefreshLayout.finishLoadmore();
                                 } else {
 
+                                    if (responseEntity.getData().getElements().size() == 0) {
+                                        mClNodata.setVisibility(View.VISIBLE);
+                                    } else {
+                                        mClNodata.setVisibility(View.GONE);
+                                    }
                                     mRefreshLayout.finishRefresh();
                                     mAfterServiceList.clear();
                                 }

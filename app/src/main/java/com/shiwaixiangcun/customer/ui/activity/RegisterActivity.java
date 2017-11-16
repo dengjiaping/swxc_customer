@@ -1,6 +1,7 @@
 package com.shiwaixiangcun.customer.ui.activity;
 
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -49,6 +50,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     RecyclerView mRvRegister;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
+    @BindView(R.id.cl_nodata)
+    ConstraintLayout mClNodata;
 
     private List<RegisterBean.ElementsBean> mList;
 
@@ -86,7 +89,17 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 .params("siteId", siteID)
                 .execute(new StringCallback() {
                     @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        mRefreshLayout.finishLoadmore();
+                        mRefreshLayout.finishRefresh();
+                        mClNodata.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
                     public void onSuccess(Response<String> response) {
+
+
                         String jsonString = response.body();
                         Type type = new TypeToken<ResponseEntity<RegisterBean>>() {
                         }.getType();
@@ -96,17 +109,23 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                         }
                         switch (data.getResponseCode()) {
 
+
                             case 1001:
-                                if (data.getData().getElements().size() == 0) {
-                                    mRefreshLayout.finishLoadmore(true);
-                                    return;
-                                }
+
 
                                 if (isLoadmore) {
-
+                                    mClNodata.setVisibility(View.GONE);
                                     currentPage++;
                                     mRefreshLayout.finishLoadmore(true);
                                 } else {
+                                    if (data.getData().getElements().size() == 0) {
+                                        mRefreshLayout.finishRefresh(true);
+                                        mClNodata.setVisibility(View.VISIBLE);
+
+                                    } else {
+                                        mRefreshLayout.setVisibility(View.GONE);
+
+                                    }
                                     mList.clear();
                                     mRefreshLayout.finishRefresh(true);
                                 }
@@ -150,6 +169,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 Bundle bundle = new Bundle();
                 RegisterBean.ElementsBean item = (RegisterBean.ElementsBean) adapter.getData().get(position);
                 bundle.putInt("activityID", item.getId());
+
+                bundle.putString("activityTitle", item.getTitle());
+                bundle.putString("cover", item.getPoster().getThumbImageURL());
                 readyGo(RegisterDetailActivity.class, bundle);
             }
         });

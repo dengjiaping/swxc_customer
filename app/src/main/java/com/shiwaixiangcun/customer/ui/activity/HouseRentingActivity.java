@@ -18,7 +18,11 @@ import com.shiwaixiangcun.customer.ui.IHouseToView;
 import com.shiwaixiangcun.customer.utils.SharePreference;
 import com.shiwaixiangcun.customer.widget.ChangeLightImageView;
 
-public class HouseRentingActivity extends AppCompatActivity implements View.OnClickListener,IHouseToView{
+/**
+ * @author Administrator
+ *         房屋租售
+ */
+public class HouseRentingActivity extends AppCompatActivity implements View.OnClickListener, IHouseToView {
 
     private ChangeLightImageView back_left;
     private TextView tv_page_name;
@@ -43,19 +47,17 @@ public class HouseRentingActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void layoutView() {
-        back_left = (ChangeLightImageView) findViewById(R.id.back_left);
-        tv_page_name = (TextView) findViewById(R.id.tv_page_name);
-        rl_rent = (RelativeLayout) findViewById(R.id.rl_rent);
-        rl_seller_house = (RelativeLayout) findViewById(R.id.rl_seller_house);
-        rl_get_rent = (RelativeLayout) findViewById(R.id.rl_get_rent);
-        rl_buy_house = (RelativeLayout) findViewById(R.id.rl_buy_house);
+        back_left = findViewById(R.id.back_left);
+        tv_page_name = findViewById(R.id.tv_page_name);
+        rl_rent = findViewById(R.id.rl_rent);
+        rl_seller_house = findViewById(R.id.rl_seller_house);
+        rl_get_rent = findViewById(R.id.rl_get_rent);
+        rl_buy_house = findViewById(R.id.rl_buy_house);
     }
 
     private void initData() {
         tv_page_name.setVisibility(View.VISIBLE);
         tv_page_name.setText("房屋租售");
-
-
 
 
         back_left.setOnClickListener(this);
@@ -68,44 +70,46 @@ public class HouseRentingActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        switch (id){
+        switch (id) {
             case R.id.back_left:
                 finish();
                 break;
             case R.id.rl_rent:
-                if (i_pta == 1){
-                    intent.setClass(this,ItoRentActivity.class);
+                if (i_pta == 1) {
+                    intent.setClass(this, ItoRentActivity.class);
                     startActivity(intent);
-                }else if (i_pta == 2){
+                } else if (i_pta == 2) {
                     SharePreference.saveStringToSpParams(this, Common.ISRESIDENT, Common.SIRESIDENT, "torent");
                     intent = new Intent(this, ResidentCertificationActivity.class);
                     startActivityForResult(intent, 1009);
-                }else {
-                    Toast.makeText(HouseRentingActivity.this,"网络异常，请稍后再试",Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(HouseRentingActivity.this, "网络异常，请稍后再试", Toast.LENGTH_LONG).show();
                 }
 
                 break;
             case R.id.rl_seller_house:
-                if (i_pta == 1){
+                if (i_pta == 1) {
 
-                    intent.setClass(this,ItoSellerActivity.class);
+                    intent.setClass(this, ItoSellerActivity.class);
                     startActivity(intent);
-                }else if (i_pta == 2){
+                } else if (i_pta == 2) {
                     SharePreference.saveStringToSpParams(this, Common.ISRESIDENT, Common.SIRESIDENT, "tosell");
                     intent = new Intent(this, ResidentCertificationActivity.class);
                     startActivityForResult(intent, 1009);
-                }else {
-                    Toast.makeText(HouseRentingActivity.this,"网络异常，请稍后再试",Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(HouseRentingActivity.this, "网络异常，请稍后再试", Toast.LENGTH_LONG).show();
                 }
 
                 break;
             case R.id.rl_get_rent:
-                intent.setClass(this,IgetRentActivity.class);
+                intent.setClass(this, IgetRentActivity.class);
                 startActivity(intent);
                 break;
             case R.id.rl_buy_house:
-                intent.setClass(this,IgetBuyActivity.class);
+                intent.setClass(this, IgetBuyActivity.class);
                 startActivity(intent);
+                break;
+            default:
                 break;
         }
     }
@@ -127,10 +131,10 @@ public class HouseRentingActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void setBgaAdpaterAndClickResult(InformationBean result) {
-        if (result != null){
-            if (result.getData().isPropertyAuth()){
+        if (result != null) {
+            if (result.getData().isPropertyAuth()) {
                 i_pta = 1;
-            }else {
+            } else {
                 i_pta = 2;
             }
         }

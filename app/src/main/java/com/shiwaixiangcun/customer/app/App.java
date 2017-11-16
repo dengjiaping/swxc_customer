@@ -149,11 +149,11 @@ public class App extends MultiDexApplication {
         HttpParams params = new HttpParams();
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         //全局的读取超时时间
-        builder.readTimeout(OkGo.DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS);
+        builder.readTimeout(30000, TimeUnit.MILLISECONDS);
         //全局的写入超时时间
-        builder.writeTimeout(OkGo.DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS);
+        builder.writeTimeout(30000, TimeUnit.MILLISECONDS);
         //全局的连接超时时间
-        builder.connectTimeout(OkGo.DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS);
+        builder.connectTimeout(15000, TimeUnit.MILLISECONDS);
         OkGo.getInstance().init(this)
                 .setCacheMode(CacheMode.NO_CACHE)
                 //建议设置OkHttpClient，不设置会使用默认的

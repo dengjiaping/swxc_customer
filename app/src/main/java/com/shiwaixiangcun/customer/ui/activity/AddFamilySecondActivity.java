@@ -185,7 +185,7 @@ public class AddFamilySecondActivity extends BaseActivity implements View.OnClic
                                 showToastShort("验证码错误");
                                 break;
                             default:
-                                showToastShort("添加家人失败");
+                                showToastShort(responseEntity.getMessage());
                                 break;
                         }
                     }

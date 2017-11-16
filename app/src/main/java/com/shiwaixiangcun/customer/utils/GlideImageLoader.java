@@ -7,13 +7,15 @@ import com.bumptech.glide.Glide;
 import com.youth.banner.loader.ImageLoader;
 
 /**
- * Created by Administrator on 2017/9/20.
+ * @author Administrator
+ * @date 2017/9/20
  */
 
 public class GlideImageLoader extends ImageLoader {
     @Override
     public void displayImage(Context context, Object path, ImageView imageView) {
-        Glide.with(context.getApplicationContext())
+
+        Glide.with(context)
                 .load(path)
                 .into(imageView);
     }

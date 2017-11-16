@@ -107,7 +107,6 @@ public class FragmentOrder extends LazyFragment {
     }
 
 
-
     @Override
     protected int getContentViewLayoutID() {
         return R.layout.order_fragment;
@@ -307,6 +306,13 @@ public class FragmentOrder extends LazyFragment {
         OkGo.<String>get(GlobalAPI.getAllOrders)
                 .params(httpParams)
                 .execute(new StringCallback() {
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        mRefreshLayout.finishLoadmore();
+                        mRefreshLayout.finishRefresh();
+                    }
+
                     @Override
                     public void onSuccess(Response<String> response) {
                         String responseJson = response.body();
