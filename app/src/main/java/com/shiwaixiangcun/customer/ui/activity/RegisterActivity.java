@@ -123,7 +123,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                                         mClNodata.setVisibility(View.VISIBLE);
 
                                     } else {
-                                        mRefreshLayout.setVisibility(View.GONE);
+                                        mClNodata.setVisibility(View.GONE);
 
                                     }
                                     mList.clear();

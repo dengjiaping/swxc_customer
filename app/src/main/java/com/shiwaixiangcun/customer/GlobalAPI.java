@@ -8,26 +8,11 @@ package com.shiwaixiangcun.customer;
 
 public class GlobalAPI {
 
+    public static String getTravel = "http://u.ctrip.com/union/CtripRedirect.aspx?TypeID=2&Allianceid=683754&sid=1217406&OUID=&jumpUrl=http%3A%2F%2Fwww.ctrip.com%2F%3FAllianceid%3D683754%26sid%3D1217406%26OUID%3D%26MultiUnionSupport%3Dtrue\"";
     /**
      * 测试服务器
      */
-//    private static String HM_DOMAIN = "http://hm.shiwaixiangcun.cn";
-//    private static String PM_DOMAIN = "http://pm.shiwaixiangcun.cn";
-//    private static String OT_DOMAIN = "http://ot.shiwaixiangcun.cn";
-//    private static String MK_DOMAIN = "http://mk.shiwaixiangcun.cn";
-//    private static String DC_DOMAIN = "https://test.chunyu.me";
-//    private static String NO_DOMAIN = "http://shiwaixiangcun.cn";
-
-    public static String getTravel = "http://u.ctrip.com/union/CtripRedirect.aspx?TypeID=2&Allianceid=683754&sid=1217406&OUID=&jumpUrl=http%3A%2F%2Fwww.ctrip.com%2F%3FAllianceid%3D683754%26sid%3D1217406%26OUID%3D%26MultiUnionSupport%3Dtrue\"";
-    /**
-     * 正式服务器
-     */
-    private static String DC_DOMAIN = "https://www.chunyuyisheng.com";
-    /**
-     * 节点
-     */
-    public static String chunyuDoctor = DC_DOMAIN;
-    private static String HM_DOMAIN = "http://hm.hxteb.com";
+    private static String HM_DOMAIN = "http://hm.shiwaixiangcun.cn";
     //健康地址获取
     public static String getEvaluating = HM_DOMAIN + "/mi/assessment/view.htm";
     public static String getPhysical = HM_DOMAIN + "/mc/customer/detail.json";
@@ -35,6 +20,16 @@ public class GlobalAPI {
     public static String getBloodSugar = HM_DOMAIN + "/mc/sugar/list.json";
     //测试地址
     public static String getWeight = HM_DOMAIN + "/mc/bmi/list.json";
+    /**
+     * 正式服务器
+     */
+
+//    private static String PM_DOMAIN = "http://pm.hxteb.com";
+//    private static String OT_DOMAIN = "http://ot.hxteb.com";
+//    private static String MK_DOMAIN = "http://mk.hxteb.com";
+//    private static String NO_DOMAIN = "http://hxteb.com";
+//    private static String HM_DOMAIN = "http://hm.hxteb.com";
+//    private static String DC_DOMAIN = "https://www.chunyuyisheng.com";
     public static String getBloodFat = HM_DOMAIN + "/mc/blood/fat.json";
     //Token相关接口
     public static String checkToken = HM_DOMAIN + "/mc/validate/access/token.json";
@@ -56,7 +51,20 @@ public class GlobalAPI {
     public static String modifyWatchInfo = HM_DOMAIN + "/mc/update/watchSetUp.json";
     public static String getLocation = HM_DOMAIN + "/mc/map/view.htm";
     public static String callSOS = HM_DOMAIN + "/mc/sosCall.json";
-    private static String MK_DOMAIN = "http://mk.hxteb.com";
+    private static String PM_DOMAIN = "http://pm.shiwaixiangcun.cn";
+    public static String addRight = PM_DOMAIN + "/mc/online/rights/add.json";
+    public static String rightRecord = PM_DOMAIN + "/mc/online/rights/listpage.json";
+    public static String rightDetail = PM_DOMAIN + "/mc/online/rights/detail.json";
+    public static String getMerchant = PM_DOMAIN + "/mi/merchant/listpage/type.json";
+    public static String getPrivacy = PM_DOMAIN + "/mi/privacyPolicy.htm";
+    public static String getRegister = PM_DOMAIN + "/mi/activity/listpage.json";
+    public static String activityDetail = PM_DOMAIN + "/mi/activity/detail.htm";
+    private static String OT_DOMAIN = "http://ot.shiwaixiangcun.cn";
+    //商城首页相关接口
+    public static String getBanner = OT_DOMAIN + "/mi/banner/listdata.json";
+    public static String getToolCategory = OT_DOMAIN + "/mi/app/category/tree.json";
+    public static String getSite = OT_DOMAIN + "/mi/site/listdata.json";
+    private static String MK_DOMAIN = "http://mk.shiwaixiangcun.cn";
     public static String getJudgeUrl = MK_DOMAIN + "/mi/goods/share/";
     //春雨医生测试服务器
     public static String afterService = MK_DOMAIN + "/mc/after/sale/listPage.json";
@@ -67,21 +75,13 @@ public class GlobalAPI {
     public static String refund = MK_DOMAIN + "/mc/after/sale/add.json";
     public static String doctorMaster = MK_DOMAIN + "/mi/doctor/list.json";
     public static String doctorDetail = MK_DOMAIN + "/mi/doctor/detail.htm";
-    private static String OT_DOMAIN = "http://ot.hxteb.com";
-    //商城首页相关接口
-    public static String getBanner = OT_DOMAIN + "/mi/banner/listdata.json";
-    public static String getToolCategory = OT_DOMAIN + "/mi/app/category/tree.json";
-    public static String getSite = OT_DOMAIN + "/mi/site/listdata.json";
-    private static String NO_DOMAIN = "http://hxteb.com";
+    private static String DC_DOMAIN = "https://test.chunyu.me";
+    /**
+     * 节点
+     */
+    public static String chunyuDoctor = DC_DOMAIN;
+    private static String NO_DOMAIN = "http://shiwaixiangcun.cn";
     public static String refreshToken = NO_DOMAIN + "/oauth2/token";
-    private static String PM_DOMAIN = "http://pm.hxteb.com";
-    public static String addRight = PM_DOMAIN + "/mc/online/rights/add.json";
-    public static String rightRecord = PM_DOMAIN + "/mc/online/rights/listpage.json";
-    public static String rightDetail = PM_DOMAIN + "/mc/online/rights/detail.json";
-    public static String getMerchant = PM_DOMAIN + "/mi/merchant/listpage/type.json";
-    public static String getPrivacy = PM_DOMAIN + "/mi/privacyPolicy.htm";
-    public static String getRegister = PM_DOMAIN + "/mi/activity/listpage.json";
-    public static String activityDetail = PM_DOMAIN + "/mi/activity/detail.htm";
     private static String DOMAIN = MK_DOMAIN;
     public static String getCategory = DOMAIN + "/mi/goods/category/tree.json";
     //地址相关接口
